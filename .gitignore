@@ -1,0 +1,9 @@
+./*/*.pyc
+./*/*/*.pyc
+./*.private
+./*/*.private
+./*/*/*.private
+*.log
+./*.log
+./**/*.log
+venv
