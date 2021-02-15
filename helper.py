@@ -8,11 +8,10 @@ import pandas as pd
 import talib
 
 
-mCacheAllDataSet = {
-    '5m': None,
-    '10m': None,
-    'daily': None
-}
+mCacheAllDataSet = {}  # Replace it suing multi index later on
+mIntervalMap = {}
+
+
 all_range = [3, 4, 5, 6, 7, 8, 9, 10, 12, 13,
              14, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100, 120, 150, 200]
 
@@ -26,14 +25,17 @@ def create_figure():
     return fig
 
 
-def getDataForInterval(interval: str, reload="0"):
+def computeDataForInterval(interval: str, reload="0"):
     global mCacheAllDataSet
-    if mCacheAllDataSet[interval] and reload != "1":
-        return mCacheAllDataSet[interval]
+    global mIntervalMap
+    if interval in mIntervalMap and reload != "1":
+        return
+
+    print('[INFO] Begin compute Data( interval :{}'.format(interval))
     datafiles = os.listdir('datasets/{}'.format(interval))
 
     # Just clear the interval
-    mCacheAllDataSet[interval] = {}
+    allSymbols = {}
     for filename in datafiles:
         symbol = filename.split('.')[0]
         df = pd.read_csv('datasets/{}/{}'.format(interval, filename))
@@ -55,8 +57,8 @@ def getDataForInterval(interval: str, reload="0"):
 
         # validated
 
-        #macd and RSI
-        #df['macd'] = talib.MACD(df['close'].as_matrix())
+        # macd and RSI
+        # df['macd'] = talib.MACD(df['close'].as_matrix())
         df["macd_macd"], df["macd_macdsignal"], df["macd_macdhist"] = talib.MACD(
             df.close, fastperiod=12, slowperiod=26, signalperiod=9)
         df['rsi'] = talib.RSI(df['close'].values, 14)
@@ -76,8 +78,40 @@ def getDataForInterval(interval: str, reload="0"):
                               acceleration=0.02, maximum=0.2)
 
         # Please add extra line here.
-        mCacheAllDataSet[interval][symbol] = df
-    return mCacheAllDataSet[interval]
+        allSymbols[symbol] = df
+    # Update the cache.
+    mIntervalMap[interval] = allSymbols
+    # Build the revserse map : symbol->interval->df
+    for sym in allSymbols:
+        if sym not in mCacheAllDataSet:
+            mCacheAllDataSet[sym] = {}
+        mCacheAllDataSet[sym][interval] = allSymbols[sym]
+    # Complated caching
+    print('[INFO] End compute Data( interval :{})'.format(interval))
+
+
+mLastReload = 0
+
+
+def reloadAllData():
+    global mLastReload
+    if(mLastReload == 1):
+        return
+    mLastReload = 1
+    for interval in ["daily", "5m"]:
+        computeDataForInterval(interval)
+
+
+def getDataForInterval(interval: str, reload="0"):
+    global mIntervalMap
+    if interval not in mIntervalMap:
+        computeDataForInterval(interval, reload)
+    return mIntervalMap.get(interval)
+
+
+def getSymbolIntervalCache():
+    global mCacheAllDataSet
+    return mCacheAllDataSet
 
 
 def sample_buy_rule(df, i):
@@ -113,11 +147,11 @@ def resolveCondition(cond: str):
         elif t.startswith("indicator:"):
             # indicator:day:0:ema_50:
             indicator_tokens = t.split(":")
-            candle_type = indicator_tokens[1]  # it can be day, m5, m10, m15
+            interval = indicator_tokens[1]  # it can be day, m5, m10, m15
             offset = int(indicator_tokens[2]) - 1
             indicator = indicator_tokens[3]
-            processed.append('df["{}"].iloc[{}]["{}"]'.format(
-                candle_type, offset, indicator))
+            processed.append('interval_df["{}"].iloc[{}]["{}"]'.format(
+                interval, offset, indicator))
         else:
             processed.append(t)
     return " ".join(processed)
@@ -125,15 +159,14 @@ def resolveCondition(cond: str):
 
 def filterstock(condition):
     print('[INFO] Running scans for {}'.format((condition)))
-    #### THIS IS A PROBLEM AS WE CAN MIX MIN AND DAY DATA ##
-    ### RE impa,net this using panel  like a 3D array ###
-    daily_data_set = getDataForInterval()
+    reloadAllData()
+    symbolIntervalCache = getSymbolIntervalCache()
     result = []
-    for symbol in daily_data_set:
-        df = daily_data_set[symbol]
+    for symbol in symbolIntervalCache:
+        interval_df = symbolIntervalCache[symbol]
         if(eval(condition)):
             result.append({
                 'symbol': symbol,
-                'close': df['daily'].iloc[-1]['close']
+                'close': interval_df['daily'].iloc[-1]['close']
             })
     return result

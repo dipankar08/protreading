@@ -10,11 +10,13 @@ from flask import Flask, render_template, request, Response
 import yfinance as yf
 from symbols import symbols
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from helper import create_figure, filterstock, getDataForInterval, resolveCondition, sample_buy_rule, sample_sell_rule
+from helper import create_figure, filterstock, getDataForInterval, resolveCondition, sample_buy_rule, sample_sell_rule, reloadAllData
 # Installation is complicated
 # brew install ta-lib - pip will give clang error
 # export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade psutil
 import talib
+
+reloadAllData()
 
 app = Flask(__name__)
 
@@ -66,6 +68,7 @@ def Screen():
 @app.route('/sample')
 def sample():
     symbol = request.args.get('symbol')
+
     reload = request.args.get('reload')
     interval = request.args.get('interval')
     if not interval:
