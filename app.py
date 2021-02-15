@@ -10,14 +10,14 @@ from flask import Flask, render_template, request, Response
 import yfinance as yf
 from symbols import symbols
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from helper import create_figure, filterstock, getDataForInterval, resolveCondition, sample_buy_rule, sample_sell_rule, reloadAllData
+from helper import create_figure, filterstock, getDataForInterval, resolveCondition, sample_buy_rule, sample_sell_rule, reloadAllData, download_intra
+import asyncio
 # Installation is complicated
 # brew install ta-lib - pip will give clang error
 # export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade psutil
 import talib
-
-reloadAllData()
-
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 app = Flask(__name__)
 
 
@@ -31,9 +31,18 @@ def snapshot():
     # 5 min
     for x in symbols:
         #print(yf.Ticker('TSLA').history(period='7d', interval='1m'))
-        data = yf.download(x+'.NS', period='7d', interval='5m')
+        data = yf.download(x+'.NS', period='1d', interval='5m')
         data.to_csv('datasets/5m/{}.csv'.format(x))
         getDataForInterval("5m", "1")
+    return {
+        'status': 'success',
+        'msg': 'Sanpshot taken'
+    }
+
+
+@app.route('/snapshot_intra')
+def snapshot_intra():
+    loop.run_until_complete(download_intra())
     return {
         'status': 'success',
         'msg': 'Sanpshot taken'

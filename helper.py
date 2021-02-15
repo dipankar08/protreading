@@ -6,7 +6,8 @@ from matplotlib.figure import Figure
 import numpy as np
 import pandas as pd
 import talib
-
+from symbols import symbols
+import yfinance as yf
 
 mCacheAllDataSet = {}  # Replace it suing multi index later on
 mIntervalMap = {}
@@ -162,11 +163,32 @@ def filterstock(condition):
     reloadAllData()
     symbolIntervalCache = getSymbolIntervalCache()
     result = []
-    for symbol in symbolIntervalCache:
-        interval_df = symbolIntervalCache[symbol]
-        if(eval(condition)):
-            result.append({
-                'symbol': symbol,
-                'close': interval_df['daily'].iloc[-1]['close']
-            })
+    index = 0
+    try:
+        for symbol in symbolIntervalCache:
+            interval_df = symbolIntervalCache[symbol]
+            try:
+                if(eval(condition)):
+                    index += 1
+                    result.append({
+                        'index': index,
+                        'symbol': symbol,
+                        'close': interval_df['daily'].iloc[-1]['close']
+                    })
+            except:
+                print('Condition checks fails for some stocks')
+                pass
+    except Exception as e:
+        print(str(e))
+        pass
     return result
+
+
+async def download_intra():
+    # Valid intervals: [1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo]
+    for interval in ['5m', '15m', '30m', '60m']:
+        print('[INFO] fetching data for intervale : {}'.format(interval))
+        for x in symbols:
+            data = yf.download(x+'.NS', period='1d', interval=interval)
+            data.to_csv('datasets/{}/{}.csv'.format(interval, x))
+            getDataForInterval(interval, "1")

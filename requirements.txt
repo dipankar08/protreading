@@ -7,3 +7,4 @@ yfinance
 matplotlib
 TA-lib
 autopep8
+asyncio 
