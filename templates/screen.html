@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <style>
+      textarea {
+        width: 100%;
+        height: 60px;
+        margin-bottom: 10px;
+      }
+      .error {
+        background: #ff614e;
+        padding: 10px;
+        color: white;
+        margin-bottom: 20px;
+        white-space: break-spaces;
+      }
+      p {
+        margin: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Advnace Screening</h1>
+    {%if error.msg |length > 0 %}
+    <div class="error">
+      <p class=""><b>{{error.msg}}</b></p>
+      <pre>{{error.stack}}</pre>
+    </div>
+    {% endif %}
+    <form>
+      <textarea name="condition" value="{{params.condition}}">{{params.condition}}</textarea>
+      <input type="submit" value="backtest" />
+    </form>
+    {%if result|length > 0 %}
+    <div class="result">
+      <table border="1">
+        <tr>
+          <td>Symbol</td>
+          <td>Close Price</td>
+        </tr>
+        {% for res in result %}
+        <tr>
+          <td>{{res.symbol}}</td>
+          <td>{{res.close}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+  </body>
+</html>

@@ -89,3 +89,44 @@ def sample_sell_rule(df, i):
     cmax = max(df['ema_30'][i], df['ema_35'][i], df['ema_40'][i],
                df['ema_45'][i], df['ema_50'][i], df['ema_60'][i])
     return cmin < cmax
+
+
+def resolveCondition(cond: str):
+    cond = cond.replace("\t", " ")
+    cond = cond.replace("\n", " ")
+    cond = cond.replace("\r", " ")
+    tokens = cond.split(" ")
+    processed = []
+    for t in tokens:
+        t = t.strip()
+        if len(t) == 0:
+            continue
+        if (t in [')', '(', 'and', 'or', ">", "<", ">=", "<=", "+", "-", "*", "/"]):
+            processed.append(t)
+        elif t.startswith('num#'):
+            processed.append(t.replace("num#", ""))
+        elif t.startswith("indicator:"):
+            # indicator:day:0:ema_50:
+            indicator_tokens = t.split(":")
+            candle_type = 'df'  # TODO indicator_tokens[1]
+            offset = int(indicator_tokens[2]) - 1
+            indicator = indicator_tokens[3]
+            processed.append('{}.iloc[{}]["{}"]'.format(
+                candle_type, offset, indicator))
+        else:
+            processed.append(t)
+    return " ".join(processed)
+
+
+def filterstock(condition):
+    print('[INFO] Running scans for {}'.format((condition)))
+    daily_data_set = getDailyDataSet()
+    result = []
+    for symbol in daily_data_set:
+        df = daily_data_set[symbol]
+        if(eval(condition)):
+            result.append({
+                'symbol': symbol,
+                'close': df.iloc[-1]['close']
+            })
+    return result

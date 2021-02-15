@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, Response
 import yfinance as yf
 from symbols import symbols
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from helper import create_figure, getDailyDataSet, sample_buy_rule, sample_sell_rule
+from helper import create_figure, filterstock, getDailyDataSet, resolveCondition, sample_buy_rule, sample_sell_rule
 # Installation is complicated
 # brew install ta-lib - pip will give clang error
 # export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade psutil
@@ -41,10 +41,19 @@ def chartTest():
 
 @app.route('/screen')
 def Screen():
-    fig = create_figure()
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
+    result = []
+    params = {'condition': ''}
+    error = {
+
+    }
+    try:
+        params['condition'] = request.args.get('condition')
+        evaled_condition = resolveCondition(params['condition'])
+        result = filterstock(evaled_condition)
+    except Exception as e:
+        error['msg'] = "Not able to perform scanning..."
+        error['stack'] = traceback.format_exc()
+    return render_template('screen.html', result=result, params=params, error=error)
 
 
 @app.route('/sample')
