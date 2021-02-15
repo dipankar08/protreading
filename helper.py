@@ -8,7 +8,11 @@ import pandas as pd
 import talib
 
 
-mCacheDailyDataSet = None
+mCacheAllDataSet = {
+    '5m': None,
+    '10m': None,
+    'daily': None
+}
 all_range = [3, 4, 5, 6, 7, 8, 9, 10, 12, 13,
              14, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100, 120, 150, 200]
 
@@ -22,15 +26,17 @@ def create_figure():
     return fig
 
 
-def getDailyDataSet(reload=False):
-    global mCacheDailyDataSet
-    if mCacheDailyDataSet and reload != "1":
-        return mCacheDailyDataSet
-    datafiles = os.listdir('datasets/daily')
-    result = {}
+def getDataForInterval(interval: str, reload="0"):
+    global mCacheAllDataSet
+    if mCacheAllDataSet[interval] and reload != "1":
+        return mCacheAllDataSet[interval]
+    datafiles = os.listdir('datasets/{}'.format(interval))
+
+    # Just clear the interval
+    mCacheAllDataSet[interval] = {}
     for filename in datafiles:
         symbol = filename.split('.')[0]
-        df = pd.read_csv('datasets/daily/{}'.format(filename))
+        df = pd.read_csv('datasets/{}/{}'.format(interval, filename))
         # Make lower case << Validated
         df['open'] = np.round(df['Open'], 2)
         df['close'] = np.round(df['Close'], 2)
@@ -70,9 +76,8 @@ def getDailyDataSet(reload=False):
                               acceleration=0.02, maximum=0.2)
 
         # Please add extra line here.
-        result[symbol] = df
-    mCacheDailyDataSet = result
-    return mCacheDailyDataSet
+        mCacheAllDataSet[interval][symbol] = df
+    return mCacheAllDataSet[interval]
 
 
 def sample_buy_rule(df, i):
@@ -108,10 +113,10 @@ def resolveCondition(cond: str):
         elif t.startswith("indicator:"):
             # indicator:day:0:ema_50:
             indicator_tokens = t.split(":")
-            candle_type = 'df'  # TODO indicator_tokens[1]
+            candle_type = indicator_tokens[1]  # it can be day, m5, m10, m15
             offset = int(indicator_tokens[2]) - 1
             indicator = indicator_tokens[3]
-            processed.append('{}.iloc[{}]["{}"]'.format(
+            processed.append('df["{}"].iloc[{}]["{}"]'.format(
                 candle_type, offset, indicator))
         else:
             processed.append(t)
@@ -120,13 +125,15 @@ def resolveCondition(cond: str):
 
 def filterstock(condition):
     print('[INFO] Running scans for {}'.format((condition)))
-    daily_data_set = getDailyDataSet()
+    #### THIS IS A PROBLEM AS WE CAN MIX MIN AND DAY DATA ##
+    ### RE impa,net this using panel  like a 3D array ###
+    daily_data_set = getDataForInterval()
     result = []
     for symbol in daily_data_set:
         df = daily_data_set[symbol]
         if(eval(condition)):
             result.append({
                 'symbol': symbol,
-                'close': df.iloc[-1]['close']
+                'close': df['daily'].iloc[-1]['close']
             })
     return result

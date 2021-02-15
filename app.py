@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, Response
 import yfinance as yf
 from symbols import symbols
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from helper import create_figure, filterstock, getDailyDataSet, resolveCondition, sample_buy_rule, sample_sell_rule
+from helper import create_figure, filterstock, getDataForInterval, resolveCondition, sample_buy_rule, sample_sell_rule
 # Installation is complicated
 # brew install ta-lib - pip will give clang error
 # export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade psutil
@@ -21,10 +21,17 @@ app = Flask(__name__)
 
 @app.route('/snapshot')
 def snapshot():
+    # daily
     for x in symbols:
         data = yf.download(x+'.NS', start="2018-01-01", end="2021-12-30")
         data.to_csv('datasets/daily/{}.csv'.format(x))
-        getDailyDataSet()
+        getDataForInterval("daily", "1")
+    # 5 min
+    for x in symbols:
+        #print(yf.Ticker('TSLA').history(period='7d', interval='1m'))
+        data = yf.download(x+'.NS', period='7d', interval='5m')
+        data.to_csv('datasets/5m/{}.csv'.format(x))
+        getDataForInterval("5m", "1")
     return {
         'status': 'success',
         'msg': 'Sanpshot taken'
@@ -60,7 +67,10 @@ def Screen():
 def sample():
     symbol = request.args.get('symbol')
     reload = request.args.get('reload')
-    data = getDailyDataSet(reload).get(symbol)
+    interval = request.args.get('interval')
+    if not interval:
+        interval = 'daily'
+    data = getDataForInterval(interval, reload).get(symbol)
     lastdata = dict(data.iloc[-1])
     return """<div>
                 <p>Data</p>
@@ -86,7 +96,7 @@ def backtest():
             'order_book': []
         }
         if (symbol and entry_rule and exit_rule):
-            df = getDailyDataSet().get(symbol)
+            df = getDataForInterval("daily").get(symbol)
             pos = 0
             num = 0
             buy_price = 0
