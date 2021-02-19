@@ -215,7 +215,7 @@ def index():
 
 if __name__ == '__main__':
     if prod:
-        app.run(host='0.0.0.0', port=5001, debug=False, ssl_context=(
+        app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
             '/etc/letsencrypt/live/rc1.grodok.com/fullchain.pem', '/etc/letsencrypt/live/rc1.grodok.com/privkey.pem'))
     else:
         app.run(host='localhost', port=5000, debug=True)
