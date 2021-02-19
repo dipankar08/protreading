@@ -1,4 +1,4 @@
-from OpenSSL import SSL
+
 import os
 
 import pandas as pd
@@ -21,12 +21,8 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 domain = "rc1.grodok.com"
-context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
-context.use_privatekey_file(
-    '/etc/letsencrypt/live/{}/privkey.pem'.format(domain))
-context.use_certificate_file(
-    '/etc/letsencrypt/live/{}/cert.pem'.format(domain))
 
+prod = False
 # Snap short API
 
 
@@ -218,4 +214,13 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True, ssl_context=context)
+    if prod:
+        from OpenSSL import SSL
+        context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+        context.use_privatekey_file(
+            '/etc/letsencrypt/live/{}/privkey.pem'.format(domain))
+        context.use_certificate_file(
+            '/etc/letsencrypt/live/{}/cert.pem'.format(domain))
+        app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=context)
+    else:
+        app.run(host='localhost', port=5000, debug=True)
