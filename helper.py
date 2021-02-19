@@ -46,6 +46,18 @@ def computeDataForInterval(interval: str, reload="0"):
         df['high'] = np.round(df['High'], 2)
         df['low'] = np.round(df['Low'], 2)
         df['volume'] = np.round(df['Volume'], 2)
+
+        # define changes
+        df['close_change'] = np.round((
+            df['close'] - df['close'].shift(1))/df['close'].shift(1)*100, 2)
+        df['volume_change'] = np.round((
+            df['volume'] - df['volume'].shift(1))/df['volume'].shift(1)*100, 2)
+
+        # Volatility
+        df['high_low_gap'] = df['high'] - df['low']
+        df['high_low_gap_percentage'] = np.round((
+            df['high'] - df['low'])/df['close']*100, 2)
+
         df.drop(columns=['Open', 'Close', "High", "Low", "Volume"])
         # write your own info here << Validated
         for range in all_range:
@@ -163,17 +175,22 @@ def filterstock(condition):
     reloadAllData()
     symbolIntervalCache = getSymbolIntervalCache()
     result = []
-    index = 0
+    sl = 0
     try:
         for symbol in symbolIntervalCache:
             interval_df = symbolIntervalCache[symbol]
             try:
                 if(eval(condition)):
-                    index += 1
+                    sl += 1
                     result.append({
-                        'index': index,
+                        'sl': sl,
                         'symbol': symbol,
-                        'close': interval_df['daily'].iloc[-1]['close']
+                        'name': symbol,  # TODO
+                        'close': interval_df['daily'].iloc[-1]['close'],
+                        'volume': interval_df['daily'].iloc[-1]['volume'],
+                        'close_change': str(interval_df['daily'].iloc[-1]['close_change']),
+                        'volume_change': str(interval_df['daily'].iloc[-1]['volume_change']),
+                        'high_low_gap_percentage': str(interval_df['daily'].iloc[-1]['high_low_gap_percentage']),
                     })
             except:
                 print('Condition checks fails for some stocks')

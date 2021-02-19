@@ -1,0 +1,10 @@
+# You must run on virtaul envirmnet
+>> create: virtualenv -p python3 venv 
+Activate>> source venv/bin/activate
+>>> pip3 install -r requirements.txt ( add file in requirements)
+>>> Manulaly check in sitepa
+
+# Installation is complicated
+#>> Pip gives clang erro
+# >>> brew install ta-lib 
+# export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade ta-lib
