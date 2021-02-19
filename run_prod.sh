@@ -1,1 +1,1 @@
-flask run --host 0.0.0.0 -p 5000 --no-debugger --cert=adhoc
+flask run --host 0.0.0.0 -p 5000 --no-debugger --key=/etc/letsencrypt/live/rc1.grodok.com/privkey.pem --cert /etc/letsencrypt/live/rc1.grodok.com/cert.pem
