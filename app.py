@@ -1,3 +1,4 @@
+from OpenSSL import SSL
 import os
 
 import pandas as pd
@@ -19,6 +20,12 @@ asyncio.set_event_loop(loop)
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+domain = "rc1.grodok.com"
+context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+context.use_privatekey_file(
+    '/etc/letsencrypt/live/{}/privkey.pem'.format(domain))
+context.use_certificate_file(
+    '/etc/letsencrypt/live/{}/cert.pem'.format(domain))
 
 # Snap short API
 
@@ -211,4 +218,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000)
+    app.run(host='localhost', port=5000, debug=True, ssl_context=context)

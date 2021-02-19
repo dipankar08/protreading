@@ -1,1 +1,1 @@
-python3.8 app.py
+flask run --host 0.0.0.0 -p 5000 --no-debugger --cert=adhoc

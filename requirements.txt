@@ -9,3 +9,4 @@ autopep8
 asyncio 
 TA-lib
 flask-cors 
+pyopenssl
