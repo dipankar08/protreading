@@ -187,10 +187,10 @@ def filterstock(condition):
                         'symbol': symbol,
                         'name': symbol,  # TODO
                         'close': interval_df['daily'].iloc[-1]['close'],
-                        'volume': str(interval_df['daily'].iloc[-1]['volume']),
-                        'close_change': str(interval_df['daily'].iloc[-1]['close_change']),
-                        'volume_change': str(interval_df['daily'].iloc[-1]['volume_change']),
-                        'high_low_gap_percentage': str(interval_df['daily'].iloc[-1]['high_low_gap_percentage']),
+                        'volume': int(interval_df['daily'].iloc[-1]['volume']),
+                        'close_change': interval_df['daily'].iloc[-1]['close_change'],
+                        'volume_change': interval_df['daily'].iloc[-1]['volume_change'],
+                        'high_low_gap_percentage': interval_df['daily'].iloc[-1]['high_low_gap_percentage'],
                     })
             except:
                 print('Condition checks fails for some stocks')

@@ -20,24 +20,45 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+# Snap short API
+
 
 @app.route('/snapshot')
 def snapshot():
-    # daily
-    for x in symbols:
-        data = yf.download(x+'.NS', start="2018-01-01", end="2021-12-30")
-        data.to_csv('datasets/daily/{}.csv'.format(x))
-        getDataForInterval("daily", "1")
-    # 5 min
-    for x in symbols:
-        #print(yf.Ticker('TSLA').history(period='7d', interval='1m'))
-        data = yf.download(x+'.NS', period='1d', interval='5m')
-        data.to_csv('datasets/5m/{}.csv'.format(x))
-        getDataForInterval("5m", "1")
-    return {
-        'status': 'success',
-        'msg': 'Sanpshot taken'
-    }
+    try:
+        # daily
+        for x in symbols:
+            data = yf.download(x+'.NS', start="2018-01-01", end="2021-12-30")
+            data.to_csv('datasets/daily/{}.csv'.format(x))
+            getDataForInterval("daily", "1")
+        # 5 min
+        for x in symbols:
+            #print(yf.Ticker('TSLA').history(period='7d', interval='1m'))
+            data = yf.download(x+'.NS', period='1d', interval='5m')
+            data.to_csv('datasets/5m/{}.csv'.format(x))
+            getDataForInterval("5m", "1")
+        return {
+            'status': 'success',
+            'msg': 'snapshot taken',
+            'out': []
+        }
+    except Exception as e:
+        return {'status': 'error', 'msg': 'Not able to take snapshot', 'out': [], 'help': traceback.format_exc()}
+
+
+@cross_origin()
+@app.route('/screen', methods=['POST', 'GET'])
+def Screen():
+    result = []
+    filter = request.args.get('filter')
+    if not filter:
+        return {'status': 'error', 'msg': 'Please pass filter using get', 'out': []}
+    try:
+        evaled_condition = resolveCondition(filter)
+        result = filterstock(evaled_condition)
+        return {'status': 'success', 'msg': 'Here is the list of Stocks', 'out': result}
+    except Exception as e:
+        return {'status': 'error', 'msg': 'Not able to perform scanning', 'out': [], 'help': traceback.format_exc()}
 
 
 @app.route('/snapshot_intra')
@@ -55,21 +76,6 @@ def chartTest():
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
-
-
-@cross_origin()
-@app.route('/screen', methods=['POST', 'GET'])
-def Screen():
-    result = []
-    filter = request.args.get('filter')
-    if not filter:
-        return {'status': 'error', 'msg': 'Please pass filter using get', 'out': []}
-    try:
-        evaled_condition = resolveCondition(filter)
-        result = filterstock(evaled_condition)
-        return {'status': 'success', 'msg': 'Here is the list of Stocks', 'out': result}
-    except Exception as e:
-        return {'status': 'error', 'msg': 'Not able to perform scanning', 'out': [], 'help': traceback.format_exc()}
 
 
 @app.route('/sample')
