@@ -6,7 +6,7 @@ bs4
 yfinance
 matplotlib
 autopep8
-asyncio 
-TA-lib
+asyncio
 flask-cors 
 pyopenssl
+mypy

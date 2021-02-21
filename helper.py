@@ -74,7 +74,7 @@ def computeDataForInterval(interval: str, reload="0"):
         # df['macd'] = talib.MACD(df['close'].as_matrix())
         df["macd_macd"], df["macd_macdsignal"], df["macd_macdhist"] = talib.MACD(
             df.close, fastperiod=12, slowperiod=26, signalperiod=9)
-        df['rsi'] = talib.RSI(df['close'].values, 14)
+        df['rsi_14'] = talib.RSI(df['close'].values, 14)
         df['rsi_6'] = talib.RSI(df['close'].values, 6)
         df['rsi_12'] = talib.RSI(df['close'].values, 12)
         df['rsi_18'] = talib.RSI(df['close'].values, 18)
@@ -161,7 +161,7 @@ def resolveCondition(cond: str):
             # indicator:day:0:ema_50:
             indicator_tokens = t.split(":")
             interval = indicator_tokens[1]  # it can be day, m5, m10, m15
-            offset = int(indicator_tokens[2]) - 1
+            offset = '{} - offset'.format(indicator_tokens[2])
             indicator = indicator_tokens[3]
             processed.append('interval_df["{}"].iloc[{}]["{}"]'.format(
                 interval, offset, indicator))

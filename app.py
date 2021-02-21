@@ -1,9 +1,11 @@
 
 import os
+from utils.backtest import perform_backtest
+from utils.utils import buildError, buildException, buildNotImplemented, buildSuccess, getParamFromRequest
 
 import pandas as pd
 import sys
-import traceback
+
 import io
 from pandas.io import parsers
 from patterns import patterns
@@ -26,6 +28,14 @@ prod = False
 # Snap short API
 
 
+@app.route('/status')
+def status():
+    try:
+        return buildSuccess()
+    except Exception as e:
+        return buildException(e)
+
+
 @app.route('/snapshot')
 def snapshot():
     try:
@@ -40,13 +50,9 @@ def snapshot():
             data = yf.download(x+'.NS', period='1d', interval='5m')
             data.to_csv('datasets/5m/{}.csv'.format(x))
             getDataForInterval("5m", "1")
-        return {
-            'status': 'success',
-            'msg': 'snapshot taken',
-            'out': []
-        }
+        return buildSuccess()
     except Exception as e:
-        return {'status': 'error', 'msg': 'Not able to take snapshot', 'out': [], 'help': traceback.format_exc()}
+        return buildException(e)
 
 
 @cross_origin()
@@ -59,9 +65,9 @@ def Screen():
     try:
         evaled_condition = resolveCondition(filter)
         result = filterstock(evaled_condition)
-        return {'status': 'success', 'msg': 'Here is the list of Stocks', 'out': result}
+        return buildSuccess(msg='Here is the list of Stocks', out=result)
     except Exception as e:
-        return {'status': 'error', 'msg': 'Not able to perform scanning', 'out': [], 'help': traceback.format_exc()}
+        return buildException(e)
 
 
 @app.route('/snapshot_intra')
@@ -102,91 +108,19 @@ def sample():
 @app.route('/backtest')
 def backtest():
     try:
-        symbol = request.args.get('symbol')
-        entry_rule = request.args.get('entry_rule')
-        exit_rule = request.args.get('exit_rule')
-        input = {
-            "symbol": symbol,
-            "entry_rule": entry_rule,
-            "exit_rule": exit_rule
-        }
-        result = {
-            'summary': {},
-            'order_book': []
-        }
-        if (symbol and entry_rule and exit_rule):
-            df = getDataForInterval("daily").get(symbol)
-            pos = 0
-            num = 0
-            buy_price = 0
-            sell_price = 0
-            buy_date = ''
-            sell_date = ''
-            for i in df.index:
-                if sample_buy_rule(df, i) and pos == 0:
-                    pos = 1
-                    buy_price = df['Close'][i]
-                    buy_date = df['Date'][i]
-
-                elif sample_sell_rule(df, i) and pos == 1:
-                    pos = 0
-                    sell_price = df['Close'][i]
-                    sell_date = df['Date'][i]
-                    result['order_book'].append({
-                        'buy_price': buy_price,
-                        'sell_price': sell_price,
-                        'buy_date': buy_date,
-                        'sell_date': sell_date,
-                        'per_change': (sell_price/buy_price - 1)*100
-                    })
-                # Test Just open
-                if(i == df['Open'].count() - 1 and pos == 1):
-                    pos = 0
-                    sell_price = df['Close'][i]
-                    sell_date = df['Date'][i]
-                    result['order_book'].append({
-                        'buy_price': buy_price,
-                        'sell_price': sell_price,
-                        'buy_date': buy_date,
-                        'sell_date': sell_date,
-                        'per_change': (sell_price/buy_price - 1)*100
-                    })
+        requestParam = getParamFromRequest(
+            request, ['symbol', 'candle_type', 'entry_rule', 'exit_rule', 'duration'])
+        result = perform_backtest(requestParam['symbol'], requestParam['candle_type'],
+                                  requestParam['duration'], requestParam['entry_rule'], requestParam['exit_rule'])
+        return buildSuccess("backtest executed successfully", result)
     except Exception as e:
-        # traceback.print_exception()
-        return {'error': str(e)}
-
-    gain = 0
-    count_gain = 0
-    max_gain = 0
-    loss = 0
-    count_loss = 0
-    max_loss = 0
-    totalR = 1
-    for oe in result['order_book']:
-        if(oe['per_change'] > 0):
-            gain += oe['per_change']
-            count_gain += 1
-            max_gain = max(max_gain, oe['per_change'])
-        else:
-            loss += oe['per_change']
-            count_loss += 1
-            max_loss = min(max_loss, oe['per_change'])
-        totalR = totalR*((i/100)+1)
-
-    result['summary'] = {
-        'gain': gain,
-        'count_gain': count_gain,
-        'loss': loss,
-        'count_loss': count_loss,
-        'max_gain': max_gain,
-        'max_loss': max_loss,
-        'totalR': totalR
-    }
-    return render_template('backtest.html', result=result, input=input, symbols=symbols)
+        return buildException(e)
 
 
 @app.route('/')
 def index():
+    return buildNotImplemented()
+    """
     pattern = request.args.get('pattern')
     result = []
     if not pattern:
@@ -211,6 +145,7 @@ def index():
         except Exception as e:
             print(e)
     return render_template('index.html', patterns=patterns, result=result)
+    """
 
 
 if __name__ == '__main__':
