@@ -22,7 +22,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 domain = "rc1.grodok.com"
 
-prod = True
+prod = False
 # Snap short API
 
 
