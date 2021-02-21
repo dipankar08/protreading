@@ -176,6 +176,7 @@ def filterstock(condition):
     symbolIntervalCache = getSymbolIntervalCache()
     result = []
     sl = 0
+    offset = -1  # This used by the eval
     try:
         for symbol in symbolIntervalCache:
             interval_df = symbolIntervalCache[symbol]
@@ -192,12 +193,12 @@ def filterstock(condition):
                         'volume_change': interval_df['daily'].iloc[-1]['volume_change'],
                         'high_low_gap_percentage': interval_df['daily'].iloc[-1]['high_low_gap_percentage'],
                     })
-            except:
-                print('Condition checks fails for some stocks')
-                pass
+            except Exception as e:
+                raise Exception('Condition checks fails for some stocks')
+
     except Exception as e:
-        print(str(e))
-        pass
+        raise Exception("Not able to process scanning")
+
     return result
 
 
