@@ -1,6 +1,7 @@
 
 import os
 import random
+from utils.utils import fixDict, fixRound, verifyOrThrow
 from flask import Response
 from matplotlib.figure import Figure
 import numpy as np
@@ -13,8 +14,7 @@ mCacheAllDataSet = {}  # Replace it suing multi index later on
 mIntervalMap = {}
 
 
-all_range = [3, 4, 5, 6, 7, 8, 9, 10, 12, 13,
-             14, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 100, 120, 150, 200]
+all_range = [5, 8, 13, 20, 28, 50, 100, 200]
 
 
 def create_figure():
@@ -48,10 +48,10 @@ def computeDataForInterval(interval: str, reload="0"):
         df['volume'] = np.round(df['Volume'], 2)
 
         # define changes
-        df['close_change'] = np.round((
-            df['close'] - df['close'].shift(1))/df['close'].shift(1)*100, 2)
-        df['volume_change'] = np.round((
-            df['volume'] - df['volume'].shift(1))/df['volume'].shift(1)*100, 2)
+        df['close_change'] = fixRound((
+            df['close'] - df['close'].shift(1))/df['close'].shift(1)*100)
+        df['volume_change'] = fixRound((
+            df['volume'] - df['volume'].shift(1))/df['volume'].shift(1)*100)
 
         # Volatility
         df['high_low_gap'] = df['high'] - df['low']
@@ -174,6 +174,7 @@ def filterstock(condition):
     print('[INFO] Running scans for {}'.format((condition)))
     reloadAllData()
     symbolIntervalCache = getSymbolIntervalCache()
+    verifyOrThrow(len(symbolIntervalCache) > 0, "Cache is not yet loaded")
     result = []
     sl = 0
     offset = -1  # This used by the eval
@@ -183,7 +184,7 @@ def filterstock(condition):
             try:
                 if(eval(condition)):
                     sl += 1
-                    result.append({
+                    result.append(fixDict({
                         'sl': sl,
                         'symbol': symbol,
                         'name': symbol,  # TODO
@@ -192,7 +193,7 @@ def filterstock(condition):
                         'close_change': interval_df['daily'].iloc[-1]['close_change'],
                         'volume_change': interval_df['daily'].iloc[-1]['volume_change'],
                         'high_low_gap_percentage': interval_df['daily'].iloc[-1]['high_low_gap_percentage'],
-                    })
+                    }))
             except Exception as e:
                 raise Exception('Condition checks fails for some stocks')
 

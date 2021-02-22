@@ -46,7 +46,6 @@ def snapshot():
             getDataForInterval("daily", "1")
         # 5 min
         for x in symbols:
-            #print(yf.Ticker('TSLA').history(period='7d', interval='1m'))
             data = yf.download(x+'.NS', period='1d', interval='5m')
             data.to_csv('datasets/5m/{}.csv'.format(x))
             getDataForInterval("5m", "1")
