@@ -1,4 +1,5 @@
 
+
 import os
 import random
 from utils.utils import fixDict, fixRound, verifyOrThrow
@@ -7,23 +8,13 @@ from matplotlib.figure import Figure
 import numpy as np
 import pandas as pd
 import talib
-from symbols import symbols
+from utils.const import symbols
 import yfinance as yf
+
 
 mCacheAllDataSet = {}  # Replace it suing multi index later on
 mIntervalMap = {}
-
-
 all_range = [5, 8, 13, 20, 28, 50, 100, 200]
-
-
-def create_figure():
-    fig = Figure()
-    axis = fig.add_subplot(1, 1, 1)
-    xs = range(100)
-    ys = [random.randint(1, 50) for x in xs]
-    axis.plot(xs, ys)
-    return fig
 
 
 def computeDataForInterval(interval: str, reload="0"):
@@ -111,7 +102,7 @@ def reloadAllData():
     if(mLastReload == 1):
         return
     mLastReload = 1
-    for interval in ["daily", "5m"]:
+    for interval in ["1d", "5m"]:
         computeDataForInterval(interval)
 
 
@@ -125,89 +116,3 @@ def getDataForInterval(interval: str, reload="0"):
 def getSymbolIntervalCache():
     global mCacheAllDataSet
     return mCacheAllDataSet
-
-
-def sample_buy_rule(df, i):
-    cmin = min(df['ema_3'][i], df['ema_5'][i], df['ema_8'][i],
-               df['ema_10'][i], df['ema_12'][i], df['ema_15'][i])
-    cmax = max(df['ema_30'][i], df['ema_35'][i], df['ema_40'][i],
-               df['ema_45'][i], df['ema_50'][i], df['ema_60'][i])
-    return cmin > cmax
-
-
-def sample_sell_rule(df, i):
-    cmin = min(df['ema_3'][i], df['ema_5'][i], df['ema_8'][i],
-               df['ema_10'][i], df['ema_12'][i], df['ema_15'][i])
-    cmax = max(df['ema_30'][i], df['ema_35'][i], df['ema_40'][i],
-               df['ema_45'][i], df['ema_50'][i], df['ema_60'][i])
-    return cmin < cmax
-
-
-def resolveCondition(cond: str):
-    cond = cond.replace("\t", " ")
-    cond = cond.replace("\n", " ")
-    cond = cond.replace("\r", " ")
-    tokens = cond.split(" ")
-    processed = []
-    for t in tokens:
-        t = t.strip()
-        if len(t) == 0:
-            continue
-        if (t in [')', '(', 'and', 'or', ">", "<", ">=", "<=", "+", "-", "*", "/"]):
-            processed.append(t)
-        elif t.startswith('num#'):
-            processed.append(t.replace("num#", ""))
-        elif t.startswith("indicator:"):
-            # indicator:day:0:ema_50:
-            indicator_tokens = t.split(":")
-            interval = indicator_tokens[1]  # it can be day, m5, m10, m15
-            offset = '{} - offset'.format(indicator_tokens[2])
-            indicator = indicator_tokens[3]
-            processed.append('interval_df["{}"].iloc[{}]["{}"]'.format(
-                interval, offset, indicator))
-        else:
-            processed.append(t)
-    return " ".join(processed)
-
-
-def filterstock(condition):
-    print('[INFO] Running scans for {}'.format((condition)))
-    reloadAllData()
-    symbolIntervalCache = getSymbolIntervalCache()
-    verifyOrThrow(len(symbolIntervalCache) > 0, "Cache is not yet loaded")
-    result = []
-    sl = 0
-    offset = -1  # This used by the eval
-    try:
-        for symbol in symbolIntervalCache:
-            interval_df = symbolIntervalCache[symbol]
-            try:
-                if(eval(condition)):
-                    sl += 1
-                    result.append(fixDict({
-                        'sl': sl,
-                        'symbol': symbol,
-                        'name': symbol,  # TODO
-                        'close': interval_df['daily'].iloc[-1]['close'],
-                        'volume': int(interval_df['daily'].iloc[-1]['volume']),
-                        'close_change': interval_df['daily'].iloc[-1]['close_change'],
-                        'volume_change': interval_df['daily'].iloc[-1]['volume_change'],
-                        'high_low_gap_percentage': interval_df['daily'].iloc[-1]['high_low_gap_percentage'],
-                    }))
-            except Exception as e:
-                raise Exception('Condition checks fails for some stocks')
-
-    except Exception as e:
-        raise Exception("Not able to process scanning")
-
-    return result
-
-
-async def download_intra():
-    # Valid intervals: [1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo]
-    for interval in ['5m', '15m', '30m', '60m']:
-        print('[INFO] fetching data for intervale : {}'.format(interval))
-        for x in symbols:
-            data = yf.download(x+'.NS', period='1d', interval=interval)
-            data.to_csv('datasets/{}/{}.csv'.format(interval, x))
-            getDataForInterval(interval, "1")

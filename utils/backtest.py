@@ -1,4 +1,5 @@
-from helper import getDataForInterval, getSymbolIntervalCache, resolveCondition
+from utils.screen import resolveCondition
+from utils.processor import getDataForInterval, getSymbolIntervalCache
 from utils.utils import buildNotImplemented, getCandleCountForDay, verifyOrThrow
 
 
