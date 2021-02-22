@@ -1,4 +1,5 @@
 
+from utils.processor import getSampleData
 from utils.download import download
 from utils.screen import resolveCondition, filterstock
 import os
@@ -28,6 +29,19 @@ def status():
 
 
 @cross_origin()
+@app.route('/sample')
+def sample():
+    try:
+        requestParam = getParamFromRequest(
+            request, ['symbol', 'columns'])
+        result = getSampleData(requestParam.get('symbol'),
+                               requestParam.get('columns').split(','))
+        return buildSuccess("sample returned", result)
+    except Exception as e:
+        return buildException(e)
+
+
+@cross_origin()
 @app.route('/screen', methods=['POST', 'GET'])
 def Screen():
     result = []
@@ -42,6 +56,7 @@ def Screen():
         return buildException(e)
 
 
+@cross_origin()
 @app.route('/snapshot')
 def snapshot_intra():
     try:
@@ -54,6 +69,7 @@ def snapshot_intra():
         return buildException(e)
 
 
+@cross_origin()
 @app.route('/backtest')
 def backtest():
     try:
@@ -66,6 +82,7 @@ def backtest():
         return buildException(e)
 
 
+@cross_origin()
 @app.route('/')
 def index():
     return buildNotImplemented()

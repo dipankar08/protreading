@@ -1,5 +1,6 @@
 
 
+import json as JSON
 import os
 import random
 from utils.utils import fixDict, fixRound, verifyOrThrow
@@ -116,3 +117,17 @@ def getDataForInterval(interval: str, reload="0"):
 def getSymbolIntervalCache():
     global mCacheAllDataSet
     return mCacheAllDataSet
+
+
+def ensureDailyDataLoaded():
+    global mCacheAllDataSet
+    if(mIntervalMap.get('1d')):
+        return
+    computeDataForInterval('1d', "1")
+
+
+def getSampleData(symbol: str, columns):
+    global mCacheAllDataSet
+    ensureDailyDataLoaded()
+    df = mCacheAllDataSet.get(symbol).get('1d')
+    return JSON.loads(df.tail().loc[:, df.columns.isin(['Date']+columns)].to_json(orient='records'))

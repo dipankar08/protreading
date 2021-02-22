@@ -2,10 +2,10 @@ import traceback
 from utils.const import CANDLE_TYPE_COUNT
 from flask import app, json, jsonify
 import numpy as np
+import json as JSON
 
 
 def returnAsJson(dict):
-    # TODO: This is an workaroid of getting rid of NAN
     return jsonify(json.dumps(dict).replace('NaN', '0'))
 
 
