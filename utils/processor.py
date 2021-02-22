@@ -32,6 +32,8 @@ def computeDataForInterval(interval: str, reload="0"):
     for filename in datafiles:
         symbol = filename.split('.')[0]
         df = pd.read_csv('datasets/{}/{}'.format(interval, filename))
+        # If somevalue is nan and all calculation just dont work
+        df.fillna(method='ffill', inplace=True)
         # Make lower case << Validated
         df['open'] = np.round(df['Open'], 2)
         df['close'] = np.round(df['Close'], 2)
@@ -81,7 +83,6 @@ def computeDataForInterval(interval: str, reload="0"):
 
         df['sar'] = talib.SAR(df['high'], df['low'],
                               acceleration=0.02, maximum=0.2)
-
         # Please add extra line here.
         allSymbols[symbol] = df
     # Update the cache.

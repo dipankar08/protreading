@@ -53,7 +53,8 @@ def resolveCondition(cond: str):
             # indicator:day:0:ema_50:
             indicator_tokens = t.split(":")
             interval = indicator_tokens[1]  # it can be day, m5, m10, m15
-            offset = '{} - offset'.format(indicator_tokens[2])
+            # Note that we have plus the offset, thus it generates like 0-1, -1-1, -2-1 ...
+            offset = '{} + offset'.format(indicator_tokens[2])
             indicator = indicator_tokens[3]
             processed.append('interval_df["{}"].iloc[{}]["{}"]'.format(
                 interval, offset, indicator))
