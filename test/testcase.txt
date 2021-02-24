@@ -1,0 +1,4 @@
+=> context => server => http://127.0.0.1:5000
+=> GET => {{server}} =>  Ask Dipankar to implement this feature
+=> GET => {{server}}/status =>  success
+=> GET => {{server}}/snapshot?candle_type=1d&duration=1d

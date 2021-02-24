@@ -1,6 +1,8 @@
+from utils.download import DownloadManager
+from utils.timex import time_this
 
+from flask.globals import g
 from utils.processor import getSampleData
-from utils.download import download
 from utils.screen import resolveCondition, filterstock
 import os
 from utils.backtest import perform_backtest
@@ -16,13 +18,36 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 domain = "rc1.grodok.com"
 
-prod = False
+timingsprod = False
 # Snap short API
+
+# Timing realted works
+
+"""
+@app.after_request
+def after_request_func(response):
+    # just append timings to the output response:
+    response.data = json.loads(json.loads(response.data))
+    response.data['time'] = g.timings
+    response.data = json.dumps(response.data)
+    return response
+"""
+
+
+@app.before_request
+def before_request_func():
+    g.timings = {}
+
+
+@time_this
+def test():
+    pass
 
 
 @app.route('/status')
 def status():
     try:
+        test()
         return buildSuccess()
     except Exception as e:
         return buildException(e)
@@ -62,7 +87,7 @@ def snapshot_intra():
     try:
         requestParam = getParamFromRequest(
             request, ['candle_type', 'duration'])
-        result = download(
+        result = DownloadManager.getInstance().download(
             requestParam['candle_type'], requestParam['duration'])
         return buildSuccess("fetched the data", result)
     except Exception as e:
@@ -114,9 +139,14 @@ def index():
     """
 
 
+"""
 if __name__ == '__main__':
     if prod:
         app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
             '/etc/letsencrypt/live/rc1.grodok.com/fullchain.pem', '/etc/letsencrypt/live/rc1.grodok.com/privkey.pem'))
     else:
         app.run(host='localhost', port=5000, debug=True)
+"""
+# HACK https://stackoverflow.com/questions/33379287/gunicorn-cant-find-app-when-name-changed-from-application
+# They need the application name as app
+application = app

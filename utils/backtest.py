@@ -1,8 +1,10 @@
+from utils.timex import time_this
 from utils.screen import resolveCondition
 from utils.processor import getDataForInterval, getSymbolIntervalCache
 from utils.utils import buildNotImplemented, getCandleCountForDay, verifyOrThrow
 
 
+@time_this
 def perform_backtest(symbol: str, candle_type: str, duration: str, entry_rule: str, exit_rule: str):
     entry_rule = resolveCondition(entry_rule)
     exit_rule = resolveCondition(exit_rule)
@@ -22,6 +24,7 @@ def perform_backtest(symbol: str, candle_type: str, duration: str, entry_rule: s
     sell_date = ''
     start_offset = 0
     notes = []
+    sl = 0
     order_book = []
     for i in df.index:
         offset = i
@@ -34,7 +37,9 @@ def perform_backtest(symbol: str, candle_type: str, duration: str, entry_rule: s
             pos = 0
             sell_price = df['Close'][i]
             sell_date = df['Date'][i]
+            sl += 1
             order_book.append({
+                'sl': sl,
                 'buy_price': buy_price,
                 'sell_price': sell_price,
                 'buy_date': buy_date,

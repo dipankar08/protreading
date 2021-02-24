@@ -1,4 +1,6 @@
 import traceback
+
+from flask.globals import g
 from utils.const import CANDLE_TYPE_COUNT
 from flask import app, json, jsonify
 import numpy as np
@@ -10,7 +12,7 @@ def returnAsJson(dict):
 
 
 def buildSuccess(msg: str = "`Successfully executed", out=None):
-    return returnAsJson({'status': 'success', 'msg': msg, 'out': out})
+    return returnAsJson({'status': 'success', 'msg': msg, 'out': out, "time": g.timings})
 
 
 def buildError(msg: str, help='No help is given'):

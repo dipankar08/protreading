@@ -1,7 +1,9 @@
+from utils.timex import time_this
 from utils.utils import fixDict, verifyOrThrow
 from utils.processor import getSymbolIntervalCache, reloadAllData
 
 
+@time_this
 def filterstock(condition):
     print('[INFO] Running scans for {}'.format((condition)))
     reloadAllData()
@@ -35,6 +37,7 @@ def filterstock(condition):
     return result
 
 
+@time_this
 def resolveCondition(cond: str):
     cond = cond.replace("\t", " ")
     cond = cond.replace("\n", " ")

@@ -3,6 +3,7 @@
 import json as JSON
 import os
 import random
+from utils.timex import time_this
 from utils.utils import fixDict, fixRound, verifyOrThrow
 from flask import Response
 from matplotlib.figure import Figure
@@ -18,6 +19,7 @@ mIntervalMap = {}
 all_range = [5, 8, 13, 20, 28, 50, 100, 200]
 
 
+@time_this
 def computeDataForInterval(interval: str, reload="0"):
     global mCacheAllDataSet
     global mIntervalMap
@@ -127,6 +129,7 @@ def ensureDailyDataLoaded():
     computeDataForInterval('1d', "1")
 
 
+@time_this
 def getSampleData(symbol: str, columns):
     global mCacheAllDataSet
     ensureDailyDataLoaded()

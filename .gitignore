@@ -7,3 +7,5 @@
 ./*.log
 ./**/*.log
 venv
+test/node_module
+test/node_modules
