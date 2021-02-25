@@ -1,9 +1,13 @@
+from enum import Enum
+
+
 CANDLE_TYPE_COUNT = {
     '1d': 1,
     '1h': 7,
     '15m': 25,
     '5m': 75
 }
+
 
 my_map = {'ACC Ltd.': 'ACC',
           'AU Small Finance Bank Ltd.': 'AUBANK',
