@@ -65,6 +65,7 @@ class FastStorage:
         }
         df = DownloadManager.getInstance().downloadAll(
             candle_type.value, intervalPeriodMap.get(candle_type))
+        # TODO: Before save, you must process it
         self._save(candle_type=candle_type, df=df)
 
     def _save(self, candle_type: TCandleType, df: DataFrame):
