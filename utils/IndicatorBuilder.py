@@ -79,5 +79,3 @@ class IndicatorBuilder:
 
             df[ticker+'.NS', 'sar'] = talib.SAR(df[ticker+'.NS', 'high'], df[ticker+'.NS', 'low'],
                                                 acceleration=0.02, maximum=0.2)
-
-

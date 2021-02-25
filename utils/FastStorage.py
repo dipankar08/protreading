@@ -4,7 +4,7 @@ from typing import Dict, List
 from utils.Decorators import timed
 from utils.DLogger import DLogger
 from utils.DownloadManager import DownloadManager
-
+from IndicatorBuilder import IndicatorBuilder
 
 import pandas as pd
 from pandas.core.frame import DataFrame
@@ -51,7 +51,7 @@ class FastStorage:
 
     def _loadData(self, candle_type: TCandleType) -> DataFrame:
         try:
-            return pd.read_pickle("{}.pkl".format(candle_type.value))
+            return pd.read_pickle("./datasets/{}.pkl".format(candle_type.value))
         except:
             return None
 
@@ -66,10 +66,11 @@ class FastStorage:
         df = DownloadManager.getInstance().downloadAll(
             candle_type.value, intervalPeriodMap.get(candle_type))
         # TODO: Before save, you must process it
+        IndicatorBuilder.getInstance().process3DData(df)
         self._save(candle_type=candle_type, df=df)
 
     def _save(self, candle_type: TCandleType, df: DataFrame):
-        df.to_pickle("{}.pkl".format(candle_type.value))
+        df.to_pickle("./datasets/{}.pkl".format(candle_type.value))
 
     def getData(self, candle_type: TCandleType):
         return self.__cache.get(candle_type)
