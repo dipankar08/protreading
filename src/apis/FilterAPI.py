@@ -44,7 +44,8 @@ class FilterAPI:
                         }
                         # add used defined data
                         for c in columns:
-                            selected_one[c[0]] = eval(c[1])
+                            if c:
+                                selected_one[c[0]] = eval(c[1])
                         result.append(fixDict(selected_one))
                 except Exception as e:
                     raise e
@@ -55,6 +56,8 @@ class FilterAPI:
         return result
 
     def resolveIndicatorExpression(self, expression: str):
+        if not expression:
+            return
         verifyOrThrow("indicator:")
         indicator_tokens = expression.split(":")
         interval = indicator_tokens[1]  # it can be day, m5, m10, m15
@@ -93,7 +96,7 @@ class FilterAPI:
 
 
 # Test
-print(FilterAPI.getInstance().resolveIndicatorExpression("indicator:1d:0:rsi_14"))
-cond = FilterAPI.getInstance().resolveCondition("indicator:1d:0:close > 10")
-print(FilterAPI.getInstance().filterstock(
-    "indicator:1d:0:close > 10", ["indicator:1d:0:rsi_14", "indicator:1d:0:rsi_6"]))
+# print(FilterAPI.getInstance().resolveIndicatorExpression("indicator:1d:0:rsi_14"))
+#cond = FilterAPI.getInstance().resolveCondition("indicator:1d:0:close > 10")
+# print(FilterAPI.getInstance().filterstock(
+#    "indicator:1d:0:close > 10", ["indicator:1d:0:rsi_14", "indicator:1d:0:rsi_6"]))
