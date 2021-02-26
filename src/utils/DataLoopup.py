@@ -28,4 +28,4 @@ class DataLookup:
 
     def getSample(self,  symbol: str, columns: List[str], candle_type: TCandleType = TCandleType.DAY_1):
         frame: pd.DataFrame = self._dataframeMap.get(candle_type.value)
-        return frame[symbol].head(1).to_json(orient='records')
+        return frame[symbol].tail(1).to_json(orient='records')
