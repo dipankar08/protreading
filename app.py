@@ -1,16 +1,19 @@
-from utils.download import DownloadManager
-from utils.timex import time_this
+
+from src.utils.DataLoopup import DataLookup
+from src.config.MyTypes import TCandleType
+from src.utils.FastStorage import FastStorage
+from src.utils.DownloadManager import DownloadManager
+from src.utils.timex import time_this
 
 from flask.globals import g
-from utils.processor import getSampleData
-from utils.screen import resolveCondition, filterstock
+from src.utils.processor import getSampleData
+from src.utils.screen import resolveCondition, filterstock
 import os
-from utils.backtest import perform_backtest
-from utils.utils import buildError, buildException, buildNotImplemented, buildSuccess, getParamFromRequest
+from src.apis.backtest import perform_backtest
+from src.utils.RetHelper import buildError, buildException, buildNotImplemented, buildSuccess, getParamFromRequest
 from flask import Flask, helpers, render_template, request, Response
 from flask_cors import CORS, cross_origin
 import asyncio
-import talib
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
 app = Flask(__name__)
@@ -39,15 +42,9 @@ def before_request_func():
     g.timings = {}
 
 
-@time_this
-def test():
-    pass
-
-
 @app.route('/status')
 def status():
     try:
-        test()
         return buildSuccess()
     except Exception as e:
         return buildException(e)
@@ -59,15 +56,15 @@ def sample():
     try:
         requestParam = getParamFromRequest(
             request, ['symbol', 'columns'])
-        result = getSampleData(requestParam.get('symbol'),
-                               requestParam.get('columns').split(','))
+        result = DataLookup.getInstance().getSample(requestParam.get('symbol'),
+                                                    requestParam.get('columns').split(','))
         return buildSuccess("sample returned", result)
     except Exception as e:
         return buildException(e)
 
 
-@cross_origin()
-@app.route('/screen', methods=['POST', 'GET'])
+@ cross_origin()
+@ app.route('/screen', methods=['POST', 'GET'])
 def Screen():
     result = []
     filter = request.args.get('filter')
@@ -81,21 +78,21 @@ def Screen():
         return buildException(e)
 
 
-@cross_origin()
-@app.route('/snapshot')
+@ cross_origin()
+@ app.route('/snapshot')
 def snapshot_intra():
     try:
         requestParam = getParamFromRequest(
-            request, ['candle_type', 'duration'])
-        result = DownloadManager.getInstance().download(
-            requestParam['candle_type'], requestParam['duration'])
+            request, ['candle_type'])
+        result = FastStorage.getInstance().refreshData(
+            candle_type=TCandleType(requestParam.get('candle_type')))
         return buildSuccess("fetched the data", result)
     except Exception as e:
         return buildException(e)
 
 
-@cross_origin()
-@app.route('/backtest')
+@ cross_origin()
+@ app.route('/backtest')
 def backtest():
     try:
         requestParam = getParamFromRequest(
@@ -107,36 +104,10 @@ def backtest():
         return buildException(e)
 
 
-@cross_origin()
-@app.route('/')
+@ cross_origin()
+@ app.route('/')
 def index():
     return buildNotImplemented()
-    """
-    pattern = request.args.get('pattern')
-    result = []
-    if not pattern:
-        return render_template('index.html', patterns=patterns, result=result)
-
-    # we have a patterns here
-    datafiles = os.listdir('datasets/daily')
-
-    for filename in datafiles:
-        symbol = filename.split('.')[0]
-        df = pd.read_csv('datasets/daily/{}'.format(filename))
-        # print(df)
-        pattern_function = getattr(talib, pattern)
-        try:
-            res = pattern_function(
-                df['Open'], df['High'], df['Low'], df["Close"])
-            last = res.tail(1).values[0]
-            # print(last)
-            if last != 0:
-                print('{} is triggered'.format(filename))
-                result.append({'symbol': symbol, 'value': last})
-        except Exception as e:
-            print(e)
-    return render_template('index.html', patterns=patterns, result=result)
-    """
 
 
 """
