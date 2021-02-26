@@ -1,11 +1,11 @@
 from src.utils.timex import time_this
-from src.utils.screen import resolveCondition
 from src.utils.processor import getDataForInterval, getSymbolIntervalCache
 from src.utils.RetHelper import buildNotImplemented, getCandleCountForDay, verifyOrThrow
 
 
 @time_this
 def perform_backtest(symbol: str, candle_type: str, duration: str, entry_rule: str, exit_rule: str):
+    return
     entry_rule = resolveCondition(entry_rule)
     exit_rule = resolveCondition(exit_rule)
     df = getDataForInterval(candle_type).get(symbol)
@@ -51,55 +51,3 @@ def perform_backtest(symbol: str, candle_type: str, duration: str, entry_rule: s
         notes.append(
             "We have an extra buy which is not sold yet. We ignore it to get accuracy of the result")
     return {"order_book": order_book}
-
-    """
-        symbol = request.args.get('symbol')
-        entry_rule = request.args.get('entry_rule')
-        exit_rule = request.args.get('exit_rule')
-        input = {
-            "symbol": symbol,
-            "entry_rule": entry_rule,
-            "exit_rule": exit_rule
-        }
-        result = {
-            'summary': {},
-            'order_book': []
-        }
-        if (symbol and entry_rule and exit_rule):
-            df = getDataForInterval("daily").get(symbol)
-            pos = 0
-            num = 0
-            buy_price = 0
-            sell_price = 0
-            buy_date = ''
-            sell_date = ''
-              for i in df.index:
-                   if sample_buy_rule(df, i) and pos == 0:
-                        pos = 1
-                        buy_price = df['Close'][i]
-                        buy_date = df['Date'][i]
-
-                    elif sample_sell_rule(df, i) and pos == 1:
-                        pos = 0
-                        sell_price = df['Close'][i]
-                        sell_date = df['Date'][i]
-                        result['order_book'].append({
-                            'buy_price': buy_price,
-                            'sell_price': sell_price,
-                            'buy_date': buy_date,
-                            'sell_date': sell_date,
-                            'per_change': (sell_price/buy_price - 1)*100
-                        })
-                    # Test Just open
-                    if(i == df['Open'].count() - 1 and pos == 1):
-                        pos = 0
-                        sell_price = df['Close'][i]
-                        sell_date = df['Date'][i]
-                        result['order_book'].append({
-                            'buy_price': buy_price,
-                            'sell_price': sell_price,
-                            'buy_date': buy_date,
-                            'sell_date': sell_date,
-                            'per_change': (sell_price/buy_price - 1)*100
-                        })
-    """

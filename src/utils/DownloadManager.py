@@ -3,7 +3,7 @@ from pandas.core.frame import DataFrame
 from src.utils.timex import time_this
 from src.utils.processor import getDataForInterval
 import yfinance as yf
-from src.utils.const import symbols
+from src.config.symbols import symbols
 
 import os
 import random
@@ -35,7 +35,7 @@ class DownloadManager:
             DownloadManager.__instance = self
 
     def downloadAll(self, interval='1d', period='1y') -> DataFrame:
-        ticker = [x+'.NS' for x in symbols.keys()]
+        ticker = [x for x in symbols.keys()]
         data = yf.download(
             tickers=ticker,
             period=period,

@@ -1,4 +1,5 @@
 import traceback
+from typing import Dict
 
 from flask.globals import g
 from src.utils.const import CANDLE_TYPE_COUNT
@@ -20,6 +21,8 @@ def buildError(msg: str, help='No help is given'):
 
 
 def buildException(ex: Exception):
+    print("\n\n\n"+"*"*100+"\nException found\n"+"*"*100+"\n" +
+          traceback.format_exc()+"*"*50+"\n\n\n")
     return returnAsJson({'status': 'error', 'msg': "Some critical error happend in the server:"+str(ex.args), 'out': [], 'help': traceback.format_exc()})
 
 
@@ -35,6 +38,23 @@ def getParamFromRequest(request, params):
                 "Sorry, the request is missing params: {}".format(v))
         res[v] = request.args.get(v)
     return res
+
+
+def ensureParmasInRequest(request, params):
+    for v in params:
+        if not request.args.get(v):
+            raise Exception(
+                "Sorry, the request is missing params: {}".format(v))
+        else:
+            request.view_args[v] = request.args.get(v)
+
+
+def ensureProvidedDefaultInRequest(request, params: Dict):
+    for (k, v) in params.items():
+        if not request.args.get(k):
+            request.view_args[k] = v
+        else:
+            request.view_args[k] = request.args.get(k)
 
 
 def verifyOrThrow(cond: bool, msg="Assert fails"):

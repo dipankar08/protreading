@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 import numpy as np
 import pandas as pd
 import talib
-from src.utils.const import symbols
+from src.config.symbols import symbols
 import yfinance as yf
 
 
