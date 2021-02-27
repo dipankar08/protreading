@@ -2,7 +2,6 @@ import traceback
 from typing import Dict
 
 from flask.globals import g
-from src.utils.const import CANDLE_TYPE_COUNT
 from flask import app, json, jsonify
 import numpy as np
 import json as JSON
