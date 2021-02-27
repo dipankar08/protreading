@@ -1,3 +1,4 @@
+import numpy as np
 from src.utils.timex import time_this
 from src.utils.RetHelper import fixDict, verifyOrThrow
 from src.utils.processor import getSymbolIntervalCache, reloadAllData
@@ -39,13 +40,13 @@ class FilterAPI:
                             'sl': sl,
                             'name': name,
                             'symbol': symbol,
-                            'close': interval_df['1d'][symbol].iloc[-1]['close'],
+                            'close': np.round(interval_df['1d'][symbol].iloc[-1]['close'], 2),
                             'volume': int(interval_df['1d'][symbol].iloc[-1]['volume']),
                         }
                         # add used defined data
                         for c in columns:
                             if c:
-                                selected_one[c[0]] = eval(c[1])
+                                selected_one[c[0]] = np.round(eval(c[1]), 2)
                         result.append(fixDict(selected_one))
                 except Exception as e:
                     raise e
@@ -64,7 +65,9 @@ class FilterAPI:
         # Note that we have plus the offset, thus it generates like 0-1, -1-1, -2-1 ...
         offset = '{} + offset'.format(indicator_tokens[2])
         indicator = indicator_tokens[3]
-        return (indicator, 'interval_df["{}"][symbol].iloc[{}]["{}"]'.format(
+        indicator_text = "{}[{}] {}".format(
+            indicator_tokens[1], indicator_tokens[2], indicator_tokens[3])
+        return (indicator_text, 'interval_df["{}"][symbol].iloc[{}]["{}"]'.format(
             interval, offset, indicator))
 
     def resolveCondition(self, cond: str):
