@@ -37,31 +37,26 @@ class FilterAPI:
                 try:
                     if(eval(condition)):
                         sl += 1
-                        selected_one = {
-                            'sl': sl,
-                            'name': name,
-                            'symbol': symbol,
-                        }
+                        selected_one = {}
+                        selected_one['symbol'] = symbol
                         if columns:
                             for c in columns:
                                 if c:
                                     selected_one[c[0]] = np.round(
                                         eval(c[1]), 2)
-                        else:
-                            selected_one['close'] = np.round(
-                                interval_df['1d'][symbol].iloc[-1]['close'], 2),
-                            selected_one['volume'] = int(
-                                interval_df['1d'][symbol].iloc[-1]['volume']),
-                            selected_one['change'] = int(
-                                interval_df['1d'][symbol].iloc[-1]['close_change_percentage']),
+                        selected_one['close'] = np.round(
+                            interval_df['1d'][symbol].iloc[-1]['close'], 2),
+                        selected_one['volume'] = int(
+                            interval_df['1d'][symbol].iloc[-1]['volume']),
+                        selected_one['change'] = int(
+                            interval_df['1d'][symbol].iloc[-1]['close_change_percentage']),
                         # add used defined data
                         result.append(fixDict(selected_one))
                 except Exception as e:
                     raise e
 
         except Exception as e:
-            raise Exception("Not able to process scanning:"+str(e.args))
-
+            raise e
         return result
 
     def resolveIndicatorExpression(self, expression: str):
