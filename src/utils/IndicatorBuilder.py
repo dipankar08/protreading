@@ -37,9 +37,9 @@ class IndicatorBuilder:
             df[ticker,
                 'volume'] = np.round(df[ticker, 'Volume'], 2)
             # define changes
-            df[ticker, 'close_change'] = fixRound((
+            df[ticker, 'close_change_percentage'] = fixRound((
                 df[ticker, 'close'] - df[ticker, 'close'].shift(1))/df[ticker, 'close'].shift(1)*100)
-            df[ticker, 'volume_change'] = fixRound((
+            df[ticker, 'volume_change_percentage'] = fixRound((
                 df[ticker, 'volume'] - df[ticker, 'volume'].shift(1))/df[ticker, 'volume'].shift(1)*100)
 
             # Volatility

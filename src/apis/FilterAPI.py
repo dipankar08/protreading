@@ -23,6 +23,7 @@ class FilterAPI:
         else:
             FilterAPI.__instance = self
 
+    @time_this
     def filterstock(self, condition, columns=[]):
         print('[INFO] Running scans for {}'.format((condition)))
         interval_df = DataLookup.getInstance().getAllData()
@@ -40,13 +41,20 @@ class FilterAPI:
                             'sl': sl,
                             'name': name,
                             'symbol': symbol,
-                            'close': np.round(interval_df['1d'][symbol].iloc[-1]['close'], 2),
-                            'volume': int(interval_df['1d'][symbol].iloc[-1]['volume']),
                         }
+                        if columns:
+                            for c in columns:
+                                if c:
+                                    selected_one[c[0]] = np.round(
+                                        eval(c[1]), 2)
+                        else:
+                            selected_one['close'] = np.round(
+                                interval_df['1d'][symbol].iloc[-1]['close'], 2),
+                            selected_one['volume'] = int(
+                                interval_df['1d'][symbol].iloc[-1]['volume']),
+                            selected_one['change'] = int(
+                                interval_df['1d'][symbol].iloc[-1]['close_change_percentage']),
                         # add used defined data
-                        for c in columns:
-                            if c:
-                                selected_one[c[0]] = np.round(eval(c[1]), 2)
                         result.append(fixDict(selected_one))
                 except Exception as e:
                     raise e
@@ -59,6 +67,18 @@ class FilterAPI:
     def resolveIndicatorExpression(self, expression: str):
         if not expression:
             return
+
+        # Remove quick ref
+        if expression in ['sl', 'close', 'symbol', 'volume', 'name', "change"]:
+            if expression == 'close':
+                return ('close', "interval_df['1d'][symbol].iloc[-1]['close']")
+            elif expression == 'volume':
+                return ('volume', "interval_df['1d'][symbol].iloc[-1]['volume']")
+            elif expression == 'change':
+                return ('change', "interval_df['1d'][symbol].iloc[-1]['close_change_percentage']")
+            else:
+                return
+
         verifyOrThrow("indicator:")
         indicator_tokens = expression.split(":")
         interval = indicator_tokens[1]  # it can be day, m5, m10, m15
@@ -100,6 +120,6 @@ class FilterAPI:
 
 # Test
 # print(FilterAPI.getInstance().resolveIndicatorExpression("indicator:1d:0:rsi_14"))
-#cond = FilterAPI.getInstance().resolveCondition("indicator:1d:0:close > 10")
+# cond = FilterAPI.getInstance().resolveCondition("indicator:1d:0:close > 10")
 # print(FilterAPI.getInstance().filterstock(
 #    "indicator:1d:0:close > 10", ["indicator:1d:0:rsi_14", "indicator:1d:0:rsi_6"]))
