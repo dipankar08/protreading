@@ -7,5 +7,9 @@
 ./*.log
 ./**/*.log
 venv
+./**/node_module
+./**/venv
+./**/*.pyc
+
 test/node_module
 test/node_modules
