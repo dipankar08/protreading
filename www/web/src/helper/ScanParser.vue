@@ -37,7 +37,7 @@
 <script>
 import $ from "jquery";
 import { convertRuleDictToRuleStr } from "./scan_helper";
-import { assertOrThrow } from "../../../libs/app";
+import { assertOrThrow } from "../common/assert";
 import { INDICATOR_LIST, OFFSET_LIST, OPERATOR_LIST } from "./const";
 
 export default {
