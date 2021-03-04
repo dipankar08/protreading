@@ -45,6 +45,15 @@
    -->
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      section: "",
+    };
+  },
+};
+</script>
 <style scoped lang="scss">
 .navigation_menu {
   height: 44px;

@@ -4,7 +4,7 @@
       <p class="header_section d_layout_fill">Home</p>
       <a-button type="primary" @click="refresh_count++"><span class="mdi mdi-reload d_mr10"></span>Refresh</a-button>
     </div>
-    <div class="d_layout_row d_fullscreen group d_mt20 responsive">
+    <div class="d_layout_row d_fullscreen group responsive">
       <div class="info_box" v-for="item in filter_id_list" :key="item">
         <FilterBox :filter_id="item" :refresh_count="refresh_count" />
       </div>
