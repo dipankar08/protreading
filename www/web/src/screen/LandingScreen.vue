@@ -22,19 +22,21 @@
       </ul>
     </div>
     <div class="d_layout_col d_layout_center_all">
-      <social-log-in class="d_mt20" @onLoginSuccess="onLoginSuccess" />
+      <social-log-in class="d_mt20" @onLoginSuccess="onLoginSuccess" @onLoginFail="onLoginFail" />
     </div>
   </div>
 </template>
 <script>
 import SocialLogIn from "../helper/SocialLogIn.vue";
-
+import { setCookie, deleteCookie } from "../common/helper.ts";
+import { localEvent } from "../common/localEvent";
 export default {
   components: { SocialLogIn },
   methods: {
     onLoginSuccess(data) {
       console.log(data);
     },
+    onLoginFail(data) {},
   },
 };
 </script>

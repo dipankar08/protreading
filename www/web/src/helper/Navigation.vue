@@ -1,12 +1,5 @@
 <template>
   <div class="d_layout_row navigation_menu">
-    <router-link to="/"
-      ><p class="d_layout_row menu_item" @click="section = 'home'" :class="section == 'home' ? 'active' : ''">
-        <span class="mdi mdi-home"></span>
-        <span>Home</span>
-      </p>
-    </router-link>
-    |
     <router-link to="/dashboard">
       <p class="d_layout_row menu_item" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
         <span class="mdi mdi-filter"></span>

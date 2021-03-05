@@ -7,27 +7,27 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Landing",
+    name: "landing",
     component: () => import("../screen/LandingScreen.vue"),
   },
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "dashboard",
     component: () => import("../screen/DashboardScreen.vue"),
   },
   {
     path: "/screen",
-    name: "Screen",
+    name: "screen",
     component: () => import("../screen/ScreenScreen.vue"),
   },
   {
     path: "/backtest",
-    name: "BackTest",
+    name: "backtest",
     component: () => import("../screen/BackTestScreen.vue"),
   },
   {
     path: "/settings",
-    name: "Settings",
+    name: "settings",
     component: () => import("../screen/SettingsScreen.vue"),
   },
 ];

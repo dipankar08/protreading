@@ -15,6 +15,7 @@
 <script>
 import VueGoogleLogin from "vue-google-login";
 import VFacebookLogin from "vue-facebook-login-component";
+import { localEvent } from "../common/localEvent";
 export default {
   name: "GoogleLogin",
   data() {
@@ -35,25 +36,35 @@ export default {
   methods: {
     onSuccess(data) {
       console.log(data);
-      this.$emit("onLoginSuccess", {
+      data = {
         type: "Google",
         user_id: data.getBasicProfile().getEmail(),
         user_name: data.getBasicProfile().getName(),
         img: data.getBasicProfile().getImageUrl(),
-      });
+      };
+      this.$emit("onLoginSuccess", data);
+      localEvent.notify("auth", data);
     },
     onFailure(err) {
       console.log(err);
+      this.$emit("onLoginFail", {
+        error: "Unknown error",
+      });
     },
     onFacebookLogin(data) {
       console.log(data);
-      this.$emit("onLoginSuccess", {
+      data = {
         type: "Facebook",
         user_id: data.authResponse.userID,
-      });
+      };
+      this.$emit("onLoginSuccess", data);
+      localEvent.notify("auth", data);
     },
     onFacebookLogout(data) {
       console.log(data);
+      this.$emit("onLoginFail", {
+        error: "Unknown error",
+      });
     },
   },
 };

@@ -5,18 +5,46 @@
   </div>
 </template>
 <script>
-import Navigation from "./helper/Navigation";
+import Navigation from "./helper/Navigation.vue";
+import { getCookie, setCookie } from "./common/helper.ts";
+import { localEvent } from "./common/localEvent";
 export default {
   components: {
     Navigation,
   },
   data() {
     return {
-      hide_nav: false,
+      hide_nav: true,
     };
   },
+  methods: {
+    handleLocalEvent(type, data) {
+      switch (type) {
+        case "auth":
+          if (data) {
+            this.$router.push({ name: "dashboard" });
+            setCookie("auth", data, "json");
+            this.hide_nav = false;
+          } else {
+            this.$router.push({ name: "landing" });
+            this.hide_nav = true;
+            setCookie("auth", null);
+          }
+          break;
+      }
+    },
+  },
   created() {
-    this.hide_nav = this.$route.path == "/";
+    localEvent.notify("auth", getCookie("auth", "json"));
+  },
+  mounted() {
+    localEvent.addObserver(this.handleLocalEvent);
+  },
+  destroyed() {
+    localEvent.removeObserver(this.handleLocalEvent);
+  },
+  updated() {
+    console.log("updated");
   },
 };
 </script>
