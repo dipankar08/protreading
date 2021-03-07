@@ -56,7 +56,8 @@ class FastStorage:
 
     def refreshData(self, candle_type: TCandleType):
         "Refresh data if needed"
-        DLogger.getInstance().d("We are refreshing data by doing network call.")
+        DLogger.getInstance().d(
+            "We are refreshing data by doing network call for {}".format(candle_type))
         intervalPeriodMap = {
             TCandleType.DAY_1: '1y',
             TCandleType.MIN_15: '1d',
