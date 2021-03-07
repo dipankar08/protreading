@@ -1,4 +1,7 @@
 symbols = {
+    '^NSEI': 'NIFTY_50',
+    "^NSEBANK": "NYFTY_BANK",
+    "^CNXIT": "NIFTY IT",
     'ACC.NS': 'ACC Ltd.',
     'AUBANK.NS': 'AU Small Finance Bank Ltd.',
     'AARTIIND.NS': 'Aarti Industries Ltd.',
