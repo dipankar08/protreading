@@ -1,5 +1,6 @@
 flask
 numpy
+finplot
 pandas
 requests
 bs4

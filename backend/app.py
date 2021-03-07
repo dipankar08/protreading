@@ -6,6 +6,7 @@ from src.config.MyTypes import TCandleType
 from src.utils.FastStorage import FastStorage
 from src.utils.DownloadManager import DownloadManager
 from src.utils.timex import time_this
+import base64
 
 from flask.globals import g
 from src.utils.processor import getSampleData
@@ -15,6 +16,8 @@ from src.utils.RetHelper import buildError, buildException, buildNotImplemented,
 from flask import Flask, helpers, render_template, request, Response
 from flask_cors import CORS, cross_origin
 import asyncio
+
+from src.utils.PlotApi import buildChartInPng
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
 app = Flask(__name__)
@@ -120,6 +123,29 @@ def backtest():
         result = perform_backtest(requestParam['symbol'], requestParam['candle_type'],
                                   requestParam['duration'], requestParam['entry_rule'], requestParam['exit_rule'])
         return buildSuccess("backtest executed successfully", result)
+    except Exception as e:
+        return buildException(e)
+
+
+@ cross_origin()
+@ app.route('/chart')
+def chart():
+    try:
+        requestParam = getParamFromRequest(
+            request, ['symbol'])
+        symbol = requestParam.get('symbol')
+        path = "datasets/screenshot/{}.png".format(symbol)
+
+        if not os.path.exists(path):
+            df = DataLookup.getInstance().getDataFrame(symbol, TCandleType.DAY_1)
+            buildChartInPng(symbol, df)
+
+        with open(path, "rb") as binary_file:
+            binary_file_data = binary_file.read()
+            base64_encoded_data = base64.b64encode(binary_file_data)
+            base64_message = base64_encoded_data.decode('utf-8')
+            return buildSuccess("Image Return", "data:image/png;base64,{}".format(base64_message))
+
     except Exception as e:
         return buildException(e)
 

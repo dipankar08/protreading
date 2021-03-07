@@ -1,4 +1,7 @@
 export const NIFTY_200 = [
+  { key: "^NSEI", text: "NIFTY_50" },
+  { key: "^NSEBANK", text: "NYFTY_BANK" },
+  { key: "^CNXIT", text: "NIFTY IT" },
   { key: "DIVISLAB.NS", text: "Divis Laboratories Ltd." },
   { key: "JINDALSTEL.NS", text: "Jindal Steel & Power Ltd." },
   { key: "ENDURANCE.NS", text: "Endurance Technologies Ltd." },

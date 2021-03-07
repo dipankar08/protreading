@@ -83,7 +83,7 @@ export function getColFormatForData(data: TObject) {
 export function notification(vue: any, data: TObject) {
   vue.$notification[data.status == "success" ? "success" : "error"]({
     message: `${data.msg}`,
-    description: `${data.help || "(No more information)"}`,
+    description: `${(data.help && data.help.substring(0, 500)) || "(No more information)"}`,
     placement: "bottomRight",
   });
 }

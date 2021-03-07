@@ -25,13 +25,12 @@ class DataLookup:
             raise Exception("This class is a singleton!")
         else:
             DataLookup.__instance = self
-            self.updateModel()
+            for candle_type in SUPPORTED_CANDLE:
+                self.updateModel(candle_type)
 
-    def updateModel(self):
-        for candle_type in SUPPORTED_CANDLE:
-            self._candleTypeToDataFrameMap[candle_type.value] = FastStorage.getInstance().getData(
-                candle_type)
-
+    def updateModel(self, candle_type: TCandleType):
+        self._candleTypeToDataFrameMap[candle_type.value] = FastStorage.getInstance().getData(
+            candle_type)
         DLogger.getInstance().d("Model updated")
 
     def getSample(self,  symbol: str, columns: List[str], candle_type: TCandleType = TCandleType.DAY_1):
@@ -41,6 +40,13 @@ class DataLookup:
 
     def getAllData(self):
         return self._candleTypeToDataFrameMap
+
+    def getDataFrame(self,  symbol: str, candle_type: TCandleType = TCandleType.DAY_1, duration=50):
+        frame: pd.DataFrame = self._candleTypeToDataFrameMap.get(
+            candle_type.value, None)
+        if frame.empty:
+            self.updateModel(candle_type)
+        return frame[symbol].tail(duration)
 
 
 # Test

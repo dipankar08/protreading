@@ -50,9 +50,12 @@ class FastStorage:
         except:
             return None
 
-    def autoCheckRefresh(self):
+    def _autoCheckRefresh(self, candle_type: TCandleType):
         "You must call this function just before each api"
-        pass
+        if not self._checkNeedRefresh(candle_type=candle_type):
+            DLogger.getInstance().d("Skipping refresh as not needed")
+            return
+        self.refreshData(candle_type=candle_type)
 
     def refreshData(self, candle_type: TCandleType):
         "Refresh data if needed"
@@ -81,9 +84,24 @@ class FastStorage:
         KeyValueStore.getInstance().set("ts_"+candle_type.name, time())
 
     def getData(self, candle_type: TCandleType):
+        self._autoCheckRefresh(candle_type)
         return self.__cache.get(candle_type)
 
     def _checkNeedRefresh(self, candle_type: TCandleType):
+        # Check file exist.
+        import os.path
+        if not os.path.exists("./datasets/{}.pkl".format(candle_type.value)):
+            DLogger.getInstance().d(
+                "Dataset is not found in cache. Did you delete? Trying to load from network")
+            return True
+
+        import datetime
+        # No need to refersh on weekends
+        weekno = datetime.datetime.today().weekday()
+        if weekno >= 5:
+            return False
+
+        # We have a last time
         last_time = KeyValueStore.getInstance().get("ts_"+candle_type.name)
         if last_time == None:
             return True
