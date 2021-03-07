@@ -54,7 +54,7 @@
 </template>
 <script>
 import ScanParser from "../helper/ScanParser";
-import { perform_scan, save_scan, get_scan, delete_scan, getColFormatForData } from "../helper/lib";
+import { perform_scan, save_scan, get_scan, delete_scan, getColFormatForData, notification } from "../helper/lib";
 import { SCREEN_COLUMNS_LIST } from "../helper/const";
 export default {
   components: {
@@ -119,11 +119,13 @@ export default {
       if (title != null && title.length > 0) {
         save_scan(
           { title: title, filter: this.screen_filter, columns: this.screen_column },
-          function() {
+          function(data, org) {
+            notification(_this, org);
             _this.loading_save = false;
             _this.error_save = null;
           },
-          function() {
+          function(err, org) {
+            notification(_this, org);
             _this.loading_save = false;
             _this.error_save = "Not able to save the filter";
           }
@@ -155,7 +157,8 @@ export default {
       perform_scan(
         filter,
         col,
-        function(data, orgData) {
+        function(data, org) {
+          notification(_this, org);
           console.log(data);
           _this.result = data;
           _this.all_result = data;
@@ -163,7 +166,8 @@ export default {
           _this.error_scan = null;
           _this.columns = _this.getColsForData(data[0]);
         },
-        function(error, orgError) {
+        function(error, org) {
+          notification(_this, org);
           console.log(error);
           _this.loading_scan = false;
           _this.error_scan = error;

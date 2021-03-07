@@ -40,7 +40,7 @@
 </template>
 <script>
 import ScanParser from "../helper/ScanParser";
-import { perform_back_test } from "../helper/lib";
+import { perform_back_test, notification } from "../helper/lib";
 import { DURATION_TYPE_LIST, CANDLE_TYPE_LIST, NIFTY_200 } from "../helper/const";
 export default {
   components: {
@@ -112,13 +112,14 @@ export default {
         this.duration,
         this.entry_rule,
         this.exit_rule,
-        function(data, orgData) {
-          console.log(orgData);
+        function(data, org) {
+          notification(_this, org);
           _this.order_book = data.order_book;
           _this.loading = false;
           _this.error = null;
         },
-        function(error, orgError) {
+        function(error, org) {
+          notification(_this, org);
           console.log(error);
           _this.loading = false;
           _this.error = error;

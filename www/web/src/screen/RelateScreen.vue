@@ -36,7 +36,7 @@
 </template>
 <script>
 import { localEvent } from "../common/localEvent";
-import { compare } from "../helper/lib";
+import { compare, notification } from "../helper/lib";
 import { NIFTY_200, INDICATOR_LIST, SHORT_CANDLE_DURATION, CANDLE_TYPE_LIST } from "../helper/const";
 export default {
   components: {},
@@ -66,6 +66,7 @@ export default {
         this.candle_type,
         this.duration,
         function(data, orgData) {
+          notification(_this, orgData);
           _this.loading_update = false;
           console.log(data);
           let options = {
@@ -148,6 +149,7 @@ export default {
           _this.series_list = series_list;
         },
         function(err, data) {
+          notification(_this, data);
           _this.loading_update = false;
           _this.alert = { msg: err, status: err };
         }

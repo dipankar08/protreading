@@ -16,6 +16,7 @@
 import VueGoogleLogin from "vue-google-login";
 import VFacebookLogin from "vue-facebook-login-component";
 import { localEvent } from "../common/localEvent";
+import { notification } from "./lib";
 export default {
   name: "GoogleLogin",
   data() {
@@ -34,7 +35,7 @@ export default {
     VFacebookLogin,
   },
   methods: {
-    onSuccess(data) {
+    onSuccess(data, org) {
       console.log(data);
       data = {
         type: "Google",
