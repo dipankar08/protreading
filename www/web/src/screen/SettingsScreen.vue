@@ -1,6 +1,5 @@
 <template>
   <div class="d_layout_col pane_home responsive_container">
-    <a-alert class="d_mb20" show-icon :message="alert.msg" v-if="alert" :type="alert.status" closable></a-alert>
     <p class="header_out_box">Your Account Information</p>
     <div class="info_box d_layout_col d_layout_center_all">
       <div class="d_layout_col d_layout_center_all" v-if="auth != null">
@@ -40,13 +39,12 @@
 </template>
 <script>
 import { localEvent } from "../common/localEvent";
-import { downloadData } from "../helper/lib";
+import { downloadData, notification } from "../helper/lib";
 export default {
   components: {},
   data() {
     return {
       loading_update: false,
-      alert: null,
       auth: localEvent.get("auth"),
     };
   },
@@ -61,12 +59,12 @@ export default {
         time,
         duration,
         function(data, orgData) {
+          notification(_this, orgData);
           _this.loading_update = false;
-          _this.alert = { msg: orgData.msg, status: orgData.status };
         },
         function(err, data) {
+          notification(_this, data);
           _this.loading_update = false;
-          _this.alert = { msg: err, status: err };
         }
       );
     },
