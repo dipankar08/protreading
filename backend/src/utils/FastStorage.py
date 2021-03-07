@@ -62,6 +62,7 @@ class FastStorage:
             TCandleType.MIN_15: '1d',
             TCandleType.MIN_30: '1d',
             TCandleType.MIN_5: '1d',
+            TCandleType.HOUR_1: '1w',
         }
 
         if not self._checkNeedRefresh(candle_type=candle_type):
