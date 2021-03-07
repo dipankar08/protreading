@@ -3377,6 +3377,7 @@ p {
 body {
   font-family: "Lato", sans-serif;
   width: 100%;
+  height: auto !important;
   min-height: 100%;
 }
 

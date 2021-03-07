@@ -26,7 +26,7 @@
             <a-select-option v-for="item in all_duration_list" :key="item.key">{{ item.text }}</a-select-option>
           </a-select>
         </div>
-        <a-button type="primary" @click="compare">Scan</a-button>
+        <a-button type="primary" @click="compare" :loading="loading_update">Scan</a-button>
       </div>
       <div class="info_box d_mb40">
         <apexchart v-for="item in series_list" :key="item.symbol" width="100%" :options="item.options" :series="item.data"></apexchart>
