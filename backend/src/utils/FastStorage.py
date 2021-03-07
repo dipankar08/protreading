@@ -1,5 +1,6 @@
 
 from enum import Enum
+from src.config.rootConfig import SUPPORTED_CANDLE
 from src.config.MyTypes import TCandleType
 from time import time
 from src.utils.KeyValueStore import KeyValueStore
@@ -16,8 +17,7 @@ from pandas.core.frame import DataFrame
 class FastStorage:
     __instance = None
     __progress = False
-    __supported: List[TCandleType] = [
-        TCandleType.DAY_1, TCandleType.MIN_5, TCandleType.MIN_15]
+    __supported: List[TCandleType] = SUPPORTED_CANDLE
     __cache: Dict[TCandleType, DataFrame] = {}
 
     @staticmethod
@@ -94,6 +94,8 @@ class FastStorage:
             return time() - last_time > 15*60
         elif candle_type == TCandleType.MIN_30:
             return time() - last_time > 30*60
+        elif candle_type == TCandleType.HOUR_1:
+            return time() - last_time > 60*60
         # We put this logic to check if the data is present and just fetched
 
         return True
