@@ -1,27 +1,33 @@
 <template>
-  <div class="d_layout_row navigation_menu">
+  <div class="d_layout_row navigation_menu d_no_responsive">
     <router-link to="/dashboard">
-      <p class="d_layout_row menu_item" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
         <span class="mdi mdi-filter"></span>
         <span>Dashboard</span>
       </p>
     </router-link>
+    <router-link to="/relate">
+      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'relate'" :class="section == 'screen' ? 'active' : ''">
+        <span class="mdi mdi-filter"></span>
+        <span>Relate</span>
+      </p>
+    </router-link>
 
     <router-link to="/screen">
-      <p class="d_layout_row menu_item" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
         <span class="mdi mdi-filter"></span>
         <span>Screen</span>
       </p>
     </router-link>
     <router-link to="/backtest">
-      <p class="d_layout_row menu_item" @click="section = 'backtest'" :class="section == 'backtest' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'backtest'" :class="section == 'backtest' ? 'active' : ''">
         <span class="mdi mdi-history"></span>
         <span>Test</span>
       </p>
     </router-link>
     <p class="d_layout_fill" />
     <router-link to="/settings">
-      <p class="d_layout_row menu_item" @click="section = 'settings'" :class="section == 'settings' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'settings'" :class="section == 'settings' ? 'active' : ''">
         <span class="mdi mdi-tune-variant"></span>
         <span>Settings</span>
       </p>

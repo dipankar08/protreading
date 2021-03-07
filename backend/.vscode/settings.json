@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "venv/bin/python",
+        "python.analysis.extraPaths": [
+            "./"
+        ],
+        "python.languageServer": "Pylance"
+}

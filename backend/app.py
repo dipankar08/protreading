@@ -1,4 +1,5 @@
 
+from src.apis.TimeSeriesAPI import TimeSeriesAPI
 from src.apis.FilterAPI import FilterAPI
 from src.utils.DataLoopup import DataLookup
 from src.config.MyTypes import TCandleType
@@ -72,6 +73,26 @@ def Screen():
         result = []
         result = FilterAPI.getInstance().filterstock(
             request.view_args.get('filter'), request.view_args.get('columns').split(","))
+        return buildSuccess(msg='Here is the list of Stocks', out=result)
+    except Exception as e:
+        return buildException(e)
+
+
+@ cross_origin()
+@ app.route('/relate', methods=['POST', 'GET'])
+def Relate():
+    try:
+        ensureParmasInRequest(request, ["symbol_list", "indicator_list"])
+        ensureProvidedDefaultInRequest(request, {'duration': 10})
+        ensureProvidedDefaultInRequest(
+            request, {'candle_type': TCandleType.DAY_1.value})
+        result = []
+        result = TimeSeriesAPI.getInstance().getTSData(
+            request.view_args.get('symbol_list').split(','),
+            request.view_args.get('indicator_list').split(","),
+            TCandleType(request.view_args.get('candle_type')),
+            request.view_args.get('duration')
+        )
         return buildSuccess(msg='Here is the list of Stocks', out=result)
     except Exception as e:
         return buildException(e)

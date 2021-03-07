@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="d_theme d_fullscreen grodok_treading" :class="hide_nav ? 'hide_nav' : ''">
+  <div id="app" class="d_theme d_fullscreen grodok_treading d_responsive" :class="hide_nav ? 'hide_nav' : ''">
     <Navigation class="nav" />
     <router-view class="main_container d_fullscreen " />
   </div>

@@ -23,6 +23,23 @@ export function perform_back_test(
   );
 }
 
+export function compare(
+  symbol_list: Array<string>,
+  indicator_list: Array<string>,
+  candle_type: string,
+  duration: string,
+  onSuccess: TOnSuccess,
+  onError: TOnError
+) {
+  GetOnSimpleStore(
+    `${STOCK_ENDPOINT}/relate?symbol_list=${symbol_list.join(",")}&indicator_list=${indicator_list.join(
+      ","
+    )}&candle_type=${candle_type}&duration=${duration}`,
+    onSuccess,
+    onError
+  );
+}
+
 export function downloadData(candle_type: string, duration: string, onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`${STOCK_ENDPOINT}/snapshot?candle_type=${candle_type}&duration=${duration}`, onSuccess, onError);
 }

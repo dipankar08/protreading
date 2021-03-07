@@ -49,8 +49,11 @@ p {
     display: flex;
 }
 .d_layout_wrap {
-    flex: auto;
     display: flex;
+    flex-wrap: wrap;
+    @media screen and (max-width: $small) {
+        flex-wrap: nowrap;
+    }
 }
 .d_layout_equal {
     > * {
@@ -89,9 +92,6 @@ p {
     justify-content: space-between;
     align-content: baseline;
 }
-.d_layout_wrap {
-    flex-wrap: wrap;
-}
 .d_layout_spacer {
     flex: 1;
 }
@@ -103,6 +103,7 @@ p {
 .d_fullscreen {
     width: 100%;
     height: 100%;
+    min-height: 100%;
     position: relative;
     // overflow: hidden; << DO NOT DO THAT
 }
@@ -245,7 +246,12 @@ p {
         margin-bottom: 1px * $i !important;
     }
 }
-//=========================  Responsive Container ==============================
+.d_spacer {
+    @media screen and (max-width: $small) {
+        margin: 10px 0;
+    }
+}
+//=========================  Responsive ==============================
 .responsive_container {
     // medium screen 300px ->900px
     width: 80%;
@@ -267,10 +273,23 @@ p {
     }
 }
 
+.d_responsive {
+    .d_layout_row {
+        @media screen and (max-width: $small) {
+            flex-direction: column;
+            &.d_no_responsive {
+                flex-direction: row;
+            }
+        }
+    }
+}
+
 //======================= FONT ============================================================
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 body {
     font-family: "Lato", sans-serif;
+    width: 100%;
+    min-height: 100%;
 }
 
 //=========================  Theme ==============================
@@ -282,10 +301,11 @@ body {
         // medium screen 300px ->900px
         width: 100%;
         padding: 30px;
+        margin: 30px auto;
         //small screen like mobile <300px
         @media screen and (max-width: $small) {
-            padding: 10px;
-            margin: 20px auto;
+            padding: 25px 10px;
+            margin: 30px auto;
         }
         // big screen > 900px
         @media screen and (min-width: $medium) {

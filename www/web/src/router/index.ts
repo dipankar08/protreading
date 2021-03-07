@@ -30,6 +30,11 @@ const routes: Array<RouteConfig> = [
     name: "settings",
     component: () => import("../screen/SettingsScreen.vue"),
   },
+  {
+    path: "/relate",
+    name: "relate",
+    component: () => import("../screen/RelateScreen.vue"),
+  },
 ];
 
 const router = new VueRouter({

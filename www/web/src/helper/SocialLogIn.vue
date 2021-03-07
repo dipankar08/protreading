@@ -85,7 +85,7 @@ $button-active-blue: #1669f2;
   align-items: center;
   border: 0px;
   width: 220px;
-  height: 40px;
+  height: 38px;
   background-color: #4285f4;
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);

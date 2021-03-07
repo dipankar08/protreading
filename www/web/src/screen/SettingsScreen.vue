@@ -7,27 +7,33 @@
         <a-avatar :src="auth.img" class="d_mb10" />
         <p class="d_mb10"><b>Name: </b>{{ auth.user_name }}</p>
         <p class="d_mb10"><b>UserId: </b>{{ auth.user_id }}</p>
-        <a-button class="d_mt10" type="primary" @click="logout">Logout</a-button>
+        <a-button class="d_mt10 d_spacer" type="primary" @click="logout">Logout</a-button>
       </div>
       <p v-else>You have not logged in!</p>
     </div>
+    <p class="header_out_box">Your Saved Scan</p>
+    <div class="info_box d_layout_col d_layout_center_all"></div>
+    <p class="header_out_box">Your Alert</p>
+    <div class="info_box d_layout_col d_layout_center_all"></div>
+    <p class="header_out_box">Your BackTest</p>
+    <div class="info_box d_layout_col d_layout_center_all"></div>
     <p class="header_out_box">Update the cache</p>
     <div class="info_box d_layout_col">
       <div class="d_layout_row d_layout_center d_mb10">
         <p class="d_layout_fill">Update 5 Min</p>
-        <a-button type="primary" @click="downloadData('5m')" :loading="loading_update">Update 5 Min</a-button>
+        <a-button type="primary d_spacer" @click="downloadData('5m')" :loading="loading_update">Update 5 Min</a-button>
       </div>
       <div class="d_layout_row d_layout_center d_mb10">
         <p class="d_layout_fill">Update 15 Min Data</p>
-        <a-button type="primary" @click="downloadData('15m')" :loading="loading_update">Update 15 Min</a-button>
+        <a-button type="primary d_spacer" @click="downloadData('15m')" :loading="loading_update">Update 15 Min</a-button>
       </div>
       <div class="d_layout_row d_layout_center d_mb10">
         <p class="d_layout_fill">Update 1h cache</p>
-        <a-button type="primary" @click="downloadData('1h')" :loading="loading_update">Update 1H Min</a-button>
+        <a-button type="primary d_spacer" @click="downloadData('1h')" :loading="loading_update">Update 1H Min</a-button>
       </div>
       <div class="d_layout_row d_layout_center d_mb10">
         <p class="d_layout_fill">Update 1d cache</p>
-        <a-button type="primary" @click="downloadData('1d')" :loading="loading_update">Update 1D </a-button>
+        <a-button type="primary d_spacer" @click="downloadData('1d')" :loading="loading_update">Update 1D </a-button>
       </div>
     </div>
   </div>
@@ -67,16 +73,4 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-.pane_home {
-  .group {
-    flex-wrap: wrap;
-    .info_box {
-      width: calc(33% - 20px);
-      height: 400px;
-      margin: 10px;
-      padding: 0px;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>

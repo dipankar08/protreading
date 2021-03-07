@@ -5,8 +5,8 @@
         <p class="header_out_box d_layout_fill">
           <span class="d_link" @click="left_pane = 'recent'"> Recent Filter</span>
         </p>
-        <a-button class="d_ml10" type="primary" @click="left_pane = 'create'">Create New</a-button>
-        <a-button class="d_ml10" type="primary" @click="left_pane = 'recent'">Recent</a-button>
+        <a-button class="d_ml10 d_spacer" type="primary" @click="left_pane = 'create'">Create New</a-button>
+        <a-button class="d_ml10 d_spacer" type="primary" @click="left_pane = 'recent'">Recent</a-button>
       </div>
       <div class="info_box filter d_layout_col d_layout_fill d_mt20" v-show="left_pane == 'create'">
         <p class="header_in_box d_mb10 ">1) What is your columns?</p>
@@ -16,8 +16,8 @@
         <p class="header_in_box d_mt20 d_mb10 ">2) What is your filter?</p>
         <ScanParser filter_id="screen1" class="d_layout_fill d_layout_fill" @OnChange="OnChangeFilter" />
         <div class="d_layout_row d_layout_equal d_mt20">
-          <a-button type="primary d_mr20" @click="perform_scan" :loading="loading_scan">Scan</a-button>
-          <a-button type="primary d_mr20" @click="save_scan" :loading="loading_save">Save</a-button>
+          <a-button type="primary d_mr20 d_spacer" @click="perform_scan" :loading="loading_scan">Scan</a-button>
+          <a-button type="primary d_mr20 d_spacer" @click="save_scan" :loading="loading_save">Save</a-button>
         </div>
       </div>
       <!-- RECENT -->
