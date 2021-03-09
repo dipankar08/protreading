@@ -1,5 +1,6 @@
 # pyright: strict
 import logging
+import traceback
 
 
 class DLogger:
@@ -27,6 +28,11 @@ class DLogger:
             formatter = logging.Formatter(log_format)
             handler.setFormatter(formatter)
             __logger.addHandler(handler)
+
+    def stack(self):
+        print("*"*100)
+        traceback.print_stack()
+        print("*"*100)
 
     def d(self, msg: str):
         self.__logger.debug(msg)

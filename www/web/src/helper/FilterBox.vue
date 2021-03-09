@@ -2,6 +2,9 @@
   <div class="template d_layout_col d_fullscreen">
     <div class="d_layout_row header">
       <p class="d_layout_fill">{{ title }}</p>
+      <a-select v-model="dropdown_column" class="select" mode="multiple">
+        <a-select-option v-for="item in LATEST_SCREEN_COLUMNS_LIST" :key="item.key" :value="item.key">{{ item.text }}</a-select-option>
+      </a-select>
       <span class="mdi mdi_btn mdi-link"></span>
       <span class="mdi mdi_btn mdi-reload" @click="reload"></span>
     </div>
@@ -19,6 +22,8 @@
 </template>
 <script>
 import { get_scan_for_id, perform_scan, getColFormatForData } from "./lib";
+import { LATEST_SCREEN_COLUMNS_LIST } from "./const";
+import _ from "underscore";
 export default {
   props: {
     filter_id: String,
@@ -27,13 +32,13 @@ export default {
   },
   data() {
     return {
+      dropdown_column: ["symbol", "close", "change"],
       title: "Loading...",
       filter: "loading...",
-      columns: [],
-      filter_columns: ["symbol", "close", "change"],
       table_loading: false,
       table_columns: [],
       table_data: [],
+      LATEST_SCREEN_COLUMNS_LIST: LATEST_SCREEN_COLUMNS_LIST,
     };
   },
   watch: {
@@ -47,7 +52,7 @@ export default {
       _this.table_loading = true;
       perform_scan(
         this.filter,
-        this.columns,
+        _.union(this.dropdown_column),
         function(data, orgData) {
           _this.table_data = data;
           _this.table_columns = _this.getColFormatForData(data[0]);
@@ -69,10 +74,7 @@ export default {
       function(data, orgData) {
         _this.title = data[0].title;
         _this.filter = data[0].filter;
-        _this.columns = data[0].columns || [];
-        for (var x of _this.filter_columns) {
-          _this.columns.push(x);
-        }
+        _this.dropdown_column = _.union(data[0].columns || [], ["symbol", "close", "change"]);
         console.log(data);
         _this.reload();
       },
@@ -91,6 +93,9 @@ export default {
   .mdi {
     padding: 0px 10px;
     cursor: pointer;
+  }
+  .select {
+    min-width: 200px;
   }
 }
 </style>

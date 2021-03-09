@@ -173,11 +173,18 @@ p {
 .d_bold {
     font-weight: bold;
 }
-.d_text_align_center {
+.d_text_center {
     text-align: center;
 }
-.d_text_align_left {
+.d_text_left {
     text-align: left;
+}
+.d_text_right {
+    text-align: left;
+}
+.d_text_hero {
+    font-size: 30px;
+    opacity: 1;
 }
 
 .d_nostyle {
@@ -287,10 +294,14 @@ p {
 //======================= FONT ============================================================
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 body {
-    font-family: "Lato", sans-serif;
     width: 100%;
     height: auto !important;
     min-height: 100%;
+}
+body,
+p,
+span {
+    font-family: "Lato", sans-serif;
 }
 
 //=========================  Theme ==============================

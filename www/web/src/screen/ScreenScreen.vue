@@ -181,6 +181,9 @@ export default {
   mounted() {
     this.get_scan();
   },
+  updated() {
+    console.log("updated1");
+  },
 };
 </script>
 <style scoped lang="scss">

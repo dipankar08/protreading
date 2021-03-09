@@ -21,6 +21,11 @@ const routes: Array<RouteConfig> = [
     component: () => import("../screen/ScreenScreen.vue"),
   },
   {
+    path: "/screens",
+    name: "screens",
+    component: () => import("../screen/BrowseScreenScreen.vue"),
+  },
+  {
     path: "/backtest",
     name: "backtest",
     component: () => import("../screen/BackTestScreen.vue"),

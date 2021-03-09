@@ -50,6 +50,9 @@ export function save_scan(data: TObject, onSuccess: TOnSuccess, onError: TOnErro
 export function get_scan(onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan`, onSuccess, onError);
 }
+export function search_scan(query: string, onSuccess: TOnSuccess, onError: TOnError) {
+  GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan?title=regex:${query}`, onSuccess, onError);
+}
 export function delete_scan(id: string, onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan/delete?id=${id}`, onSuccess, onError);
 }
@@ -64,7 +67,7 @@ export function getColFormatForData(data: TObject) {
         title: property,
         dataIndex: property,
         sorter: (a: any, b: any) => {
-          return a.name.localeCompare(b.name);
+          return a[property].localeCompare(b[property]);
         },
       });
     } else {
@@ -72,7 +75,7 @@ export function getColFormatForData(data: TObject) {
         title: property,
         dataIndex: property,
         sorter: (a: any, b: any) => {
-          return a.close_change - b.close_change;
+          return a[property] - b[property];
         },
       });
     }

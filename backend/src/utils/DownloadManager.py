@@ -15,6 +15,7 @@ import pandas as pd
 import talib
 import yfinance as yf
 from multiprocessing import Pool
+from src.utils.DLogger import DLogger
 
 
 class DownloadManager:
@@ -35,6 +36,7 @@ class DownloadManager:
             DownloadManager.__instance = self
 
     def downloadAll(self, interval='1d', period='1y') -> DataFrame:
+        DLogger.getInstance().stack()
         ticker = [x for x in symbols.keys()]
         data = yf.download(
             tickers=ticker,

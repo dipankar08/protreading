@@ -22,11 +22,11 @@ export default {
       switch (type) {
         case "auth":
           if (data) {
-            this.$router.push({ name: "dashboard" });
+            this.$router.push({ name: "dashboard" }).catch(() => {});
             setCookie("auth", data, "json");
             this.hide_nav = false;
           } else {
-            this.$router.push({ name: "landing" });
+            this.$router.push({ name: "landing" }).catch(() => {});
             this.hide_nav = true;
             setCookie("auth", null);
           }
@@ -44,6 +44,12 @@ export default {
     localEvent.removeObserver(this.handleLocalEvent);
   },
   updated() {
+    let url = new URL(window.location.href);
+    let res = {};
+    for (let key of url.searchParams.keys()) {
+      res[key] = url.searchParams.get(key);
+    }
+    this.$router.push({ path: window.location.pathname.replace("/", ""), query: res }).catch(() => {});
     console.log("updated");
   },
 };

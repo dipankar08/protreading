@@ -226,7 +226,6 @@ export let SHORT_CANDLE_DURATION = [
 ];
 
 export let INDICATOR_LIST = [
-  { key: "--", text: "Select" },
   { key: "close", text: "Close" },
   { key: "open", text: "Open" },
   { key: "high", text: "High" },
@@ -292,14 +291,26 @@ export let OPERATOR_LIST = [
   { key: "*", text: "Multiply" },
   { key: "/", text: "Divide" },
 ];
-
-export let SCREEN_COLUMNS_LIST = [
-  { key: "indicator:1d:0:close", text: "Latest close" },
-  { key: "indicator:1d:-1:close", text: "Prev Day close" },
-  { key: "indicator:1d:0:volume", text: "Latest Volume" },
-  { key: "indicator:1d:0:rsi_14", text: "Lastest RSI(14)" },
-  { key: "indicator:1d:0:close_change", text: "Price Change %" },
-  { key: "indicator:1d:0:volume_change", text: "volume_change%" },
-  { key: "indicator:1d:0:high_low_gap", text: "high_low_gap " },
-  { key: "indicator:1d:0:high_low_gap_percentage", text: "high_low_gap_percentage" },
+export let COMMON_COLUMNS_LIST = [
+  { key: "symbol", text: "symbol" },
+  { key: "close", text: "close" },
+  { key: "change", text: "change" },
 ];
+
+export let SCREEN_COLUMNS_LIST: Array<any> = COMMON_COLUMNS_LIST;
+for (let z of INDICATOR_LIST) {
+  for (let x of CANDLE_TYPE_LIST) {
+    for (let y = 0; y >= -1; y--) {
+      SCREEN_COLUMNS_LIST.push({ key: `indicator:${x.key}:${y}:${z.key}`, text: `${x.key} [${y}] ${z.text}` });
+    }
+  }
+}
+
+export let LATEST_SCREEN_COLUMNS_LIST: Array<any> = COMMON_COLUMNS_LIST;
+for (let z of INDICATOR_LIST) {
+  for (let x of CANDLE_TYPE_LIST) {
+    for (let y = 0; y >= 0; y--) {
+      LATEST_SCREEN_COLUMNS_LIST.push({ key: `indicator:${x.key}:${y}:${z.key}`, text: `${x.key} ${z.text}` });
+    }
+  }
+}
