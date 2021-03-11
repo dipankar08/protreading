@@ -1,9 +1,17 @@
 import { PostOnSimpleStore, GetOnSimpleStore } from "@/common/network";
 import { TArray, TObject, TOnError, TOnSuccess } from "@/common/types";
 import _ from "underscore";
+import { LiveDataArray, LiveObject } from "../common/livedata";
 let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://rc1.grodok.com:5000";
 console.log(`Endpoint --> ${STOCK_ENDPOINT}`);
 
+/// Define Live Data
+export let liveAccountObject = new LiveObject(function(data) {
+  console.log("Live Object Updated");
+  updateAcceount(data);
+});
+
+/// Network APIs
 export function perform_scan(filter: string, columns: Array<string>, onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`${STOCK_ENDPOINT}/screen?filter=${filter}&columns=${columns.join(",")}`, onSuccess, onError);
 }
@@ -59,6 +67,42 @@ export function delete_scan(id: string, onSuccess: TOnSuccess, onError: TOnError
 export function get_scan_for_id(id: string, onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan?id=${id}`, onSuccess, onError);
 }
+
+export function markLogin(user_id: string) {
+  PostOnSimpleStore(
+    `https://simplestore.dipankar.co.in/api/protreader_account/insertorupdate`,
+    {
+      _field: "user_id",
+      _payload: [{ user_id: user_id, last_login_time: new Date().toUTCString() }],
+    },
+    function() {
+      fetchAccount(user_id);
+    }
+  );
+}
+
+export function fetchAccount(user_id: string) {
+  GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/protreader_account/?user_id=${user_id}`, function(data) {
+    console.log(data);
+    if (data?.length > 0) {
+      liveAccountObject.override((data as any)[0]);
+    }
+  });
+}
+
+export function updateAcceount(data: TObject) {
+  PostOnSimpleStore(
+    `https://simplestore.dipankar.co.in/api/protreader_account/update`,
+    data,
+    function(data, org) {
+      notification((window as any)._vue, org);
+    },
+    function(e, org) {
+      notification((window as any)._vue, org);
+    }
+  );
+}
+
 export function getColFormatForData(data: TObject) {
   let result = [];
   for (const property in data) {
@@ -84,9 +128,11 @@ export function getColFormatForData(data: TObject) {
 }
 
 export function notification(vue: any, data: TObject) {
-  vue.$notification[data.status == "success" ? "success" : "error"]({
-    message: `${data.msg}`,
-    description: `${(data.help && data.help.substring(0, 500)) || "(No more information)"}`,
-    placement: "bottomRight",
-  });
+  if (vue) {
+    vue.$notification[data.status == "success" ? "success" : "error"]({
+      message: `${data.msg}`,
+      description: `${(data.help && data.help.substring(0, 500)) || "(No more information)"}`,
+      placement: "bottomRight",
+    });
+  }
 }

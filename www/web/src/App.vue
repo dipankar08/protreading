@@ -8,6 +8,7 @@
 import Navigation from "./helper/Navigation.vue";
 import { getCookie, setCookie } from "./common/helper.ts";
 import { localEvent } from "./common/localEvent";
+import { markLogin } from "./helper/lib";
 export default {
   components: {
     Navigation,
@@ -24,6 +25,7 @@ export default {
           if (data) {
             this.$router.push({ name: "dashboard" }).catch(() => {});
             setCookie("auth", data, "json");
+            markLogin(data.user_id);
             this.hide_nav = false;
           } else {
             this.$router.push({ name: "landing" }).catch(() => {});

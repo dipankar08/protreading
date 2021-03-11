@@ -13,8 +13,8 @@
       </p>
     </router-link>
 
-    <router-link to="/screen">
-      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
+    <router-link to="/screens">
+      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screens'" :class="section == 'screens' ? 'active' : ''">
         <span class="mdi mdi-filter"></span>
         <span>Screen</span>
       </p>
