@@ -1,4 +1,6 @@
 import { TObject } from "@/common/types";
+import _ from "underscore";
+import { assertOrThrow } from "./assert";
 type HOOK = {
   onPush: (item: string | null, all_item?: any) => void;
   onPop: (item: string | null, all_item?: any) => void;
@@ -77,7 +79,8 @@ export class LiveObject {
   override(item: TObject, notify = true) {
     this._object = item;
     if (notify) {
-      for (let x of this._observers) {
+      // for override, we will not notify the first one which is pass by the constarctor
+      for (let x of this._observers.slice(1)) {
         x(this._object);
       }
     }
@@ -86,15 +89,48 @@ export class LiveObject {
   // set a property of the object
   set(key: string, value: any, notify = true) {
     this._object[key] = value;
-    if (notify) {
-      for (let x of this._observers) {
-        x(this._object);
+    if (notify) this._notify();
+  }
+
+  // This will append a value for a key, where obj[key] is a array
+  pushToArray(key: string, value: any, notify = true) {
+    if (!this._object[key]) {
+      this._object[key] = [];
+    } else {
+      assertOrThrow(_.isArray(this._object[key]), "you can't append to a non-array", "");
+    }
+    this._object[key].push(value);
+
+    if (notify) this._notify();
+  }
+
+  _notify() {
+    for (let x of this._observers) {
+      x(this._object);
+    }
+  }
+
+  // You can remove an item from the object value as array
+  popFromArray(key: string, _id: any, notify = true) {
+    if (!_.isArray(this._object[key])) {
+      return;
+    }
+    for (let x = 0; x < this._object[key].length; x++) {
+      if (this._object[key][x]._id == _id && _id) {
+        this._object[key].splice(x, 1);
+        if (notify) this._notify();
+        return;
       }
     }
   }
+
   // add observer
   addObserver(observer: (arg0: object) => void) {
     this._observers.push(observer);
+    // perform catchup
+    if (Object.keys(this._object).length > 0) {
+      observer(this._object);
+    }
   }
 
   // remove observer

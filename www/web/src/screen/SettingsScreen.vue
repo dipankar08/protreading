@@ -11,18 +11,30 @@
         <a-button class="d_mt10 d_spacer" type="primary" @click="logout">Logout</a-button>
       </div>
     </div>
+    <!-- Focus group -->
     <p class="header_out_box">Focus Stock</p>
     <div class="info_box d_layout_col d_layout_center_all">
-      <div class="d_layout_col">
-        <key-value-list title="" :items="focus_group_history"></key-value-list>
+      <div class="d_layout_row d_fullwidth d_mb20">
+        <p class="d_layout_fill">Your current Focus group are as below:</p>
         <a-button type="primary" @click="focus_group_dialog_visible = true">Create New Group</a-button>
       </div>
-      <div class="d_layout_col"></div>
+      <div class="d_layout_col d_fullwidth">
+        <key-value-list title="" :items="focus_group" @onClickAction="onFocusGroupClickAction" action_icon="mdi-delete-outline"></key-value-list>
+      </div>
     </div>
-    <p class="header_out_box">Your Alert</p>
-    <div class="info_box d_layout_col d_layout_center_all"></div>
-    <p class="header_out_box">Your BackTest</p>
-    <div class="info_box d_layout_col d_layout_center_all"></div>
+
+    <!-- Saved Screen -->
+    <p class="header_out_box">Saved Screen</p>
+    <div class="info_box d_layout_col d_layout_center_all">
+      <div class="d_layout_row d_fullwidth d_mb20">
+        <p class="d_layout_fill">Your saved screen ( You can add more screen from screen page)</p>
+        <a-button type="primary" @click="findMoreScreen">Find More Screen</a-button>
+      </div>
+      <div class="d_layout_col d_fullwidth">
+        <key-value-list title="" :items="saved_screen" @onClickAction="onSavedScreenClickAction" action_icon="mdi-delete-outline"></key-value-list>
+      </div>
+    </div>
+
     <p class="header_out_box">Update the cache</p>
     <div class="info_box d_layout_col">
       <div class="d_layout_row d_layout_center d_mb10">
@@ -63,10 +75,11 @@
 </template>
 <script>
 import { localEvent } from "../common/localEvent";
-import KeyValueList from "../helper/KeyValueList.vue";
+import KeyValueList from "../common/vue/KeyValueList.vue";
 import { downloadData, notification, liveAccountObject } from "../helper/lib";
 import { NIFTY_200 } from "../helper/const";
 import InplaceEdit from "../common/vue/InplaceEdit.vue";
+import { getRandomKey } from "../common/utils";
 
 export default {
   components: { KeyValueList, InplaceEdit },
@@ -77,7 +90,8 @@ export default {
       focus_group_new_list: [],
       focus_group_loading: false,
       focus_group_dialog_visible: false,
-      focus_group_history: [],
+      focus_group: [],
+      saved_screen: [],
 
       // const
       NIFTY_200: NIFTY_200,
@@ -96,8 +110,20 @@ export default {
       liveAccountObject.set("name", name);
     },
     createFocusGroup() {
-      //LD_MyFocusGroupItems.push({ key: this.focus_group_new_name, value: this.focus_group_new_list });
+      liveAccountObject.pushToArray("focus_group", {
+        name: this.focus_group_new_name,
+        list: this.focus_group_new_list,
+        _id: getRandomKey(),
+      });
     },
+    onFocusGroupClickAction(data) {
+      liveAccountObject.popFromArray("focus_group", data._id);
+    },
+    onSavedScreenClickAction(data) {
+      liveAccountObject.popFromArray("saved_screen", data._id);
+    },
+    findMoreScreen() {},
+
     downloadData(time, duration) {
       let _this = this;
       _this.loading_update = true;
@@ -114,8 +140,19 @@ export default {
         }
       );
     },
+
     accountDataObs(data) {
       this.account_data.name = data.name;
+      if (data.focus_group) {
+        this.focus_group = data.focus_group.map((x) => {
+          return { _id: x._id, key: x.name, value: x.list };
+        });
+      }
+      if (data.saved_screen) {
+        this.saved_screen = data.saved_screen.map((x) => {
+          return { _id: x._id, key: x.title, value: x.filter };
+        });
+      }
     },
   },
   mounted() {

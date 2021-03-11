@@ -15,7 +15,8 @@
             <p><b>Screen Columns:</b> {{ item.columns }}</p>
             <p><b>Screen Id:</b> {{ item._id }}</p>
             <div slot="extra" class="d_layout_row">
-              <span class="mdi mdi_btn mdi-play" @click="openUrl(`/screen?id=${item._id}`)"></span>
+              <a-button class="d_mr20" type="primary" @click="openUrl(`/screen?id=${item._id}`)"> Run this Screen</a-button>
+              <a-button type="primary" @click="saveScreen(item)">Save this screen</a-button>
             </div>
           </a-collapse-panel>
         </a-collapse>
@@ -27,7 +28,7 @@
   </div>
 </template>
 <script>
-import { perform_scan, save_scan, search_scan, delete_scan, getColFormatForData, notification } from "../helper/lib";
+import { search_scan, notification, liveAccountObject } from "../helper/lib";
 export default {
   components: {},
   data() {
@@ -39,6 +40,10 @@ export default {
   methods: {
     openUrl(data) {
       window.open(data, "_blank");
+    },
+    saveScreen(item) {
+      // item needs to covert from vue obj to normal obj
+      liveAccountObject.pushToArray("saved_screen", JSON.parse(JSON.stringify(item)));
     },
     onSearch(value) {
       let _this = this;

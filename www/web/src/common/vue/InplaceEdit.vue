@@ -1,7 +1,7 @@
 <template>
   <div class="inplaceedit">
     <a-input v-model="value1" :disabled="disabled">
-      <a-tooltip slot="suffix" title="Extra information" @click="onEdit">
+      <a-tooltip slot="suffix" title="Click to Edit" @click="onEdit">
         <a-icon :type="disabled ? 'edit' : 'save'" style="color: rgba(0,0,0,.45)" />
       </a-tooltip>
     </a-input>
@@ -39,6 +39,7 @@ export default {
   .ant-input-disabled {
     background: transparent;
     border: transparent;
+    color: black;
   }
 }
 </style>
