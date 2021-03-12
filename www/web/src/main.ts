@@ -11,7 +11,7 @@ Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 
 Vue.config.productionTip = false;
-(window as any).vue = new Vue({
+export const rootVue = new Vue({
   router,
   render: (h) => h(App),
 }).$mount("#app");

@@ -110,19 +110,25 @@ export default {
       liveAccountObject.set("name", name);
     },
     createFocusGroup() {
-      liveAccountObject.pushToArray("focus_group", {
-        name: this.focus_group_new_name,
-        list: this.focus_group_new_list,
-        _id: getRandomKey(),
-      });
+      liveAccountObject.pushToArray(
+        "focus_group",
+        {
+          name: this.focus_group_new_name,
+          list: this.focus_group_new_list,
+          _id: getRandomKey(),
+        },
+        { req_type: "focus_group_update", success_msg: "Focus group updated" }
+      );
     },
     onFocusGroupClickAction(data) {
-      liveAccountObject.popFromArray("focus_group", data._id);
+      liveAccountObject.popFromArray("focus_group", data._id, { req_type: "focus_group_update", success_msg: "Focus group updated" });
     },
     onSavedScreenClickAction(data) {
-      liveAccountObject.popFromArray("saved_screen", data._id);
+      liveAccountObject.popFromArray("saved_screen", data._id, { req_type: "saved_screen_update", success_msg: "Saved Screen updated" });
     },
-    findMoreScreen() {},
+    findMoreScreen() {
+      this.$router.push({ name: "screens" }).catch(() => {});
+    },
 
     downloadData(time, duration) {
       let _this = this;

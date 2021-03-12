@@ -1,14 +1,18 @@
 import { PostOnSimpleStore, GetOnSimpleStore } from "@/common/network";
 import { TArray, TObject, TOnError, TOnSuccess } from "@/common/types";
+import { rootVue } from "@/main";
 import _ from "underscore";
 import { LiveDataArray, LiveObject } from "../common/livedata";
 let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://rc1.grodok.com:5000";
 console.log(`Endpoint --> ${STOCK_ENDPOINT}`);
 
 /// Define Live Data
-export let liveAccountObject = new LiveObject(function(data) {
+export let liveAccountObject = new LiveObject(function(data, extra) {
   console.log("Live Object Updated");
   updateAcceount(data);
+  if (extra?.success_msg) {
+    notification(null, { status: "success", msg: extra.success_msg });
+  }
 });
 
 /// Network APIs
@@ -128,11 +132,16 @@ export function getColFormatForData(data: TObject) {
 }
 
 export function notification(vue: any, data: TObject) {
+  if (!vue) {
+    vue = rootVue;
+  }
   if (vue) {
     vue.$notification[data.status == "success" ? "success" : "error"]({
       message: `${data.msg}`,
       description: `${(data.help && data.help.substring(0, 500)) || "(No more information)"}`,
       placement: "bottomRight",
     });
+  } else {
+    console.log(`Ignore notification due to vue is null ${JSON.stringify(data)}`);
   }
 }

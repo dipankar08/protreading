@@ -16,7 +16,7 @@
             <p><b>Screen Id:</b> {{ item._id }}</p>
             <div slot="extra" class="d_layout_row">
               <a-button class="d_mr20" type="primary" @click="openUrl(`/screen?id=${item._id}`)"> Run this Screen</a-button>
-              <a-button type="primary" @click="saveScreen(item)">Save this screen</a-button>
+              <a-button type="primary" @click="saveScreen(item)" :loading="save_screen_loading">Save this screen</a-button>
             </div>
           </a-collapse-panel>
         </a-collapse>
@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       loading: false,
+      save_screen_loading: false,
       search_result: [],
     };
   },
@@ -43,7 +44,8 @@ export default {
     },
     saveScreen(item) {
       // item needs to covert from vue obj to normal obj
-      liveAccountObject.pushToArray("saved_screen", JSON.parse(JSON.stringify(item)));
+      this.save_screen_loading = true;
+      liveAccountObject.pushToArray("saved_screen", JSON.parse(JSON.stringify(item), { req_type: "saved_screen_update" }));
     },
     onSearch(value) {
       let _this = this;
@@ -62,12 +64,19 @@ export default {
         }
       );
     },
+    accountDataObs(data, extra) {
+      switch (extra?.req_type) {
+        case "saved_screen":
+          this.save_screen_loading = false;
+          break;
+      }
+    },
   },
   mounted() {
-    //this.get_scan();
+    liveAccountObject.addObserver(this.accountDataObs);
   },
-  updated() {
-    console.log("updated1");
+  destroyed() {
+    liveAccountObject.removeObserver(this.accountDataObs);
   },
 };
 </script>

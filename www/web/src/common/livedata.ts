@@ -67,7 +67,7 @@ export class LiveDataArray {
 }
 
 ///// Live Object
-type TOnModified = (all_item?: any, key?: string) => void;
+type TOnModified = (all_item?: any, extra?: TObject) => void;
 export class LiveObject {
   _object: TObject = {};
   _observers: TOnModified[];
@@ -87,13 +87,13 @@ export class LiveObject {
   }
 
   // set a property of the object
-  set(key: string, value: any, notify = true) {
+  set(key: string, value: any, extra?: TObject) {
     this._object[key] = value;
-    if (notify) this._notify();
+    this._notify(extra);
   }
 
   // This will append a value for a key, where obj[key] is a array
-  pushToArray(key: string, value: any, notify = true) {
+  pushToArray(key: string, value: any, extra?: TObject) {
     if (!this._object[key]) {
       this._object[key] = [];
     } else {
@@ -101,24 +101,18 @@ export class LiveObject {
     }
     this._object[key].push(value);
 
-    if (notify) this._notify();
-  }
-
-  _notify() {
-    for (let x of this._observers) {
-      x(this._object);
-    }
+    this._notify(extra);
   }
 
   // You can remove an item from the object value as array
-  popFromArray(key: string, _id: any, notify = true) {
+  popFromArray(key: string, _id: any, extra?: TObject) {
     if (!_.isArray(this._object[key])) {
       return;
     }
     for (let x = 0; x < this._object[key].length; x++) {
       if (this._object[key][x]._id == _id && _id) {
         this._object[key].splice(x, 1);
-        if (notify) this._notify();
+        this._notify();
         return;
       }
     }
@@ -140,6 +134,15 @@ export class LiveObject {
     });
     if (removeIndex !== -1) {
       this._observers = this._observers.slice(removeIndex, 1);
+    }
+  }
+
+  // private function
+  _notify(extra?: TObject) {
+    if (extra?.notify != false) {
+      for (let x of this._observers) {
+        x(this._object, extra);
+      }
     }
   }
 }
