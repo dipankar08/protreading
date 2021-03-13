@@ -128,8 +128,9 @@ def backtest():
 
 
 def get_of_default(obj, key, defl):
-    if obj.get(key):
-        return obj.key(obj)
+    res = obj.get(key)
+    if res:
+        return res
     else:
         return defl
 
@@ -141,8 +142,8 @@ def chart():
         requestParam = getParamFromRequest(
             request, ['symbol'])
         symbol = requestParam.get('symbol')
-        candle_type = get_of_default(requestParam, "candle_type", "1d")
-        duration = get_of_default(requestParam, "duration", "30")
+        candle_type = get_of_default(request.args, "candle_type", "1d")
+        duration = get_of_default(request.args, "duration", "30")
 
         path = "datasets/screenshot/{}-{}-{}.png".format(
             symbol, candle_type, duration)

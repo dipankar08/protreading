@@ -86,6 +86,10 @@ export class LiveObject {
     }
   }
 
+  get(key: string): any {
+    return this._object[key];
+  }
+
   // set a property of the object
   set(key: string, value: any, extra?: TObject) {
     this._object[key] = value;

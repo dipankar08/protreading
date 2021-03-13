@@ -10,6 +10,9 @@ Vue.use(Antd);
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 
+import VueContentPlaceholders from "vue-content-placeholders";
+Vue.use(VueContentPlaceholders);
+
 Vue.config.productionTip = false;
 export const rootVue = new Vue({
   router,

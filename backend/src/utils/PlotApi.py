@@ -9,7 +9,7 @@ def buildChartInPng(symbol, df, path):
     matplotlib.use('Agg')
     try:
         fplt.plot(
-            df.tail(50),
+            df,
             type='candle',
             style='charles',
             # title=symbol,

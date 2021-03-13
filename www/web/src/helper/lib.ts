@@ -73,7 +73,7 @@ export function get_scan_for_id(id: string, onSuccess: TOnSuccess, onError: TOnE
 }
 
 export function load_chart(symbol: string, candle_type: string, duration: number, onSuccess: TOnSuccess, onError: TOnError, config?: TObject) {
-  GetOnSimpleStore(`http://localhost:5000/chart?symbol=${symbol}&candle_type=${candle_type}&duration=${duration}`, onSuccess, onError);
+  GetOnSimpleStore(`${STOCK_ENDPOINT}/chart?symbol=${symbol}&candle_type=${candle_type}&duration=${duration}`, onSuccess, onError);
 }
 
 export function markLogin(user_id: string) {

@@ -62,11 +62,11 @@ class FastStorage:
         DLogger.getInstance().d(
             "We are refreshing data by doing network call for {}".format(candle_type))
         intervalPeriodMap = {
-            TCandleType.DAY_1: '1y',
-            TCandleType.MIN_15: '1d',
-            TCandleType.MIN_30: '1d',
-            TCandleType.MIN_5: '1d',
-            TCandleType.HOUR_1: '1w',
+            TCandleType.DAY_1: 180,
+            TCandleType.MIN_15: 180,
+            TCandleType.MIN_30: 180,
+            TCandleType.MIN_5: 180,
+            TCandleType.HOUR_1: 180,
         }
 
         if not self._checkNeedRefresh(candle_type=candle_type):
@@ -74,7 +74,7 @@ class FastStorage:
             return
 
         df = DownloadManager.getInstance().downloadAll(
-            candle_type.value, intervalPeriodMap.get(candle_type))
+            candle_type, intervalPeriodMap.get(candle_type))
         # TODO: Before save, you must process it
         IndicatorBuilder.getInstance().process3DData(df)
         self._save(candle_type=candle_type, df=df)

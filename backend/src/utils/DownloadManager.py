@@ -1,5 +1,6 @@
 ## pyright: strict
 from pandas.core.frame import DataFrame
+from src.config.MyTypes import TCandleType
 from src.utils.timex import time_this
 from src.utils.processor import getDataForInterval
 import yfinance as yf
@@ -16,6 +17,7 @@ import talib
 import yfinance as yf
 from multiprocessing import Pool
 from src.utils.DLogger import DLogger
+from src.utils.convertion import covert_to_period_from_duration
 
 
 class DownloadManager:
@@ -35,13 +37,13 @@ class DownloadManager:
         else:
             DownloadManager.__instance = self
 
-    def downloadAll(self, interval='1d', period='1y') -> DataFrame:
+    def downloadAll(self, interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame:
         DLogger.getInstance().stack()
         ticker = [x for x in symbols.keys()]
         data = yf.download(
             tickers=ticker,
-            period=period,
-            interval=interval,
+            period=covert_to_period_from_duration(interval, period),
+            interval=interval.value,
             group_by='ticker',
             auto_adjust=False,
             prepost=False,

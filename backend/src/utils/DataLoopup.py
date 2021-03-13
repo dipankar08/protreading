@@ -44,7 +44,7 @@ class DataLookup:
     def getDataFrame(self,  symbol: str, candle_type: TCandleType = TCandleType.DAY_1, duration=50):
         frame: pd.DataFrame = self._candleTypeToDataFrameMap.get(
             candle_type.value, None)
-        if frame.empty:
+        if frame is None:
             self.updateModel(candle_type)
         return frame[symbol].tail(duration)
 
