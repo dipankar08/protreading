@@ -145,7 +145,7 @@ def chart():
         candle_type = get_of_default(request.args, "candle_type", "1d")
         duration = get_of_default(request.args, "duration", "30")
 
-        path = "datasets/screenshot/{}-{}-{}.png".format(
+        path = "datasets/cache/screenshot/{}-{}-{}.png".format(
             symbol, candle_type, duration)
 
         if not os.path.exists(path):

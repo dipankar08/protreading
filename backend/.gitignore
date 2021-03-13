@@ -1,0 +1,15 @@
+./*/*.pyc
+./*/*/*.pyc
+./*.private
+./*/*.private
+./*/*/*.private
+*.log
+./*.log
+./**/*.log
+venv
+./**/node_module
+./**/venv
+./**/*.pyc
+datasets/cache 
+test/node_module
+test/node_modules
