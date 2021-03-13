@@ -4,14 +4,11 @@
       <a-select class="d_ml20" v-model="focus_group">
         <a-select-option v-for="item in focus_group_list" :key="item._id" :value="item.list">{{ item.name }}</a-select-option>
       </a-select>
-      <a-select class="d_ml20" mode="multiple" v-model="chart_config">
-        <a-select-option v-for="item in CHART_DISPLAY_CONFIG" :key="item.key" :value="item.key">{{ item.text }}</a-select-option>
-      </a-select>
       <a-select class="width_75 d_ml20" v-model="candle_type">
         <a-select-option v-for="item in CANDLE_TYPE_LIST" :key="item.key" :value="item.key">{{ item.text }}</a-select-option>
       </a-select>
       <a-select class="width_75 d_ml20" v-model="duration">
-        <a-select-option v-for="item in SHORT_CANDLE_DURATION" :key="item.key" :value="item.key">{{ item.text }}</a-select-option>
+        <a-select-option v-for="item in SHORT_CANDLE_DURATION" :key="item" :value="item">{{ item }}</a-select-option>
       </a-select>
 
       <p class="d_layout_fill"></p>
@@ -30,7 +27,7 @@
 
 <script>
 import Chart from "../helper/Chart.vue";
-import { DEFAULT_FOCUS_GROUP, CHART_DISPLAY_CONFIG, CANDLE_TYPE_LIST, SHORT_CANDLE_DURATION } from "../helper/const";
+import { DEFAULT_FOCUS_GROUP, CANDLE_TYPE_LIST } from "../helper/const";
 import { liveAccountObject } from "../helper/lib";
 export default {
   components: { Chart },
@@ -38,11 +35,10 @@ export default {
     return {
       focus_group_list: liveAccountObject.get("focus_group") || DEFAULT_FOCUS_GROUP,
       CANDLE_TYPE_LIST: CANDLE_TYPE_LIST,
-      SHORT_CANDLE_DURATION: SHORT_CANDLE_DURATION,
-      CHART_DISPLAY_CONFIG: CHART_DISPLAY_CONFIG,
+      SHORT_CANDLE_DURATION: ["14", "28", "45", "60"],
       // const
       candle_type: "1d",
-      duration: 30,
+      duration: 14,
       focus_group: DEFAULT_FOCUS_GROUP[0].list,
       chart_config: ["candle", "volume"],
       // config

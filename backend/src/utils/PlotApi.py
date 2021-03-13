@@ -19,7 +19,7 @@ def buildChartInPng(symbol, df, path):
             #mav=(3, 6, 9),
             volume=True,
             # ylabel_lower='Shares\nTraded',
-            show_nontrading=True,
+            show_nontrading=False,
             savefig=dict(fname=path, bbox_inches="tight")
         )
     except Exception as e:
