@@ -4,7 +4,7 @@
       <p class="d_layout_fill">
         <span>{{ symbol }} </span>&#183;<span>{{ candle_type }} </span>&#183;<span>{{ duration }} </span>&#183;
       </p>
-      <span class="mdi mdi-reload mdi_btn" @click="loadChart"></span>
+      <span class="mdi mdi-reload mdi_btn" @click="loadChart(true)"></span>
     </div>
     <img :src="img" />
     <content-placeholders v-show="loading">
@@ -48,7 +48,7 @@ export default {
     },
   },
   methods: {
-    loadChart() {
+    loadChart(reload) {
       let _this = this;
       if (!this.symbol) {
         _this.error = "Please pass some symbol";
@@ -63,6 +63,7 @@ export default {
         this.symbol,
         this.candle_type,
         this.duration,
+        reload ? "1" : "0",
         function(data) {
           _this.loading = false;
           _this.error = null;
