@@ -72,6 +72,10 @@ export function get_scan_for_id(id: string, onSuccess: TOnSuccess, onError: TOnE
   GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan?id=${id}`, onSuccess, onError);
 }
 
+export function load_chart(symbol: string, candle_type: string, duration: number, onSuccess: TOnSuccess, onError: TOnError, config?: TObject) {
+  GetOnSimpleStore(`http://localhost:5000/chart?symbol=${symbol}&candle_type=${candle_type}&duration=${duration}`, onSuccess, onError);
+}
+
 export function markLogin(user_id: string) {
   PostOnSimpleStore(
     `https://simplestore.dipankar.co.in/api/protreader_account/insertorupdate`,
@@ -131,7 +135,10 @@ export function getColFormatForData(data: TObject) {
   return result;
 }
 
-export function notification(vue: any, data: TObject) {
+export function notification(vue: any, data?: TObject) {
+  if (!data) {
+    return;
+  }
   if (!vue) {
     vue = rootVue;
   }

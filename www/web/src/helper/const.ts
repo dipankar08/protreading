@@ -314,3 +314,20 @@ for (let z of INDICATOR_LIST) {
     }
   }
 }
+
+export let DEFAULT_FOCUS_GROUP = [
+  {
+    _id: "default",
+    name: "Default Group",
+    list: ["^NSEI", "WIPRO.NS", "DRREDDY.NS", "BAJAJ-AUTO.NS", "BHARTIARTL.NS", "BRITANNIA.NS", "GODREJCP.NS", "NAUKRI.NS"],
+  },
+  {
+    _id: "default2",
+    name: "Default Group 2",
+    list: ["GODREJCP.NS", "NAUKRI.NS"],
+  },
+];
+export let CHART_DISPLAY_CONFIG = [
+  { key: "candle", text: "candle" },
+  { key: "volume", text: "volume" },
+];

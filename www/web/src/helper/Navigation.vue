@@ -6,17 +6,17 @@
         <span>Dashboard</span>
       </p>
     </router-link>
-    <router-link to="/relate">
+    <router-link to="/console">
       <p class="d_layout_row menu_item d_no_responsive" @click="section = 'relate'" :class="section == 'screen' ? 'active' : ''">
-        <span class="mdi mdi-filter"></span>
-        <span>Relate</span>
+        <span class="mdi mdi-apps-box"></span>
+        <span>Console</span>
       </p>
     </router-link>
 
     <router-link to="/screens">
       <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screens'" :class="section == 'screens' ? 'active' : ''">
-        <span class="mdi mdi-filter"></span>
-        <span>Screen</span>
+        <span class="mdi mdi-tools"></span>
+        <span>Tools</span>
       </p>
     </router-link>
     <router-link to="/backtest">
@@ -29,7 +29,7 @@
     <router-link to="/settings">
       <p class="d_layout_row menu_item d_no_responsive" @click="section = 'settings'" :class="section == 'settings' ? 'active' : ''">
         <span class="mdi mdi-tune-variant"></span>
-        <span>Settings</span>
+        <span>Account</span>
       </p>
     </router-link>
     <!--

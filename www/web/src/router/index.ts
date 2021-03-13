@@ -40,6 +40,11 @@ const routes: Array<RouteConfig> = [
     name: "relate",
     component: () => import("../screen/RelateScreen.vue"),
   },
+  {
+    path: "/console",
+    name: "console",
+    component: () => import("../screen/ConsoleScreen.vue"),
+  },
 ];
 
 const router = new VueRouter({

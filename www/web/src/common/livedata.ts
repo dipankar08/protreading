@@ -51,7 +51,7 @@ export class LiveDataArray {
     }
   }
   // add observer
-  addObserver(observer: (arg0: string) => void) {
+  addObserver(observer: (arg0: TObject) => void) {
     this._observers.push(observer);
   }
 

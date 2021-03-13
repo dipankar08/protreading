@@ -2,17 +2,17 @@ import io
 from matplotlib.pyplot import ylabel
 import yfinance as yf
 import mplfinance as fplt
-import matplotlib
-matplotlib.use('Agg')
 
 
-def buildChartInPng(symbol, df, options={}):
+def buildChartInPng(symbol, df, path):
+    import matplotlib
+    matplotlib.use('Agg')
     try:
         fplt.plot(
             df.tail(50),
             type='candle',
             style='charles',
-            title=symbol,
+            # title=symbol,
             ylabel='',
             ylabel_lower='',
             figratio=(12, 6),
@@ -20,7 +20,7 @@ def buildChartInPng(symbol, df, options={}):
             volume=True,
             # ylabel_lower='Shares\nTraded',
             show_nontrading=True,
-            savefig='datasets/screenshot/{}.png'.format(symbol)
+            savefig=dict(fname=path, bbox_inches="tight")
         )
     except Exception as e:
         raise e

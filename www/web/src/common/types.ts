@@ -4,5 +4,5 @@ export type TObject = {
 
 export type TArray = any[];
 
-export type TOnSuccess = (resultObj?: any[] | TObject, oriResp?: any) => void;
+export type TOnSuccess = (resultObj?: any[] | TObject, oriResp?: TObject) => void;
 export type TOnError = (msg?: string, oriResp?: TObject) => void;

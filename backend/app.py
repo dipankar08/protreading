@@ -127,6 +127,13 @@ def backtest():
         return buildException(e)
 
 
+def get_of_default(obj, key, defl):
+    if obj.get(key):
+        return obj.key(obj)
+    else:
+        return defl
+
+
 @ cross_origin()
 @ app.route('/chart')
 def chart():
@@ -134,11 +141,16 @@ def chart():
         requestParam = getParamFromRequest(
             request, ['symbol'])
         symbol = requestParam.get('symbol')
-        path = "datasets/screenshot/{}.png".format(symbol)
+        candle_type = get_of_default(requestParam, "candle_type", "1d")
+        duration = get_of_default(requestParam, "duration", "30")
+
+        path = "datasets/screenshot/{}-{}-{}.png".format(
+            symbol, candle_type, duration)
 
         if not os.path.exists(path):
-            df = DataLookup.getInstance().getDataFrame(symbol, TCandleType.DAY_1)
-            buildChartInPng(symbol, df)
+            df = DataLookup.getInstance().getDataFrame(
+                symbol, TCandleType(candle_type), int(duration))
+            buildChartInPng(symbol, df, path)
 
         with open(path, "rb") as binary_file:
             binary_file_data = binary_file.read()
