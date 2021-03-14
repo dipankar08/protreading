@@ -5,7 +5,7 @@ we need to do teh reverse when we want to do the same.
 // This maily recusrive function which serialize the tree to string
 // see the test code to understand how we serilaie the data
 *******************************************************/
-
+import $ from "jquery";
 import { TObject } from "@/common/types";
 
 let ONE_RULE_ACTION_BUTTON = `<span class="btn_list">
@@ -47,11 +47,11 @@ export function convert_html_to_rule_dict(filter_id: string): TObject {
       .get();
     let fx_group = [];
     for (let y of fx_group_ele) {
-      let value = {};
+      let value: TObject = {};
       for (let t of $(y)
         .find(".references")
         .get()) {
-        value[$(t).attr("data-key")] = $(t).attr("data-value");
+        value[$(t).attr("data-key") || ""] = $(t).attr("data-value");
       }
       let type = $(y).hasClass("indicator_group") ? "indicator_group" : "operator_group";
       fx_group.push({ type: type, value: value });

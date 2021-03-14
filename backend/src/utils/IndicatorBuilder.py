@@ -4,7 +4,7 @@ import pandas as pd
 import talib
 from src.config.symbols import symbols
 from src.utils.RetHelper import fixDict, fixRound, verifyOrThrow
-all_range = [5, 8, 13, 20, 28, 50, 100, 200]
+all_range = [5, 8, 13, 50, 100, 200]
 
 
 class IndicatorBuilder:
@@ -62,19 +62,15 @@ class IndicatorBuilder:
             df[ticker, 'rsi_14'] = np.round(
                 talib.RSI(df[ticker, 'close'].values, 14), 2)
             df[ticker,
-                'rsi_6'] = talib.RSI(df[ticker, 'close'].values, 6)
-            df[ticker,
-                'rsi_12'] = talib.RSI(df[ticker, 'close'].values, 12)
-            df[ticker,
                 'rsi_18'] = talib.RSI(df[ticker, 'close'].values, 18)
 
             # band
             df[ticker, 'bb_up_5'],  df[ticker, 'bb_mid_5'],  df[ticker, 'bb_down_5'] = talib.BBANDS(
                 df[ticker, 'close'], timeperiod=5)
-            df[ticker, 'bb_up_15'], df[ticker, 'bb_mid_15'], df[ticker, 'bb_down_15'] = talib.BBANDS(
-                df[ticker, 'close'], timeperiod=15)
-            df[ticker, 'bb_up_60'], df[ticker, 'bb_mid_60'], df[ticker, 'bb_down_60'] = talib.BBANDS(
-                df[ticker, 'close'], timeperiod=60)
+            # df[ticker, 'bb_up_15'], df[ticker, 'bb_mid_15'], df[ticker, 'bb_down_15'] = talib.BBANDS(
+            #    df[ticker, 'close'], timeperiod=15)
+            # df[ticker, 'bb_up_60'], df[ticker, 'bb_mid_60'], df[ticker, 'bb_down_60'] = talib.BBANDS(
+            #    df[ticker, 'close'], timeperiod=60)
 
             df[ticker, 'sar'] = talib.SAR(df[ticker, 'high'], df[ticker, 'low'],
                                           acceleration=0.02, maximum=0.2)

@@ -16,11 +16,6 @@ const routes: Array<RouteConfig> = [
     component: () => import("../screen/DashboardScreen.vue"),
   },
   {
-    path: "/screen",
-    name: "screen",
-    component: () => import("../screen/ScreenScreen.vue"),
-  },
-  {
     path: "/screens",
     name: "screens",
     component: () => import("../screen/BrowseScreenScreen.vue"),

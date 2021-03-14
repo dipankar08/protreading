@@ -3,7 +3,7 @@
     <div class="d_layout_col">
       <div class="info_box search_box d_layout_col d_align_center_all d_text_center">
         <div class="d_layout_row">
-          <a-input-search placeholder="search filter" enter-button @search="onSearch" :loading="loading" />
+          <a-input-search placeholder="search filter" enter-button @search="onSearch" :loading="loading" v-model="search_query" />
           <a-button type="primary d_ml20" @click="create_dialog_visible = true">Create New </a-button>
         </div>
         <p class="d_text_caption d_mt10">(You can search from 15K defined filters or you can create your own. All the filter are public)</p>
@@ -15,11 +15,15 @@
           </template>
           <a-collapse-panel v-for="(item, index) of search_result" :key="index" :header="item.title">
             <p><b>Screener Rule:</b> {{ item.query_string || "No filter code is given" }}</p>
-            <p><b>Screen Columns:</b> {{ item.columns }}</p>
-            <p><b>Screen Id:</b> {{ item._id }}</p>
+            <p><b>Screen Description:</b> {{ item.description || "Nothing provided" }}</p>
             <div slot="extra" class="d_layout_row">
-              <a-button class="d_mr20" type="primary" @click="openDialogWithScan(item)"> Run this Screen</a-button>
-              <a-button type="primary" @click="saveScreen(item)" :loading="save_screen_loading">Save this screen</a-button>
+              <a-tooltip class="d_ml10" title="Run this scan"><a-button type="primary" @click="openDialogWithScan(item)"> Run</a-button></a-tooltip>
+              <a-tooltip class="d_ml10" title="Save this scan in your account"
+                ><a-button type="primary" @click="saveScreen(item)" :loading="save_screen_loading">Save</a-button></a-tooltip
+              >
+              <a-tooltip class="d_ml10" title="Delete this scan"
+                ><a-button type="primary" @click="deleteScreen(item)" :loading="save_screen_loading">Delete</a-button></a-tooltip
+              >
             </div>
           </a-collapse-panel>
         </a-collapse>
@@ -46,17 +50,12 @@
         </div>
         <div class="save_block d_layout_col d_mt20 d_mb20" v-show="save_scan_dialog">
           <p>Please fillup the form and click save now! Once you save, it can be search by title or you can view from your account</p>
-          <a-input v-model="title" placeholder="What is the title of the Scan" class="d_mt10"></a-input>
-          <a-input v-model="description" placeholder="Write short description about the scan" class="d_mt10"></a-input>
-          <!--
-          <a-select placeholder="Please select scan type" defaultValue="intraday-bullish">
-            <a-select-option key="intraday-bullish" value="Intraday bullish"></a-select-option>
-            <a-select-option key="intraday-bearish" value="Intraday bearish"></a-select-option>
-            <a-select-option key="long-bullish" value="Long bullish"></a-select-option>
-            <a-select-option key="long-bearish" value="Long bearish"></a-select-option>
+          <a-input v-model="title" placeholder="What is the title of the Scan" class="d_mt20"></a-input>
+          <a-input v-model="description" placeholder="Write short description about the scan" class="d_mt20"></a-input>
+          <a-select class="d_mt20" placeholder="Please select scan type" defaultValue="intraday-bullish" mode="multiple" v-model="tags">
+            <a-select-option v-for="item in save_tag_list" :key="item.key">{{ item.text }}</a-select-option>
           </a-select>
-          -->
-          <a-button type="primary" class="d_mt10" @click="save_scan">Save Now</a-button>
+          <a-button type="primary" class="d_mt20" @click="save_scan">Save Now</a-button>
         </div>
         <FilterBox :notification="true" class="result d_mt20" :query_string="query_string" :refresh_count="refresh_count" />
       </div>
@@ -66,15 +65,18 @@
 <script>
 import ScanParser from "../helper/ScanParser";
 import FilterBox from "@/helper/FilterBox";
-import { search_scan, notification, liveAccountObject, save_scan } from "../helper/lib";
+import { search_scan, notification, liveAccountObject, save_scan, delete_scan } from "../helper/lib";
+//import MdiButton from "../common/vue/MdiButton.vue";
 export default {
   components: {
     ScanParser,
     FilterBox,
+    //   MdiButton,
   },
   data() {
     return {
       // Data
+      search_query: "",
       loading: false,
       save_screen_loading: false,
       search_result: [],
@@ -89,9 +91,16 @@ export default {
       //save
       title: "",
       description: "",
+      tags: [],
       loading_save: false,
       query_html: "",
       query_string: "",
+      save_tag_list: [
+        { key: "intraday-bullish", text: "Intraday Bullish" },
+        { key: "intraday-bearish", text: "Intraday Bearish" },
+        { key: "long-bullish", text: "Long Bullish" },
+        { key: "long-bearish", text: "Long Bearish" },
+      ],
     };
   },
   methods: {
@@ -109,11 +118,24 @@ export default {
       this.save_screen_loading = true;
       liveAccountObject.pushToArray("saved_screen", JSON.parse(JSON.stringify(item), { req_type: "saved_screen_update" }));
     },
-    onSearch(value) {
+    deleteScreen(item) {
+      let _this = this;
+      delete_scan(
+        item._id,
+        function(d, org) {
+          notification(_this, org);
+          _this.onSearch();
+        },
+        function(e, org) {
+          notification(_this, org);
+        }
+      );
+    },
+    onSearch() {
       let _this = this;
       _this.loading = true;
       search_scan(
-        value,
+        this.search_query,
         function(data, org) {
           notification(_this, org);
           _this.loading = false;
@@ -137,10 +159,11 @@ export default {
         {
           title: this.title,
           description: this.description,
-          tags: [],
+          tags: this.tags,
           query_string: this.query_string,
           query_html: this.query_html,
           columns: this.screen_column,
+          author_id: liveAccountObject.get("user_id"),
         },
         function(data, org) {
           notification(_this, org);

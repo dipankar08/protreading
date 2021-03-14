@@ -51,12 +51,15 @@ export default {
     };
   },
   watch: {
-    query_html(val) {
-      $(`#${this.filter_id} .filter`).html(val);
-      this.updateData();
+    query_html() {
+      this.replaceHTML();
     },
   },
   methods: {
+    replaceHTML() {
+      $(`#${this.filter_id} .filter`).html(this.query_html);
+      this.updateData();
+    },
     hideAll() {
       $(`#${this.filter_id} .selector`).hide();
       $(`#${this.filter_id} .references`)
@@ -78,12 +81,12 @@ export default {
       //Define HTML
       var global_current_ref = null;
       var indicator_html = ` <span class='indicator_group fx_group'>
-             <span class='indicator_ref references' data-key='indicator' data-value='--'>Select</span>
+             <span class='indicator_ref references' data-key='indicator' data-value='close'>Close</span>
              <span class='offset_ref references' data-key='offset' data-value='1d:0'>[0]day</span>
-             <span class='input_ref references ignore' data-key='number' data-value='--'>Select</span>
+             <span class='input_ref references ignore' data-key='number' data-value='20'>20</span>
             </span>
       `;
-      var operator_html = `<span class='operator_group fx_group'> <span class="operator_ref references" data-key="operator" data-value='--'>Select</span></span>`;
+      var operator_html = `<span class='operator_group fx_group'> <span class="operator_ref references" data-key="operator" data-value='=='>equals</span></span>`;
       var empty_rule_html = `<li>
             <span class="rule_list"></span>
             <span class = "btn_list">
@@ -108,7 +111,9 @@ export default {
         selector.show();
       }
       function addIndicatorGroup(where) {
-        let indicator = $(where).append(indicator_html);
+        let indicator = $(where)
+          .last()
+          .append(indicator_html);
         showSelectorHideRef(
           $(indicator)
             .find(".indicator_ref")
@@ -117,7 +122,9 @@ export default {
         );
       }
       function addOperatorGroup(where) {
-        let operator = $(where).append(operator_html);
+        let operator = $(where)
+          .last()
+          .append(operator_html);
         showSelectorHideRef(
           $(operator)
             .find(".operator_ref")
@@ -253,6 +260,9 @@ export default {
   mounted() {
     this.hideAll();
     this.setupComponents();
+    if (this.query_html && this.query_html.length > 0) {
+      this.replaceHTML();
+    }
   },
   update() {},
 };

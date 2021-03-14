@@ -46,9 +46,9 @@ class FilterAPI:
                                         eval(c[1]), 2)
                         selected_one['close'] = np.round(
                             interval_df['1d'][symbol].iloc[-1]['close'], 2),
-                        selected_one['volume'] = int(
+                        selected_one['volume'] = str(
                             interval_df['1d'][symbol].iloc[-1]['volume']),
-                        selected_one['change'] = int(
+                        selected_one['change'] = str(
                             interval_df['1d'][symbol].iloc[-1]['close_change_percentage']),
                         # add used defined data
                         result.append(fixDict(selected_one))
