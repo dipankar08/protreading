@@ -2,8 +2,11 @@
   <div class="d_fullscreen d_layout_col responsive_container">
     <div class="d_layout_col">
       <div class="info_box search_box d_layout_col d_align_center_all d_text_center">
-        <p class="d_text_hero d_mb20">Search Screen</p>
-        <a-input-search placeholder="search filter" enter-button @search="onSearch" :loading="loading" />
+        <div class="d_layout_row">
+          <a-input-search placeholder="search filter" enter-button @search="onSearch" :loading="loading" />
+          <a-button type="primary d_ml20" @click="create_dialog_visible = true">Create New </a-button>
+        </div>
+        <p class="d_text_caption d_mt10">(You can search from 15K defined filters or you can create your own. All the filter are public)</p>
       </div>
       <div class="info_box search_result" v-if="search_result.length > 0">
         <a-collapse default-active-key="1" :bordered="false">
@@ -11,11 +14,11 @@
             <a-icon type="caret-right" :rotate="props.isActive ? 90 : 0" />
           </template>
           <a-collapse-panel v-for="(item, index) of search_result" :key="index" :header="item.title">
-            <p><b>Screener Rule:</b> {{ item.filter || "No filter code is given" }}</p>
+            <p><b>Screener Rule:</b> {{ item.query_string || "No filter code is given" }}</p>
             <p><b>Screen Columns:</b> {{ item.columns }}</p>
             <p><b>Screen Id:</b> {{ item._id }}</p>
             <div slot="extra" class="d_layout_row">
-              <a-button class="d_mr20" type="primary" @click="openUrl(`/screen?id=${item._id}`)"> Run this Screen</a-button>
+              <a-button class="d_mr20" type="primary" @click="openDialogWithScan(item)"> Run this Screen</a-button>
               <a-button type="primary" @click="saveScreen(item)" :loading="save_screen_loading">Save this screen</a-button>
             </div>
           </a-collapse-panel>
@@ -25,22 +28,81 @@
         <p>Here are the list of common filters</p>
       </div>
     </div>
+    <!-- Create new  -->
+    <a-modal
+      width="80%"
+      height="800px"
+      title="Create New Filter"
+      :visible="create_dialog_visible"
+      @cancel="create_dialog_visible = false"
+      :footer="null"
+      class="create_dialog"
+    >
+      <div class="d_layout_col d_fullscreen">
+        <ScanParser :query_html="history_query_html" filter_id="screen1" class="d_layout_fill d_layout_fill scan_filter" @OnChange="OnChangeFilter" />
+        <div class="d_layout_row d_mt20 d_layout_right">
+          <a-button type="primary" class="d_mr5" @click="refresh_count++">Run Scan</a-button>
+          <a-button type="link" @click="save_scan_dialog = !save_scan_dialog">Or Save this scan</a-button>
+        </div>
+        <div class="save_block d_layout_col d_mt20 d_mb20" v-show="save_scan_dialog">
+          <p>Please fillup the form and click save now! Once you save, it can be search by title or you can view from your account</p>
+          <a-input v-model="title" placeholder="What is the title of the Scan" class="d_mt10"></a-input>
+          <a-input v-model="description" placeholder="Write short description about the scan" class="d_mt10"></a-input>
+          <!--
+          <a-select placeholder="Please select scan type" defaultValue="intraday-bullish">
+            <a-select-option key="intraday-bullish" value="Intraday bullish"></a-select-option>
+            <a-select-option key="intraday-bearish" value="Intraday bearish"></a-select-option>
+            <a-select-option key="long-bullish" value="Long bullish"></a-select-option>
+            <a-select-option key="long-bearish" value="Long bearish"></a-select-option>
+          </a-select>
+          -->
+          <a-button type="primary" class="d_mt10" @click="save_scan">Save Now</a-button>
+        </div>
+        <FilterBox :notification="true" class="result d_mt20" :query_string="query_string" :refresh_count="refresh_count" />
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
-import { search_scan, notification, liveAccountObject } from "../helper/lib";
+import ScanParser from "../helper/ScanParser";
+import FilterBox from "@/helper/FilterBox";
+import { search_scan, notification, liveAccountObject, save_scan } from "../helper/lib";
 export default {
-  components: {},
+  components: {
+    ScanParser,
+    FilterBox,
+  },
   data() {
     return {
+      // Data
       loading: false,
       save_screen_loading: false,
       search_result: [],
+      history_query_html: "",
+
+      // create
+      save_scan_dialog: false,
+      refresh_count: 0,
+      create_dialog_visible: false,
+      screen_filter: null,
+
+      //save
+      title: "",
+      description: "",
+      loading_save: false,
+      query_html: "",
+      query_string: "",
     };
   },
   methods: {
-    openUrl(data) {
-      window.open(data, "_blank");
+    openDialogWithScan(item) {
+      this.create_dialog_visible = true;
+      this.history_query_html = item.query_html;
+      this.query_string = item.query_string;
+    },
+    OnChangeFilter(value) {
+      this.query_html = value.query_html;
+      this.query_string = value.query_string;
     },
     saveScreen(item) {
       // item needs to covert from vue obj to normal obj
@@ -64,6 +126,32 @@ export default {
         }
       );
     },
+    save_scan() {
+      this.loading_save = true;
+      let _this = this;
+      if (this.title.trim().length == 0 && this.description.trim().length == 0 && this.query_string.length == 0) {
+        notification(this, { status: "error", msg: "Please enter title, description and filter" });
+        return;
+      }
+      save_scan(
+        {
+          title: this.title,
+          description: this.description,
+          tags: [],
+          query_string: this.query_string,
+          query_html: this.query_html,
+          columns: this.screen_column,
+        },
+        function(data, org) {
+          notification(_this, org);
+          _this.loading_save = false;
+        },
+        function(err, org) {
+          notification(_this, org);
+          _this.loading_save = false;
+        }
+      );
+    },
     accountDataObs(data, extra) {
       switch (extra?.req_type) {
         case "saved_screen":
@@ -83,5 +171,19 @@ export default {
 <style scoped lang="scss">
 .ant-collapse-borderless {
   background-color: transparent;
+}
+.create_dialog {
+  padding: 0px !important;
+  .scan_filter {
+    background: whitesmoke;
+    padding: 5px 20px;
+  }
+  .result {
+    border-top: 2px solid blueviolet;
+  }
+  .save_block {
+    background: whitesmoke;
+    padding: 20px;
+  }
 }
 </style>

@@ -21,14 +21,15 @@
   </div>
 </template>
 <script>
-import { get_scan_for_id, perform_scan, getColFormatForData } from "./lib";
+import { get_scan_for_id, perform_scan, getColFormatForData, save_scan, notification } from "./lib";
 import { LATEST_SCREEN_COLUMNS_LIST } from "./const";
-import _ from "underscore";
+import _, { filter } from "underscore";
 export default {
   props: {
-    filter_id: String,
-    refresh_rate: Number,
-    refresh_count: Number,
+    filter_id: String, // give the SS id
+    refresh_count: Number, // increment this count to refresh
+    query_string: String,
+    notification: Boolean, // showing notification when network success or fail,
   },
   data() {
     return {
@@ -45,6 +46,9 @@ export default {
     refresh_count(newVal) {
       this.reload();
     },
+    query_string(newVal) {
+      this.filter = newVal;
+    },
   },
   methods: {
     reload() {
@@ -53,12 +57,18 @@ export default {
       perform_scan(
         this.filter,
         _.union(this.dropdown_column),
-        function(data, orgData) {
+        function(data, org) {
+          if (_this.notification) {
+            notification(_this, org);
+          }
           _this.table_data = data;
           _this.table_columns = _this.getColFormatForData(data[0]);
           _this.table_loading = false;
         },
-        function(error, orgError) {
+        function(error, org) {
+          if (_this.notification) {
+            notification(_this, org);
+          }
           _this.table_loading = false;
         }
       );
@@ -69,19 +79,30 @@ export default {
   },
   mounted() {
     let _this = this;
-    get_scan_for_id(
-      this.filter_id,
-      function(data, orgData) {
-        _this.title = data[0].title;
-        _this.filter = data[0].filter;
-        _this.dropdown_column = _.union(data[0].columns || [], ["symbol", "close", "change"]);
-        console.log(data);
-        _this.reload();
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
+    if (this.query_string) {
+      _this.title = "Custom Filter";
+      _this.filter = this.query_string;
+      _this.dropdown_column = ["symbol", "close", "change"];
+    } else {
+      get_scan_for_id(
+        this.filter_id,
+        function(data, org) {
+          if (_this.notification) {
+            notification(_this, org);
+          }
+          _this.title = data[0].title;
+          _this.filter = data[0].filter;
+          _this.dropdown_column = _.union(data[0].columns || [], ["symbol", "close", "change"]);
+          _this.reload();
+        },
+        function(error, org) {
+          if (_this.notification) {
+            notification(_this, org);
+          }
+          console.log(error);
+        }
+      );
+    }
   },
 };
 </script>

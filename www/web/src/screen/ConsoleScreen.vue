@@ -35,10 +35,10 @@ export default {
     return {
       focus_group_list: liveAccountObject.get("focus_group") || DEFAULT_FOCUS_GROUP,
       CANDLE_TYPE_LIST: CANDLE_TYPE_LIST,
-      SHORT_CANDLE_DURATION: ["14", "28", "45", "60"],
+      SHORT_CANDLE_DURATION: ["15", "28", "45", "60"],
       // const
       candle_type: "1d",
-      duration: 14,
+      duration: "15",
       focus_group: DEFAULT_FOCUS_GROUP[0].list,
       chart_config: ["candle", "volume"],
       // config
