@@ -20,7 +20,7 @@ class KeyValueStore:
         else:
             KeyValueStore.__instance = self
             try:
-                with open('kv.pkl', 'rb') as handle:
+                with open('datasets/kv.pkl', 'rb') as handle:
                     self.__store = pickle.load(handle)
             except:
                 self.__store = {}
@@ -28,7 +28,7 @@ class KeyValueStore:
     def set(self, key: str, value: Any):
         self.__store[key] = value
         # You might not do that always..
-        with open('kv.pkl', 'wb') as handle:
+        with open('datasets/kv.pkl', 'wb') as handle:
             pickle.dump(self.__store, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def get(self, key: str) -> Any:

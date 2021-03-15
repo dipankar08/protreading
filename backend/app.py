@@ -13,11 +13,12 @@ from src.utils.processor import getSampleData
 import os
 from src.apis.backtest import perform_backtest
 from src.utils.RetHelper import buildError, buildException, buildNotImplemented, buildSuccess, ensureParmasInRequest, ensureProvidedDefaultInRequest, getParamFromRequest
-from flask import Flask, helpers, render_template, request, Response
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import asyncio
 
 from src.utils.PlotApi import buildChartInPng
+from utils.helper import get_of_default
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
 app = Flask(__name__)
@@ -26,24 +27,13 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 domain = "rc1.grodok.com"
 
 timingsprod = False
-# Snap short API
-
-# Timing realted works
-
-"""
-@app.after_request
-def after_request_func(response):
-    # just append timings to the output response:
-    response.data = json.loads(json.loads(response.data))
-    response.data['time'] = g.timings
-    response.data = json.dumps(response.data)
-    return response
-"""
 
 
 @app.before_request
 def before_request_func():
     g.timings = {}
+
+#################################################  BEGIN OF ROUTER #############################################################
 
 
 @app.route('/status')
@@ -127,14 +117,6 @@ def backtest():
         return buildException(e)
 
 
-def get_of_default(obj, key, defl):
-    res = obj.get(key)
-    if res:
-        return res
-    else:
-        return defl
-
-
 @ cross_origin()
 @ app.route('/chart')
 def chart():
@@ -169,15 +151,10 @@ def chart():
 def index():
     return buildNotImplemented()
 
+#################################################  BEGIN OF WORKER #############################################################
 
-"""
-if __name__ == '__main__':
-    if prod:
-        app.run(host='0.0.0.0', port=5000, debug=False, ssl_context=(
-            '/etc/letsencrypt/live/rc1.grodok.com/fullchain.pem', '/etc/letsencrypt/live/rc1.grodok.com/privkey.pem'))
-    else:
-        app.run(host='localhost', port=5000, debug=True)
-"""
+
+#################################################  BEGIN OF APP #############################################################
 # HACK https://stackoverflow.com/questions/33379287/gunicorn-cant-find-app-when-name-changed-from-application
 # They need the application name as app
 application = app
