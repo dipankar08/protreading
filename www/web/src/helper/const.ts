@@ -1,6 +1,7 @@
+import _ from "underscore";
 import sync from "./sync.json";
 export const NIFTY_200 = sync.SUPPORTED_SYMBOL;
-export const INDICATOR_LIST = sync.SUPPORTED_INDICATOR;
+export const INDICATOR_LIST = _.union([{ key: "number", text: "Number" }], sync.SUPPORTED_INDICATOR);
 
 export let CANDLE_TYPE_LIST = [
   { key: "5m", text: "5min" },
@@ -68,7 +69,7 @@ export let COMMON_COLUMNS_LIST = [
   { key: "change", text: "change" },
 ];
 
-export let SCREEN_COLUMNS_LIST: Array<any> = COMMON_COLUMNS_LIST;
+export let SCREEN_COLUMNS_LIST: Array<any> = [...COMMON_COLUMNS_LIST];
 for (let z of INDICATOR_LIST) {
   for (let x of CANDLE_TYPE_LIST) {
     for (let y = 0; y >= -1; y--) {
@@ -77,13 +78,9 @@ for (let z of INDICATOR_LIST) {
   }
 }
 
-export let LATEST_SCREEN_COLUMNS_LIST: Array<any> = COMMON_COLUMNS_LIST;
+export let LATEST_SCREEN_COLUMNS_LIST: Array<any> = [...COMMON_COLUMNS_LIST];
 for (let z of INDICATOR_LIST) {
-  for (let x of CANDLE_TYPE_LIST) {
-    for (let y = 0; y >= 0; y--) {
-      LATEST_SCREEN_COLUMNS_LIST.push({ key: `indicator:${x.key}:${y}:${z.key}`, text: `${x.key} ${z.text}` });
-    }
-  }
+  LATEST_SCREEN_COLUMNS_LIST.push({ key: `indicator:1d:0:${z.key}`, text: `${z.text}` });
 }
 
 export let DEFAULT_FOCUS_GROUP = [
