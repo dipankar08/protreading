@@ -12,3 +12,5 @@ flask-cors
 pyopenssl
 mypy
 celery
+redis
+mplfinance
