@@ -6,8 +6,11 @@ from src.config.MyTypes import TCandleType
 from src.utils.FastStorage import FastStorage
 from src.utils.DownloadManager import DownloadManager
 from src.utils.timex import time_this
+from celery import Celery
 import base64
-
+import random
+import time
+from flask import jsonify, url_for
 from flask.globals import g
 from src.utils.processor import getSampleData
 import os
@@ -18,7 +21,7 @@ from flask_cors import CORS, cross_origin
 import asyncio
 
 from src.utils.PlotApi import buildChartInPng
-from utils.helper import get_of_default
+from src.utils.helper import get_of_default
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
 app = Flask(__name__)
@@ -151,7 +154,75 @@ def chart():
 def index():
     return buildNotImplemented()
 
+
 #################################################  BEGIN OF WORKER #############################################################
+# Celery configuration
+app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+celery = Celery(app.name,
+                broker=app.config.get('CELERY_BROKER_URL'),
+                include=["app"]
+                )
+celery.conf.update(app.config)
+
+
+# This is a sample long running task
+@celery.task(bind=True, name="backend.app.long_task")
+def long_task(self):
+    """Background task that runs a long function with progress reports."""
+    verb = ['Starting up', 'Booting', 'Repairing', 'Loading', 'Checking']
+    adjective = ['master', 'radiant', 'silent', 'harmonic', 'fast']
+    noun = ['solar array', 'particle reshaper', 'cosmic ray', 'orbiter', 'bit']
+    message = ''
+    total = random.randint(10, 50)
+    for i in range(total):
+        if not message or random.random() < 0.25:
+            message = '{0} {1} {2}...'.format(random.choice(verb),
+                                              random.choice(adjective),
+                                              random.choice(noun))
+        self.update_state(state='PROGRESS',
+                          meta={'current': i, 'total': total,
+                                'status': message})
+        time.sleep(1)
+    return {'current': 100, 'total': 100, 'status': 'Task completed!',
+            'result': 42}
+
+
+@app.route('/longtask', methods=['GET'])
+def longtask():
+    task = long_task.apply_async()
+    return buildSuccess("Submitted", {'Location': url_for('taskstatus',
+                                                          task_id=task.id)})
+
+
+@app.route('/status/<task_id>')
+def taskstatus(task_id):
+    task = long_task.AsyncResult(task_id)
+    if task.state == 'PENDING':
+        response = {
+            'state': task.state,
+            'current': 0,
+            'total': 1,
+            'status': 'Pending...'
+        }
+    elif task.state != 'FAILURE':
+        response = {
+            'state': task.state,
+            'current': task.info.get('current', 0),
+            'total': task.info.get('total', 1),
+            'status': task.info.get('status', '')
+        }
+        if 'result' in task.info:
+            response['result'] = task.info['result']
+    else:
+        # something went wrong in the background job
+        response = {
+            'state': task.state,
+            'current': 1,
+            'total': 1,
+            'status': str(task.info),  # this is the exception raised
+        }
+    return jsonify(response)
 
 
 #################################################  BEGIN OF APP #############################################################

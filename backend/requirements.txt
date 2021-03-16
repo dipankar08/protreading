@@ -11,3 +11,4 @@ asyncio
 flask-cors 
 pyopenssl
 mypy
+celery

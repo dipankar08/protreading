@@ -7,4 +7,4 @@ with open('src/config/sync.json') as json_file:
     for p in data['SUPPORTED_SYMBOL']:
         symbols[p['key']] = p['text']
 
-print(symbols)
+# print(symbols)

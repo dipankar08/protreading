@@ -3,5 +3,8 @@
         "python.analysis.extraPaths": [
             "./"
         ],
-        "python.languageServer": "Pylance"
+        "python.languageServer": "Pylance",
+        "cSpell.words": [
+            "jsonify"
+        ]
 }
