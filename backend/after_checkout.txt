@@ -16,6 +16,9 @@ In ubuntu:
 sudo ln -s /usr/bin/python3.8 /usr/bin/python3
 sudo apt-get install python3.8-dev
 
+Download : https://deac-ams.dl.sourceforge.net/project/ta-lib/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz
+https://mrjbq7.github.io/ta-lib/install.html
+
 tar -xzf ta-lib-0.4.0-src.tar.gz
 cd ta-lib/
 ./configure --prefix=/usr
