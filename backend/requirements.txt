@@ -14,3 +14,4 @@ mypy
 celery
 redis
 mplfinance
+gunicorn
