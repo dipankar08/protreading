@@ -1,3 +1,8 @@
+1. Install pip env
+https://gist.github.com/planetceres/8adb62494717c71e93c96d8adad26f5c
+2. pipenv install
+
+#############. NOT NEEDED =========
 # You must run on virtaul envirmnet
 >>> sudo apt-get install python3-pip
 >>> sudo pip3 install virtualenv 
