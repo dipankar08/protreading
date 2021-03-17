@@ -7,6 +7,9 @@
 >>> pip3 install -r requirements.txt ( add file in requirements)
 
 # Installation is complicated
+
+
+=============. Installing TA Lib =====================
 #>> Pip gives clang erro
 # >>> brew install ta-lib 
 # export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade ta-lib
@@ -27,3 +30,11 @@ sudo make install
 
 source venv/bin/activate
 export ARCHFLAGS="-arch x86_64"; pip3 install ta-lib
+
+=========== SETUP HTTPS ======================
+sudo snap install --classic certbot
+sudo certbot certonly --standalone
+There was a permission issue, you need to use root and then run the serevre
+sudo chown ubuntu:ubuntu /etc/letsencrypt/live/realtime.grodok.com/privkey.pem
+
+
