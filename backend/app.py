@@ -4,6 +4,7 @@ from src.apis.FilterAPI import FilterAPI
 from src.utils.DataLoopup import DataLookup
 from src.config.MyTypes import TCandleType
 from src.utils.FastStorage import FastStorage
+from src.utils import DLogger
 from src.utils.DownloadManager import DownloadManager
 from src.utils.timex import time_this
 from celery import Celery
@@ -19,16 +20,31 @@ from src.utils.RetHelper import buildError, buildException, buildNotImplemented,
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import asyncio
+from celery.schedules import crontab
+from flask_caching import Cache
 
 from src.utils.PlotApi import buildChartInPng
 from src.utils.helper import get_of_default
+from src.utils.constant import CACHE_TIMEOUT_1DAY, CACHE_TIMEOUT_30MIN, CACHE_TIMEOUT_5MIN
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
+
+###############################################SETUP APP ######################
 app = Flask(__name__)
+# COR
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 domain = "rc1.grodok.com"
+# Cache
+config = {
+    "DEBUG": True,          # some Flask specific configs
+    "CACHE_TYPE": "redis",  # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": CACHE_TIMEOUT_5MIN
+}
+app.config.from_mapping(config)
+cache = Cache(app)
 
+# Tracking time
 timingsprod = False
 
 
@@ -39,16 +55,31 @@ def before_request_func():
 #################################################  BEGIN OF ROUTER #############################################################
 
 
-@app.route('/status')
-def status():
+@app.route('/clearcache')
+def clearcache():
+    " This will delete cache for all the data "
     try:
-        return buildSuccess()
+        # cache.delete_memoized(status)  >>> NOT WORKS
+        # cache.delete_many("flask_cache_view//status") >> NOT WORKS
+        cache.clear()
+        return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
+    except Exception as e:
+        return buildException(e)
+
+
+@app.route('/status')
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
+def status():
+    "status of the app"
+    try:
+        return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
     except Exception as e:
         return buildException(e)
 
 
 @cross_origin()
 @app.route('/sample')
+@cache.cached(timeout=CACHE_TIMEOUT_1DAY, query_string=True)
 def sample():
     try:
         requestParam = getParamFromRequest(
@@ -62,6 +93,7 @@ def sample():
 
 @ cross_origin()
 @ app.route('/screen', methods=['POST', 'GET'])
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 def Screen():
     try:
         ensureParmasInRequest(request, ['filter'])
@@ -76,6 +108,7 @@ def Screen():
 
 @ cross_origin()
 @ app.route('/relate', methods=['POST', 'GET'])
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 def Relate():
     try:
         ensureParmasInRequest(request, ["symbol_list", "indicator_list"])
@@ -96,6 +129,8 @@ def Relate():
 
 @ cross_origin()
 @ app.route('/snapshot')
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN)
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 def snapshot_intra():
     try:
         requestParam = getParamFromRequest(
@@ -109,6 +144,7 @@ def snapshot_intra():
 
 @ cross_origin()
 @ app.route('/backtest')
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 def backtest():
     try:
         requestParam = getParamFromRequest(
@@ -122,6 +158,7 @@ def backtest():
 
 @ cross_origin()
 @ app.route('/chart')
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 def chart():
     try:
         requestParam = getParamFromRequest(
@@ -157,16 +194,53 @@ def index():
 
 #################################################  BEGIN OF WORKER #############################################################
 # Celery configuration
+import pdb
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
-celery = Celery(app.name,
+app.config['result_backend'] = 'redis://localhost:6379/0'
+celery = Celery("app",
                 broker=app.config.get('CELERY_BROKER_URL'),
                 include=["app"]
                 )
 celery.conf.update(app.config)
 
+##### CORN JOB ######
+
+
+@celery.task(name="backend.app.see_you")
+def see_you():
+    print("See you in ten seconds!")
+
+
+celery.conf.beat_schedule = {
+    "see-you-in-ten-seconds-task": {
+        "task": "backend.app.see_you",
+        "schedule": 10.0
+    }
+}
+
+
+@celery.on_after_configure.connect
+def add_periodic(**kwargs):
+    DLogger.getInstance().d("Config periodic task,,,")
+    celery.add_periodic_task(10.0, test.s('hello'), name='add every 10')
+
+    # Calls test('world') every 30 seconds
+    celery.add_periodic_task(30.0, test.s('world'), expires=10)
+
+    # Executes every Monday morning at 7:30 a.m.
+    celery.add_periodic_task(
+        crontab(hour=7, minute=30, day_of_week=1),
+        test.s('Happy Mondays!'),
+    )
+
+
+@celery.task
+def test(arg):
+    print(arg)
 
 # This is a sample long running task
+
+
 @celery.task(bind=True, name="backend.app.long_task")
 def long_task(self):
     """Background task that runs a long function with progress reports."""

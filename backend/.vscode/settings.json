@@ -5,6 +5,7 @@
         ],
         "python.languageServer": "Pylance",
         "cSpell.words": [
+            "Radis",
             "jsonify"
         ]
 }
