@@ -3,7 +3,7 @@ import { TArray, TObject, TOnError, TOnSuccess } from "@/common/types";
 import { rootVue } from "@/main";
 import _ from "underscore";
 import { LiveDataArray, LiveObject } from "../common/livedata";
-let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://rc1.grodok.com:5000";
+let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://realtime.grodok.com:5000";
 console.log(`Endpoint --> ${STOCK_ENDPOINT}`);
 
 /// Define Live Data

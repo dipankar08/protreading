@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+finplot = "*"
+pandas = "*"
+requests = "*"
+bs4 = "*"
+yfinance = "*"
+matplotlib = "*"
+autopep8 = "*"
+asyncio = "*"
+mypy = "*"
+celery = "*"
+redis = "*"
+mplfinance = "*"
+gunicorn = "*"
+Flask = "*"
+Flask-Cors = "*"
+pyOpenSSL = "*"
+Flask-Caching = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
