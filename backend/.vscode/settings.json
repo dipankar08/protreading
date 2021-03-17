@@ -1,11 +1,12 @@
 {
-    "python.pythonPath": "venv/bin/python",
+    "python.pythonPath": "/Users/dip/.local/share/virtualenvs/backend-xjZDogeb/bin/python",
         "python.analysis.extraPaths": [
             "./"
         ],
         "python.languageServer": "Pylance",
         "cSpell.words": [
             "Radis",
+            "dredis",
             "jsonify"
         ]
 }
