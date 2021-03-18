@@ -1,6 +1,5 @@
 
 from myapp.core.helper import get_param_or_throw
-from myapp.core.DownloadManager import download
 from myapp.core.MyTypes import TCandleType
 #from myapp.core.FastStorage import FastStorage
 from flask import Blueprint, render_template, Response, request
@@ -35,10 +34,9 @@ def status():
 @core_api.route('/snapshot')
 def snapshot_intra():
     try:
-        requestParam = getParamFromRequest(
-            request, ['candle_type'])
-        download(TCandleType(requestParam.get('candle_type')))
-        return buildSuccess("fetched the data", {"success"})
+        task_id = tasks.snapshot_pipeline.delay(
+            get_param_or_throw(request, 'candle_type'))
+        return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
     except Exception as e:
         return buildException(e)
 
