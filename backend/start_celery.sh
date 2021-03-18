@@ -1,1 +1,1 @@
-celery -A app.celery worker --loglevel=info
+pipenv run celery -A myapp.worker.celery worker
