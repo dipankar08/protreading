@@ -1,6 +1,6 @@
 
 
-from myapp.core.MyTypes import TCandleType
+from myapp.core.dtypes import TCandleType
 import pandas as pd
 from pandas.core.frame import DataFrame
 

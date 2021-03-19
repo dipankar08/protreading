@@ -1,5 +1,5 @@
 
-from myapp.core.MyTypes import TCandleType
+from myapp.core.dtypes import TCandleType
 from typing import List
 
 SUPPORTED_CANDLE: List[TCandleType] = [

@@ -13,9 +13,17 @@ __logger.addHandler(handler)
 
 def stack():
     print("*" * 100)
-    traceback.print_stack()
+    traceback.print_stack(limit=5)
     print("*" * 100)
 
 
 def d(msg: str):
     __logger.debug(msg)
+
+
+def e(msg: str):
+    __logger.error(msg)
+
+
+def ex(msg: str, e: Exception):
+    __logger.exception(msg, e)

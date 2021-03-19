@@ -1,6 +1,6 @@
 ## pyright: strict
 from pandas.core.frame import DataFrame
-from myapp.core.MyTypes import TCandleType
+from myapp.core.dtypes import TCandleType
 import yfinance as yf
 from myapp.core.symbols import symbols
 from myapp.core.dlog import stack

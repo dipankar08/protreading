@@ -1,4 +1,4 @@
-from myapp.core.MyTypes import TCandleType
+from myapp.core.dtypes import TCandleType
 
 
 def covert_to_period_from_duration(candle_type: TCandleType, duration: int):

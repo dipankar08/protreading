@@ -1,5 +1,5 @@
 
-from myapp.core.MyTypes import TCandleType
+from myapp.core.dtypes import TCandleType
 _intervalPeriodMap = {
     TCandleType.DAY_1: 180,
     TCandleType.MIN_15: 180,
