@@ -1,6 +1,6 @@
 
 from typing import List
-from myapp.core.MyTypes import TCandleType
+from myapp.core.dtypes import TCandleType
 from myapp.core.DataLoopup import DataLookup
 
 
