@@ -25,3 +25,17 @@ def trace_perf(func):
         return res
 
     return wrapper
+
+
+def log_func(func):
+    "Just log entry and exit point"
+    def wrapper(*arg):
+        t = time.time()
+        dlog.d("\n\n>>>>>>>>>>>>>>>> STARTING {} <<<<<<<<<<<<<".format(
+            func.__name__))
+        res = func(*arg)
+        dlog.d("\n>>>>>>>>>>>>>>>> ENDING {}, Time taken: {} sec <<<<<<<<<<<<<\n\n".format(
+            func.__name__, time.time() - t))
+        return res
+
+    return wrapper
