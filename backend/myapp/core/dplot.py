@@ -1,4 +1,5 @@
 import io
+from myapp.core.ddecorators import dump_args
 import os
 from myapp.core.dtypes import TCandleType
 from matplotlib.pyplot import ylabel
@@ -9,6 +10,7 @@ from myapp.core import dglobaldata
 import base64
 
 
+@dump_args
 def get_endcoded_png_for_chart(symbol, candle_type, duration, reload):
     import matplotlib
     matplotlib.use('Agg')
