@@ -6,6 +6,6 @@
 => GET => {{server}}/snapshot?candle_type=15m=> success
 => GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100&columns=indicator:1d:0:rsi_14 => success
 => GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100 => success
-=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open =>success
-=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open&candle_type=5m&duration=30 =>success
+#=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open =>success
+#=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open&candle_type=5m&duration=30 =>success
 => GET => {{server}}/chart?symbol=WIPRO.NS => success
