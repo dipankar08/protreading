@@ -1,4 +1,7 @@
 {
+   "SUPPORTED_CHART_DURATION":[
+      "30", "60"
+   ],
    "SUPPORTED_INDICATOR":[
       {
          "key":"open",

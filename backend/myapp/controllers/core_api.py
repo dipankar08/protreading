@@ -34,7 +34,6 @@ def status():
 
 
 @core_api.route('/task')
-@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 @make_exception_safe
 def task():
     "Run the worker task from the web"
@@ -87,7 +86,7 @@ def chart():
     duration = get_param_or_default(request, "duration", "30")
     reload = get_param_or_default(request, "reload", "0")
     encoded_png = dplot.get_endcoded_png_for_chart(
-        symbol, candle_type, duration, reload)
+        symbol, TCandleType(candle_type), duration, reload)
     return buildSuccess("Image Return", "data:image/png;base64,{}".format(encoded_png))
 
 
