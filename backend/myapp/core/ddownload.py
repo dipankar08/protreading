@@ -1,4 +1,5 @@
 ## pyright: strict
+from myapp.core.ddecorators import trace_perf
 from pandas.core.frame import DataFrame
 from myapp.core.dtypes import TCandleType
 import yfinance as yf
@@ -8,6 +9,7 @@ from myapp.core.convertion import covert_to_period_from_duration
 from myapp.core import dredis
 
 
+@trace_perf
 def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame:
     key = "download_progress_" + interval.value
     if(dredis.get(key) == "1"):
@@ -15,7 +17,7 @@ def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame
     data = None
     dredis.set(key, "1")
     try:
-        stack()
+        # stack()
         ticker = [x for x in symbols.keys()]
         data = yf.download(
             tickers=ticker,

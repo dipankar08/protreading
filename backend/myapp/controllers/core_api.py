@@ -5,7 +5,7 @@ from myapp.core.dtypes import TCandleType
 from flask import Blueprint, request
 from myapp import tasks
 from myapp.extensions import cache
-from myapp.core.RetHelper import buildSuccess, buildException
+from myapp.core.RetHelper import buildError, buildSuccess, buildException
 core_api = Blueprint('core_api_views', __name__)
 import random
 from flask_cors import CORS, cross_origin
@@ -17,6 +17,7 @@ from myapp.core import dlog
 from myapp.core import dfilter
 from myapp.core import dplot
 from myapp.core.ddecorators import make_exception_safe
+from myapp.core.rootConfig import SUPPORTED_CANDLE
 
 
 @core_api.before_request
@@ -30,6 +31,22 @@ def before_request_func():
 def status():
     "status of the app"
     return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
+
+
+@core_api.route('/task')
+@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
+@make_exception_safe
+def task():
+    "Run the worker task from the web"
+    task = get_param_or_throw(request, "task")
+    if task == "snapshot_all":
+        task_id = tasks.snapshot_pipeline_all.delay()
+        return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
+    if task == "chart_all":
+        task_id = tasks.plot_chart_all.delay()
+        return buildSuccess("task plot_chart_all submitted", {"status_url": "/result/{}".format(task_id)})
+    else:
+        return buildError("Task not found")
 
 
 @cross_origin()
