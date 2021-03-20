@@ -1,3 +1,4 @@
+from myapp.core.ddecorators import trace_perf
 from myapp.core.dtypes import TCandleType
 from myapp.core.rootConfig import SUPPORTED_CANDLE
 from myapp.core.DLogger import DLogger
@@ -42,6 +43,7 @@ def is_data_updated(candle_type: TCandleType) -> bool:
     return int(last_redis_ts) > int(last_mem_ts)
 
 
+@trace_perf
 def load_data_on_boot():
     for candle_type in SUPPORTED_CANDLE:
         try:
@@ -69,6 +71,7 @@ def get_all_data():
     return _candleTypeToDataFrameMap
 
 
+@trace_perf
 def download_process_data_internal(candle_type: TCandleType):
     mark_dataload_start(candle_type)
     "You must call this function from view controler uusing task"
@@ -88,4 +91,3 @@ def download_process_data_internal(candle_type: TCandleType):
 
 # test
 load_data_on_boot()
-print(get_df("TCS.NS", TCandleType.MIN_5))

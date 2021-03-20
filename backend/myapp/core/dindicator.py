@@ -1,13 +1,14 @@
-from myapp.core.Decorators import timed
 import numpy as np
 import pandas as pd
 import talib
 from pandas import DataFrame
 from myapp.core.symbols import symbols
 from myapp.core.RetHelper import fixDict, fixRound, verifyOrThrow
+from myapp.core.ddecorators import trace_perf
 all_range = [5, 8, 13, 50, 100, 200]
 
 
+@trace_perf
 def process_inplace(df: DataFrame):
     # If somevalue is nan and all calculation just dont work
     df.fillna(method='ffill', inplace=True)

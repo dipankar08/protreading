@@ -1,3 +1,4 @@
+from typing import Any
 from flask.wrappers import Request
 
 
@@ -25,3 +26,17 @@ def get_param_or_throw(request: Request, key):
         return res
     else:
         raise Exception("You must send a `{}` with the request".format(key))
+
+
+def get_param_or_default(request: Request, key: str, defl: Any):
+    res = request.args.get(key)
+    if res:
+        return res
+    else:
+        return defl
+
+
+def str_to_list(inp: str):
+    if not inp:
+        return []
+    return [x.strip() for x in inp.split(",") if x.strip() != '']

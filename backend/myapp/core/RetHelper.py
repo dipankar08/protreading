@@ -29,33 +29,6 @@ def buildNotImplemented():
     return buildError("This endpoint not yet supported", "Ask Dipankar to implement this feature")
 
 
-def getParamFromRequest(request, params):
-    res = {}
-    for v in params:
-        if not request.args.get(v):
-            raise Exception(
-                "Sorry, the request is missing params: {}".format(v))
-        res[v] = request.args.get(v)
-    return res
-
-
-def ensureParmasInRequest(request, params):
-    for v in params:
-        if not request.args.get(v):
-            raise Exception(
-                "Sorry, the request is missing params: {}".format(v))
-        else:
-            request.view_args[v] = request.args.get(v)
-
-
-def ensureProvidedDefaultInRequest(request, params: Dict):
-    for (k, v) in params.items():
-        if not request.args.get(k):
-            request.view_args[k] = v
-        else:
-            request.view_args[k] = request.args.get(k)
-
-
 def verifyOrThrow(cond: bool, msg="Assert fails"):
     if not cond:
         raise Exception(
