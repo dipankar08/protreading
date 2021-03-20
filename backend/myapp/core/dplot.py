@@ -7,18 +7,20 @@ from pandas.core.frame import DataFrame
 import yfinance as yf
 import mplfinance as fplt
 from myapp.core import dglobaldata
+from myapp.core import dlog
 import base64
 
 
-@dump_args
-def get_endcoded_png_for_chart(symbol, candle_type, duration, reload):
+def get_endcoded_png_for_chart(symbol: str, candle_type: TCandleType, duration: str, reload: str):
+    dlog.d("get_endcoded_png_for_chart called with symbol:{}, type:{}, duration:{}".format(
+        symbol, candle_type, duration))
     import matplotlib
     matplotlib.use('Agg')
     path = "datasets/cache/screenshot/{}-{}-{}.png".format(
-        symbol, candle_type, duration)
+        symbol, candle_type.value, duration)
     if not os.path.exists(path) or reload == "1":
         df = dglobaldata.get_df(
-            symbol, TCandleType(candle_type), int(duration))
+            symbol, candle_type, int(duration))
         build_chart_and_save(symbol, df, path)
 
     with open(path, "rb") as binary_file:

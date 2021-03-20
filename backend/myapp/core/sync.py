@@ -8,3 +8,6 @@ with open('myapp/core/sync.json') as json_file:
         SUPPORT_SYMBOL[p['key']] = p['text']
 
 # print(symbols)
+SUPPORTED_CHART_DURATION = [
+    "30", "60"
+]
