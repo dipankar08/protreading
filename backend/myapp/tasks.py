@@ -53,5 +53,5 @@ def plot_chart_all() -> dict:
     "Build chart for all item"
     for symbol in SUPPORT_SYMBOL.keys():
         dplot.get_endcoded_png_for_chart(
-            symbol=symbol, candle_type=TCandleType.DAY_1, duration="30", reload="1")
+            symbol=symbol, candle_type=TCandleType.DAY_1, duration="15", reload="1")
     return buildTaskSuccess("Complated all snap shot", None)
