@@ -5,6 +5,9 @@ from flask import Flask
 from myapp import extensions
 from flask_caching import Cache
 
+from celery.schedules import crontab
+from myapp.core import dlog
+
 
 def configure_celery(app: Flask) -> Celery:
     """Configures celery instance from app, using it's config"""
@@ -30,6 +33,8 @@ def configure_celery(app: Flask) -> Celery:
         task_always_eager=app.config.get('CELERY_ALWAYS_EAGER', False)
     )
     extensions.celery.Task = ContextTask
+    dlog.d("Celery setup properly:{}".format(
+        app.config.get('CELERYBEAT_SCHEDULE', {})))
     return extensions.celery
 
 
