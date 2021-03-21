@@ -19,6 +19,8 @@ session: str = ''
 
 def init():
     global session
+    if session != '':
+        return
     try:
         data: dict = simplestore_post(
             url="{}/api/analytics/launch".format(SIMPLESTORE_ENDPOINT),
@@ -48,13 +50,11 @@ def ex(msg: str, e: Exception):
 
 
 def remote(tag: str, msg: str, extra: Dict = {}):
-    try:
-        simplestore_post(
-            url="{}/api/analytics/action".format(SIMPLESTORE_ENDPOINT),
-            data={"app_id": APP_ID, "session": session,
-                  "tag": tag, "msg": msg, "extra": extra}
-        )
-    except:
-        pass
+    d("Remote called....")
+    simplestore_post(
+        url="{}/api/analytics/action".format(SIMPLESTORE_ENDPOINT),
+        data={"app_id": APP_ID, "session": session,
+              "tag": tag, "msg": msg, "extra": extra}
+    )
 
 # setup logs

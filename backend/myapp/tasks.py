@@ -14,6 +14,10 @@ from myapp.core import dglobaldata
 from myapp.core import dplot
 from myapp.core.sync import SUPPORT_SYMBOL, SUPPORTED_CHART_DURATION
 
+# Log might needs to be inited for worker
+dlog.init()
+dlog.remote("boot_complete", "App initialized")
+
 
 def buildTaskSuccess(msg: str, out: Any):
     return {"status": "success", "msg": msg, "out": out}
