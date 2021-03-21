@@ -1,3 +1,4 @@
+from datetime import timedelta
 from myapp.core.ddecorators import log_func
 from myapp.core.rootConfig import SUPPORTED_CANDLE
 import time
@@ -56,3 +57,8 @@ def plot_chart_all() -> dict:
             dplot.get_endcoded_png_for_chart(
                 symbol=symbol, candle_type=TCandleType.DAY_1, duration=duration, reload="1")
     return buildTaskSuccess("Complated all snap shot", None)
+
+
+@celery.task(name='tasks.print')
+def hello():
+    dlog.d('task run for print')
