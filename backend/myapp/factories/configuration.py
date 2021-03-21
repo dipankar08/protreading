@@ -46,8 +46,8 @@ class Config:
             'args': {"5m": '5m'},  # Not sure the right way to pass the params
             # Run everyday after treading stop
             # this needs to fix
-            # 'schedule': crontab(minute="*/5", day_of_week="mon-fri", hour="3-10"),
+            'schedule': crontab(minute="*/5", day_of_week="mon-fri", hour="3-10"),
             # Testing
-            'schedule': crontab(minute="*/1", day_of_week="sun-mon", hour="0-23"),
+            # 'schedule': crontab(minute="*/1", day_of_week="sun-mon", hour="0-23"),
         },
     }
