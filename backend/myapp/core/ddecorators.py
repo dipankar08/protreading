@@ -1,3 +1,4 @@
+import functools
 from myapp.core import dlog
 from myapp.core import RetHelper
 import time
@@ -15,30 +16,48 @@ def make_exception_safe(func):
 
 
 def trace_perf(func):
-    def wrapper(*arg):
+    def wrapper(*args, **kwargs):
         t = time.time()
         dlog.d("\n\n>>>>>>>>>>>>>>>> STARTING {} <<<<<<<<<<<<<".format(
             func.__name__))
-        res = func(*arg)
+        res = func(*args, **kwargs)
         dlog.d("\n>>>>>>>>>>>>>>>> ENDING {}, Time taken: {} sec <<<<<<<<<<<<<\n\n".format(
             func.__name__, time.time() - t))
         return res
-
+    wrapper.__name__ = func.__name__
     return wrapper
 
 
-def log_func(func):
-    "Just log entry and exit point"
-    def wrapper(*arg):
-        t = time.time()
-        dlog.d("\n\n>>>>>>>>>>>>>>>> STARTING {} <<<<<<<<<<<<<".format(
-            func.__name__))
-        res = func(*arg)
-        dlog.d("\n>>>>>>>>>>>>>>>> ENDING {}, Time taken: {} sec <<<<<<<<<<<<<\n\n".format(
-            func.__name__, time.time() - t))
-        return res
+def log_func(remote_logging=False):
+    def actual_decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            t = time.time()
+            func_name = func.__name__
+            if remote_logging:
+                dlog.remote(func_name, "function {} started".format(func_name))
+            dlog.d("\n\n>>>>>>>>>>>>>>>> STARTING {} <<<<<<<<<<<<<".format(
+                func.__name__))
+            res = func(*args, **kwargs)
+            dlog.d("\n>>>>>>>>>>>>>>>> ENDING {}, Time taken: {} sec <<<<<<<<<<<<<\n\n".format(
+                func.__name__, time.time() - t))
+            if remote_logging:
+                dlog.remote(func_name, "function {} ended ( time taken: {} )".format(
+                    func_name, time.time() - t))
+            return res
+        return wrapper
+    return actual_decorator
 
-    return wrapper
+
+def log_decorator(log_enabled):
+    def actual_decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            if log_enabled:
+                print("Calling Function: " + func.__name__)
+            return func(*args, **kwargs)
+        return wrapper
+    return actual_decorator
 
 
 def dump_args(func):

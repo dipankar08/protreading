@@ -25,18 +25,29 @@ class Config:
         #    'task': 'tasks.print',
         #    'schedule': crontab(),
         # },
+
         'test-celery': {
             'task': 'tasks.code_api.plot_chart_all',
             # Run everyday after treading stop
-            'schedule': crontab(hour=10, minute=5),  # tested
+            'schedule': crontab(hour=10, minute=10),  # tested
         },
+        # At the end of the day update the 1D data
+        'snapshot-1d': {
+            'task': 'tasks.code_api.snapshot',
+            'args': {"1d": '1d'},  # Not sure the right way to pass the params
+            # Run everyday after treading stop
+            # this needs to fix
+            'schedule': crontab(hour=10, minute=5),
+        },
+
+        # At end of each min, update the 5 min data
         'snapshot-5min': {
             'task': 'tasks.code_api.snapshot',
-            'args': '5m',
+            'args': {"5m": '5m'},  # Not sure the right way to pass the params
             # Run everyday after treading stop
             # this needs to fix
             # 'schedule': crontab(minute="*/5", day_of_week="mon-fri", hour="3-10"),
             # Testing
-            'schedule': crontab(minute="*/5", day_of_week="sun-mon", hour="14-15"),
+            'schedule': crontab(minute="*/1", day_of_week="sun-mon", hour="0-23"),
         },
     }
