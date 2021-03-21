@@ -20,6 +20,13 @@ pipenv shell
 which python3
 
 
+======== RADIS
+
+sudo apt update
+sudo apt install redis-server
+sudo systemctl status redis
+
+
 =============. Installing TA Lib =====================
 #>> Pip gives clang erro
 # >>> brew install ta-lib 
@@ -44,7 +51,7 @@ sudo snap install --classic certbot
 sudo certbot certonly --standalone
 There was a permission issue, you need to use root and then run the serevre
 sudo chown ubuntu:ubuntu /etc/letsencrypt/live/realtime.grodok.com/privkey.pem
-
+sudo chown <user> -R /etc/letsencrypt
 
 
 
