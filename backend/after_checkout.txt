@@ -1,17 +1,23 @@
-1. Install pip env
-https://gist.github.com/planetceres/8adb62494717c71e93c96d8adad26f5c
-2. pipenv install
+1. Install pip env\: https://gist.github.com/planetceres/8adb62494717c71e93c96d8adad26f5c
+==================================
+echo 'export PATH="${HOME}/.local/bin:$PATH"' >> ~/.bashrc
 
-#############. NOT NEEDED =========
-# You must run on virtaul envirmnet
->>> sudo apt-get install python3-pip
->>> sudo pip3 install virtualenv 
->> create: virtualenv -p python3.8 venv 
->>> source venv/bin/activate
->>> which python3
->>> pip3 install -r requirements.txt ( add file in requirements)
+# Install right python
+sudo apt-get update
+sudo apt-get install python3.8
+sudo rm /usr/bin/python3
+sudo ln -s /usr/bin/python3.8 /usr/bin/python3
 
-# Installation is complicated
+#install pip3
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3 get-pip.py --force-reinstall
+#python3 -m pip install --user pipenv
+
+#install package
+python3 --version
+pipenv install
+pipenv shell
+which python3
 
 
 =============. Installing TA Lib =====================
@@ -20,20 +26,17 @@ https://gist.github.com/planetceres/8adb62494717c71e93c96d8adad26f5c
 # export ARCHFLAGS="-arch x86_64"; /usr/bin/python3 -m pip install --user --upgrade ta-lib
 
 
-In ubuntu:
-sudo ln -s /usr/bin/python3.8 /usr/bin/python3
-sudo apt-get install python3.8-dev
-
 Download : https://deac-ams.dl.sourceforge.net/project/ta-lib/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz
 https://mrjbq7.github.io/ta-lib/install.html
 
+wget https://deac-ams.dl.sourceforge.net/project/ta-lib/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz
 tar -xzf ta-lib-0.4.0-src.tar.gz
 cd ta-lib/
 ./configure --prefix=/usr
 make
 sudo make install
 
-source venv/bin/activate
+pipenv shell
 export ARCHFLAGS="-arch x86_64"; pip3 install ta-lib
 
 =========== SETUP HTTPS ======================
@@ -43,3 +46,14 @@ There was a permission issue, you need to use root and then run the serevre
 sudo chown ubuntu:ubuntu /etc/letsencrypt/live/realtime.grodok.com/privkey.pem
 
 
+
+
+========== `older=========
+#############. NOT NEEDED =========
+# You must run on virtaul envirmnet
+>>> sudo apt-get install python3-pip
+>>> sudo pip3 install virtualenv 
+>> create: virtualenv -p python3.8 venv 
+>>> source venv/bin/activate
+>>> which python3
+>>> pip3 install -r requirements.txt ( add file in requirements)
