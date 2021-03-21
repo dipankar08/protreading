@@ -41,9 +41,12 @@ def task():
     if task == "snapshot_all":
         task_id = tasks.snapshot_pipeline_all.delay()
         return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
-    if task == "chart_all":
+    elif task == "chart_all":
         task_id = tasks.plot_chart_all.delay()
         return buildSuccess("task plot_chart_all submitted", {"status_url": "/result/{}".format(task_id)})
+    elif task == "print":
+        task_id = tasks.print_hello.delay()
+        return buildSuccess("task print_hello submitted", {"status_url": "/result/{}".format(task_id)})
     else:
         return buildError("Task not found")
 

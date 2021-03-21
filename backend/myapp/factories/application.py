@@ -6,6 +6,7 @@ from myapp.controllers.sample import home
 from myapp.controllers.core_api import core_api
 from myapp.factories.configuration import Config
 from flask_cors import CORS, cross_origin
+from myapp.core import dlog
 
 
 def create_application() -> Flask:

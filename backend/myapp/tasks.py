@@ -20,7 +20,7 @@ def buildTaskSuccess(msg: str, out: Any):
 
 
 @celery.task(name="tasks.simple_task")
-@log_func
+@log_func(remote_logging=True)
 def simple_task(argument: str) -> str:
     sleep_for = random.randrange(5, 11)
     print("Going to sleep for {} seconds...".format(sleep_for))
@@ -32,24 +32,27 @@ def simple_task(argument: str) -> str:
 
 
 @celery.task(name="tasks.code_api.snapshot")
-@log_func
-def snapshot_pipeline(argument: str) -> dict:
+@log_func(remote_logging=True)
+def snapshot_pipeline(candle_type: str) -> dict:
     "This will download - process - and save the file as pkl"
-    candle_type = TCandleType(argument)
+    print(candle_type)
+    candle_type = TCandleType(candle_type)
     return dglobaldata.download_process_data_internal(candle_type)
 
 
 @celery.task(name="tasks.code_api.snapshot_all")
-@log_func
+@log_func(remote_logging=True)
 def snapshot_pipeline_all() -> dict:
     "This will download - process - and save the file as pkl"
+    dlog.remote("snapshot_pipeline_all", "task snapshot_pipeline_all started")
     for x in SUPPORTED_CANDLE:
         dglobaldata.download_process_data_internal(x)
+    dlog.remote("snapshot_pipeline_all", "task snapshot_pipeline_all ended")
     return buildTaskSuccess("Complated all snap shot", None)
 
 
 @celery.task(name="tasks.code_api.plot_chart_all")
-@log_func
+@log_func(remote_logging=True)
 def plot_chart_all() -> dict:
     "Build chart for all item"
     for duration in SUPPORTED_CHART_DURATION:
@@ -60,5 +63,6 @@ def plot_chart_all() -> dict:
 
 
 @celery.task(name='tasks.print')
-def hello():
+@log_func(remote_logging=True)
+def print_hello():
     dlog.d('task run for print')
