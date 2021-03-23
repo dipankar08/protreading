@@ -6,7 +6,12 @@
         "python.languageServer": "Pylance",
         "cSpell.words": [
             "Radis",
+            "ddecorators",
+            "dfilter",
             "dglobaldata",
+            "dhighlights",
+            "dlog",
+            "dplot",
             "dredis",
             "inplace",
             "jsonify"
