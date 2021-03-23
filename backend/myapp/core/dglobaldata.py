@@ -15,6 +15,10 @@ _candleTypeToDataFrameMap: Dict[str, pd.DataFrame] = {}
 _last_update_ts: Dict[str, int] = {}
 
 
+def reportNAN(data):
+    dlog.e("NAN found for the item : {}".format(data))
+
+
 def mark_dataload_start(candle_type: TCandleType):
     dredis.set("download_start_{}".format(candle_type.value), "1")
 

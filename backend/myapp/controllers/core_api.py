@@ -2,7 +2,7 @@
 from myapp.core.helper import get_param_or_default, get_param_or_throw, str_to_list
 from myapp.core.dtypes import TCandleType
 # from myapp.core.FastStorage import FastStorage
-from flask import Blueprint, request
+from flask import Blueprint, json, request
 from myapp import tasks
 from myapp.extensions import cache
 from myapp.core.RetHelper import buildError, buildSuccess, buildException
@@ -18,6 +18,7 @@ from myapp.core import dfilter
 from myapp.core import dplot
 from myapp.core.ddecorators import make_exception_safe
 from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core import dhighlights
 
 
 @core_api.before_request
@@ -47,6 +48,8 @@ def task():
     elif task == "print":
         task_id = tasks.print_hello.delay()
         return buildSuccess("task print_hello submitted", {"status_url": "/result/{}".format(task_id)})
+    elif task == 'highlights':
+        return buildSuccess("calculated", dhighlights.build_highlights())
     else:
         return buildError("Task not found")
 
@@ -68,6 +71,19 @@ def clearcache():
     # cache.delete_many("flask_cache_view//status") >> NOT WORKS
     dredis.clear(get_param_or_throw(request, "key"))
     return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
+
+
+@core_api.route('/highlights')
+@make_exception_safe
+def highlights():
+    " This will delete cache for all the data "
+    # cache.delete_memoized(status)  >>> NOT WORKS
+    # cache.delete_many("flask_cache_view//status") >> NOT WORKS
+    hl = dredis.get("india_highlights", None)
+    if hl:
+        return buildSuccess("Highlights returned", json.loads(hl))
+    else:
+        return buildError("No highlights is available")
 
 
 @ cross_origin()

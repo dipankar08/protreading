@@ -7,7 +7,7 @@ from myapp.core.symbols import symbols
 
 
 @trace_perf
-def filterstock(condition, columns=[]):
+def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
     dlog.d('[INFO] Running scans for condition: {}, columns: {}'.format(
         condition, columns))
     interval_df = dglobaldata.get_all_data()
@@ -24,12 +24,26 @@ def filterstock(condition, columns=[]):
                     selected_one = {}
                     selected_one['symbol'] = symbol
                     selected_one['name'] = name
-                    selected_one['close'] = np.round(
-                        interval_df['1d'][symbol].iloc[-1]['close'], 2),
+
+                    selected_one['close'] = str(np.round(
+                        interval_df['1d'][symbol].iloc[-1]['close'], 2))
+
+                    if selected_one['close'] == "nan":
+                        dglobaldata.reportNAN(selected_one)
+                        continue
+
                     selected_one['volume'] = str(
-                        interval_df['1d'][symbol].iloc[-1]['volume']),
+                        interval_df['1d'][symbol].iloc[-1]['volume'])
+                    if selected_one['volume'] == "nan":
+                        dglobaldata.reportNAN(selected_one)
+                        continue
+
                     selected_one['change'] = str(
-                        interval_df['1d'][symbol].iloc[-1]['close_change_percentage']),
+                        interval_df['1d'][symbol].iloc[-1]['close_change_percentage'])
+                    if selected_one['change'] == "nan":
+                        dglobaldata.reportNAN(selected_one)
+                        continue
+
                     if columns:
                         for c in columns:
                             if c:
@@ -42,6 +56,16 @@ def filterstock(condition, columns=[]):
 
     except Exception as e:
         raise e
+    # Filter None
+
+    # Do sort
+    if sort_by:
+        result.sort(key=lambda x: x.get(sort_by.replace("-", "")),
+                    reverse=sort_by[0] != "-")
+
+    # Do limit
+    if limit:
+        result = result[:limit]
     return result
 
 
@@ -59,20 +83,23 @@ def resolveIndicatorExpression(expression: str):
             return ('change', "interval_df['1d'][symbol].iloc[-1]['close_change_percentage']")
         else:
             return
-
-    verifyOrThrow("indicator:")
     indicator_tokens = expression.split(":")
     interval = indicator_tokens[1]  # it can be day, m5, m10, m15
     # Note that we have plus the offset, thus it generates like 0-1, -1-1, -2-1 ...
     offset = '{} + offset'.format(indicator_tokens[2])
     indicator = indicator_tokens[3]
-    indicator_text = "{}[{}] {}".format(
-        indicator_tokens[1], indicator_tokens[2], indicator_tokens[3])
+    #indicator_text = "{}[{}] {}".format(indicator_tokens[1], indicator_tokens[2], indicator_tokens[3])
+    indicator_text = expression.replace("indicator:", "")
     return (indicator_text, 'interval_df["{}"][symbol].iloc[{}]["{}"]'.format(
         interval, offset, indicator))
 
 
 def resolveCondition(cond: str):
+    # Spacial case when you want to skip the condition
+    if cond.lower() == "true" or cond == "1":
+        return "True"
+
+    # Now process it
     cond = cond.replace("\t", " ")
     cond = cond.replace("\n", " ")
     cond = cond.replace("\r", " ")

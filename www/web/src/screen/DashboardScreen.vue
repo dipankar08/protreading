@@ -1,39 +1,51 @@
 <template>
-  <div class="d_layout_col pane_home responsive_container">
-    <div class="d_layout_row">
-      <p class="header_section d_layout_fill">Home</p>
+  <div class="d_layout_col pane_home d_m10">
+    <div class="d_layout_row hide">
       <a-button type="primary" @click="refresh_count++"><span class="mdi mdi-reload d_mr10"></span>Refresh</a-button>
     </div>
-    <div class="d_layout_row d_fullscreen d_layout_wrap responsive">
-      <div class="info_box" v-for="item in filter_id_list" :key="item">
-        <FilterBox :filter_id="item" :refresh_count="refresh_count" />
-      </div>
+
+    <div class="d_layout_row d_fullscreen d_layout_wrap tables">
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
     </div>
   </div>
 </template>
 <script>
-import FilterBox from "@/helper/FilterBox";
+//import FilterBox from "@/helper/FilterBox";
+import SimpleTable from "@/common/vue/SimpleTable.vue";
 export default {
   components: {
-    FilterBox,
+    //FilterBox,
+    SimpleTable,
   },
   data() {
     return {
+      table_data: [
+        { name: "dip", roll: 1 },
+        { name: "dip", roll: 1 },
+        { name: "dip", roll: 1 },
+        { name: "dip", roll: 1 },
+        { name: "dip", roll: 1 },
+      ],
       refresh_count: 0,
-      filter_id_list: ["603ae151001537253e14d305", "603ae109001537253e14d2cc", "603ae42f001537253e14d44f", "603ae3bb001537253e14d43d"],
     };
   },
 };
 </script>
 <style scoped lang="scss">
 .pane_home {
-  .group {
+  .tables {
     .info_box {
       height: 400px;
-      margin: 30px 0;
+      width: calc(25% - 20px);
+      margin: 10px;
       padding: 0px;
-      &:only-child {
-      }
     }
   }
 }
