@@ -1,3 +1,4 @@
+from myapp.core.dnetwork import ping_backend
 import traceback
 from typing import Dict
 
@@ -12,6 +13,7 @@ def returnAsJson(dict):
 
 
 def buildSuccess(msg: str = "`Successfully executed", out=None):
+    ping_backend()
     return returnAsJson({'status': 'success', 'msg': msg, 'out': out, "time": 'deleted'})
 
 
