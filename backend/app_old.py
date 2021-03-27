@@ -34,7 +34,7 @@ app = Flask(__name__)
 # COR
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-domain = "rc1.grodok.com"
+domain = "api.grodok.com"
 # Cache
 config = {
     "DEBUG": True,          # some Flask specific configs

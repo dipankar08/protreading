@@ -1,4 +1,5 @@
 from datetime import timedelta
+from myapp.core.dnetwork import ping_celery
 from myapp.core.ddecorators import log_func
 from myapp.core.rootConfig import SUPPORTED_CANDLE
 import time
@@ -40,6 +41,7 @@ def simple_task(argument: str) -> str:
 def snapshot_pipeline(candle_type: str) -> dict:
     "This will download - process - and save the file as pkl"
     print(candle_type)
+    ping_celery()
     candle_type = TCandleType(candle_type)
     return dglobaldata.download_process_data_internal(candle_type)
 
@@ -48,6 +50,7 @@ def snapshot_pipeline(candle_type: str) -> dict:
 @log_func(remote_logging=True)
 def snapshot_pipeline_all() -> dict:
     "This will download - process - and save the file as pkl"
+    ping_celery()
     dlog.remote("snapshot_pipeline_all", "task snapshot_pipeline_all started")
     for x in SUPPORTED_CANDLE:
         dglobaldata.download_process_data_internal(x)
@@ -59,6 +62,7 @@ def snapshot_pipeline_all() -> dict:
 @log_func(remote_logging=True)
 def plot_chart_all() -> dict:
     "Build chart for all item"
+    ping_celery()
     for duration in SUPPORTED_CHART_DURATION:
         for symbol in SUPPORT_SYMBOL.keys():
             dplot.get_endcoded_png_for_chart(
@@ -69,4 +73,5 @@ def plot_chart_all() -> dict:
 @celery.task(name='tasks.print')
 @log_func(remote_logging=True)
 def print_hello():
+    ping_celery()
     dlog.d('task run for print')

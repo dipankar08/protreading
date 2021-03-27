@@ -1,4 +1,5 @@
 
+from myapp.core.dnetwork import ping_backend
 from myapp.core.helper import get_param_or_default, get_param_or_throw, str_to_list
 from myapp.core.dtypes import TCandleType
 # from myapp.core.FastStorage import FastStorage
@@ -31,6 +32,7 @@ def before_request_func():
 @make_exception_safe
 def status():
     "status of the app"
+    ping_backend()
     return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
 
 

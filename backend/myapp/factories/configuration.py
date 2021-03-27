@@ -25,7 +25,6 @@ class Config:
         #    'task': 'tasks.print',
         #    'schedule': crontab(),
         # },
-
         'test-celery': {
             'task': 'tasks.code_api.plot_chart_all',
             # Run everyday after treading stop
