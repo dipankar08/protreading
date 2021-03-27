@@ -51,10 +51,13 @@ def ex(msg: str, e: Exception):
 
 def remote(tag: str, msg: str, extra: Dict = {}):
     d("Remote called....")
-    simplestore_post(
+    try:
+     simplestore_post(
         url="{}/api/analytics/action".format(SIMPLESTORE_ENDPOINT),
         data={"app_id": APP_ID, "session": session,
               "tag": tag, "msg": msg, "extra": extra}
-    )
+     )
+    except:
+     pass
 
 # setup logs
