@@ -3,5 +3,9 @@ CACHE_TIMEOUT_15MIN = 15 * 60
 CACHE_TIMEOUT_30MIN = 15 * 60
 CACHE_TIMEOUT_1HOUR = 60 * 60
 CACHE_TIMEOUT_1DAY = 24 * 60 * 60
+<<<<<<< HEAD
 SIMPLESTORE_ENDPOINT = "https://api.grodok.com"
+=======
+SIMPLESTORE_ENDPOINT = "http://api.grodok.com"
+>>>>>>> 4316679f30d6ad74ac3f4cea03afe28f996acf3f
 APP_ID = "protreading"
