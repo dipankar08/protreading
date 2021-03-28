@@ -65,6 +65,13 @@ def snapshot_intra():
     return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
 
 
+@cross_origin()
+@core_api.route('/summary')
+@make_exception_safe
+def summary():
+    return buildSuccess("calculated", dhighlights.build_highlights())
+
+
 @core_api.route('/clearcache')
 @make_exception_safe
 def clearcache():

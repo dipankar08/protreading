@@ -1,3 +1,4 @@
+import os
 from typing import Any
 from flask.wrappers import Request
 
@@ -40,3 +41,16 @@ def str_to_list(inp: str):
     if not inp:
         return []
     return [x.strip() for x in inp.split(",") if x.strip() != '']
+
+# Please Make sure you have a .env file inside backend project
+# pipenv will automatillay load it.
+
+
+def isDebug() -> bool:
+    return os.getenv('DEBUG') == "1"
+
+
+if isDebug():
+    print(">>> Running in DEBUG Mode ....")
+else:
+    print(">> RUNNING IN PROD")
