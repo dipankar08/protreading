@@ -53,4 +53,4 @@ def isDebug() -> bool:
 if isDebug():
     print(">>> Running in DEBUG Mode ....")
 else:
-    print(">> RUNNING IN PROD")
+    print(">> RUNNING IN PROD MODE .....")
