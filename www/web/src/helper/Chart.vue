@@ -6,7 +6,7 @@
       </p>
       <span class="mdi mdi-reload mdi_btn" @click="loadChart(true)"></span>
     </div>
-    <img :src="img" />
+    <img :src="img" v-show="!loading" />
     <content-placeholders v-show="loading">
       <content-placeholders-heading :img="true" />
       <content-placeholders-text :lines="3" />

@@ -2,7 +2,7 @@
   <div class="d_layout_col price_table">
     <div class="d_layout_row d_layout_space_between row" v-for="(item, index) in data" :key="index">
       <div class="d_layout_col d_mr10">
-        <p class="name">{{ item.name }}</p>
+        <p class="name" @click="openChart(item.symbol)">{{ item.name }}</p>
         <p class="symbol">{{ item.symbol }}</p>
       </div>
       <div class="d_layout_col">
@@ -14,11 +14,16 @@
 </template>
 
 <script>
+import { localEvent } from "../localEvent";
 export default {
   props: {
     data: Array, // {key:, value:}
   },
-  methods: {},
+  methods: {
+    openChart(symbol) {
+      localEvent.notify("chart_dialog", symbol);
+    },
+  },
 };
 </script>
 
@@ -31,6 +36,10 @@ export default {
       color: #11111199;
       font-size: 15px;
       line-height: 1.5;
+      &:hover {
+        color: #dd0f70;
+        cursor: pointer;
+      }
     }
     .symbol {
       color: #11111144;
