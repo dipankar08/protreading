@@ -1,5 +1,6 @@
 # pyright: strict
 import logging
+from myapp.core.helper import isDebug
 from typing import Dict
 from myapp.core.constant import APP_ID, SIMPLESTORE_ENDPOINT
 from myapp.core.dnetwork import simplestore_post
@@ -18,6 +19,9 @@ session: str = ''
 
 
 def init():
+    if isDebug():
+        d("ignore remote log in debug mode")
+        return
     global session
     if session != '':
         return
@@ -51,13 +55,16 @@ def ex(msg: str, e: Exception):
 
 def remote(tag: str, msg: str, extra: Dict = {}):
     d("Remote called....")
+    if isDebug():
+        d("ignore remote log in debug mode")
+        return
     try:
-     simplestore_post(
-        url="{}/api/analytics/action".format(SIMPLESTORE_ENDPOINT),
-        data={"app_id": APP_ID, "session": session,
-              "tag": tag, "msg": msg, "extra": extra}
-     )
+        simplestore_post(
+            url="{}/api/analytics/action".format(SIMPLESTORE_ENDPOINT),
+            data={"app_id": APP_ID, "session": session,
+                  "tag": tag, "msg": msg, "extra": extra}
+        )
     except:
-     pass
+        pass
 
 # setup logs

@@ -1,3 +1,4 @@
+from myapp.core.helper import isDebug
 import requests
 from json import loads
 # from myapp.core import dlog << cercular deps
@@ -35,6 +36,9 @@ ping_backend_ts = datetime.datetime(2012, 3, 5, 23, 8, 15)
 
 
 def ping_celery():
+    if isDebug():
+        # Donot track the ping from debug
+        return
     global ping_celery_ts
     if (datetime.datetime.now() - ping_celery_ts).total_seconds() < 60 * 60:
         return
@@ -43,6 +47,9 @@ def ping_celery():
 
 
 def ping_backend():
+    if isDebug():
+        # Donot track the ping from debug
+        return
     global ping_backend_ts
     if (datetime.datetime.now() - ping_backend_ts).total_seconds() < 60 * 60:
         return
