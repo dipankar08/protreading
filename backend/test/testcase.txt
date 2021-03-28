@@ -1,6 +1,6 @@
 => context => server => http://127.0.0.1:5000
 => GET => {{server}} =>  Ask Dipankar to implement this feature
-=> GET => {{server}}/status =>  success
+=> GET => {{server}}/status =>  task submitted
 #=> GET => {{server}}/snapshot?candle_type=1d=> success
 => GET => {{server}}/snapshot?candle_type=5m => success
 => GET => {{server}}/snapshot?candle_type=15m=> success
@@ -9,3 +9,5 @@
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open =>success
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open&candle_type=5m&duration=30 =>success
 => GET => {{server}}/chart?symbol=WIPRO.NS => success
+=> GET => {{server}}/summary => success
+=> GET => {{server}}/task?task=snapshot_all => task submitted
