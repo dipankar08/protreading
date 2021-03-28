@@ -10,6 +10,11 @@
       </p>
       <p class="dmb20">Protreading.com .@2020 All right reserved.</p>
     </div>
+    <a-modal :visible="chart_dialog_visible" title="Quick chart" :footer="null" @cancel="chart_dialog_visible = false" centered>
+      <div class="d_layout_col">
+        <chart candle_type="1d" duration="30" :symbol="chart_dialog_symbol" />
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -17,13 +22,17 @@ import Navigation from "./helper/Navigation.vue";
 import { getCookie, setCookie } from "./common/helper.ts";
 import { localEvent } from "./common/localEvent";
 import { markLogin } from "./helper/lib";
+import Chart from "./helper/Chart.vue";
 export default {
   components: {
     Navigation,
+    Chart,
   },
   data() {
     return {
       hide_nav: true,
+      chart_dialog_visible: false,
+      chart_dialog_symbol: null,
     };
   },
   methods: {
@@ -38,6 +47,10 @@ export default {
             this.$router.push({ name: "landing" }).catch(() => {});
             setCookie("auth", null);
           }
+          break;
+        case "chart_dialog":
+          this.chart_dialog_visible = true;
+          this.chart_dialog_symbol = data;
           break;
       }
     },
