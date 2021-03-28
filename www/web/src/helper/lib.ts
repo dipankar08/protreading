@@ -3,7 +3,7 @@ import { TArray, TObject, TOnError, TOnSuccess } from "@/common/types";
 import { rootVue } from "@/main";
 import _ from "underscore";
 import { LiveDataArray, LiveObject } from "../common/livedata";
-let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://api.grodok.com:5000";
+let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://dev.api.grodok.com:5000";
 console.log(`Endpoint --> ${STOCK_ENDPOINT}`);
 
 /// Define Live Data
@@ -70,6 +70,10 @@ export function delete_scan(id: string, onSuccess: TOnSuccess, onError: TOnError
 }
 export function get_scan_for_id(id: string, onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan?id=${id}`, onSuccess, onError);
+}
+
+export function get_summary(onSuccess: TOnSuccess, onError: TOnError) {
+  GetOnSimpleStore(`${STOCK_ENDPOINT}/summary`, onSuccess, onError);
 }
 
 export function load_chart(

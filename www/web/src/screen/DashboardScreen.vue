@@ -1,51 +1,134 @@
 <template>
-  <div class="d_layout_col pane_home d_m10">
+  <div class="d_layout_col pane_home responsive_container">
     <div class="d_layout_row hide">
       <a-button type="primary" @click="refresh_count++"><span class="mdi mdi-reload d_mr10"></span>Refresh</a-button>
     </div>
+    <p class="header_out_box">Market Overview</p>
+    <div class="info_box d_layout_row d_layout_equal d_responsive">
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Top Gainer</p>
+        <price-table :data="summary.top_gainer.data" v-if="summary.top_gainer" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Top Looser</p>
+        <price-table :data="summary.top_looser.data" v-if="summary.top_looser" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Top Active</p>
+        <price-table :data="summary.top_active.data" v-if="summary.top_active" />
+      </div>
+    </div>
 
-    <div class="d_layout_row d_fullscreen d_layout_wrap tables">
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
-      <div class="info_box"><simple-table :data="table_data" title="Sample Table" /></div>
+    <p class="header_out_box">Leader board</p>
+    <div class="info_box d_layout_row d_layout_equal">
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Only Buyer</p>
+        <price-table :data="summary.only_buyer.data" v-if="summary.only_buyer" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Only Seller</p>
+        <price-table :data="summary.only_seller.data" v-if="summary.only_seller" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">52 Week High</p>
+        <price-table :data="summary.week_52_high.data" v-if="summary.week_52_high" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">52 Week Low</p>
+        <price-table :data="summary.week_52_low.data" v-if="summary.week_52_low" />
+      </div>
+    </div>
+    <p class="header_out_box">Market Trends</p>
+    <div class="info_box d_layout_row d_layout_equal">
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">3 days uptrend</p>
+        <price-table :data="summary.uptrend_3_days.data" v-if="summary.uptrend_3_days" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">3 days downtread</p>
+        <price-table :data="summary.downtrend_3_days.data" v-if="summary.downtrend_3_days" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Overbought</p>
+        <price-table :data="summary.overbought.data" v-if="summary.overbought" />
+      </div>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">OverSold</p>
+        <price-table :data="summary.oversold.data" v-if="summary.oversold" />
+      </div>
+    </div>
+
+    <p class="header_out_box">Prediction</p>
+    <div class="info_box d_layout_row d_layout_equal">
+      <div class="d_layout_col">
+        <p class="header_in_box">Today's Breakout</p>
+      </div>
+      <div class="d_layout_col">
+        <p class="header_in_box">Today's breakdown</p>
+      </div>
+      <div class="d_layout_col">
+        <p class="header_in_box">Tomorrow' breakout</p>
+      </div>
+      <div class="d_layout_col">
+        <p class="header_in_box">Tomorrow's breakdown</p>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import PriceTable from "../common/vue/PriceTable.vue";
+import { get_scan_for_id, get_summary } from "../helper/lib";
 //import FilterBox from "@/helper/FilterBox";
-import SimpleTable from "@/common/vue/SimpleTable.vue";
+// import SimpleTable from "@/common/vue/SimpleTable.vue";
 export default {
   components: {
+    PriceTable,
     //FilterBox,
-    SimpleTable,
+    //SimpleTable,
   },
   data() {
     return {
-      table_data: [
-        { name: "dip", roll: 1 },
-        { name: "dip", roll: 1 },
-        { name: "dip", roll: 1 },
-        { name: "dip", roll: 1 },
-        { name: "dip", roll: 1 },
-      ],
       refresh_count: 0,
+      summary: {
+        top_gainer: { data: [] },
+        top_looser: { data: [] },
+        top_active: { data: [] },
+        only_buyer: { data: [] },
+        only_seller: { data: [] },
+        week_52_high: { data: [] },
+        week_52_low: { data: [] },
+      },
     };
+  },
+  mounted() {
+    let _this = this;
+    get_summary(
+      function(data, org) {
+        console.log(data);
+        _this.summary = data;
+      },
+      function(err, org) {}
+    );
   },
 };
 </script>
 <style scoped lang="scss">
 .pane_home {
-  .tables {
-    .info_box {
-      height: 400px;
-      width: calc(25% - 20px);
-      margin: 10px;
-      padding: 0px;
+  .info_box {
+    padding: 0px;
+    .info_box_holder {
+      padding: 20px;
+      &:nth-child(even) {
+        //background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);
+      }
+      &:nth-child(odd) {
+        //background-image: linear-gradient(-225deg, #fffeff 0%, #d7fffe 100%);
+      }
+      .header_in_box {
+        font-size: 18px;
+        color: black;
+        padding-bottom: 20px;
+      }
     }
   }
 }
