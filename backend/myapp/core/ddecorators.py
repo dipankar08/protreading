@@ -2,6 +2,7 @@ import functools
 from myapp.core import dlog
 from myapp.core import RetHelper
 import time
+from myapp.core import dredis
 
 
 def make_exception_safe(func):
@@ -72,3 +73,43 @@ def dump_args(func):
             '%s=%r' % entry
             for entry in zip(argnames, args[:len(argnames)]) + [("args", list(args[len(argnames):]))] + [("kwargs", kwargs)]) + ")")
     return echo_func
+
+
+import pickle
+
+
+def smart_cache(cache_key: str):
+    " The cache will store in redis - we will call picket to serialize"
+    def actual_decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            t = time.time()
+            func_name = func.__name__
+            # Check if cache exist.
+            cache = dredis.getraw(cache_key)
+            cache_key_loading = "{}_loading".format(cache_key)
+            cache_key_ts = "{}_ts".format(cache_key)
+            if cache:
+                # TODO CHECK Cache expaire
+                return pickle.loads(cache)
+            # Check global lock
+            if dredis.get(cache_key_loading) == "1":
+                raise Exception(
+                    "{} is locked by smart cache".format(func_name))
+            # Lock
+            dredis.set(cache_key_loading, "1")
+            # We need to use try catch to avoid unlock
+            try:
+                # Execute
+                res = func(*args, **kwargs)
+                dredis.set(cache_key, pickle.dumps(res))
+                dredis.set(cache_key_ts, time.time())
+            except Exception as e:
+                dlog.ex("exception happened while executing:{}".format(func_name), e)
+                pass
+            # Unlock
+            dredis.set(cache_key_loading, "0")
+
+            return res
+        return wrapper
+    return actual_decorator

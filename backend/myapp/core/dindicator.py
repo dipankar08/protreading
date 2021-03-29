@@ -58,4 +58,11 @@ def process_inplace(df: DataFrame):
 
         df[ticker, 'sar'] = talib.SAR(df[ticker, 'high'], df[ticker, 'low'],
                                       acceleration=0.02, maximum=0.2)
+
+        df[ticker, 'atr_14'] = talib.ATR(
+            df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'], timeperiod=14)
+        df[ticker, 'natr_14'] = talib.NATR(df[ticker, 'high'], df[ticker, 'low'],
+                                           df[ticker, 'close'], timeperiod=14)
+        df[ticker, 'tr_14'] = talib.TRANGE(
+            df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'])
     return df
