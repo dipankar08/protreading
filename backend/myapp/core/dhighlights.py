@@ -173,19 +173,9 @@ ENABLED_LIST = [
 ]
 
 
-def build_highlights(ignore_cache=False):
-    if ignore_cache:
-        return build_highlights_internal()
-    else:
-        return build_highlights_with_cache()
-
-
 @smart_cache(cache_key="summary_result")
-def build_highlights_with_cache():
-    return build_highlights_internal()
-
-
-def build_highlights_internal():
+def build_highlights(ignore_cache=False):
+    "ignore_cache will override the decorator to ignore cache"
     result = {}
     global rules
     for x in rules:
@@ -200,5 +190,4 @@ def build_highlights_internal():
             limit=x.get('limit')
         )
         result[x.get('name')] = {"name": x.get('name'), "data": ret}
-    print(result)
     return result

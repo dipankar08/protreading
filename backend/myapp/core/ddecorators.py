@@ -79,19 +79,28 @@ import pickle
 
 
 def smart_cache(cache_key: str):
+    """ This is extramly smart caching with multi worker support 
+    The cache use the redis cache. This function ensure
+    - default caching over lifetime
+    - override ignore caching by passing function params.
+    - define timestamp when cache will expair.
     " The cache will store in redis - we will call picket to serialize"
+    " please pass params like ignore_cache = true to ignore caching"""
     def actual_decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            t = time.time()
+            print(args)
+            print(kwargs)
             func_name = func.__name__
-            # Check if cache exist.
-            cache = dredis.getraw(cache_key)
+
             cache_key_loading = "{}_loading".format(cache_key)
             cache_key_ts = "{}_ts".format(cache_key)
-            if cache:
-                # TODO CHECK Cache expaire
-                return pickle.loads(cache)
+            # Check if cache exist.
+            if kwargs.get('ignore_cache') != True:
+                cache = dredis.getraw(cache_key)
+                if cache:
+                    # TODO CHECK Cache expaire
+                    return pickle.loads(cache)
             # Check global lock
             if dredis.get(cache_key_loading) == "1":
                 raise Exception(
