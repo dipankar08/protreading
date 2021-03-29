@@ -14,6 +14,7 @@
             "dplot",
             "dredis",
             "inplace",
-            "jsonify"
+            "jsonify",
+            "natr"
         ]
 }

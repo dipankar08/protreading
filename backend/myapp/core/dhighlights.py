@@ -1,7 +1,44 @@
 from myapp.core.dtypes import TCandleType
 from myapp.core import dfilter
+from myapp.core.ddecorators import smart_cache
 
 rules = [
+    {
+        "name": "high_volume",
+        # DONE
+        "condition": "true",
+        "columns": [],
+        "sort_by": "volume",
+        "limit": 10,
+        "active":True,
+    },
+    {
+        "name": "high_low_gap",
+        # DONE
+        "condition": "true",
+        "columns": ["indicator:1d:0:high_low_gap_percentage"],
+        "sort_by": "indicator:1d:0:high_low_gap_percentage",
+        "limit": 10,
+        "active":True,
+    },
+    {
+        "name": "avarage_true_range",
+        # DONE
+        "condition": "true",
+        "columns": ["indicator:1d:0:atr_14"],
+        "sort_by": "indicator:1d:0:atr_14",
+        "limit": 10,
+        "active":True,
+    },
+    {
+        "name": "normalized_avarage_true_range",
+        # DONE
+        "condition": "true",
+        "columns": ["indicator:1d:0:natr_14"],
+        "sort_by": "indicator:1d:0:natr_14",
+        "limit": 10,
+        "active":True,
+    },
     {
         "name": "top_gainer",
         "condition": "true",  # DONE
@@ -92,18 +129,69 @@ rules = [
         "limit": 10,
         "active":True,
     },
+    {
+        "name": "psar_up",
+        # DONE
+        "condition": "( indicator:1d:0:sar < indicator:1d:0:low ) and ( indicator:1d:-1:sar > indicator:1d:-1:high ) and ( indicator:1d:-2:sar > indicator:1d:-2:high ) and ( indicator:1d:-3:sar > indicator:1d:-3:high )",
+        "columns": [],
+        "sort_by": "change",
+        "limit": 10,
+        "active":True,
+    },
+    {
+        "name": "psar_down",
+        # DONE
+        "condition": "( indicator:1d:0:sar > indicator:1d:0:high ) and ( indicator:1d:-1:sar < indicator:1d:-1:low ) and ( indicator:1d:-2:sar < indicator:1d:-2:low ) and ( indicator:1d:-3:sar < indicator:1d:-3:low )",
+        "columns": [],
+        "sort_by": "change",
+        "limit": 10,
+        "active":True,
+    },
 ]
 from myapp.core.constant import CACHE_TIMEOUT_1DAY, CACHE_TIMEOUT_30MIN, CACHE_TIMEOUT_5MIN
 
 from myapp.extensions import cache
 
+ENABLED_LIST = [
+    "high_volume",
+    "high_low_gap",
+    "avarage_true_range",
+    "normalized_avarage_true_range",
+    "top_gainer",
+    "top_looser",
+    "top_active",
+    "only_buyer",
+    "only_seller",
+    "52_weeks_high",
+    "52_weeks_low",
+    "overbought",
+    "oversold",
+    "uptrend_3_days",
+    "downtrend_3_days",
+    "psar_up",
+    "psar_down"
+]
 
-@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
-def build_highlights():
+
+def build_highlights(ignore_cache=False):
+    if ignore_cache:
+        return build_highlights_internal()
+    else:
+        return build_highlights_with_cache()
+
+
+@smart_cache(cache_key="summary_result")
+def build_highlights_with_cache():
+    return build_highlights_internal()
+
+
+def build_highlights_internal():
     result = {}
     global rules
     for x in rules:
         if not x.get('active'):
+            continue
+        if x.get('name') not in ENABLED_LIST:
             continue
         ret = dfilter.filterstock(
             condition=x.get('condition'),

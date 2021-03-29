@@ -60,8 +60,10 @@ def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
 
     # Do sort
     if sort_by:
-        result.sort(key=lambda x: x.get(sort_by.replace("-", "")),
-                    reverse=sort_by[0] != "-")
+        sort_key = sort_by.replace("-", "")
+        reverse = sort_by[0] != "-"
+        result = [x for x in result if x.get(sort_key) is not None]
+        result.sort(key=lambda x: x.get(sort_key), reverse=reverse)
 
     # Do limit
     if limit:
@@ -88,8 +90,8 @@ def resolveIndicatorExpression(expression: str):
     # Note that we have plus the offset, thus it generates like 0-1, -1-1, -2-1 ...
     offset = '{} + offset'.format(indicator_tokens[2])
     indicator = indicator_tokens[3]
-    #indicator_text = "{}[{}] {}".format(indicator_tokens[1], indicator_tokens[2], indicator_tokens[3])
-    indicator_text = expression.replace("indicator:", "")
+    # indicator_text = "{}[{}] {}".format(indicator_tokens[1], indicator_tokens[2], indicator_tokens[3])
+    indicator_text = expression  # Just keep the full expression
     return (indicator_text, 'interval_df["{}"][symbol].iloc[{}]["{}"]'.format(
         interval, offset, indicator))
 

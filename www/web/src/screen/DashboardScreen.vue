@@ -38,6 +38,7 @@
         <price-table :data="summary.week_52_low.data" v-if="summary.week_52_low" />
       </div>
     </div>
+
     <p class="header_out_box">Market Trends</p>
     <div class="info_box d_layout_row d_layout_equal">
       <div class="d_layout_col info_box_holder">
@@ -58,19 +59,39 @@
       </div>
     </div>
 
-    <p class="header_out_box">Prediction</p>
+    <p class="header_out_box">Volatility Trends</p>
     <div class="info_box d_layout_row d_layout_equal">
-      <div class="d_layout_col">
-        <p class="header_in_box">Today's Breakout</p>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Top Volume</p>
+        <price-table :data="summary.high_volume.data" v-if="summary.high_volume" />
       </div>
-      <div class="d_layout_col">
-        <p class="header_in_box">Today's breakdown</p>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">High Low Gap</p>
+        <price-table :data="summary.high_low_gap.data" v-if="summary.high_low_gap" />
       </div>
-      <div class="d_layout_col">
-        <p class="header_in_box">Tomorrow' breakout</p>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">ATR Analysis</p>
+        <price-table :data="summary.avarage_true_range.data" v-if="summary.avarage_true_range" />
       </div>
-      <div class="d_layout_col">
-        <p class="header_in_box">Tomorrow's breakdown</p>
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Normalized ATR</p>
+        <price-table :data="summary.normalized_avarage_true_range.data" v-if="summary.normalized_avarage_true_range" />
+      </div>
+    </div>
+
+    <p class="header_out_box">Trend Reversal(Down to Up)</p>
+    <div class="info_box d_layout_row d_layout_equal">
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Parabolic SAR Reversal</p>
+        <price-table :data="summary.psar_up.data" v-if="summary.psar_up" />
+      </div>
+    </div>
+
+    <p class="header_out_box">Trend Reversal(Up to Down)</p>
+    <div class="info_box d_layout_row d_layout_equal">
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">Parabolic SAR Reversal</p>
+        <price-table :data="summary.psar_down.data" v-if="summary.psar_down" />
       </div>
     </div>
   </div>
