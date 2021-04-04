@@ -46,6 +46,20 @@ sudo make install
 pipenv shell
 export ARCHFLAGS="-arch x86_64"; pip3 install ta-lib
 
+#### MAC SETUP ===
+1. install pipenv
+python3 -m pip install --user pipenv
+2. setup path
+echo 'export PATH="${HOME}/Library/Python/3.9/bin:$PATH"' >> ~/.bashrc
+export PATH="${HOME}/Library/Python/3.9/bin:$PATH"
+echo $PATH
+3. install package
+pipenv install
+4. check shell
+pipenv shell
+python3 --version
+which python3
+
 =========== SETUP HTTPS ======================
 sudo snap install --classic certbot
 sudo certbot certonly --standalone
