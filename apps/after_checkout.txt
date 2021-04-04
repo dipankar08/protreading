@@ -1,0 +1,2 @@
+1. run all nodejs comamnd using npx.
+like  npx react-native run-ios
