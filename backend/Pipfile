@@ -22,6 +22,7 @@ Flask = "*"
 Flask-Cors = "*"
 pyOpenSSL = "*"
 Flask-Caching = "*"
+pylint="*"
 
 [dev-packages]
 
