@@ -3,6 +3,7 @@ import numpy as np
 from myapp.core.RetHelper import fixDict, verifyOrThrow
 from myapp.core import dlog
 from myapp.core import dglobaldata
+from myapp.core import timetracker
 from myapp.core.symbols import symbols
 
 
@@ -29,19 +30,19 @@ def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
                         interval_df['1d'][symbol].iloc[-1]['close'], 2))
 
                     if selected_one['close'] == "nan":
-                        dglobaldata.reportNAN(selected_one)
+                        timetracker.reportNAN(selected_one)
                         continue
 
                     selected_one['volume'] = str(
                         interval_df['1d'][symbol].iloc[-1]['volume'])
                     if selected_one['volume'] == "nan":
-                        dglobaldata.reportNAN(selected_one)
+                        timetracker.reportNAN(selected_one)
                         continue
 
                     selected_one['change'] = str(
                         interval_df['1d'][symbol].iloc[-1]['close_change_percentage'])
                     if selected_one['change'] == "nan":
-                        dglobaldata.reportNAN(selected_one)
+                        timetracker.reportNAN(selected_one)
                         continue
 
                     if columns:

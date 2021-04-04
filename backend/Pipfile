@@ -13,17 +13,14 @@ yfinance = "*"
 matplotlib = "*"
 autopep8 = "*"
 asyncio = "*"
-mypy = "*"
 celery = "*"
 redis = "*"
 mplfinance = "*"
 gunicorn = "*"
 Flask = "*"
 Flask-Cors = "*"
-pyright = "*"
 pyOpenSSL = "*"
-Flask-Caching = "*"
-pylint="*"
+Flask-Caching = "*"          
 
 [dev-packages]
 

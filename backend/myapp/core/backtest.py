@@ -1,5 +1,5 @@
 from myapp.core.timex import time_this
-from myapp.core.processor import getDataForInterval, getSymbolIntervalCache
+#from myapp.core.indicator import getDataForInterval, getSymbolIntervalCache
 from myapp.core.RetHelper import buildNotImplemented, getCandleCountForDay, verifyOrThrow
 
 

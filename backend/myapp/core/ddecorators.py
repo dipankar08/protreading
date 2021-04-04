@@ -108,6 +108,7 @@ def smart_cache(cache_key: str):
             # Lock
             dredis.set(cache_key_loading, "1")
             # We need to use try catch to avoid unlock
+            res = None
             try:
                 # Execute
                 res = func(*args, **kwargs)
@@ -118,7 +119,6 @@ def smart_cache(cache_key: str):
                 pass
             # Unlock
             dredis.set(cache_key_loading, "0")
-
             return res
         return wrapper
     return actual_decorator

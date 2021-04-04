@@ -3,6 +3,7 @@ from myapp.core.dnetwork import ping_backend
 from myapp.core.helper import get_param_or_default, get_param_or_throw, str_to_list
 from myapp.core.dtypes import TCandleType
 # from myapp.core.FastStorage import FastStorage
+from myapp.core import timetracker
 from flask import Blueprint, json, request
 from myapp import tasks
 from myapp.extensions import cache
@@ -119,11 +120,11 @@ def chart():
 
 
 def may_schedule_fetch_data(candle_type: TCandleType) -> str:
-    if dglobaldata.is_dataload_start(candle_type):
+    if timetracker.is_dataload_start(candle_type):
         dlog.d("Skiped as a download already in progress")
         return ""
 
-    if not dglobaldata.is_data_updated(candle_type):
+    if not timetracker.is_data_updated(candle_type):
         dlog.d("Skiped data has not yet updated")
         return ""
     # schedule the task
