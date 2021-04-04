@@ -6,10 +6,18 @@ from flask.globals import g
 from flask import app, json, jsonify
 import numpy as np
 import json as JSON
+#from myapp.core.dglobaldata import _last_update_ts
+
+
+def addExtraInfo(dict):
+    ts = dict([(k, v) for k, v in _last_update_ts])
+    dict['data_timestamp'] = ts
+    return dict
 
 
 def returnAsJson(dict):
-    return jsonify(json.dumps(dict).replace('NaN', '0'))
+    data = addExtraInfo(dict)
+    return jsonify(json.dumps(data).replace('NaN', '0'))
 
 
 def buildSuccess(msg: str = "`Successfully executed", out=None):
@@ -18,6 +26,7 @@ def buildSuccess(msg: str = "`Successfully executed", out=None):
 
 
 def buildError(msg: str, help='No help is given'):
+    ping_backend()
     return returnAsJson({'status': 'error', 'msg': msg, 'out': [], 'help': help})
 
 
