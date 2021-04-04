@@ -30,6 +30,10 @@ redis-cli ping
 pipenv shell
 ./start_celery.sh
 
+8. Lininging
+../fix_perm.sh
+npm install --global pyright --user
+pyright
 8. Run the server from VS code
 
 
