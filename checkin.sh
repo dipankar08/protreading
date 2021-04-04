@@ -1,3 +1,4 @@
+echo ">>>>>> Liniting python backend ......"
 cd backend;pyright;cd -
 
 git pull
