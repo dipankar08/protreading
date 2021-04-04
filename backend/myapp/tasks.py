@@ -42,8 +42,8 @@ def snapshot_pipeline(candle_type: str) -> dict:
     "This will download - process - and save the file as pkl"
     print(candle_type)
     ping_celery()
-    candle_type = TCandleType(candle_type)
-    return dglobaldata.download_process_data_internal(candle_type)
+    _candle_type = TCandleType(candle_type)
+    return dglobaldata.download_process_data_internal(_candle_type)
 
 
 @celery.task(name="tasks.code_api.snapshot_all")

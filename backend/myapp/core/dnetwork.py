@@ -17,8 +17,8 @@ def simplestore_get(url: str) -> dict:
 
 def simplestore_post(url: str, data: dict, silent=True) -> dict:
     print("Calling POST:${}".format(url))
-    data = requests.post(url, json=data)
-    jsonData = loads(data.content)
+    data1 = requests.post(url, json=data)
+    jsonData = loads(data1.content)
     if jsonData.get('status') != 'success':
         print("{} ==> {}".format(url, str(jsonData)))
         raise Exception("simplestore_get fails for {}".format(url))

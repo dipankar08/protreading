@@ -1,7 +1,7 @@
 
 from typing import List
 from myapp.core.dtypes import TCandleType
-from myapp.core.DataLoopup import DataLookup
+from myapp.core import dglobaldata
 
 
 class TimeSeriesAPI:
@@ -22,7 +22,7 @@ class TimeSeriesAPI:
             TimeSeriesAPI.__instance = self
 
     def getTSData(self, symbol_list: List, indicator_list: List, candle_type: TCandleType, duration: int):
-        all_data = DataLookup.getInstance().getAllData()
+        all_data = dglobaldata.get_all_data()
         df1 = all_data.get(candle_type.value)
         df2 = df1.head(int(duration))
         result = {}

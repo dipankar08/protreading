@@ -7,10 +7,12 @@ from flask import app, json, jsonify
 import numpy as np
 import json as JSON
 #from myapp.core.dglobaldata import _last_update_ts
+from myapp.core import timetracker
+CANDLE_TYPE_COUNT = []
 
 
 def addExtraInfo(dict):
-    ts = dict([(k, v) for k, v in _last_update_ts])
+    ts = dict([(k, v) for k, v in timetracker._last_update_ts])
     dict['data_timestamp'] = ts
     return dict
 
@@ -22,7 +24,7 @@ def returnAsJson(dict):
 
 def buildSuccess(msg: str = "`Successfully executed", out=None):
     ping_backend()
-    return returnAsJson({'status': 'success', 'msg': msg, 'out': out, "time": 'deleted'})
+    return returnAsJson({'status': 'success', 'msg': msg, 'out': out, "time": 'Deleted'})
 
 
 def buildError(msg: str, help='No help is given'):

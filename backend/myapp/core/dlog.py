@@ -1,7 +1,8 @@
 # pyright: strict
 import logging
+
+from numpy import record
 from myapp.core.helper import isDebug
-from typing import Dict
 from myapp.core.constant import APP_ID, SIMPLESTORE_ENDPOINT
 from myapp.core.dnetwork import simplestore_post
 import traceback
@@ -26,7 +27,7 @@ def init():
     if session != '':
         return
     try:
-        data: dict = simplestore_post(
+        data: record = simplestore_post(
             url="{}/api/analytics/launch".format(SIMPLESTORE_ENDPOINT),
             data={"app_id": APP_ID, "app_version": "1.0", "device_os": "web", "device_id": "null", "device_api": "null"})
         session = data.get('out')[0].get('session')
@@ -53,7 +54,7 @@ def ex(msg: str, e: Exception):
     __logger.exception(msg, e)
 
 
-def remote(tag: str, msg: str, extra: Dict = {}):
+def remote(tag: str, msg: str, extra: record = {}):
     d("Remote called....")
     if isDebug():
         d("ignore remote log in debug mode")
