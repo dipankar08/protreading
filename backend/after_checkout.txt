@@ -1,3 +1,42 @@
+MAC SETUP
+====================================
+1. install pipenv
+python3 -m pip install --user pipenv
+2. setup path
+echo 'export PATH="${HOME}/Library/Python/3.9/bin:$PATH"' >> ~/.bashrc
+export PATH="${HOME}/Library/Python/3.9/bin:$PATH"
+echo $PATH
+3. install package
+pipenv install
+4. check shell
+pipenv shell
+python3 --version
+which python3
+
+4. install ta lib
+pipenv shell
+export ARCHFLAGS="-arch x86_64"; pip3 install ta-lib
+
+5. Install Redis
+sudo chown -R $(whoami) /usr/local/bin /usr/local/lib /usr/local/sbin
+chmod u+w /usr/local/bin /usr/local/lib /usr/local/sbin
+brew install redis
+
+6. start redis
+brew services start redis
+redis-cli ping
+
+7. Start celery ( another terminal)
+pipenv shell
+./start_celery.sh
+
+8. Run the server from VS code
+
+
+UBUNTU SETUP
+====================================
+
+
 1. Install pip env\: https://gist.github.com/planetceres/8adb62494717c71e93c96d8adad26f5c
 ==================================
 echo 'export PATH="${HOME}/.local/bin:$PATH"' >> ~/.bashrc
@@ -46,19 +85,7 @@ sudo make install
 pipenv shell
 export ARCHFLAGS="-arch x86_64"; pip3 install ta-lib
 
-#### MAC SETUP ===
-1. install pipenv
-python3 -m pip install --user pipenv
-2. setup path
-echo 'export PATH="${HOME}/Library/Python/3.9/bin:$PATH"' >> ~/.bashrc
-export PATH="${HOME}/Library/Python/3.9/bin:$PATH"
-echo $PATH
-3. install package
-pipenv install
-4. check shell
-pipenv shell
-python3 --version
-which python3
+
 
 =========== SETUP HTTPS ======================
 sudo snap install --classic certbot
