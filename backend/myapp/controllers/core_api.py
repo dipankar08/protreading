@@ -113,5 +113,8 @@ def clearcache():
     " This will delete cache for all the data "
     # cache.delete_memoized(status)  >>> NOT WORKS
     # cache.delete_many("flask_cache_view//status") >> NOT WORKS
-    dredis.clear(get_param_or_throw(request, "key"))
+    if(request.args.get('key')):
+        dredis.clear(get_param_or_throw(request, "key"))
+    else:
+        dredis.clearAll()
     return buildSuccess("Clear cache", {"random": random.randint(10, 100)})

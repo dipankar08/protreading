@@ -25,6 +25,10 @@ def clear(key):
     _redis.delete(key)
 
 
+def clearAll():
+    _redis.flushall()
+
+
 # test
 set("hello", "1")
 print(get("hello") == "1")
