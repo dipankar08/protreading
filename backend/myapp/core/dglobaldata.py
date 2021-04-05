@@ -38,7 +38,6 @@ def get_df(symbol: str, candle_type: TCandleType = TCandleType.DAY_1, duration=5
     frame: pd.DataFrame = _candleTypeToDataFrameMap.get(
         candle_type.value, None)
     if frame is None:
-        may_schedule_fetch_data(candle_type)
         raise Exception("Data is not yet avilable")
     return frame[symbol].tail(duration)
 
@@ -54,6 +53,8 @@ def download_process_data_internal(candle_type: TCandleType):
     dlog.d("Staring snapshot_pipeline")
     dlog.d("1/3 Staring snapshot_pipeline")
     download_data = ddownload.download(candle_type)
+    if download_data == "ALREADY_IN_PROGRESS":
+        return
     dlog.d("2/3 Processing data")
     processed_df = dindicator.process_inplace(download_data)
     dlog.d("3/3 Saving data")

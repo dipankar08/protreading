@@ -40,7 +40,7 @@ def reportException(ex: Exception, location=""):
                   "location": traceback.format_exc().split("\n")[-4].strip(), "type": "exception",
                   "stack": traceback.format_exc(), "args": str(ex.args)}
         )
-        dlog.d(res)
+        dlog.d(str(res))
     except Exception as ex:
         dlog.ex(ex)
 
