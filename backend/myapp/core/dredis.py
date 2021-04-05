@@ -9,7 +9,7 @@ def set(key, value):
     _redis.set(key, value)
 
 
-def get(key, defl=None):
+def get(key, defl: str = None):
     "just return as a string"
     if _redis.get(key):
         return _redis.get(key).decode('ascii')

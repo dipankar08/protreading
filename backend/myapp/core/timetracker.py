@@ -1,9 +1,13 @@
+from myapp.core.rootConfig import SUPPORTED_CANDLE
 import time
 from typing import Dict
 from myapp.core import dredis
 from myapp.core import dlog
 from myapp.core.dtypes import TCandleType
 _last_update_ts: Dict[str, int] = {}
+for x in SUPPORTED_CANDLE:
+    _last_update_ts[x.value] = int(dredis.get(
+        "download_start_{}_ts".format(x.value), "0"))
 
 
 def reportNAN(data):
@@ -28,11 +32,25 @@ def mark_last_data_update_ts(candle_type: TCandleType):
     _last_update_ts[candle_type.value] = int(time.time())
 
 
-def is_data_updated(candle_type: TCandleType) -> bool:
-    "return true if memoruy already has data"
+# Data is fetched and should load from data.
+def should_load_data_from_disk(candle_type: TCandleType) -> bool:
     last_mem_ts = _last_update_ts.get(candle_type.value)
-    if not last_mem_ts:
-        last_mem_ts = -1
-    last_redis_ts = dredis.get("download_start_{}_ts".format(
-        candle_type.value), "0")
+    # data not exist
+    if last_mem_ts == 0:
+        return True
+    # The mem data is old
+    last_redis_ts = int(dredis.get(
+        "download_start_{}_ts".format(candle_type.value), "0"))
+    return int(last_redis_ts) > int(last_mem_ts)
+
+
+# You should fetch the data from network
+def should_fetch_data(candle_type: TCandleType) -> bool:
+    last_mem_ts = _last_update_ts.get(candle_type.value)
+    # data not exist
+    if last_mem_ts == 0 or last_mem_ts is None:
+        return True
+    # The mem data is old
+    last_redis_ts = int(dredis.get(
+        "download_start_{}_ts".format(candle_type.value), "0"))
     return int(last_redis_ts) > int(last_mem_ts)

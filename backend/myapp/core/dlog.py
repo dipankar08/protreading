@@ -1,10 +1,5 @@
 # pyright: strict
 import logging
-
-from numpy import record
-from myapp.core.helper import isDebug
-from myapp.core.constant import APP_ID, SIMPLESTORE_ENDPOINT
-from myapp.core.dnetwork import simplestore_post
 import traceback
 # setup logger
 __logger = logging.getLogger(__name__)
@@ -14,26 +9,6 @@ log_format = "[%(asctime)s][%(levelname)s] %(message)s"
 formatter = logging.Formatter(log_format)
 handler.setFormatter(formatter)
 __logger.addHandler(handler)
-
-
-session: str = ''
-
-
-def init():
-    if isDebug():
-        d("ignore remote log in debug mode")
-        return
-    global session
-    if session != '':
-        return
-    try:
-        data: record = simplestore_post(
-            url="{}/api/analytics/launch".format(SIMPLESTORE_ENDPOINT),
-            data={"app_id": APP_ID, "app_version": "1.0", "device_os": "web", "device_id": "null", "device_api": "null"})
-        session = data.get('out')[0].get('session')
-        d("Remote log is inited with session:{}".format(session))
-    except:
-        pass
 
 
 def stack():
@@ -50,22 +25,5 @@ def e(msg: str):
     __logger.error(msg)
 
 
-def ex(msg: str, e: Exception):
+def ex(e: Exception, msg: str = "Dipankar has not provided any msg"):
     __logger.exception(msg, e)
-
-
-def remote(tag: str, msg: str, extra: record = {}):
-    d("Remote called....")
-    if isDebug():
-        d("ignore remote log in debug mode")
-        return
-    try:
-        simplestore_post(
-            url="{}/api/analytics/action".format(SIMPLESTORE_ENDPOINT),
-            data={"app_id": APP_ID, "session": session,
-                  "tag": tag, "msg": msg, "extra": extra}
-        )
-    except:
-        pass
-
-# setup logs

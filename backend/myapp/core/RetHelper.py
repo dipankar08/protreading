@@ -12,7 +12,9 @@ CANDLE_TYPE_COUNT = []
 
 
 def addExtraInfo(dict):
-    ts = dict([(k, v) for k, v in timetracker._last_update_ts])
+    ts = {}
+    for (k, v) in timetracker._last_update_ts.items():
+        ts[k] = v
     dict['data_timestamp'] = ts
     return dict
 
@@ -56,7 +58,7 @@ def getCandleCountForDay(day: int, candle_type):
 
 def fixDict(dict):
     for k in dict.keys():
-        if dict[k] == None or dict[k] == np.nan:
+        if dict[k] is None or dict[k] == np.nan:
             print('fixing null value', dict[k])
             dict[k] = 'Unknown'
     return dict
