@@ -1,4 +1,5 @@
 ## pyright: strict
+from myapp.core.DLogger import DLogger
 from myapp.core.ddecorators import trace_perf
 from pandas.core.frame import DataFrame
 from myapp.core.dtypes import TCandleType
@@ -6,17 +7,16 @@ import yfinance as yf
 from myapp.core.symbols import symbols
 from myapp.core.dlog import stack
 from myapp.core.convertion import covert_to_period_from_duration
-from myapp.core import dredis
-from myapp.core import danalytics
+from myapp.core import dredis, dlog, danalytics
 
 
 @trace_perf
-def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame:
+def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> (bool, DataFrame):
     key = "download_progress_" + interval.value
     if(dredis.get(key) == "1"):
         danalytics.reportAction(
             "ignore_duplicate_fetch_download_already_progress")
-        return "ALREADY_IN_PROGRESS"
+        return (False, None)
     data = None
     dredis.set(key, "1")
     try:
@@ -33,7 +33,8 @@ def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame
             proxy=None
         )
     except Exception as e:
-        return None
+        dlog.ex(e)
+        return (False, None)
     finally:
         dredis.set(key, "0")
-    return data
+    return (True, data)

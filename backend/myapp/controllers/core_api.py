@@ -118,3 +118,12 @@ def clearcache():
     else:
         dredis.clearAll()
     return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
+
+
+# arbitary test
+@core_api.route('/test')
+@make_exception_safe
+def just_test():
+    " This will delete cache for all the data "
+    dglobaldata.download_process_data_internal(TCandleType.MIN_5)
+    return buildError("Please verify test in code.")
