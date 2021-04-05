@@ -28,15 +28,56 @@ def before_request_func():
     g.timings = {}
 
 
+# Core APIS
+
+
+# STATUS
 @core_api.route('/status')
 @cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
 @make_exception_safe
 def status():
     "status of the app"
-    ping_backend()
+    dglobaldata.checkLoadLatestData()
     return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
 
 
+# SUMMARY
+@cross_origin()
+@core_api.route('/summary')
+@make_exception_safe
+def summary():
+    dglobaldata.checkLoadLatestData()
+    return buildSuccess("calculated", dhighlights.build_highlights())
+
+
+# SCREEN
+@ cross_origin()
+@ core_api.route('/screen', methods=['POST', 'GET'])
+@make_exception_safe
+def Screen():
+    dglobaldata.checkLoadLatestData()
+    result = dfilter.filterstock(
+        get_param_or_throw(request, 'filter'),
+        str_to_list(get_param_or_default(request, 'columns', '')))
+    return buildSuccess(msg='Here is the list of Stocks', out=result)
+
+
+# CHARTS
+@ cross_origin()
+@ core_api.route('/chart')
+@make_exception_safe
+def chart():
+    dglobaldata.checkLoadLatestData()
+    symbol = get_param_or_throw(request, 'symbol')
+    candle_type = get_param_or_default(request, "candle_type", "1d")
+    duration = get_param_or_default(request, "duration", "30")
+    reload = get_param_or_default(request, "reload", "0")
+    encoded_png = dplot.get_endcoded_png_for_chart(
+        symbol, TCandleType(candle_type), duration, reload)
+    return buildSuccess("Image Return", "data:image/png;base64,{}".format(encoded_png))
+
+
+# OTHER INTERNAL APIS
 @core_api.route('/task')
 @make_exception_safe
 def task():
@@ -66,13 +107,6 @@ def snapshot_intra():
     return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
 
 
-@cross_origin()
-@core_api.route('/summary')
-@make_exception_safe
-def summary():
-    return buildSuccess("calculated", dhighlights.build_highlights())
-
-
 @core_api.route('/clearcache')
 @make_exception_safe
 def clearcache():
@@ -81,52 +115,3 @@ def clearcache():
     # cache.delete_many("flask_cache_view//status") >> NOT WORKS
     dredis.clear(get_param_or_throw(request, "key"))
     return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
-
-
-@core_api.route('/highlights')
-@make_exception_safe
-def highlights():
-    " This will delete cache for all the data "
-    # cache.delete_memoized(status)  >>> NOT WORKS
-    # cache.delete_many("flask_cache_view//status") >> NOT WORKS
-    hl = dredis.get("india_highlights", None)
-    if hl:
-        return buildSuccess("Highlights returned", json.loads(hl))
-    else:
-        return buildError("No highlights is available")
-
-
-@ cross_origin()
-@ core_api.route('/screen', methods=['POST', 'GET'])
-@make_exception_safe
-def Screen():
-    result = dfilter.filterstock(
-        get_param_or_throw(request, 'filter'),
-        str_to_list(get_param_or_default(request, 'columns', '')))
-    return buildSuccess(msg='Here is the list of Stocks', out=result)
-
-
-@ cross_origin()
-@ core_api.route('/chart')
-@make_exception_safe
-def chart():
-    symbol = get_param_or_throw(request, 'symbol')
-    candle_type = get_param_or_default(request, "candle_type", "1d")
-    duration = get_param_or_default(request, "duration", "30")
-    reload = get_param_or_default(request, "reload", "0")
-    encoded_png = dplot.get_endcoded_png_for_chart(
-        symbol, TCandleType(candle_type), duration, reload)
-    return buildSuccess("Image Return", "data:image/png;base64,{}".format(encoded_png))
-
-
-def may_schedule_fetch_data(candle_type: TCandleType) -> str:
-    if timetracker.is_dataload_start(candle_type):
-        dlog.d("Skiped as a download already in progress")
-        return ""
-
-    if not timetracker.is_data_updated(candle_type):
-        dlog.d("Skiped data has not yet updated")
-        return ""
-    # schedule the task
-    task_id = tasks.snapshot_pipeline.delay(candle_type.value)
-    return task_id

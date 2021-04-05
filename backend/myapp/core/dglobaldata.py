@@ -1,5 +1,6 @@
-from myapp.core.timetracker import mark_dataload_end, mark_dataload_start
-from myapp.controllers.core_api import may_schedule_fetch_data
+from logging import log
+from myapp import tasks
+from myapp.core.timetracker import mark_dataload_end, mark_dataload_start, should_fetch_data, should_load_data_from_disk
 from myapp.core.ddecorators import trace_perf
 from myapp.core.dtypes import TCandleType
 from myapp.core.rootConfig import SUPPORTED_CANDLE
@@ -11,22 +12,25 @@ from myapp.core import dredis
 import pandas as pd
 from myapp.core import ddownload
 from myapp.core import dindicator
+from myapp.core import timetracker
 import time
 _candleTypeToDataFrameMap: Dict[str, pd.DataFrame] = {}
+
+
+def loadDataForCandle(candle_type: TCandleType):
+    try:
+        _candleTypeToDataFrameMap[candle_type.value] = dstorage.load_data_to_disk(
+            dstorage.get_default_path_for_candle((candle_type)))
+        timetracker.mark_last_data_update_ts(candle_type)
+        dlog.d("updating data...")
+    except Exception as e:
+        dlog.ex(e, "not able to load data from storage.")
 
 
 @trace_perf
 def load_data_on_boot():
     for candle_type in SUPPORTED_CANDLE:
-        try:
-            _candleTypeToDataFrameMap[candle_type.value] = dstorage.load_data_to_disk(
-                dstorage.get_default_path_for_candle((candle_type)))
-            dlog.d("updating data...")
-        except Exception as e:
-            dlog.ex("not able to load data from storage.", e)
-        # Schedule any case
-        # DONOT LOAD Data on BOOT
-        # may_schedule_fetch_data(candle_type)
+        loadDataForCandle(candle_type=candle_type)
 
 
 def get_df(symbol: str, candle_type: TCandleType = TCandleType.DAY_1, duration=50):
@@ -61,5 +65,13 @@ def download_process_data_internal(candle_type: TCandleType):
     return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
 
 
-# test
+# Call this function in all core api
+def checkLoadLatestData():
+    for candle_type in SUPPORTED_CANDLE:
+        if should_load_data_from_disk(candle_type=candle_type):
+            loadDataForCandle(candle_type=candle_type)
+        if should_fetch_data(candle_type=candle_type):
+            tasks.snapshot_pipeline.delay(candle_type.value)
+
+
 load_data_on_boot()

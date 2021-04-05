@@ -3,6 +3,7 @@ from myapp.core import dlog
 from myapp.core import RetHelper
 import time
 from myapp.core import dredis
+from myapp.core import danalytics
 
 
 def make_exception_safe(func):
@@ -10,7 +11,26 @@ def make_exception_safe(func):
         try:
             return func(*args, **kwargs)
         except Exception as e:
-            dlog.ex("Unknown error in the server", e)
+            dlog.ex(e, "Unknown error in the server")
+            danalytics.reportException(e)
+            return RetHelper.buildException(e)
+    wrapper.__name__ = func.__name__
+    return wrapper
+
+
+def task_common_action(func):
+    def wrapper(*args, **kwargs):
+        func_name = func.__name__
+        try:
+            danalytics.reportAction("worker_task_start_{}".format(func_name))
+            ret = func(*args, **kwargs)
+            danalytics.reportAction("worker_task_success_{}".format(func_name))
+            return ret
+        except Exception as e:
+            dlog.ex(e, "Unknown error in the server")
+            danalytics.reportAction(
+                "worker_task_exception_{}".format(func_name))
+            danalytics.reportException(e)
             return RetHelper.buildException(e)
     wrapper.__name__ = func.__name__
     return wrapper
@@ -36,15 +56,14 @@ def log_func(remote_logging=False):
             t = time.time()
             func_name = func.__name__
             if remote_logging:
-                dlog.remote(func_name, "function {} started".format(func_name))
+                danalytics.reportAction(func_name + "_started")
             dlog.d("\n\n>>>>>>>>>>>>>>>> STARTING {} <<<<<<<<<<<<<".format(
                 func.__name__))
             res = func(*args, **kwargs)
             dlog.d("\n>>>>>>>>>>>>>>>> ENDING {}, Time taken: {} sec <<<<<<<<<<<<<\n\n".format(
                 func.__name__, time.time() - t))
             if remote_logging:
-                dlog.remote(func_name, "function {} ended ( time taken: {} )".format(
-                    func_name, time.time() - t))
+                danalytics.reportAction(func_name + "_ended")
             return res
         return wrapper
     return actual_decorator
@@ -115,7 +134,7 @@ def smart_cache(cache_key: str):
                 dredis.set(cache_key, pickle.dumps(res))
                 dredis.set(cache_key_ts, time.time())
             except Exception as e:
-                dlog.ex("exception happened while executing:{}".format(func_name), e)
+                dlog.ex(e, "exception happened while executing:{}".format(func_name))
                 pass
             # Unlock
             dredis.set(cache_key_loading, "0")
