@@ -7,13 +7,16 @@ from myapp.core.symbols import symbols
 from myapp.core.dlog import stack
 from myapp.core.convertion import covert_to_period_from_duration
 from myapp.core import dredis
+from myapp.core import danalytics
 
 
 @trace_perf
-def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame:
+def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame | str:
     key = "download_progress_" + interval.value
     if(dredis.get(key) == "1"):
-        raise Exception("Download already progress")
+        danalytics.reportAction(
+            "ignore_duplicate_fetch_download_already_progress")
+        return "ALREADY_IN_PROGRESS"
     data = None
     dredis.set(key, "1")
     try:
