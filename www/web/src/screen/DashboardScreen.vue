@@ -94,6 +94,7 @@
         <price-table :data="summary.psar_down.data" v-if="summary.psar_down" />
       </div>
     </div>
+    <p class="last_update"><b>Note: </b>{{ last_update }}</p>
   </div>
 </template>
 <script>
@@ -110,6 +111,7 @@ export default {
   data() {
     return {
       refresh_count: 0,
+      last_update: "We don't know the last update",
       summary: {
         top_gainer: { data: [] },
         top_looser: { data: [] },
@@ -127,6 +129,11 @@ export default {
       function(data, org) {
         console.log(data);
         _this.summary = data;
+        _this.last_update = Object.keys(org.data_timestamp)
+          .map(function(x) {
+            return `${x} data updated on ${org.data_timestamp[x]}.  `;
+          })
+          .join("");
       },
       function(err, org) {}
     );
@@ -135,6 +142,10 @@ export default {
 </script>
 <style scoped lang="scss">
 .pane_home {
+  .last_update {
+    color: #ef6464;
+    font-size: 12px;
+  }
   .info_box {
     padding: 0px;
     .info_box_holder {
