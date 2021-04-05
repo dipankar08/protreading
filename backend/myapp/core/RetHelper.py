@@ -1,3 +1,4 @@
+import time
 from myapp.core.dnetwork import ping_backend
 import traceback
 from typing import Dict
@@ -14,7 +15,7 @@ CANDLE_TYPE_COUNT = []
 def addExtraInfo(dict):
     ts = {}
     for (k, v) in timetracker._last_update_ts.items():
-        ts[k] = v
+        ts[k] = time.strftime("%d/%m/%Y, %H:%M:%S GMT", time.gmtime(v))
     dict['data_timestamp'] = ts
     return dict
 
