@@ -11,7 +11,7 @@ from myapp.core import danalytics
 
 
 @trace_perf
-def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame | str:
+def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> DataFrame:
     key = "download_progress_" + interval.value
     if(dredis.get(key) == "1"):
         danalytics.reportAction(
