@@ -52,9 +52,9 @@ def download_process_data_internal(candle_type: TCandleType):
     "You must call this function from view controler uusing task"
     dlog.d("Staring snapshot_pipeline")
     dlog.d("1/3 Staring snapshot_pipeline")
-    download_data = ddownload.download(candle_type)
-    if download_data == "ALREADY_IN_PROGRESS":
-        return
+    ret_value, download_data = ddownload.download(candle_type)
+    if ret_value is False:
+        return {"status": "error", "msg": "something goes wrong", "out": None}
     dlog.d("2/3 Processing data")
     processed_df = dindicator.process_inplace(download_data)
     dlog.d("3/3 Saving data")

@@ -46,6 +46,7 @@ def reportException(ex: Exception, location=""):
 
 
 def reportAction(tag: str, extra: dict = {}):
+    dlog.d("logging remore action with tag:" + tag)
     if isDebug():
         dlog.d("ignore remote log in debug mode")
         return

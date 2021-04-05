@@ -9,6 +9,7 @@
         independent advice, if necessary.
       </p>
       <p class="dmb20">Protreading.com .@2020 All right reserved.</p>
+      <a href="https://dev.api.grodok.com:5000/clearcache"> click to clear the cache </a>
     </div>
     <a-modal :visible="chart_dialog_visible" title="Quick chart" :footer="null" @cancel="chart_dialog_visible = false" centered>
       <div class="d_layout_col">
