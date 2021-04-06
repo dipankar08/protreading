@@ -64,7 +64,7 @@ def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
         sort_key = sort_by.replace("-", "")
         reverse = sort_by[0] != "-"
         result = [x for x in result if x.get(sort_key) is not None]
-        result.sort(key=lambda x: x.get(sort_key), reverse=reverse)
+        result.sort(key=lambda x: float(x.get(sort_key)), reverse=reverse)
 
     # Do limit
     if limit:
