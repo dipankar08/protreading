@@ -1,7 +1,7 @@
 from myapp.core.dglobaldata import checkLoadLatestData
 from myapp.core.dtypes import TCandleType
 from myapp.core import dfilter, dredis
-from myapp.core.ddecorators import smart_cache
+from myapp.core.ddecorators import ensure_single_entry, smart_cache
 
 rules = [
     {
@@ -183,11 +183,12 @@ ENABLED_LIST = [
 ]
 
 
-@smart_cache(cache_key="summary_result")
+@ensure_single_entry(cache_key="summary_result")
 def compute_summary():
     "ignore_cache will override the decorator to ignore cache"
     # Ensure we update the flobal data
     checkLoadLatestData()
+    # You should not check the change here.
     result = {}
     global rules
     for x in rules:
@@ -202,7 +203,7 @@ def compute_summary():
             limit=x.get('limit')
         )
         result[x.get('name')] = {"name": x.get('name'), "data": ret}
-    return result
+    dredis.setPickle("summary_result", result)
 
 
 def get_summary():
