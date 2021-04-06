@@ -46,14 +46,12 @@ def status():
 @core_api.route('/summary')
 @make_exception_safe
 def summary():
-    dglobaldata.checkLoadLatestData()
+    mayRebuildData()
     summary = dhighlights.get_summary()
     if summary:
         return buildSuccess("calculated", summary)
     else:
-        # Put the task in worker thread
-        task = tasks.compute_summary.delay()
-        return buildError("Summary is not yet available", "Trying to compute task, task_id = {}".format(task.task_id))
+        return buildError("Summary is not yet available")
 
 
 # SCREEN
@@ -132,5 +130,13 @@ def clearcache():
 def just_test():
     " This will delete cache for all the data "
     # ddownload.download(TCandleType.DAY_1)
-    dglobaldata.download_process_data_internal(TCandleType.DAY_1)
+    # dglobaldata.download_process_data_internal(TCandleType.DAY_1)
+    dhighlights.compute_summary()
     return buildError("Please verify test in code.")
+
+
+def mayRebuildData() -> bool:
+    changed_candle = dglobaldata.checkLoadLatestData()
+    if TCandleType.DAY_1 in changed_candle:
+        tasks.compute_summary.delay()
+    return len(changed_candle) == 0

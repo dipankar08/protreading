@@ -140,3 +140,31 @@ def smart_cache(cache_key: str):
             return res
         return wrapper
     return actual_decorator
+
+
+def ensure_single_entry(cache_key: str):
+    def actual_decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            print(args)
+            print(kwargs)
+            func_name = func.__name__
+            cache_key_loading = "{}_loading".format(cache_key)
+            if dredis.get(cache_key_loading) == "1":
+                raise Exception(
+                    "{} is already in progress".format(func_name))
+            # Lock
+            dredis.set(cache_key_loading, "1")
+            # We need to use try catch to avoid unlock
+            res = None
+            try:
+                # Execute
+                res = func(*args, **kwargs)
+            except Exception as e:
+                dlog.ex(e, "exception happened while executing:{}".format(func_name))
+                pass
+            # Unlock
+            dredis.set(cache_key_loading, "0")
+            return res
+        return wrapper
+    return actual_decorator

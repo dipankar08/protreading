@@ -70,11 +70,14 @@ def download_process_data_internal(candle_type: TCandleType):
 
 # Call this function in all core api
 def checkLoadLatestData():
+    changed = []
     for candle_type in SUPPORTED_CANDLE:
         if should_load_data_from_disk(candle_type=candle_type):
             loadDataForCandle(candle_type=candle_type)
+            changed.append(candle_type)
         if should_fetch_data(candle_type=candle_type):
             tasks.snapshot_pipeline.delay(candle_type.value)
+    return changed
 
 
 load_data_on_boot()
