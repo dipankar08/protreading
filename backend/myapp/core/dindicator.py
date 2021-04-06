@@ -1,3 +1,4 @@
+from myapp.core.DLogger import DLogger
 import numpy as np
 import pandas as pd
 import talib
@@ -5,6 +6,7 @@ from pandas import DataFrame
 from myapp.core.symbols import symbols
 from myapp.core.RetHelper import fixDict, fixRound, verifyOrThrow
 from myapp.core.ddecorators import trace_perf
+from myapp.core import dlog, danalytics
 all_range = [5, 8, 13, 50, 100, 200]
 
 
@@ -36,33 +38,51 @@ def process_inplace(df: DataFrame):
                 span=range, adjust=False).mean(), 2)
             df[ticker, "sma_{}".format(range)] = np.round(
                 df[ticker, "close"].rolling(range).mean(), 2)
-            df[ticker, "wma_{}".format(range)] = talib.WMA(
-                df[ticker, "close"], timeperiod=range)
+            try:
+                df[ticker, "wma_{}".format(range)] = talib.WMA(
+                    df[ticker, "close"], timeperiod=range)
+            except Exception as e:
+                dlog.ex(e)
+                df[ticker, "wma_{}".format(range)] = 0
         # validated
         # macd and RSI
         # df[ticker, 'macd'] = talib.MACD(df[ticker, 'close'].as_matrix())
         # df[ticker, "macd_macd"], df[ticker, "macd_macdsignal"], df[ticker, "macd_macdhist"] = talib.MACD(
         #    df.close, fastperiod=12, slowperiod=26, signalperiod=9)
-        df[ticker, 'rsi_14'] = np.round(
-            talib.RSI(df[ticker, 'close'].values, 14), 2)
-        df[ticker,
-            'rsi_18'] = talib.RSI(df[ticker, 'close'].values, 18)
+        # TAlib cause exception so just be in the safe
+        try:
+            df[ticker, 'rsi_14'] = np.round(
+                talib.RSI(df[ticker, 'close'].values, 14), 2)
+            df[ticker,
+                'rsi_18'] = talib.RSI(df[ticker, 'close'].values, 18)
 
-        # band
-        df[ticker, 'bb_up_5'], df[ticker, 'bb_mid_5'], df[ticker, 'bb_down_5'] = talib.BBANDS(
-            df[ticker, 'close'], timeperiod=5)
-        # df[ticker, 'bb_up_15'], df[ticker, 'bb_mid_15'], df[ticker, 'bb_down_15'] = talib.BBANDS(
-        #    df[ticker, 'close'], timeperiod=15)
-        # df[ticker, 'bb_up_60'], df[ticker, 'bb_mid_60'], df[ticker, 'bb_down_60'] = talib.BBANDS(
-        #    df[ticker, 'close'], timeperiod=60)
+            # band
+            df[ticker, 'bb_up_5'], df[ticker, 'bb_mid_5'], df[ticker, 'bb_down_5'] = talib.BBANDS(
+                df[ticker, 'close'], timeperiod=5)
+            # df[ticker, 'bb_up_15'], df[ticker, 'bb_mid_15'], df[ticker, 'bb_down_15'] = talib.BBANDS(
+            #    df[ticker, 'close'], timeperiod=15)
+            # df[ticker, 'bb_up_60'], df[ticker, 'bb_mid_60'], df[ticker, 'bb_down_60'] = talib.BBANDS(
+            #    df[ticker, 'close'], timeperiod=60)
 
-        df[ticker, 'sar'] = talib.SAR(df[ticker, 'high'], df[ticker, 'low'],
-                                      acceleration=0.02, maximum=0.2)
+            df[ticker, 'sar'] = talib.SAR(df[ticker, 'high'], df[ticker, 'low'],
+                                          acceleration=0.02, maximum=0.2)
 
-        df[ticker, 'atr_14'] = talib.ATR(
-            df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'], timeperiod=14)
-        df[ticker, 'natr_14'] = talib.NATR(df[ticker, 'high'], df[ticker, 'low'],
-                                           df[ticker, 'close'], timeperiod=14)
-        df[ticker, 'tr_14'] = talib.TRANGE(
-            df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'])
+            df[ticker, 'atr_14'] = talib.ATR(
+                df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'], timeperiod=14)
+            df[ticker, 'natr_14'] = talib.NATR(df[ticker, 'high'], df[ticker, 'low'],
+                                               df[ticker, 'close'], timeperiod=14)
+            df[ticker, 'tr_14'] = talib.TRANGE(
+                df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'])
+        except Exception as e:
+            dlog.ex(e)
+            danalytics.reportAction("talib_exception_for_{}".format(ticker))
+            df[ticker, 'rsi_14'] = -1
+            df[ticker, 'rsi_18'] = -1
+            df[ticker, 'bb_up_5'], df[ticker,
+                                      'bb_mid_5'], df[ticker, 'bb_down_5'] = (-1, -1, -1)
+            df[ticker, 'sar'] = -1
+            df[ticker, 'atr_14'] = -1
+            df[ticker, 'natr_14'] = -1
+            df[ticker, 'tr_14'] = -1
+    dlog.d("Indicator compution done proper way")
     return df

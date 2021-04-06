@@ -1,3 +1,4 @@
+from myapp.core.dglobaldata import checkLoadLatestData
 from myapp.core.dtypes import TCandleType
 from myapp.core import dfilter, dredis
 from myapp.core.ddecorators import smart_cache
@@ -45,6 +46,14 @@ rules = [
         "columns": [],
         "sort_by": "change",
         "limit": 10,
+        "active":True,
+    },
+    {
+        "name": "all_data",
+        "condition": "true",  # DONE
+        "columns": ["indicator:1d:0:rsi_14", "indicator:1d:-1:close_change_percentage", "indicator:1d:-1:close"],
+        "sort_by": "change",
+        "limit": 500,
         "active":True,
     },
     {
@@ -153,6 +162,7 @@ from myapp.core.constant import CACHE_TIMEOUT_1DAY, CACHE_TIMEOUT_30MIN, CACHE_T
 from myapp.extensions import cache
 
 ENABLED_LIST = [
+    "all_data",
     "high_volume",
     "high_low_gap",
     "avarage_true_range",
@@ -176,6 +186,8 @@ ENABLED_LIST = [
 @smart_cache(cache_key="summary_result")
 def compute_summary():
     "ignore_cache will override the decorator to ignore cache"
+    # Ensure we update the flobal data
+    checkLoadLatestData()
     result = {}
     global rules
     for x in rules:
