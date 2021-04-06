@@ -1,5 +1,5 @@
 echo ">>>>>> Liniting python backend ......"
-cd backend;pyright;cd -
+cd backend;pipenv shell pyright;cd -
 
 git pull
 git add --all

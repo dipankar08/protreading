@@ -1,33 +1,33 @@
 <template>
   <div class="d_layout_row navigation_menu d_no_responsive">
     <router-link to="/dashboard">
-      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
-        <span class="mdi mdi-filter"></span>
-        <span>Dashboard</span>
+      <p class="d_layout_row menu_item d_no_responsive d_mb20 d_mt20" @click="section = 'screen'" :class="section == 'screen' ? 'active' : ''">
+        <span class="mdi mdi-home"></span>
+        <span>Home</span>
       </p>
     </router-link>
     <router-link to="/console">
-      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'relate'" :class="section == 'screen' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive d_mb20" @click="section = 'relate'" :class="section == 'screen' ? 'active' : ''">
         <span class="mdi mdi-apps-box"></span>
         <span>Console</span>
       </p>
     </router-link>
 
     <router-link to="/screens">
-      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'screens'" :class="section == 'screens' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive d_mb20" @click="section = 'screens'" :class="section == 'screens' ? 'active' : ''">
         <span class="mdi mdi-tools"></span>
         <span>Tools</span>
       </p>
     </router-link>
     <router-link to="/backtest">
-      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'backtest'" :class="section == 'backtest' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive d_mb20" @click="section = 'backtest'" :class="section == 'backtest' ? 'active' : ''">
         <span class="mdi mdi-history"></span>
         <span>Test</span>
       </p>
     </router-link>
     <p class="d_layout_fill" />
     <router-link to="/settings">
-      <p class="d_layout_row menu_item d_no_responsive" @click="section = 'settings'" :class="section == 'settings' ? 'active' : ''">
+      <p class="d_layout_row menu_item d_no_responsive d_mb20" @click="section = 'settings'" :class="section == 'settings' ? 'active' : ''">
         <span class="mdi mdi-tune-variant"></span>
         <span>Account</span>
       </p>
@@ -55,16 +55,17 @@ export default {
 </script>
 <style scoped lang="scss">
 .navigation_menu {
-  height: 44px;
-  background: #dd1070;
+  width: 70px;
+  background: #1876f2;
   color: white;
   left: 0;
-  width: 100%;
+  height: 100%;
   position: fixed;
   align-items: center;
+  flex-direction: column;
+  z-index: 10;
   .mdi {
     font-size: 24px;
-    margin-right: 10px;
   }
   .menu_item {
     margin: 0 auto;
@@ -77,6 +78,9 @@ export default {
     &:hover {
       opacity: 1;
     }
+  }
+  .d_layout_row {
+    flex-direction: column;
   }
 }
 </style>

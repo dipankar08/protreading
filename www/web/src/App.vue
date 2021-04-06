@@ -100,14 +100,9 @@ export default {
       height: 100%;
     }
   }
-  .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-  }
+
   .main_container {
-    padding-top: 55px;
+    padding-left: 70px;
   }
   .active {
     color: #dd1070;
@@ -136,6 +131,22 @@ export default {
     &:hover {
       color: #dd1070;
       opacity: 1;
+    }
+  }
+  .page_header_block {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    .header {
+      font-weight: 700;
+      font-size: 35px;
+      color: #111111;
+      line-height: 1;
+      padding-bottom: 10px;
+    }
+    .subheader button {
+      font-size: 14px;
     }
   }
 }

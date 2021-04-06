@@ -1,5 +1,5 @@
 from myapp.core.dtypes import TCandleType
-from myapp.core import dfilter
+from myapp.core import dfilter, dredis
 from myapp.core.ddecorators import smart_cache
 
 rules = [
@@ -174,7 +174,7 @@ ENABLED_LIST = [
 
 
 @smart_cache(cache_key="summary_result")
-def build_highlights(ignore_cache=False):
+def compute_summary():
     "ignore_cache will override the decorator to ignore cache"
     result = {}
     global rules
@@ -191,3 +191,7 @@ def build_highlights(ignore_cache=False):
         )
         result[x.get('name')] = {"name": x.get('name'), "data": ret}
     return result
+
+
+def get_summary():
+    return dredis.getPickle("summary_result")

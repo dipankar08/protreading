@@ -3,7 +3,18 @@
     <div class="d_layout_row hide">
       <a-button type="primary" @click="refresh_count++"><span class="mdi mdi-reload d_mr10"></span>Refresh</a-button>
     </div>
-    <p class="header_out_box">Market Overview</p>
+    <div class="d_layout_col page_header_block">
+      <p class="header">Home</p>
+      <div class="d_layout_row subheader">
+        <a-button type="link" href="#market"> Market Overview</a-button>
+        <a-button type="link" href="#leader"> Leader board</a-button>
+        <a-button type="link" href="#trends"> Market Trends</a-button>
+        <a-button type="link" href="#vola"> Volatility Trends</a-button>
+        <a-button type="link" href="#technical"> Technical Trends</a-button>
+        <a-button type="link" href="#all"> All Stocks</a-button>
+      </div>
+    </div>
+    <p class="header_out_box" id="market">Market Overview</p>
     <div class="info_box d_layout_row d_layout_equal d_responsive">
       <div class="d_layout_col info_box_holder">
         <p class="header_in_box">Top Gainer</p>
@@ -19,7 +30,7 @@
       </div>
     </div>
 
-    <p class="header_out_box">Leader board</p>
+    <p class="header_out_box" id="leader">Leader board</p>
     <div class="info_box d_layout_row d_layout_equal">
       <div class="d_layout_col info_box_holder">
         <p class="header_in_box">Only Buyer</p>
@@ -39,7 +50,7 @@
       </div>
     </div>
 
-    <p class="header_out_box">Market Trends</p>
+    <p class="header_out_box" id="trends">Market Trends</p>
     <div class="info_box d_layout_row d_layout_equal">
       <div class="d_layout_col info_box_holder">
         <p class="header_in_box">3 days uptrend</p>
@@ -59,7 +70,7 @@
       </div>
     </div>
 
-    <p class="header_out_box">Volatility Trends</p>
+    <p class="header_out_box" id="vola">Volatility Trends</p>
     <div class="info_box d_layout_row d_layout_equal">
       <div class="d_layout_col info_box_holder">
         <p class="header_in_box">Top Volume</p>
@@ -79,7 +90,7 @@
       </div>
     </div>
 
-    <p class="header_out_box">Trend Reversal(Down to Up)</p>
+    <p class="header_out_box" id="technical">Trend Reversal(Down to Up)</p>
     <div class="info_box d_layout_row d_layout_equal">
       <div class="d_layout_col info_box_holder">
         <p class="header_in_box">Parabolic SAR Reversal</p>
@@ -99,7 +110,7 @@
 </template>
 <script>
 import PriceTable from "../common/vue/PriceTable.vue";
-import { get_scan_for_id, get_summary } from "../helper/lib";
+import { get_scan_for_id, get_summary, notification } from "../helper/lib";
 //import FilterBox from "@/helper/FilterBox";
 // import SimpleTable from "@/common/vue/SimpleTable.vue";
 export default {
@@ -127,6 +138,7 @@ export default {
     let _this = this;
     get_summary(
       function(data, org) {
+        notification(_this, org);
         console.log(data);
         _this.summary = data;
         _this.last_update = Object.keys(org.data_timestamp)
@@ -135,7 +147,9 @@ export default {
           })
           .join("");
       },
-      function(err, org) {}
+      function(err, org) {
+        notification(_this, org);
+      }
     );
   },
 };

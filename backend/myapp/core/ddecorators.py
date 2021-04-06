@@ -116,10 +116,9 @@ def smart_cache(cache_key: str):
             cache_key_ts = "{}_ts".format(cache_key)
             # Check if cache exist.
             if kwargs.get('ignore_cache') != True:
-                cache = dredis.getraw(cache_key)
+                cache = dredis.getPickle(cache_key, None)
                 if cache:
-                    # TODO CHECK Cache expaire
-                    return pickle.loads(cache)
+                    return cache
             # Check global lock
             if dredis.get(cache_key_loading) == "1":
                 raise Exception(
@@ -131,7 +130,7 @@ def smart_cache(cache_key: str):
             try:
                 # Execute
                 res = func(*args, **kwargs)
-                dredis.set(cache_key, pickle.dumps(res))
+                dredis.setPickle(cache_key, res)
                 dredis.set(cache_key_ts, time.time())
             except Exception as e:
                 dlog.ex(e, "exception happened while executing:{}".format(func_name))
