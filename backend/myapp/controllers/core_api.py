@@ -51,6 +51,7 @@ def summary():
     if summary:
         return buildSuccess("calculated", summary)
     else:
+        tasks.compute_summary.delay()
         return buildError("Summary is not yet available")
 
 
