@@ -47,7 +47,13 @@ def status():
 @make_exception_safe
 def summary():
     dglobaldata.checkLoadLatestData()
-    return buildSuccess("calculated", dhighlights.build_highlights())
+    summary = dhighlights.get_summary()
+    if summary:
+        return buildSuccess("calculated", summary)
+    else:
+        # Put the task in worker thread
+        task = tasks.compute_summary.delay()
+        return buildError("Summary is not yet available", "Trying to compute task, task_id = {}".format(task.task_id))
 
 
 # SCREEN

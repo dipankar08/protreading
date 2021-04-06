@@ -10,7 +10,7 @@ from myapp.core import dlog
 from myapp.core import danalytics
 from myapp.core.dtypes import TCandleType
 from myapp.core import dindicator
-from myapp.core import dstorage
+from myapp.core import dstorage, dhighlights
 from myapp.core import dglobaldata
 from myapp.core import dplot
 from myapp.core.sync import SUPPORT_SYMBOL, SUPPORTED_CHART_DURATION
@@ -70,6 +70,15 @@ def plot_chart_all() -> dict:
         for symbol in SUPPORT_SYMBOL.keys():
             dplot.get_endcoded_png_for_chart(
                 symbol=symbol, candle_type=TCandleType.DAY_1, duration=duration, reload="1")
+    return buildTaskSuccess("Complated all snap shot", None)
+
+
+@celery.task(name="tasks.code_api.compute_summary")
+@log_func(remote_logging=True)
+@task_common_action
+def compute_summary() -> dict:
+    "Build chart for all item"
+    dhighlights.compute_summary()
     return buildTaskSuccess("Complated all snap shot", None)
 
 
