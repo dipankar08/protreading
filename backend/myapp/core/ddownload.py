@@ -37,4 +37,8 @@ def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> (bool, Da
         return (False, None)
     finally:
         dredis.set(key, "0")
+    # Sometime it ret duplicate results for the last row so drop it,
+    if len(data.index) > 1 and data.index[-2] == data.index[-1]:
+        dlog.d("Droping last row due to duplicates")
+        data.drop(data.tail(1).index, inplace=True)
     return (True, data)

@@ -63,6 +63,8 @@ def download_process_data_internal(candle_type: TCandleType):
     dlog.d("Completed snapshot_pipeline")
     # Mark as done
     mark_dataload_end(candle_type)
+    # update the data
+    checkLoadLatestData()
     return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
 
 

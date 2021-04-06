@@ -11,7 +11,7 @@
         <a-button type="link" href="#trends"> Market Trends</a-button>
         <a-button type="link" href="#vola"> Volatility Trends</a-button>
         <a-button type="link" href="#technical"> Technical Trends</a-button>
-        <a-button type="link" href="#all"> All Stocks</a-button>
+        <a-button type="link" href="#all_stocks"> All Stocks</a-button>
       </div>
     </div>
     <p class="header_out_box" id="market">Market Overview</p>
@@ -103,6 +103,14 @@
       <div class="d_layout_col info_box_holder">
         <p class="header_in_box">Parabolic SAR Reversal</p>
         <price-table :data="summary.psar_down.data" v-if="summary.psar_down" />
+      </div>
+    </div>
+
+    <p class="header_out_box" id="all_stocks">All_Data</p>
+    <div class="info_box d_layout_row d_layout_equal">
+      <div class="d_layout_col info_box_holder">
+        <p class="header_in_box">All Data</p>
+        <price-table :data="summary.all_data.data" v-if="summary.all_data" />
       </div>
     </div>
     <p class="last_update"><b>Note: </b>{{ last_update }}</p>

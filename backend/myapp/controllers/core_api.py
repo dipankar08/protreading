@@ -20,7 +20,7 @@ from myapp.core import dfilter
 from myapp.core import dplot
 from myapp.core.ddecorators import make_exception_safe
 from myapp.core.rootConfig import SUPPORTED_CANDLE
-from myapp.core import dhighlights
+from myapp.core import dhighlights, ddownload
 
 
 @core_api.before_request
@@ -131,5 +131,6 @@ def clearcache():
 @make_exception_safe
 def just_test():
     " This will delete cache for all the data "
-    dglobaldata.download_process_data_internal(TCandleType.MIN_5)
+    # ddownload.download(TCandleType.DAY_1)
+    dglobaldata.download_process_data_internal(TCandleType.DAY_1)
     return buildError("Please verify test in code.")

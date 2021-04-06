@@ -39,25 +39,33 @@ def simple_task(argument: str) -> str:
 @celery.task(name="tasks.code_api.snapshot")
 @log_func(remote_logging=True)
 @task_common_action
-def snapshot_pipeline(candle_type: str) -> dict:
+def snapshot_pipeline(candle_type: str):
     "This will download - process - and save the file as pkl"
     print(candle_type)
     ping_celery()
     _candle_type = TCandleType(candle_type)
-    return dglobaldata.download_process_data_internal(_candle_type)
+    dglobaldata.download_process_data_internal(_candle_type)
+    # Compute Summary
+    if _candle_type == TCandleType.DAY_1:
+        dhighlights.compute_summary()
 
 
 @celery.task(name="tasks.code_api.snapshot_all")
 @log_func(remote_logging=True)
 @task_common_action
-def snapshot_pipeline_all() -> dict:
+def snapshot_pipeline_all():
     "This will download - process - and save the file as pkl"
     ping_celery()
     danalytics.reportAction("snapshot_pipeline_all_started")
     for x in SUPPORTED_CANDLE:
         dglobaldata.download_process_data_internal(x)
     danalytics.reportAction("snapshot_pipeline_all_ended")
-    return buildTaskSuccess("Complated all snap shot", None)
+    buildTaskSuccess("Complated all snap shot", None)
+    # Compute Summary
+    dhighlights.compute_summary()
+
+    # update
+    dglobaldata.checkLoadLatestData()
 
 
 @celery.task(name="tasks.code_api.plot_chart_all")
