@@ -31,6 +31,11 @@ const routes: Array<RouteConfig> = [
     component: () => import("../screen/SettingsScreen.vue"),
   },
   {
+    path: "/alerts",
+    name: "alerts",
+    component: () => import("../screen/AlertScreen.vue"),
+  },
+  {
     path: "/relate",
     name: "relate",
     component: () => import("../screen/RelateScreen.vue"),

@@ -25,6 +25,12 @@
         <span>Test</span>
       </p>
     </router-link>
+    <router-link to="/alerts">
+      <p class="d_layout_row menu_item d_no_responsive d_mb20" @click="section = 'screens'" :class="section == 'screens' ? 'active' : ''">
+        <span class="mdi mdi-bell"></span>
+        <span>Alerts</span>
+      </p>
+    </router-link>
     <p class="d_layout_fill" />
     <router-link to="/settings">
       <p class="d_layout_row menu_item d_no_responsive d_mb20" @click="section = 'settings'" :class="section == 'settings' ? 'active' : ''">
