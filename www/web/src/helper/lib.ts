@@ -5,7 +5,7 @@ import _ from "underscore";
 import { LiveDataArray, LiveObject } from "../common/livedata";
 let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://dev.api.grodok.com:5000";
 console.log(`Endpoint --> ${STOCK_ENDPOINT}`);
-
+type CRUD = "insert" | "update" | "delete" | "get" | "create_update";
 /// Define Live Data
 export let liveAccountObject = new LiveObject(function(data, extra) {
   console.log("Live Object Updated");
@@ -59,6 +59,31 @@ export function downloadData(candle_type: string, duration: string, onSuccess: T
 export function save_scan(data: TObject, onSuccess: TOnSuccess, onError: TOnError) {
   PostOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan/create`, data, onSuccess, onError);
 }
+
+export function alert_func(action: CRUD, onSuccess: TOnSuccess, onError: TOnError, data: TObject) {
+  switch (action) {
+    case "create_update":
+      if (data._id) {
+        PostOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_alert/update`, data, onSuccess, onError);
+      } else {
+        PostOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_alert/insert`, data, onSuccess, onError);
+      }
+      break;
+    case "insert":
+      PostOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_alert/insert`, data, onSuccess, onError);
+      break;
+    case "update":
+      PostOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_alert/update`, data, onSuccess, onError);
+      break;
+    case "delete":
+      PostOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_alert/delete`, { id: data._id }, onSuccess, onError);
+      break;
+    case "get":
+      GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_alert?user_id=${liveAccountObject.get("user_id")}`, onSuccess, onError);
+      break;
+  }
+}
+
 export function get_scan(onSuccess: TOnSuccess, onError: TOnError) {
   GetOnSimpleStore(`https://simplestore.dipankar.co.in/api/grodok_stock_scan`, onSuccess, onError);
 }

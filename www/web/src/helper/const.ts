@@ -99,3 +99,5 @@ export let CHART_DISPLAY_CONFIG = [
   { key: "candle", text: "candle" },
   { key: "volume", text: "volume" },
 ];
+
+export let ALERT_INDICATOR_LIST = sync.SUPPORTED_INDICATOR;
