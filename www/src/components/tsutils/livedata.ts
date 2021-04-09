@@ -1,4 +1,4 @@
-import { TObject } from "@/common/types";
+import { TObject } from "./types";
 import _ from "underscore";
 import { assertOrThrow } from "./assert";
 type HOOK = {
