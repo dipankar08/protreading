@@ -117,10 +117,10 @@
   </div>
 </template>
 <script>
-import PriceTable from "../common/vue/PriceTable.vue";
+import PriceTable from "../components/vue/PriceTable.vue";
 import { get_scan_for_id, get_summary, notification } from "../helper/lib";
 //import FilterBox from "@/helper/FilterBox";
-// import SimpleTable from "@/common/vue/SimpleTable.vue";
+// import SimpleTable from "@/components/vue/SimpleTable.vue";
 export default {
   components: {
     PriceTable,

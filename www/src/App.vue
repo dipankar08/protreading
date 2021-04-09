@@ -20,8 +20,8 @@
 </template>
 <script>
 import Navigation from "./helper/Navigation.vue";
-import { getCookie, setCookie } from "./common/helper.ts";
-import { localEvent } from "./common/localEvent";
+import { getCookie, setCookie } from "@/components/webdev/typescript/helper.ts";
+import { localEvent } from "@/components/webdev/typescript/localEvent";
 import { markLogin } from "./helper/lib";
 import Chart from "./helper/Chart.vue";
 export default {
@@ -87,8 +87,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "common/d.scss";
-@import "common/ant_override.scss";
+@import "components/webdev/scss/d.scss";
+@import "components/webdev/scss/ant_override.scss";
 .grodok_treading {
   &.hide_nav {
     .nav,

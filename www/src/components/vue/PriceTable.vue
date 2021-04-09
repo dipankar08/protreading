@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { localEvent } from "../localEvent";
+import { localEvent } from "@/components/webdev/typescript/localEvent";
 export default {
   props: {
     data: Array, // {key:, value:}

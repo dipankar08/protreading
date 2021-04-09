@@ -29,7 +29,7 @@
         </a-collapse>
       </div>
       <div class="info_box search_hints" v-else>
-        <p>Here are the list of common filters</p>
+        <p>Here are the list of components filters</p>
       </div>
     </div>
     <!-- Create new  -->
@@ -66,7 +66,7 @@
 import ScanParser from "../helper/ScanParser";
 import FilterBox from "@/helper/FilterBox";
 import { search_scan, notification, liveAccountObject, save_scan, delete_scan } from "../helper/lib";
-//import MdiButton from "../common/vue/MdiButton.vue";
+//import MdiButton from "../components/vue/MdiButton.vue";
 export default {
   components: {
     ScanParser,
