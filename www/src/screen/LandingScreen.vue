@@ -35,9 +35,9 @@
 </template>
 <script>
 import SocialLogIn from "../helper/SocialLogIn.vue";
-import { setCookie, deleteCookie } from "../common/helper.ts";
-import { localEvent } from "../common/localEvent";
-import Promo from "../common/vue/Promo.vue";
+import { setCookie, deleteCookie } from "@/components/webdev/typescript/helper.ts";
+import { localEvent } from "@/components/webdev/typescript/localEvent";
+import Promo from "../components/vue/Promo.vue";
 export default {
   components: { SocialLogIn, Promo },
   data() {

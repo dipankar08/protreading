@@ -74,12 +74,12 @@
   </div>
 </template>
 <script>
-import { localEvent } from "../common/localEvent";
-import KeyValueList from "../common/vue/KeyValueList.vue";
+import { localEvent } from "@/components/webdev/typescript/localEvent";
+import KeyValueList from "../components/vue/KeyValueList.vue";
 import { downloadData, notification, liveAccountObject } from "../helper/lib";
 import { NIFTY_200 } from "../helper/const";
-import InplaceEdit from "../common/vue/InplaceEdit.vue";
-import { getRandomKey } from "../common/utils";
+import InplaceEdit from "../components/vue/InplaceEdit.vue";
+import { getRandomKey } from "@/components/webdev/typescript/utils";
 
 export default {
   components: { KeyValueList, InplaceEdit },

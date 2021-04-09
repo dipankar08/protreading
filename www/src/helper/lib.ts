@@ -1,8 +1,8 @@
-import { PostOnSimpleStore, GetOnSimpleStore } from "@/common/network";
-import { TArray, TObject, TOnError, TOnSuccess } from "@/common/types";
+import { PostOnSimpleStore, GetOnSimpleStore } from "@/components/webdev/typescript/network";
+import { TArray, TObject, TOnError, TOnSuccess } from "@/components/webdev/typescript/types";
 import { rootVue } from "@/main";
 import _ from "underscore";
-import { LiveDataArray, LiveObject } from "../common/livedata";
+import { LiveDataArray, LiveObject } from "@/components/webdev/typescript/livedata";
 let STOCK_ENDPOINT = process.env.NODE_ENV == "development" ? "http://localhost:5000" : "https://dev.api.grodok.com:5000";
 console.log(`Endpoint --> ${STOCK_ENDPOINT}`);
 type CRUD = "insert" | "update" | "delete" | "get" | "create_update";

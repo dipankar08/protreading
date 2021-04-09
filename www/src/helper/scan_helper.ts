@@ -6,7 +6,7 @@ we need to do teh reverse when we want to do the same.
 // see the test code to understand how we serilaie the data
 *******************************************************/
 import $ from "jquery";
-import { TObject } from "@/common/types";
+import { TObject } from "@/components/webdev/typescript/types";
 
 let ONE_RULE_ACTION_BUTTON = `<span class="btn_list">
               <span class="btn_add_fx_group mdi mdi-view-grid-plus-outline"></span>

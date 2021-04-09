@@ -33,7 +33,7 @@
 <script>
 import $ from "jquery";
 import { convertRuleDictToRuleStr, convert_html_to_rule_dict } from "./scan_helper";
-import { assertOrThrow } from "../common/assert";
+import { assertOrThrow } from "@/components/webdev/typescript/assert";
 import { INDICATOR_LIST, OFFSET_LIST, OPERATOR_LIST } from "./const";
 
 export default {

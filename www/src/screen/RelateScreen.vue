@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-import { localEvent } from "../common/localEvent";
+import { localEvent } from "@/components/webdev/typescript/localEvent";
 import { compare, notification } from "../helper/lib";
 import { NIFTY_200, INDICATOR_LIST, SHORT_CANDLE_DURATION, CANDLE_TYPE_LIST } from "../helper/const";
 export default {

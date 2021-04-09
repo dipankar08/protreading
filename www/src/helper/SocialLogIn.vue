@@ -2,7 +2,7 @@
   <div class="d_layout_col d_layout_center_all social_login">
     <p class="login_text d_mb20">Login using social account</p>
     <vue-google-login class="google-btn d_layout_row" :params="params" :onSuccess="onSuccess" :onFailure="onFailure">
-      <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+      <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/componentss/5/53/Google_%22G%22_Logo.svg" />
       <p class="btn-text"><b>Sign in with google</b></p>
     </vue-google-login>
     <v-facebook-login class="d_mt20" app-id="186436819581071" @login="onFacebookLogin" @logout="onFacebookLogout"></v-facebook-login>
@@ -15,7 +15,7 @@
 <script>
 import VueGoogleLogin from "vue-google-login";
 import VFacebookLogin from "vue-facebook-login-component";
-import { localEvent } from "../common/localEvent";
+import { localEvent } from "@/components/webdev/typescript/localEvent";
 import { notification } from "./lib";
 export default {
   name: "GoogleLogin",

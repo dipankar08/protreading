@@ -57,13 +57,11 @@
   </div>
 </template>
 <script>
-//import { localEvent } from "../common/localEvent";
-//import KeyValueList from "../common/vue/KeyValueList.vue";
 import { downloadData, notification, liveAccountObject, alert_func } from "../helper/lib";
 import { NIFTY_200, ALERT_INDICATOR_LIST } from "../helper/const";
-//import InplaceEdit from "../common/vue/InplaceEdit.vue";
-import { getRandomKey } from "../common/utils";
-import SimpleTable from "../common/vue/SimpleTable.vue";
+//import InplaceEdit from "../components/vue/InplaceEdit.vue";
+import { getRandomKey } from "@/components/webdev/typescript//utils";
+import SimpleTable from "../components/vue/SimpleTable.vue";
 
 export default {
   components: { SimpleTable },
