@@ -41,6 +41,16 @@ def status():
     return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
 
 
+@core_api.route('/latest')
+@make_exception_safe
+def latest():
+    "status of the app"
+    candle_type = get_param_or_default(request, "candle_type", "1d")
+    return buildSuccess("Status Ok", {
+        "data": dredis.getPickle("latest_{}".format(candle_type))
+    })
+
+
 # SUMMARY
 @cross_origin()
 @core_api.route('/summary')
@@ -131,8 +141,8 @@ def clearcache():
 def just_test():
     " This will delete cache for all the data "
     # ddownload.download(TCandleType.DAY_1)
-    # dglobaldata.download_process_data_internal(TCandleType.DAY_1)
-    dhighlights.compute_summary()
+    dglobaldata.download_process_data_internal(TCandleType.MIN_5)
+    # dhighlights.compute_summary()
     return buildError("Please verify test in code.")
 
 
