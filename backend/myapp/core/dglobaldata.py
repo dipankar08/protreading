@@ -1,4 +1,7 @@
 from logging import log
+from pandas.core.frame import DataFrame
+
+import redis
 from myapp import tasks
 from myapp.core.timetracker import mark_dataload_end, mark_dataload_start, should_fetch_data, should_load_data_from_disk
 from myapp.core.ddecorators import trace_perf
@@ -6,9 +9,7 @@ from myapp.core.dtypes import TCandleType
 from myapp.core.rootConfig import SUPPORTED_CANDLE
 from myapp.core.DLogger import DLogger
 from typing import Dict, List
-from myapp.core import dstorage
-from myapp.core import dlog
-from myapp.core import dredis
+from myapp.core import dredis, danalytics, dstorage, dlog
 import pandas as pd
 from myapp.core import ddownload
 from myapp.core import dindicator
@@ -46,6 +47,31 @@ def get_all_data():
     return _candleTypeToDataFrameMap
 
 
+import json
+from ast import literal_eval
+
+
+def getLatestDataInJson(df: DataFrame):
+    final_result = {}
+    try:
+        df = df.tail(1)
+        result = df.to_json(orient="records")
+        parsed = json.loads(result)
+        for x in parsed[0].keys():
+            pair = literal_eval(x)
+            symbol = pair[0]
+            indicator = pair[1]
+            value = parsed[0][x]
+            if symbol not in final_result:
+                final_result[symbol] = {}
+            final_result[symbol][indicator] = value
+        #print(json.dumps(final_result, indent=4))
+    except Exception as e:
+        dlog.ex(e)
+        danalytics.reportException(e)
+    return final_result
+
+
 @trace_perf
 def download_process_data_internal(candle_type: TCandleType):
     mark_dataload_start(candle_type)
@@ -60,6 +86,10 @@ def download_process_data_internal(candle_type: TCandleType):
     dlog.d("3/3 Saving data")
     path_to_store = dstorage.get_default_path_for_candle(candle_type)
     dstorage.store_data_to_disk(processed_df, path_to_store)
+
+    dlog.d("4/4 Notify latest data to redis")
+    dredis.setPickle("latest_{}".format(candle_type.value),
+                     getLatestDataInJson(processed_df))
     dlog.d("Completed snapshot_pipeline")
     # Mark as done
     mark_dataload_end(candle_type)

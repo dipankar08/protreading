@@ -1,0 +1,954 @@
+{
+   "SUPPORTED_INDICATOR":[
+      {
+         "key":"open",
+         "text":"open"
+      },
+      {
+         "key":"close",
+         "text":"close"
+      },
+      {
+         "key":"high",
+         "text":"high"
+      },
+      {
+         "key":"low",
+         "text":"low"
+      },
+      {
+         "key":"volume",
+         "text":"volume"
+      },
+      {
+         "key":"close_change_percentage",
+         "text":"close_change_percentage"
+      },
+      {
+         "key":"high_low_gap",
+         "text":"high_low_gap"
+      },
+      {
+         "key":"high_low_gap_percentage",
+         "text":"high_low_gap_percentage"
+      },
+      {
+         "key":"ema_5",
+         "text":"ema(5)"
+      },
+      {
+         "key":"ema_8",
+         "text":"ema(8)"
+      },
+      {
+         "key":"ema_13",
+         "text":"ema(13)"
+      },
+      {
+         "key":"ema_50",
+         "text":"ema(50)"
+      },
+      {
+         "key":"ema_100",
+         "text":"ema(100)"
+      },
+      {
+         "key":"ema_200",
+         "text":"ema(200)"
+      },
+      {
+         "key":"sma_5",
+         "text":"sma(5)"
+      },
+      {
+         "key":"sma_8",
+         "text":"sma(8)"
+      },
+      {
+         "key":"sma_13",
+         "text":"sma(13)"
+      },
+      {
+         "key":"sma_50",
+         "text":"sma(50)"
+      },
+      {
+         "key":"sma_100",
+         "text":"sma(100)"
+      },
+      {
+         "key":"sma_200",
+         "text":"sma(200)"
+      },
+      {
+         "key":"wma_5",
+         "text":"wma(5)"
+      },
+      {
+         "key":"wma_8",
+         "text":"wma(8)"
+      },
+      {
+         "key":"wma_13",
+         "text":"wma(13)"
+      },
+      {
+         "key":"wma_50",
+         "text":"wma(50)"
+      },
+      {
+         "key":"wma_100",
+         "text":"wma(100)"
+      },
+      {
+         "key":"wma_200",
+         "text":"wma(200)"
+      },
+      {
+         "key":"rsi_14",
+         "text":"rsi(14)"
+      },
+      {
+         "key":"macd",
+         "text":"macd"
+      },
+      {
+         "key":"macd_signal",
+         "text":"macd_signal"
+      },
+      {
+         "key":"macd_control",
+         "text":"macd_control"
+      },
+      {
+         "key":"bb_up_5",
+         "text":"B.band Up(5)"
+      },
+      {
+         "key":"bb_mid_5",
+         "text":"B.Band mid(5)"
+      },
+      {
+         "key":"bb_down_5",
+         "text":"B.Band down(5)"
+      },
+      {
+         "key":"sar",
+         "text":"Parabolic SAR"
+      }
+   ],
+   "SUPPORTED_SYMBOL":[
+      {
+         "key":"^NSEI",
+         "text":"NIFTY_50"
+      },
+      {
+         "key":"^NSEBANK",
+         "text":"NYFTY_BANK"
+      },
+      {
+         "key":"^CNXIT",
+         "text":"NIFTY IT"
+      },
+      {
+         "key":"ACC.NS",
+         "text":"ACC Ltd."
+      },
+      {
+         "key":"AUBANK.NS",
+         "text":"AU Small Finance Bank Ltd."
+      },
+      {
+         "key":"AARTIIND.NS",
+         "text":"Aarti Industries Ltd."
+      },
+      {
+         "key":"ABBOTINDIA.NS",
+         "text":"Abbott India Ltd."
+      },
+      {
+         "key":"ADANIENT.NS",
+         "text":"Adani Enterprises Ltd."
+      },
+      {
+         "key":"ADANIGREEN.NS",
+         "text":"Adani Green Energy Ltd."
+      },
+      {
+         "key":"ADANIPORTS.NS",
+         "text":"Adani Ports and Special Economic Zone Ltd."
+      },
+      {
+         "key":"ATGL.NS",
+         "text":"Adani Total Gas Ltd."
+      },
+      {
+         "key":"ADANITRANS.NS",
+         "text":"Adani Transmission Ltd."
+      },
+      {
+         "key":"ABCAPITAL.NS",
+         "text":"Aditya Birla Capital Ltd."
+      },
+      {
+         "key":"ABFRL.NS",
+         "text":"Aditya Birla Fashion and Retail Ltd."
+      },
+      {
+         "key":"AJANTPHARM.NS",
+         "text":"Ajanta Pharmaceuticals Ltd."
+      },
+      {
+         "key":"APLLTD.NS",
+         "text":"Alembic Pharmaceuticals Ltd."
+      },
+      {
+         "key":"ALKEM.NS",
+         "text":"Alkem Laboratories Ltd."
+      },
+      {
+         "key":"AMARAJABAT.NS",
+         "text":"Amara Raja Batteries Ltd."
+      },
+      {
+         "key":"AMBUJACEM.NS",
+         "text":"Ambuja Cements Ltd."
+      },
+      {
+         "key":"APOLLOHOSP.NS",
+         "text":"Apollo Hospitals Enterprise Ltd."
+      },
+      {
+         "key":"APOLLOTYRE.NS",
+         "text":"Apollo Tyres Ltd."
+      },
+      {
+         "key":"ASHOKLEY.NS",
+         "text":"Ashok Leyland Ltd."
+      },
+      {
+         "key":"ASIANPAINT.NS",
+         "text":"Asian Paints Ltd."
+      },
+      {
+         "key":"AUROPHARMA.NS",
+         "text":"Aurobindo Pharma Ltd."
+      },
+      {
+         "key":"DMART.NS",
+         "text":"Avenue Supermarts Ltd."
+      },
+      {
+         "key":"AXISBANK.NS",
+         "text":"Axis Bank Ltd."
+      },
+      {
+         "key":"BAJAJ-AUTO.NS",
+         "text":"Bajaj Auto Ltd."
+      },
+      {
+         "key":"BAJFINANCE.NS",
+         "text":"Bajaj Finance Ltd."
+      },
+      {
+         "key":"BAJAJFINSV.NS",
+         "text":"Bajaj Finserv Ltd."
+      },
+      {
+         "key":"BAJAJHLDNG.NS",
+         "text":"Bajaj Holdings & Investment Ltd."
+      },
+      {
+         "key":"BALKRISIND.NS",
+         "text":"Balkrishna Industries Ltd."
+      },
+      {
+         "key":"BANDHANBNK.NS",
+         "text":"Bandhan Bank Ltd."
+      },
+      {
+         "key":"BANKBARODA.NS",
+         "text":"Bank of Baroda"
+      },
+      {
+         "key":"BANKINDIA.NS",
+         "text":"Bank of India"
+      },
+      {
+         "key":"BATAINDIA.NS",
+         "text":"Bata India Ltd."
+      },
+      {
+         "key":"BERGEPAINT.NS",
+         "text":"Berger Paints India Ltd."
+      },
+      {
+         "key":"BEL.NS",
+         "text":"Bharat Electronics Ltd."
+      },
+      {
+         "key":"BHARATFORG.NS",
+         "text":"Bharat Forge Ltd."
+      },
+      {
+         "key":"BHEL.NS",
+         "text":"Bharat Heavy Electricals Ltd."
+      },
+      {
+         "key":"BPCL.NS",
+         "text":"Bharat Petroleum Corporation Ltd."
+      },
+      {
+         "key":"BHARTIARTL.NS",
+         "text":"Bharti Airtel Ltd."
+      },
+      {
+         "key":"BIOCON.NS",
+         "text":"Biocon Ltd."
+      },
+      {
+         "key":"BBTC.NS",
+         "text":"Bombay Burmah Trading Corporation Ltd."
+      },
+      {
+         "key":"BOSCHLTD.NS",
+         "text":"Bosch Ltd."
+      },
+      {
+         "key":"BRITANNIA.NS",
+         "text":"Britannia Industries Ltd."
+      },
+      {
+         "key":"CESC.NS",
+         "text":"CESC Ltd."
+      },
+      {
+         "key":"CADILAHC.NS",
+         "text":"Cadila Healthcare Ltd."
+      },
+      {
+         "key":"CANBK.NS",
+         "text":"Canara Bank"
+      },
+      {
+         "key":"CASTROLIND.NS",
+         "text":"Castrol India Ltd."
+      },
+      {
+         "key":"CHOLAFIN.NS",
+         "text":"Cholamandalam Investment and Finance Company Ltd."
+      },
+      {
+         "key":"CIPLA.NS",
+         "text":"Cipla Ltd."
+      },
+      {
+         "key":"CUB.NS",
+         "text":"City Union Bank Ltd."
+      },
+      {
+         "key":"COALINDIA.NS",
+         "text":"Coal India Ltd."
+      },
+      {
+         "key":"COFORGE.NS",
+         "text":"Coforge Ltd."
+      },
+      {
+         "key":"COLPAL.NS",
+         "text":"Colgate Palmolive (India) Ltd."
+      },
+      {
+         "key":"CONCOR.NS",
+         "text":"Container Corporation of India Ltd."
+      },
+      {
+         "key":"COROMANDEL.NS",
+         "text":"Coromandel International Ltd."
+      },
+      {
+         "key":"CROMPTON.NS",
+         "text":"Crompton Greaves Consumer Electricals Ltd."
+      },
+      {
+         "key":"CUMMINSIND.NS",
+         "text":"Cummins India Ltd."
+      },
+      {
+         "key":"DLF.NS",
+         "text":"DLF Ltd."
+      },
+      {
+         "key":"DABUR.NS",
+         "text":"Dabur India Ltd."
+      },
+      {
+         "key":"DALBHARAT.NS",
+         "text":"Dalmia Bharat Ltd."
+      },
+      {
+         "key":"DHANI.NS",
+         "text":"Dhani Services Ltd."
+      },
+      {
+         "key":"DIVISLAB.NS",
+         "text":"Divis Laboratories Ltd."
+      },
+      {
+         "key":"LALPATHLAB.NS",
+         "text":"Dr. Lal Path Labs Ltd."
+      },
+      {
+         "key":"DRREDDY.NS",
+         "text":"Dr. Reddys Laboratories Ltd."
+      },
+      {
+         "key":"EDELWEISS.NS",
+         "text":"Edelweiss Financial Services Ltd."
+      },
+      {
+         "key":"EICHERMOT.NS",
+         "text":"Eicher Motors Ltd."
+      },
+      {
+         "key":"EMAMILTD.NS",
+         "text":"Emami Ltd."
+      },
+      {
+         "key":"ENDURANCE.NS",
+         "text":"Endurance Technologies Ltd."
+      },
+      {
+         "key":"ESCORTS.NS",
+         "text":"Escorts Ltd."
+      },
+      {
+         "key":"EXIDEIND.NS",
+         "text":"Exide Industries Ltd."
+      },
+      {
+         "key":"FEDERALBNK.NS",
+         "text":"Federal Bank Ltd."
+      },
+      {
+         "key":"FORTIS.NS",
+         "text":"Fortis Healthcare Ltd."
+      },
+      {
+         "key":"FRETAIL.NS",
+         "text":"Future Retail Ltd."
+      },
+      {
+         "key":"GAIL.NS",
+         "text":"GAIL (India) Ltd."
+      },
+      {
+         "key":"GMRINFRA.NS",
+         "text":"GMR Infrastructure Ltd."
+      },
+      {
+         "key":"GICRE.NS",
+         "text":"General Insurance Corporation of India"
+      },
+      {
+         "key":"GLENMARK.NS",
+         "text":"Glenmark Pharmaceuticals Ltd."
+      },
+      {
+         "key":"GODREJAGRO.NS",
+         "text":"Godrej Agrovet Ltd."
+      },
+      {
+         "key":"GODREJCP.NS",
+         "text":"Godrej Consumer Products Ltd."
+      },
+      {
+         "key":"GODREJIND.NS",
+         "text":"Godrej Industries Ltd."
+      },
+      {
+         "key":"GODREJPROP.NS",
+         "text":"Godrej Properties Ltd."
+      },
+      {
+         "key":"GRASIM.NS",
+         "text":"Grasim Industries Ltd."
+      },
+      {
+         "key":"GUJGASLTD.NS",
+         "text":"Gujarat Gas Ltd."
+      },
+      {
+         "key":"GSPL.NS",
+         "text":"Gujarat State Petronet Ltd."
+      },
+      {
+         "key":"HCLTECH.NS",
+         "text":"HCL Technologies Ltd."
+      },
+      {
+         "key":"HDFCAMC.NS",
+         "text":"HDFC Asset Management Company Ltd."
+      },
+      {
+         "key":"HDFCBANK.NS",
+         "text":"HDFC Bank Ltd."
+      },
+      {
+         "key":"HDFCLIFE.NS",
+         "text":"HDFC Life Insurance Company Ltd."
+      },
+      {
+         "key":"HAVELLS.NS",
+         "text":"Havells India Ltd."
+      },
+      {
+         "key":"HEROMOTOCO.NS",
+         "text":"Hero MotoCorp Ltd."
+      },
+      {
+         "key":"HINDALCO.NS",
+         "text":"Hindalco Industries Ltd."
+      },
+      {
+         "key":"HINDPETRO.NS",
+         "text":"Hindustan Petroleum Corporation Ltd."
+      },
+      {
+         "key":"HINDUNILVR.NS",
+         "text":"Hindustan Unilever Ltd."
+      },
+      {
+         "key":"HINDZINC.NS",
+         "text":"Hindustan Zinc Ltd."
+      },
+      {
+         "key":"HUDCO.NS",
+         "text":"Housing & Urban Development Corporation Ltd."
+      },
+      {
+         "key":"HDFC.NS",
+         "text":"Housing Development Finance Corporation Ltd."
+      },
+      {
+         "key":"ICICIBANK.NS",
+         "text":"ICICI Bank Ltd."
+      },
+      {
+         "key":"ICICIGI.NS",
+         "text":"ICICI Lombard General Insurance Company Ltd."
+      },
+      {
+         "key":"ICICIPRULI.NS",
+         "text":"ICICI Prudential Life Insurance Company Ltd."
+      },
+      {
+         "key":"ISEC.NS",
+         "text":"ICICI Securities Ltd."
+      },
+      {
+         "key":"IDFCFIRSTB.NS",
+         "text":"IDFC First Bank Ltd."
+      },
+      {
+         "key":"ITC.NS",
+         "text":"ITC Ltd."
+      },
+      {
+         "key":"IBULHSGFIN.NS",
+         "text":"Indiabulls Housing Finance Ltd."
+      },
+      {
+         "key":"INDHOTEL.NS",
+         "text":"Indian Hotels Co. Ltd."
+      },
+      {
+         "key":"IOC.NS",
+         "text":"Indian Oil Corporation Ltd."
+      },
+      {
+         "key":"IRCTC.NS",
+         "text":"Indian Railway Catering And Tourism Corporation Ltd."
+      },
+      {
+         "key":"IGL.NS",
+         "text":"Indraprastha Gas Ltd."
+      },
+      {
+         "key":"INDUSTOWER.NS",
+         "text":"Indus Towers Ltd."
+      },
+      {
+         "key":"INDUSINDBK.NS",
+         "text":"IndusInd Bank Ltd."
+      },
+      {
+         "key":"NAUKRI.NS",
+         "text":"Info Edge (India) Ltd."
+      },
+      {
+         "key":"INFY.NS",
+         "text":"Infosys Ltd."
+      },
+      {
+         "key":"INDIGO.NS",
+         "text":"InterGlobe Aviation Ltd."
+      },
+      {
+         "key":"IPCALAB.NS",
+         "text":"Ipca Laboratories Ltd."
+      },
+      {
+         "key":"JSWENERGY.NS",
+         "text":"JSW Energy Ltd."
+      },
+      {
+         "key":"JSWSTEEL.NS",
+         "text":"JSW Steel Ltd."
+      },
+      {
+         "key":"JINDALSTEL.NS",
+         "text":"Jindal Steel & Power Ltd."
+      },
+      {
+         "key":"JUBLFOOD.NS",
+         "text":"Jubilant Foodworks Ltd."
+      },
+      {
+         "key":"KOTAKBANK.NS",
+         "text":"Kotak Mahindra Bank Ltd."
+      },
+      {
+         "key":"L&TFH.NS",
+         "text":"L&T Finance Holdings Ltd."
+      },
+      {
+         "key":"LTTS.NS",
+         "text":"L&T Technology Services Ltd."
+      },
+      {
+         "key":"LICHSGFIN.NS",
+         "text":"LIC Housing Finance Ltd."
+      },
+      {
+         "key":"LTI.NS",
+         "text":"Larsen & Toubro Infotech Ltd."
+      },
+      {
+         "key":"LT.NS",
+         "text":"Larsen & Toubro Ltd."
+      },
+      {
+         "key":"LUPIN.NS",
+         "text":"Lupin Ltd."
+      },
+      {
+         "key":"MRF.NS",
+         "text":"MRF Ltd."
+      },
+      {
+         "key":"MGL.NS",
+         "text":"Mahanagar Gas Ltd."
+      },
+      {
+         "key":"M&MFIN.NS",
+         "text":"Mahindra & Mahindra Financial Services Ltd."
+      },
+      {
+         "key":"M&M.NS",
+         "text":"Mahindra & Mahindra Ltd."
+      },
+      {
+         "key":"MANAPPURAM.NS",
+         "text":"Manappuram Finance Ltd."
+      },
+      {
+         "key":"MARICO.NS",
+         "text":"Marico Ltd."
+      },
+      {
+         "key":"MARUTI.NS",
+         "text":"Maruti Suzuki India Ltd."
+      },
+      {
+         "key":"MFSL.NS",
+         "text":"Max Financial Services Ltd."
+      },
+      {
+         "key":"MINDTREE.NS",
+         "text":"MindTree Ltd."
+      },
+      {
+         "key":"MOTHERSUMI.NS",
+         "text":"Motherson Sumi Systems Ltd."
+      },
+      {
+         "key":"MPHASIS.NS",
+         "text":"MphasiS Ltd."
+      },
+      {
+         "key":"MUTHOOTFIN.NS",
+         "text":"Muthoot Finance Ltd."
+      },
+      {
+         "key":"NATCOPHARM.NS",
+         "text":"NATCO Pharma Ltd."
+      },
+      {
+         "key":"NMDC.NS",
+         "text":"NMDC Ltd."
+      },
+      {
+         "key":"NTPC.NS",
+         "text":"NTPC Ltd."
+      },
+      {
+         "key":"NATIONALUM.NS",
+         "text":"National Aluminium Co. Ltd."
+      },
+      {
+         "key":"NAVINFLUOR.NS",
+         "text":"Navin Fluorine International Ltd."
+      },
+      {
+         "key":"NESTLEIND.NS",
+         "text":"Nestle India Ltd."
+      },
+      {
+         "key":"NAM-INDIA.NS",
+         "text":"Nippon Life India Asset Management Ltd."
+      },
+      {
+         "key":"OBEROIRLTY.NS",
+         "text":"Oberoi Realty Ltd."
+      },
+      {
+         "key":"ONGC.NS",
+         "text":"Oil & Natural Gas Corporation Ltd."
+      },
+      {
+         "key":"OIL.NS",
+         "text":"Oil India Ltd."
+      },
+      {
+         "key":"OFSS.NS",
+         "text":"Oracle Financial Services Software Ltd."
+      },
+      {
+         "key":"PIIND.NS",
+         "text":"PI Industries Ltd."
+      },
+      {
+         "key":"PAGEIND.NS",
+         "text":"Page Industries Ltd."
+      },
+      {
+         "key":"PETRONET.NS",
+         "text":"Petronet LNG Ltd."
+      },
+      {
+         "key":"PFIZER.NS",
+         "text":"Pfizer Ltd."
+      },
+      {
+         "key":"PIDILITIND.NS",
+         "text":"Pidilite Industries Ltd."
+      },
+      {
+         "key":"PEL.NS",
+         "text":"Piramal Enterprises Ltd."
+      },
+      {
+         "key":"POLYCAB.NS",
+         "text":"Polycab India Ltd."
+      },
+      {
+         "key":"PFC.NS",
+         "text":"Power Finance Corporation Ltd."
+      },
+      {
+         "key":"POWERGRID.NS",
+         "text":"Power Grid Corporation of India Ltd."
+      },
+      {
+         "key":"PRESTIGE.NS",
+         "text":"Prestige Estates Projects Ltd."
+      },
+      {
+         "key":"PGHH.NS",
+         "text":"Procter & Gamble Hygiene & Health Care Ltd."
+      },
+      {
+         "key":"PNB.NS",
+         "text":"Punjab National Bank"
+      },
+      {
+         "key":"RBLBANK.NS",
+         "text":"RBL Bank Ltd."
+      },
+      {
+         "key":"RECLTD.NS",
+         "text":"REC Ltd."
+      },
+      {
+         "key":"RAJESHEXPO.NS",
+         "text":"Rajesh Exports Ltd."
+      },
+      {
+         "key":"RELIANCE.NS",
+         "text":"Reliance Industries Ltd."
+      },
+      {
+         "key":"SBICARD.NS",
+         "text":"SBI Cards and Payment Services Ltd."
+      },
+      {
+         "key":"SBILIFE.NS",
+         "text":"SBI Life Insurance Company Ltd."
+      },
+      {
+         "key":"SRF.NS",
+         "text":"SRF Ltd."
+      },
+      {
+         "key":"SANOFI.NS",
+         "text":"Sanofi India Ltd."
+      },
+      {
+         "key":"SHREECEM.NS",
+         "text":"Shree Cement Ltd."
+      },
+      {
+         "key":"SRTRANSFIN.NS",
+         "text":"Shriram Transport Finance Co. Ltd."
+      },
+      {
+         "key":"SIEMENS.NS",
+         "text":"Siemens Ltd."
+      },
+      {
+         "key":"SBIN.NS",
+         "text":"State Bank of India"
+      },
+      {
+         "key":"SAIL.NS",
+         "text":"Steel Authority of India Ltd."
+      },
+      {
+         "key":"SUNPHARMA.NS",
+         "text":"Sun Pharmaceutical Industries Ltd."
+      },
+      {
+         "key":"SUNTV.NS",
+         "text":"Sun TV Network Ltd."
+      },
+      {
+         "key":"SYNGENE.NS",
+         "text":"Syngene International Ltd."
+      },
+      {
+         "key":"TVSMOTOR.NS",
+         "text":"TVS Motor Company Ltd."
+      },
+      {
+         "key":"TATACHEM.NS",
+         "text":"Tata Chemicals Ltd."
+      },
+      {
+         "key":"TCS.NS",
+         "text":"Tata Consultancy Services Ltd."
+      },
+      {
+         "key":"TATACONSUM.NS",
+         "text":"Tata Consumer Products Ltd."
+      },
+      {
+         "key":"TATAMOTORS.NS",
+         "text":"Tata Motors Ltd."
+      },
+      {
+         "key":"TATAPOWER.NS",
+         "text":"Tata Power Co. Ltd."
+      },
+      {
+         "key":"TATASTEEL.NS",
+         "text":"Tata Steel Ltd."
+      },
+      {
+         "key":"TECHM.NS",
+         "text":"Tech Mahindra Ltd."
+      },
+      {
+         "key":"RAMCOCEM.NS",
+         "text":"The Ramco Cements Ltd."
+      },
+      {
+         "key":"TITAN.NS",
+         "text":"Titan Company Ltd."
+      },
+      {
+         "key":"TORNTPHARM.NS",
+         "text":"Torrent Pharmaceuticals Ltd."
+      },
+      {
+         "key":"TORNTPOWER.NS",
+         "text":"Torrent Power Ltd."
+      },
+      {
+         "key":"TRENT.NS",
+         "text":"Trent Ltd."
+      },
+      {
+         "key":"UPL.NS",
+         "text":"UPL Ltd."
+      },
+      {
+         "key":"ULTRACEMCO.NS",
+         "text":"UltraTech Cement Ltd."
+      },
+      {
+         "key":"UNIONBANK.NS",
+         "text":"Union Bank of India"
+      },
+      {
+         "key":"UBL.NS",
+         "text":"United Breweries Ltd."
+      },
+      {
+         "key":"MCDOWELL-N.NS",
+         "text":"United Spirits Ltd."
+      },
+      {
+         "key":"VGUARD.NS",
+         "text":"V-Guard Industries Ltd."
+      },
+      {
+         "key":"VBL.NS",
+         "text":"Varun Beverages Ltd."
+      },
+      {
+         "key":"IDEA.NS",
+         "text":"Vodafone Idea Ltd."
+      },
+      {
+         "key":"VOLTAS.NS",
+         "text":"Voltas Ltd."
+      },
+      {
+         "key":"WHIRLPOOL.NS",
+         "text":"Whirlpool of India Ltd."
+      },
+      {
+         "key":"WIPRO.NS",
+         "text":"Wipro Ltd."
+      },
+      {
+         "key":"YESBANK.NS",
+         "text":"Yes Bank Ltd."
+      },
+      {
+         "key":"ZEEL.NS",
+         "text":"Zee Entertainment Enterprises Ltd."
+      }
+   ]
+}

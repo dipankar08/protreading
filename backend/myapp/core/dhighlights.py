@@ -1,6 +1,6 @@
 from myapp.core.dglobaldata import checkLoadLatestData
 from myapp.core.dtypes import TCandleType
-from myapp.core import dfilter, dredis
+from myapp.core import dfilter, dredis, dglobaldata
 from myapp.core.ddecorators import ensure_single_entry, smart_cache
 
 rules = [
