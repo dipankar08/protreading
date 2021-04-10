@@ -1,2 +1,6 @@
+=== ETUP==
+npx expo init trading121
+npx expo start
+
 1. run all nodejs comamnd using npx.
 like  npx react-native run-ios

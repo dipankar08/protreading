@@ -1,4 +1,12 @@
 {
   "name": "trading121",
-  "displayName": "trading121"
+  "displayName": "trading121",
+  "expo": {
+    "name": "trading121",
+    "slug": "trading121",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
 }
