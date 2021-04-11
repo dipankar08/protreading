@@ -10,9 +10,10 @@ import { SignUpScreen, SignInScreen, SplashScreen, SearchScreen, SearchScreen2, 
 import { ProfileScreen } from "./ProfileScreen";
 import { PositionScreen } from "./PositionScreen";
 import { MarketScreen } from "./MarketScreen";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { Button } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { TProps } from "./types";
 // authstack
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
@@ -22,18 +23,24 @@ const AuthStackScreen = () => (
   </AuthStack.Navigator>
 );
 
+// Home Stack
 const HomeStack = createStackNavigator();
-const HomeStackScreen = () => (
+const HomeStackScreen = ({ navigation }: TProps) => (
   <HomeStack.Navigator>
-    <HomeStack.Screen name="Home" component={HomeScreen} />
-    <HomeStack.Screen name="Position" component={PositionScreen} />
-    <HomeStack.Screen name="Market" component={MarketScreen} />
     <HomeStack.Screen
-      name="Details"
-      component={DetailsScreen}
-      options={({ route }) => ({
-        title: "Details",
-      })}
+      name="Home"
+      component={HomeScreen}
+      options={{
+        title: "Home",
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+        headerLeft: () => <MaterialCommunityIcons name="menu" color="white" size={24} style={{ marginLeft: 10 }} />,
+      }}
     />
   </HomeStack.Navigator>
 );
@@ -47,23 +54,78 @@ const SearchStackScreen = () => (
   </SearchStack.Navigator>
 );
 
-// Profile
+// Profile Stack
 const ProfileStack = createStackNavigator();
 const ProfileStackScreen = () => (
   <ProfileStack.Navigator>
-    <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+    <ProfileStack.Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{
+        title: "Profile",
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
   </ProfileStack.Navigator>
+);
+
+// Market Stack
+const MarketStack = createStackNavigator();
+const MarketStackScreen = () => (
+  <MarketStack.Navigator>
+    <MarketStack.Screen
+      name="Market"
+      component={MarketScreen}
+      options={{
+        title: "Market",
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+  </MarketStack.Navigator>
+);
+
+// Position Stack
+const PositionStack = createStackNavigator();
+const PositionStackScreen = () => (
+  <PositionStack.Navigator>
+    <PositionStack.Screen
+      name="Position"
+      component={PositionScreen}
+      options={{
+        title: "Position",
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+  </PositionStack.Navigator>
 );
 
 // Button Tabs
 const Tabs = createBottomTabNavigator();
 const TabsScreen = () => (
   <Tabs.Navigator
-    initialRouteName="Market"
+    initialRouteName="Home"
     tabBarOptions={{
       activeTintColor: "#e91e63",
       keyboardHidesTabBar: true,
-      showLabel: false,
+      showLabel: true,
     }}
   >
     <Tabs.Screen
@@ -76,15 +138,16 @@ const TabsScreen = () => (
     />
     <Tabs.Screen
       name="Market"
-      component={MarketScreen}
+      component={MarketStackScreen}
       options={{
+        title: "Market",
         tabBarLabel: "Market",
         tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="trending-up" color={color} size={size} />,
       }}
     />
     <Tabs.Screen
       name="Position"
-      component={PositionScreen}
+      component={PositionStackScreen}
       options={{
         tabBarLabel: "Position",
         tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="camera-iris" color={color} size={size} />,
@@ -92,7 +155,7 @@ const TabsScreen = () => (
     />
     <Tabs.Screen
       name="Profile"
-      component={ProfileScreen}
+      component={ProfileStackScreen}
       options={{
         tabBarLabel: "Profile",
         tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account" color={color} size={size} />,
