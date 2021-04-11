@@ -67,17 +67,18 @@ export const MarketScreen = ({ navigation }: TProps) => {
         data={marketKey}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => {
-          let color = item.key === selectedListKey ? "red" : "black";
+          let color = item.key === selectedListKey ? "#000000ff" : "#00000090";
           return (
             <TouchableWithoutFeedback onPress={() => actionOnRow(item)}>
               <Text
                 style={{
                   backgroundColor: color,
                   color: "white",
+                  fontSize: 12,
                   paddingVertical: 8,
                   paddingHorizontal: 16,
-                  borderRadius: 10,
-                  marginRight: 20,
+                  borderRadius: 15,
+                  marginRight: 10,
                   marginBottom: 20,
                   marginTop: 20,
                   textTransform: "capitalize",
@@ -105,11 +106,16 @@ export const MarketScreen = ({ navigation }: TProps) => {
               }}
             >
               <DLayoutRow>
-                <DLayoutCol>
+                <View
+                  style={{
+                    flex: 2,
+                    flexDirection: "column",
+                  }}
+                >
                   <Text
                     style={{
-                      fontSize: 15,
-                      color: "#111111",
+                      fontSize: 14,
+                      color: "#00000090",
                     }}
                   >
                     {item.name}
@@ -117,13 +123,13 @@ export const MarketScreen = ({ navigation }: TProps) => {
                   <Text
                     style={{
                       fontSize: 12,
-                      color: "#11111160",
+                      color: "#00000050",
                       paddingTop: 5,
                     }}
                   >
                     {item.symbol}
                   </Text>
-                </DLayoutCol>
+                </View>
                 <View
                   style={{
                     flex: 1,
