@@ -107,8 +107,6 @@ def task():
     elif task == "print":
         task_id = tasks.print_hello.delay()
         return buildSuccess("task print_hello submitted", {"status_url": "/result/{}".format(task_id)})
-    elif task == 'summary':
-        return buildSuccess("calculated", dhighlights.build_highlights(ignore_cache=True))
     else:
         return buildError("Task not found")
 
