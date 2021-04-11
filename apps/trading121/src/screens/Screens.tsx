@@ -3,7 +3,7 @@ import { Button, StyleSheet, View, Text } from "react-native";
 import { AuthContext } from "../components/context";
 import { TProps } from "./types";
 import { globalStyle } from "../components/styles";
-import { CardView } from "../components/basic";
+import { DCard } from "../components/basic";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,10 +26,10 @@ const ScreenContainer = ({ children }: TProps) => {
 export const SplashScreen = () => {
   return (
     <ScreenContainer>
-      <CardView>
+      <DCard>
         <Text>Splash...</Text>
         <Button title="action" onPress={() => alert("todo")} />
-      </CardView>
+      </DCard>
     </ScreenContainer>
   );
 };
@@ -38,10 +38,10 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const { signIn } = React.useContext(AuthContext);
   return (
     <ScreenContainer>
-      <CardView overrideStyle={{ height: 200 }}>
+      <DCard overrideStyle={{ height: 200 }}>
         <Text style={[globalStyle.PrimaryText]}>Sign In</Text>
         <Button title="action" onPress={() => signIn()} />
-      </CardView>
+      </DCard>
     </ScreenContainer>
   );
 };
