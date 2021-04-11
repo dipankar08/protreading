@@ -6,8 +6,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AuthContext } from "../components/context";
-import { SignUpScreen, SignInScreen, SplashScreen, SearchScreen, SearchScreen2, HomeScreen, DetailsScreen } from "./Screens";
-import { ProfileScreen } from "./Screens";
+import { SignUpScreen, SignInScreen, SplashScreen, SearchScreen, SearchScreen2, DetailsScreen, HomeScreen } from "./Screens";
+import { ProfileScreen } from "./ProfileScreen";
+import { PositionScreen } from "./PositionScreen";
+import { MarketScreen } from "./MarketScreen";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 // authstack
 const AuthStack = createStackNavigator();
@@ -22,6 +26,8 @@ const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Screen name="Position" component={PositionScreen} />
+    <HomeStack.Screen name="Market" component={MarketScreen} />
     <HomeStack.Screen
       name="Details"
       component={DetailsScreen}
@@ -52,9 +58,46 @@ const ProfileStackScreen = () => (
 // Button Tabs
 const Tabs = createBottomTabNavigator();
 const TabsScreen = () => (
-  <Tabs.Navigator>
-    <Tabs.Screen name="Home" component={HomeStackScreen} />
-    <Tabs.Screen name="Search" component={SearchStackScreen} />
+  <Tabs.Navigator
+    initialRouteName="Market"
+    tabBarOptions={{
+      activeTintColor: "#e91e63",
+      keyboardHidesTabBar: true,
+      showLabel: false,
+    }}
+  >
+    <Tabs.Screen
+      name="Home"
+      component={HomeStackScreen}
+      options={{
+        tabBarLabel: "Home",
+        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="home" color={color} size={size} />,
+      }}
+    />
+    <Tabs.Screen
+      name="Market"
+      component={MarketScreen}
+      options={{
+        tabBarLabel: "Market",
+        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="trending-up" color={color} size={size} />,
+      }}
+    />
+    <Tabs.Screen
+      name="Position"
+      component={PositionScreen}
+      options={{
+        tabBarLabel: "Position",
+        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="camera-iris" color={color} size={size} />,
+      }}
+    />
+    <Tabs.Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{
+        tabBarLabel: "Profile",
+        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account" color={color} size={size} />,
+      }}
+    />
   </Tabs.Navigator>
 );
 
