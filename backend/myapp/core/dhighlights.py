@@ -1,3 +1,4 @@
+import time
 from myapp.core.dglobaldata import checkLoadLatestData
 from myapp.core.dtypes import TCandleType
 from myapp.core import dfilter, dredis, dglobaldata
@@ -202,8 +203,12 @@ def compute_summary():
             sort_by=x.get('sort_by'),
             limit=x.get('limit')
         )
-        result[x.get('name')] = {"name": x.get('name'), "data": ret}
-    dredis.setPickle("summary_result", result)
+        result[x.get('name')] = ret
+    dredis.setPickle("summary_result",
+                     {'data': result,
+                      'update_ts': str(time.time()),
+                      'update_ts_human':
+                      time.strftime("%d/%m/%Y, %H:%M:%S GMT", time.gmtime())})
 
 
 def get_summary():

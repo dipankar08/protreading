@@ -10,6 +10,7 @@ import json as JSON
 #from myapp.core.dglobaldata import _last_update_ts
 from myapp.core import timetracker
 CANDLE_TYPE_COUNT = []
+from flask import jsonify
 
 
 def addExtraInfo(dict):
@@ -22,7 +23,7 @@ def addExtraInfo(dict):
 
 def returnAsJson(dict):
     data = addExtraInfo(dict)
-    return jsonify(json.dumps(data).replace('NaN', '0'))
+    return jsonify(data)
 
 
 def buildSuccess(msg: str = "`Successfully executed", out=None):

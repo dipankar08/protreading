@@ -46,15 +46,13 @@ def status():
 def latest():
     "status of the app"
     candle_type = get_param_or_default(request, "candle_type", "1d")
-    return buildSuccess("Status Ok", {
-        "data": dredis.getPickle("latest_{}".format(candle_type))
-    })
+    return buildSuccess("Status Ok", dredis.getPickle("latest_{}".format(candle_type)))
 
 
 # SUMMARY
-@cross_origin()
-@core_api.route('/summary')
-@make_exception_safe
+@ cross_origin()
+@ core_api.route('/summary')
+@ make_exception_safe
 def summary():
     mayRebuildData()
     summary = dhighlights.get_summary()
@@ -68,7 +66,7 @@ def summary():
 # SCREEN
 @ cross_origin()
 @ core_api.route('/screen', methods=['POST', 'GET'])
-@make_exception_safe
+@ make_exception_safe
 def Screen():
     dglobaldata.checkLoadLatestData()
     result = dfilter.filterstock(
@@ -80,7 +78,7 @@ def Screen():
 # CHARTS
 @ cross_origin()
 @ core_api.route('/chart')
-@make_exception_safe
+@ make_exception_safe
 def chart():
     dglobaldata.checkLoadLatestData()
     symbol = get_param_or_throw(request, 'symbol')
@@ -93,8 +91,8 @@ def chart():
 
 
 # OTHER INTERNAL APIS
-@core_api.route('/task')
-@make_exception_safe
+@ core_api.route('/task')
+@ make_exception_safe
 def task():
     "Run the worker task from the web"
     task = get_param_or_throw(request, "task")
@@ -111,17 +109,17 @@ def task():
         return buildError("Task not found")
 
 
-@cross_origin()
-@core_api.route('/snapshot')
-@make_exception_safe
+@ cross_origin()
+@ core_api.route('/snapshot')
+@ make_exception_safe
 def snapshot_intra():
     task_id = tasks.snapshot_pipeline.delay(
         get_param_or_throw(request, 'candle_type'))
     return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
 
 
-@core_api.route('/clearcache')
-@make_exception_safe
+@ core_api.route('/clearcache')
+@ make_exception_safe
 def clearcache():
     " This will delete cache for all the data "
     # cache.delete_memoized(status)  >>> NOT WORKS
@@ -134,8 +132,8 @@ def clearcache():
 
 
 # arbitary test
-@core_api.route('/test')
-@make_exception_safe
+@ core_api.route('/test')
+@ make_exception_safe
 def just_test():
     " This will delete cache for all the data "
     # ddownload.download(TCandleType.DAY_1)

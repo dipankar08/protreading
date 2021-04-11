@@ -65,7 +65,7 @@ def getLatestDataInJson(df: DataFrame):
             if symbol not in final_result:
                 final_result[symbol] = {}
             final_result[symbol][indicator] = value
-        #print(json.dumps(final_result, indent=4))
+        # print(json.dumps(final_result, indent=4))
     except Exception as e:
         dlog.ex(e)
         danalytics.reportException(e)
@@ -89,7 +89,10 @@ def download_process_data_internal(candle_type: TCandleType):
 
     dlog.d("4/4 Notify latest data to redis")
     dredis.setPickle("latest_{}".format(candle_type.value),
-                     getLatestDataInJson(processed_df))
+                     {'data': getLatestDataInJson(processed_df),
+                      'update_ts': str(time.time()),
+                      'update_ts_human':
+                      time.strftime("%d/%m/%Y, %H:%M:%S GMT", time.gmtime())})
     dlog.d("Completed snapshot_pipeline")
     # Mark as done
     mark_dataload_end(candle_type)
