@@ -14,6 +14,7 @@ import { MarketScreen } from "./MarketScreen";
 import { Button } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "./types";
+import { loadLatestData, userBoot } from "../libs/boot_helper";
 // authstack
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
@@ -200,8 +201,8 @@ const RootStackScreen = ({ userToken }: TProps) => {
 };
 
 const RootNavigation = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [userToken, setUserToken] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   // define auth context
   const authContext = React.useMemo(() => {
@@ -221,23 +222,18 @@ const RootNavigation = () => {
     };
   }, []);
 
-  // define lifecyle
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  });
-
-  if (isLoading) {
+  const { isComplete, latestData } = userBoot();
+  if (isComplete) {
+    return (
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+          <RootStackScreen userToken={userToken} />
+        </NavigationContainer>
+      </AuthContext.Provider>
+    );
+  } else {
     return <SplashScreen />;
   }
-  return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <RootStackScreen userToken={userToken} />
-      </NavigationContainer>
-    </AuthContext.Provider>
-  );
 };
 
 export default RootNavigation;

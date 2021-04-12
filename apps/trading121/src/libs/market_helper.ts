@@ -16,6 +16,7 @@ export type TMarketEntry = {
   change: number;
 };
 
+export type TObject = { [key: string]: any };
 export const userMarket = () => {
   const [summary, setSummary] = React.useState<Map<string, Array<TMarketEntry>>>();
 
@@ -28,9 +29,10 @@ export const userMarket = () => {
     console.log("[NETWORK] fetching from network ");
     try {
       let response = await axios.get("https://dev.api.grodok.com:5000/summary");
-      const jsondata: any = JSON.parse(response.data);
+      const jsondata: any = response.data;
       if (jsondata.status == "success") {
-        let data = jsondata.out;
+        let data = jsondata.out.data;
+        //console.log(data);
         try {
           await AsyncStorage.setItem("MARKET_SUMMARY", JSON.stringify(data));
           console.log("data saved in cache");
@@ -53,8 +55,9 @@ export const userMarket = () => {
   function processData(obj: any) {
     let result = new Map<string, Array<TMarketEntry>>();
     for (let c of Object.keys(obj)) {
-      result.set(c, obj[c].data);
+      result.set(c, obj[c]);
     }
+    //console.log(result);
     setSummary(result);
     let keys = Object.keys(obj);
     setMarketKey(

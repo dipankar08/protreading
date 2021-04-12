@@ -4,6 +4,7 @@ import { AuthContext } from "../components/context";
 import { TProps } from "./types";
 import { globalStyle } from "../components/styles";
 import { DCard } from "../components/basic";
+import { userBoot } from "../libs/boot_helper";
 
 const styles = StyleSheet.create({
   container: {
