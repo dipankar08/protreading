@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import RootNavigation from "./src/screens/navigation";
+import { registerRootComponent } from "expo";
 
 export default function App() {
   return (
@@ -19,3 +20,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+registerRootComponent(App);
