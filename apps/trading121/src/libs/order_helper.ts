@@ -3,6 +3,8 @@ import React from "react";
 import { Alert } from "react-native";
 import Toast from "react-native-simple-toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { latestMarketCacheData } from "./boot_helper";
+import { loadLatestData } from "./network";
 
 type TInvestmentSummary = {
   invested_amount: number;
@@ -30,6 +32,7 @@ type TOrder = {
 };
 
 export const userOrder = () => {
+  const [latestData, setLatestData] = React.useState<any>();
   const [orderList, setOrderList] = React.useState<TOrder[]>([]);
   const [orderSummary, setOrderSummary] = React.useState<TInvestmentSummary>();
   const [loading, setLoading] = React.useState(false);
@@ -42,40 +45,53 @@ export const userOrder = () => {
 
   function processOrder(obj: any) {
     console.log("processing order...");
+    if (!latestData) {
+      console.log("error:latest data is null");
+      return;
+    }
     //console.log(obj);
     let result: Array<TOrder> = [];
     let invested_amount_total = 0;
     let current_amount_total = 0;
 
     for (var x of obj) {
-      let latest = 120; //x.latest;
-      let open_for = "4 days";
-      let is_open = x.sell_price == null;
-      let invested_amount = x.buy_price * x.quantities;
-      let current_amount = latest * x.quantities;
-      let change = (x.last_price = x.buy_price);
-      let change_per = ((x.last_price - x.buy_price) * 100) / x.buy_price;
-      let gross = (x.last_price - x.buy_price) * x.quantities;
-      result.push({
+      let symbol: string = x.symbol;
+      let market_data = latestData[symbol.toUpperCase()];
+      console.log(x);
+      if (!market_data) {
+        continue;
+      }
+      x.last_price = market_data?.["close"]; //x.latest;
+      //console.log(latest);
+      x.open_for = "4 days";
+      x.is_open = x.sell_price == null;
+      x.invested_amount = x.buy_price * x.quantities;
+      x.current_amount = x.last_price * x.quantities;
+      x.change = x.current_amount - x.invested_amount;
+      x.change_per = ((x.last_price - x.buy_price) * 100) / x.buy_price;
+      x.gross = (x.last_price - x.buy_price) * x.quantities;
+      let cur_result = {
         _id: x._id,
         symbol: x.symbol,
         buy_price: x.buy_price,
         sell_price: x.sell_price || null,
-        last_price: 0, // todo
+        last_price: x.last_price, // todo
         buy_ts: x.buy_ts,
         sell_ts: x.sell_ts || null,
         quantities: x.quantities,
         is_open: x.sell_price == null,
-        is_gain: x.buy_price > latest,
-        open_for: open_for,
-        invested_sum: invested_amount,
-        change: change,
-        change_per: change_per,
-        gross: gross,
-      });
-      if (is_open) {
-        invested_amount_total += invested_amount;
-        current_amount_total += current_amount_total;
+        is_gain: x.buy_price > x.last_price,
+        open_for: x.open_for,
+        invested_sum: x.invested_amount.toFixed(2),
+        change: x.change.toFixed(2),
+        change_per: x.change_per.toFixed(2),
+        gross: x.gross.toFixed(2),
+      };
+      console.log(cur_result);
+      result.push(cur_result);
+      if (x.is_open) {
+        invested_amount_total += x.invested_amount;
+        current_amount_total += x.current_amount;
       }
     }
     result.sort((a, b) => (a.is_open ? -1 : 1));
@@ -139,7 +155,7 @@ export const userOrder = () => {
         buy_price: parseInt(newStock.buy_price),
         quantities: parseInt(newStock.quantities),
       });
-      console.log(response);
+      //console.log(response);
       const jsondata: any = response.data;
       if (jsondata.status == "success" && jsondata.out.length > 0) {
         //setOrderList(processOrder(response.data));
@@ -190,9 +206,16 @@ export const userOrder = () => {
     loadFromNetwork();
   };
 
-  React.useEffect(() => {
+  async function loadMarketData() {
+    let data = await loadLatestData();
+    console.log(data);
+    setLatestData(data);
     fetchOrder();
+  }
+
+  React.useEffect(() => {
+    loadMarketData();
   }, []);
 
-  return { orderList, loading, reloadOrder, newStock, createOrder, setNewStock, orderSummary, closeOrder };
+  return { orderList, loading, reloadOrder, newStock, createOrder, setNewStock, orderSummary, closeOrder, latestData };
 };

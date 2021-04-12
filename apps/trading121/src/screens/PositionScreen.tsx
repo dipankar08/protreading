@@ -11,7 +11,7 @@ import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture
 export const PositionScreen = ({ navigation }: TProps) => {
   // state
   const [modalVisible, setModalVisible] = React.useState(false);
-  const { orderList, loading, reloadOrder, newStock, createOrder, setNewStock, orderSummary, closeOrder } = userOrder();
+  const { orderList, loading, reloadOrder, newStock, createOrder, setNewStock, orderSummary, closeOrder, latestData } = userOrder();
 
   return (
     <DContainer>
@@ -23,7 +23,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
           </DLayoutCol>
           <DLayoutCol>
             <DText>Current </DText>
-            <DText>{orderSummary?.change_amount} INR</DText>
+            <DText>{orderSummary?.current_amount} INR</DText>
           </DLayoutCol>
         </DLayoutRow>
         <DLayoutRow>
@@ -32,8 +32,8 @@ export const PositionScreen = ({ navigation }: TProps) => {
             <DText>{orderSummary?.change_amount} INR</DText>
           </DLayoutCol>
           <DLayoutCol>
-            <DText>Profit %</DText>
-            <DText>{orderSummary?.change_per} INR</DText>
+            <DText>Profit</DText>
+            <DText>{orderSummary?.change_per} %</DText>
           </DLayoutCol>
         </DLayoutRow>
       </DCard>
@@ -69,9 +69,9 @@ export const PositionScreen = ({ navigation }: TProps) => {
                     </DLayoutCol>
                     <DLayoutCol style={{ alignItems: "flex-end" }}>
                       <DText style={{ color: color, fontSize: 14 }}>
-                        PL:{item.change}({item.change_per})
+                        PL:{item.change}({item.change_per} %)
                       </DText>
-                      <DText style={{ color: color, fontSize: 14 }}>LTP:</DText>
+                      <DText style={{ color: color, fontSize: 14 }}>LTP:{item.last_price}</DText>
                       <DText style={{ color: "#00000050", fontSize: 14 }}>Quantity</DText>
                     </DLayoutCol>
                   </DLayoutRow>
