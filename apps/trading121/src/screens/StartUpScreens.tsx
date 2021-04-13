@@ -9,7 +9,7 @@ import logo from "../../assets/images/logo.png";
 import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
-import { processLatestData, processSummaryData } from "../models/processor";
+import { processMarketData, processSummaryData } from "../models/processor";
 import { deleteData, getData, saveData } from "../libs/stoarge";
 import { CACHE_KEY_MARKET, CACHE_KEY_SUMMARY } from "../appstate/CONST";
 
@@ -26,11 +26,8 @@ export const SplashScreen = () => {
         // try load from cache.
         let data = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type=5m", CACHE_KEY_MARKET, true);
         let data1 = await getRequest("https://dev.api.grodok.com:5000/summary", CACHE_KEY_SUMMARY);
-
-        appState.dispatch({ type: "UPDATE_MARKET_DATA", payload: processLatestData(data) });
-        // try load from cache.
-
-        appState.dispatch({ type: "UPDATE_SUMMARY_DATA", payload: processSummaryData(data1) });
+        appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(data) });
+        appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(data1) });
         // mark boot complete
         setLoading(false);
         appState.dispatch({ type: "MARK_BOOT_COMPLETE" });
@@ -62,7 +59,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
   useEffect(() => {
     async function checkSignIn() {
       if (getData("USER_INFO")) {
-        console.log(getData("USER_INFO"));
+        //console.log(getData("USER_INFO"));
         appState.dispatch({ type: "MARK_USER_SIGN_IN", payload: getData("USER_INFO") });
       }
     }

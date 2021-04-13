@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TObject } from "../models/model";
 import { getData, saveData } from "./stoarge";
 
 export async function loadLatestData() {
@@ -15,10 +16,11 @@ export async function loadLatestData() {
   }
 }
 
-export async function getRequest(url: string, cacheKey?: string, cache_first = true) {
+// Be explict if you wnats to improve perf
+export async function getRequest(url: string, cacheKey?: string, cache_first = false) {
   console.log("try fetching " + url);
   if (cache_first && cacheKey) {
-    console.log("Trying cache first..");
+    console.log("[Network]Trying cache first..");
     let data = await getData(cacheKey);
     if (data) {
       return data;
@@ -34,6 +36,20 @@ export async function getRequest(url: string, cacheKey?: string, cache_first = t
     return jsondata.out;
   } else {
     console.log("fetch failed....");
+    throw new Error("Server sends error");
+  }
+}
+
+// No try catch here
+export async function postRequest(url: string, data: TObject) {
+  console.log("[Network] posting " + url);
+  let response = await axios.post(url, data);
+  const jsondata: any = response.data;
+  if (jsondata.status == "success") {
+    console.log("post success...");
+    return jsondata.out;
+  } else {
+    console.log("post failed....");
     throw new Error("Server sends error");
   }
 }

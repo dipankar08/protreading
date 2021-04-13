@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { TObject } from "./market_helper";
+import { TObject } from "../models/model";
 export async function saveData(key: string, value: TObject) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));

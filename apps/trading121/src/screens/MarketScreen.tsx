@@ -1,17 +1,42 @@
-import axios from "axios";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, FlatList, Text, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { DCard, DContainer, DLayoutCol, DLayoutRow } from "../components/basic";
 import { TProps } from "./types";
-import Toast from "react-native-simple-toast";
-import { TKeyText, userMarket } from "../libs/market_helper";
+import { AppStateContext } from "../appstate/AppStateStore";
+import { getRequest } from "../libs/network";
+import { CACHE_KEY_SUMMARY, CACHE_KEY_MARKET } from "../appstate/CONST";
+import { processSummaryData } from "../models/processor";
+import { TKeyText } from "../models/model";
 
 export const MarketScreen = ({ navigation }: TProps) => {
-  const { loading, marketKey, summary, selectedListKey, setSelectedListKey, loadFromNetwork } = userMarket();
+  const appState = useContext(AppStateContext);
+
+  const [selectedListKey, setSelectedListKey] = useState("all_data");
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  async function reload() {
+    console.log("[NETWORK] fetching from network ");
+    setLoading(true);
+    try {
+      let summary = await getRequest("https://dev.api.grodok.com:5000/summary", CACHE_KEY_SUMMARY, false);
+      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
+      let market = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type_5m", CACHE_KEY_MARKET, false);
+      appState.dispatch({ type: "UPDATE_MARKET", payload: processSummaryData(market) });
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      setError("Not able to get Data");
+    }
+  }
+
+  React.useEffect(() => {
+    reload();
+  }, []);
 
   function actionOnRow(item: TKeyText) {
-    console.log("Selected Item :", item);
+    //console.log("Selected Item :", item);
     setSelectedListKey(item.key);
   }
 
@@ -20,7 +45,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-        data={marketKey}
+        data={appState.state.summary?.tags}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => {
           let color = item.key === selectedListKey ? "#000000ff" : "#00000090";
@@ -48,9 +73,9 @@ export const MarketScreen = ({ navigation }: TProps) => {
       />
 
       <FlatList
-        onRefresh={() => loadFromNetwork()}
+        onRefresh={() => reload()}
         refreshing={loading}
-        data={summary?.get(selectedListKey)}
+        data={appState.state.summary?.data[selectedListKey]}
         keyExtractor={(item, index) => item.name}
         scrollsToTop={true}
         renderItem={({ item }) => {
