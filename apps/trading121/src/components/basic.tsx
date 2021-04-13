@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { STYLES } from "./styles";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -23,7 +24,7 @@ export const DCard = ({ children, overrideStyle }: TProps) => {
   );
 };
 
-export const DContainerSafe = ({ children, overrideStyle }: TProps) => {
+export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
   return (
     <SafeAreaView
       style={[
@@ -35,6 +36,7 @@ export const DContainerSafe = ({ children, overrideStyle }: TProps) => {
           flexDirection: "column",
         },
         overrideStyle,
+        style,
       ]}
     >
       {children}
@@ -42,21 +44,40 @@ export const DContainerSafe = ({ children, overrideStyle }: TProps) => {
   );
 };
 
-export const DText = ({ children, style }: TProps) => {
-  return <Text style={[{}, style]}>{children}</Text>;
+export const DText = ({ children, style, center, bold, primary, secondary, dark, caption }: TProps) => {
+  return (
+    <Text
+      style={[
+        {
+          fontSize: caption ? 10 : primary ? 16.5 : 12.5,
+          color: dark ? "white" : secondary ? "#11111199" : "#111111",
+          marginVertical: 8, // DO NOT OVERRIDE
+          fontWeight: bold ? "bold" : "normal",
+          textAlign: center ? "center" : "left",
+        },
+        {},
+        style,
+      ]}
+    >
+      {children}
+    </Text>
+  );
 };
 
-export const DButton = ({ children, style, onPress }: TProps) => {
+export const DButton = ({ children, style, primary, secondary, onPress, dark }: TProps) => {
   return (
-    <TouchableOpacity onPress={() => onPress()}>
+    <TouchableOpacity onPress={onPress}>
       <Text
         style={[
           {
-            backgroundColor: "blue",
-            color: "white",
+            backgroundColor: primary ? (dark ? "white" : STYLES.APP_COLOR_PRIMARY) : "#00000000",
+            color: dark ? (primary ? STYLES.APP_COLOR_PRIMARY : "white") : primary ? "white" : STYLES.APP_COLOR_PRIMARY,
+            borderColor: dark ? "white" : STYLES.APP_COLOR_PRIMARY,
+            borderWidth: 1,
             textAlign: "center",
             paddingVertical: 10,
-            borderRadius: 5,
+            marginVertical: 8,
+            borderRadius: 6,
             textTransform: "uppercase",
           },
           style,
@@ -68,7 +89,33 @@ export const DButton = ({ children, style, onPress }: TProps) => {
   );
 };
 
-export const DContainer = ({ children, overrideStyle }: TProps) => {
+export const DTextInput = ({ children, style, dark, placeholder, onChangeText }: TProps) => {
+  return (
+    <TextInput
+      onChangeText={onChangeText}
+      placeholder={placeholder}
+      placeholderTextColor={dark ? "#ffffff99" : "#11111199"}
+      style={[
+        {
+          placeholder: placeholder,
+          backgroundColor: "#00000000",
+          color: dark ? "white" : STYLES.APP_COLOR_PRIMARY,
+          borderColor: dark ? "white" : STYLES.APP_COLOR_PRIMARY,
+          borderWidth: 1,
+          padding: 10,
+          paddingVertical: 10,
+          marginVertical: 8,
+          borderRadius: 6,
+          textTransform: "uppercase",
+        },
+        style,
+      ]}
+    >
+      {children}
+    </TextInput>
+  );
+};
+export const DContainer = ({ children, style }: TProps) => {
   return (
     <View
       style={[
@@ -77,9 +124,11 @@ export const DContainer = ({ children, overrideStyle }: TProps) => {
           paddingRight: 5,
           paddingLeft: 5,
           flex: 1,
+          width: "100%",
+          height: "100%",
           flexDirection: "column",
         },
-        overrideStyle,
+        style,
       ]}
     >
       {children}
@@ -87,14 +136,14 @@ export const DContainer = ({ children, overrideStyle }: TProps) => {
   );
 };
 
-export const DSpace = ({ children, overrideStyle }: TProps) => {
+export const DSpace = ({ children, style }: TProps) => {
   return (
     <View
       style={[
         {
           height: 20,
         },
-        overrideStyle,
+        style,
       ]}
     >
       {children}
@@ -102,7 +151,7 @@ export const DSpace = ({ children, overrideStyle }: TProps) => {
   );
 };
 
-export const DLayoutRow = ({ children, row, equal, center, overrideStyle }: any) => {
+export const DLayoutRow = ({ children, row, equal, center, style }: any) => {
   return (
     <View
       style={[
@@ -110,7 +159,7 @@ export const DLayoutRow = ({ children, row, equal, center, overrideStyle }: any)
           flex: 1,
           flexDirection: "row",
         },
-        overrideStyle,
+        style,
       ]}
     >
       {children}
@@ -118,7 +167,7 @@ export const DLayoutRow = ({ children, row, equal, center, overrideStyle }: any)
   );
 };
 
-export const DLayoutCol = ({ children, row, equal, center, overrideStyle, style }: any) => {
+export const DLayoutCol = ({ children, row, equal, center, style }: any) => {
   return (
     <View
       style={[
@@ -126,7 +175,6 @@ export const DLayoutCol = ({ children, row, equal, center, overrideStyle, style 
           flex: 1,
           flexDirection: "column",
         },
-        overrideStyle,
         style,
       ]}
     >
