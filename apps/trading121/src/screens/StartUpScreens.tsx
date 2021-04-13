@@ -57,22 +57,25 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
 
   useEffect(() => {
+    console.log("Signin hook");
     async function checkSignIn() {
-      if (getData("USER_INFO")) {
-        //console.log(getData("USER_INFO"));
-        appState.dispatch({ type: "MARK_USER_SIGN_IN", payload: getData("USER_INFO") });
+      let userInfo = await getData("USER_INFO");
+      if (userInfo) {
+        appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
+      } else {
+        console.log("No save user info found");
       }
     }
-    //checkSignIn();
+    checkSignIn();
   }, []);
 
   function signIn() {
     if (email.trim().length == 0) {
       return;
     }
-    let userInfo = { name: "Guest", email: email };
+    let userInfo = { name: "Guest", email: email.toLocaleLowerCase(), user_id: email.toLocaleLowerCase() };
     saveData("USER_INFO", userInfo);
-    appState.dispatch({ type: "MARK_USER_SIGN_IN", payload: userInfo });
+    appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
   }
   return (
     <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 40 }}>

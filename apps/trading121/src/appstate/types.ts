@@ -1,7 +1,13 @@
 import { TMarket, TPosition, TSummary } from "../models/model";
 export type TAction = {
-  type: "SET_COUNTER" | "MARK_BOOT_COMPLETE" | "MARK_USER_SIGN_IN" | "MARK_USER_SIGNED_OUT" | "UPDATE_MARKET" | "UPDATE_SUMMARY" | "UPDATE_POSITION";
+  type: "SET_COUNTER" | "MARK_BOOT_COMPLETE" | "UPDATE_USER_INFO" | "MARK_USER_SIGNED_OUT" | "UPDATE_MARKET" | "UPDATE_SUMMARY" | "UPDATE_POSITION";
   payload?: any;
+};
+
+export type TUserInfo = {
+  name: string;
+  email: string;
+  user_id: string;
 };
 
 export type TAppState = {
@@ -11,7 +17,7 @@ export type TAppState = {
   isBootComplete: boolean;
   //user info
   isLoggedIn: boolean;
-  userInfo: any;
+  userInfo: TUserInfo;
   //summary
   isSummaryLoaded: boolean;
   summary?: TSummary;
@@ -30,6 +36,7 @@ export const initialState: TAppState = {
   userInfo: {
     name: "Guest",
     email: "",
+    user_id: "unknown",
   },
   isSummaryLoaded: false,
   isPositionLoaded: false,

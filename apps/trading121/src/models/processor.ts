@@ -10,6 +10,7 @@ export function processMarketData(obj: any): TMarket {
   for (let c of Object.keys(obj)) {
     ltpMap.set(c, obj[c].close);
     obj[c].symbol = c;
+    obj[c].name = c;
     stocks.push(obj[c]);
   }
   let market: TMarket = {
@@ -75,6 +76,8 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
       change: x.change.toFixed(2),
       change_per: x.change_per.toFixed(2),
       gross: x.gross.toFixed(2),
+      ltp: x.close,
+      ltp_change: "0%", // TODO
     };
     // console.log(cur_result);
     orderList.push(cur_result);
