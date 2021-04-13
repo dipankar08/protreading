@@ -97,7 +97,6 @@ export const DTextInput = ({ children, style, dark, placeholder, onChangeText }:
       placeholderTextColor={dark ? "#ffffff99" : "#11111199"}
       style={[
         {
-          placeholder: placeholder,
           backgroundColor: "#00000000",
           color: dark ? "white" : STYLES.APP_COLOR_PRIMARY,
           borderColor: dark ? "white" : STYLES.APP_COLOR_PRIMARY,

@@ -1,64 +1,119 @@
-import axios from "axios";
-import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal, Alert, Pressable } from "react-native";
-import { ScreenContainer } from "react-native-screens";
+import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal } from "react-native";
 import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton } from "../components/basic";
 import { TProps } from "./types";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Input } from "react-native-elements";
-import { userOrder } from "../libs/order_helper";
-import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import React from "react";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
-import { TKeyText } from "../libs/market_helper";
+import { useContext } from "react";
+import { AppStateContext } from "../appstate/AppStateStore";
+import { CACHE_KEY_POSITION } from "../appstate/CONST";
+import { processPositionData } from "../models/processor";
+import { verifyOrCrash } from "../libs/assert";
+import { getRequest, postRequest } from "../libs/network";
+import { showNotification } from "../libs/uihelper";
+import { TOrder } from "../models/model";
+import { Alert } from "react-native";
 
 export const PositionScreen = ({ navigation }: TProps) => {
+  const appState = useContext(AppStateContext);
   // state
   const [modalVisible, setModalVisible] = React.useState(false);
-  const { orderList, loading, reloadOrder, newStock, createOrder, setNewStock, orderSummary, closeOrder, latestData } = userOrder();
-  const [selectedValue, setSelectedValue] = useState("java");
-  const [stockList, setStockList] = React.useState<Array<TKeyText>>([
-    { key: "REDL", text: "REL" },
-    { key: "REDL1", text: "REL" },
-    { key: "REDL2", text: "REL" },
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
-    { key: "REDL3", text: "REL" },
+  // new order
+  const [stock, setStock] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [quantities, setQuantities] = React.useState("");
 
-    { key: "REDL4", text: "REL" },
+  async function reload(useCache = true) {
+    console.log("[NETWORK] fetching from network ");
+    setLoading(true);
+    try {
+      let position = await getRequest("https://simplestore.dipankar.co.in/api/grodok_position", CACHE_KEY_POSITION, useCache);
+      verifyOrCrash(appState.state.market != null);
+      appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      setError("Not able to get Data");
+    }
+  }
 
-    { key: "REDL5", text: "REL" },
+  React.useEffect(() => {
+    reload(false);
+  }, []);
 
-    { key: "REDL6", text: "REL" },
+  async function createNewOrder() {
+    try {
+      let response = await postRequest("https://simplestore.dipankar.co.in/api/grodok_position/create", {
+        symbol: stock,
+        buy_price: parseInt(price),
+        quantities: parseInt(quantities),
+      });
+      // no cache.
+      reload(false);
+      showNotification("Created a new order");
+    } catch (err) {
+      console.log(err);
+      showNotification("Not able to create a order");
+    }
+  }
 
-    { key: "REDL7", text: "REL" },
+  async function closeOrder(order: TOrder, sell_price: string) {
+    Alert.alert("Close this order?", "After closing your position summary will be updated!", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          console.log("OK Pressed");
+          try {
+            let response = postRequest("https://simplestore.dipankar.co.in/api/grodok_position/update", {
+              _id: order._id,
+              sell_price: parseFloat("10"),
+            });
+            //console.log(response);
+            // no cache.
+            reload(false);
+            showNotification("Closed the order");
+          } catch (err) {
+            console.log(err);
+            showNotification("Not able to close the order");
+          }
+        },
+      },
+    ]);
+  }
 
-    { key: "REDL8", text: "REL" },
-
-    { key: "REDL9", text: "REL" },
-  ]);
-
-  let serviceItems = stockList.map((item) => {
-    return <Picker.Item key={item.key} value={item.text} label={item.text} />;
+  let stockList = appState.state.market?.stocks.map((item) => {
+    return <Picker.Item key={item.symbol} value={item.symbol} label={item.name} />;
   });
+
   return (
     <DContainer>
       <DCard overrideStyle={{ height: 150, backgroundColor: "#bbbbbb" }}>
         <DLayoutRow>
           <DLayoutCol>
             <DText>Invested </DText>
-            <DText>{orderSummary?.invested_amount} INR</DText>
+            <DText>{appState.state.position?.positionSummary?.invested_amount} INR</DText>
           </DLayoutCol>
           <DLayoutCol>
             <DText>Current </DText>
-            <DText>{orderSummary?.current_amount} INR</DText>
+            <DText>{appState.state.position?.positionSummary?.current_amount} INR</DText>
           </DLayoutCol>
         </DLayoutRow>
         <DLayoutRow>
           <DLayoutCol>
             <DText>Profit</DText>
-            <DText>{orderSummary?.change_amount} INR</DText>
+            <DText>{appState.state.position?.positionSummary?.change_amount} INR</DText>
           </DLayoutCol>
           <DLayoutCol>
             <DText>Profit</DText>
-            <DText>{orderSummary?.change_per} %</DText>
+            <DText>{appState.state.position?.positionSummary?.change_per} %</DText>
           </DLayoutCol>
         </DLayoutRow>
       </DCard>
@@ -69,9 +124,9 @@ export const PositionScreen = ({ navigation }: TProps) => {
         }}
       >
         <FlatList
-          onRefresh={() => reloadOrder()}
+          onRefresh={() => reload(false)}
           refreshing={loading}
-          data={orderList}
+          data={appState.state.position?.orderList}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => {
             let color = item.change_per > 0 ? "green" : "red";
@@ -79,7 +134,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
               <TouchableWithoutFeedback
                 onLongPress={() => {
                   if (item.is_open) {
-                    closeOrder(item._id, "0");
+                    closeOrder(item, "0");
                   }
                 }}
               >
@@ -121,31 +176,15 @@ export const PositionScreen = ({ navigation }: TProps) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={{}}>Add new position for tracking</Text>
-            <Picker
-              selectedValue={selectedValue}
-              style={styles.pickerStyle}
-              onValueChange={(itemValue, itemIndex) =>
-                setNewStock({ buy_price: newStock.buy_price, quantities: newStock.quantities, symbol: itemValue, sell_price: null })
-              }
-            >
-              {serviceItems}
+            <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
+              {stockList}
             </Picker>
-            <TextInput
-              style={styles.TextInputStyle}
-              placeholder="White Stock Price"
-              value={newStock.buy_price + ""}
-              onChangeText={(text) => setNewStock({ buy_price: text, quantities: newStock.quantities, symbol: newStock.symbol, sell_price: null })}
-            ></TextInput>
-            <TextInput
-              style={styles.TextInputStyle}
-              placeholder="Write Stock Qn"
-              value={newStock.quantities + ""}
-              onChangeText={(text) => setNewStock({ buy_price: newStock.buy_price, quantities: text, symbol: newStock.symbol, sell_price: null })}
-            ></TextInput>
+            <TextInput style={styles.TextInputStyle} placeholder="White Stock Price" value={price} onChangeText={setPrice}></TextInput>
+            <TextInput style={styles.TextInputStyle} placeholder="Write Stock Qn" value={quantities} onChangeText={setQuantities}></TextInput>
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
               <Button
                 onPress={() => {
-                  createOrder();
+                  createNewOrder();
                   setModalVisible(false);
                 }}
                 title="add New"
