@@ -11,9 +11,10 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
 import { processLatestData, processSummaryData } from "../models/processor";
 import { deleteData, getData, saveData } from "../libs/stoarge";
+import { CACHE_KEY_MARKET, CACHE_KEY_SUMMARY } from "../appstate/CONST";
 
 // Splash screen or boot screen is important for loading the boot data.
-// In this screen we are trying to load data from network or in cache...
+// In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
 export const SplashScreen = () => {
   const appState = useContext(AppStateContext);
   const [loading, setLoading] = useState(false);
@@ -23,8 +24,8 @@ export const SplashScreen = () => {
       try {
         setLoading(true);
         // try load from cache.
-        let data = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type=5m");
-        let data1 = await getRequest("https://dev.api.grodok.com:5000/latest");
+        let data = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type=5m", CACHE_KEY_MARKET, true);
+        let data1 = await getRequest("https://dev.api.grodok.com:5000/summary", CACHE_KEY_SUMMARY);
 
         appState.dispatch({ type: "UPDATE_MARKET_DATA", payload: processLatestData(data) });
         // try load from cache.
