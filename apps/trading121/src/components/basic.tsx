@@ -155,7 +155,7 @@ export const DLayoutRow = ({ children, row, equal, center, style }: any) => {
     <View
       style={[
         {
-          flex: 1,
+          display: "flex",
           flexDirection: "row",
         },
         style,
@@ -171,7 +171,7 @@ export const DLayoutCol = ({ children, row, equal, center, style }: any) => {
     <View
       style={[
         {
-          flex: 1,
+          display: "flex",
           flexDirection: "column",
         },
         style,
@@ -179,5 +179,17 @@ export const DLayoutCol = ({ children, row, equal, center, style }: any) => {
     >
       {children}
     </View>
+  );
+};
+
+export const FlatListItemSeparator = () => {
+  return (
+    <View
+      style={{
+        height: 1,
+        width: "100%",
+        backgroundColor: "#00000040",
+      }}
+    />
   );
 };

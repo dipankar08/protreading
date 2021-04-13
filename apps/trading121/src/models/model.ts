@@ -45,6 +45,8 @@ export type TOrder = {
   change: number;
   change_per: number;
   gross: number;
+  ltp: number;
+  ltp_change: number;
 };
 
 export type TPositionSummary = {

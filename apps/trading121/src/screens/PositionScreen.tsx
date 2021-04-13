@@ -1,5 +1,5 @@
 import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal } from "react-native";
-import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton } from "../components/basic";
+import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator } from "../components/basic";
 import { TProps } from "./types";
 import React from "react";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -22,6 +22,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
   const [error, setError] = React.useState("");
 
   // new order
+  const [stockList, setStockList] = React.useState([<Picker.Item key="" value="" label="Wait..." />]);
   const [stock, setStock] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [quantities, setQuantities] = React.useState("");
@@ -30,7 +31,11 @@ export const PositionScreen = ({ navigation }: TProps) => {
     console.log("[NETWORK] fetching from network ");
     setLoading(true);
     try {
-      let position = await getRequest("https://simplestore.dipankar.co.in/api/grodok_position", CACHE_KEY_POSITION, useCache);
+      let position = await getRequest(
+        `https://simplestore.dipankar.co.in/api/grodok_position?user_id=${appState.state.userInfo.user_id}`,
+        CACHE_KEY_POSITION,
+        useCache
+      );
       verifyOrCrash(appState.state.market != null);
       appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
       setLoading(false);
@@ -42,11 +47,13 @@ export const PositionScreen = ({ navigation }: TProps) => {
 
   React.useEffect(() => {
     reload(false);
+    //console.log(appState.state.market?.stocks);
   }, []);
 
   async function createNewOrder() {
     try {
       let response = await postRequest("https://simplestore.dipankar.co.in/api/grodok_position/create", {
+        user_id: appState.state.userInfo.user_id,
         symbol: stock,
         buy_price: parseInt(price),
         quantities: parseInt(quantities),
@@ -89,31 +96,33 @@ export const PositionScreen = ({ navigation }: TProps) => {
     ]);
   }
 
-  let stockList = appState.state.market?.stocks.map((item) => {
-    return <Picker.Item key={item.symbol} value={item.symbol} label={item.name} />;
-  });
+  let xStockList = appState.state.market
+    ? appState.state.market.stocks.map((item) => {
+        return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol} />;
+      })
+    : [<Picker.Item key="" value="" label="Wait..." />];
 
   return (
     <DContainer>
       <DCard overrideStyle={{ height: 150, backgroundColor: "#bbbbbb" }}>
-        <DLayoutRow>
-          <DLayoutCol>
-            <DText>Invested </DText>
-            <DText>{appState.state.position?.positionSummary?.invested_amount} INR</DText>
+        <DLayoutRow style={{ flex: 1 }}>
+          <DLayoutCol style={{ flex: 1 }}>
+            <Text style={styles.textHeader}>Invested </Text>
+            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.invested_amount} INR</Text>
           </DLayoutCol>
-          <DLayoutCol>
-            <DText>Current </DText>
-            <DText>{appState.state.position?.positionSummary?.current_amount} INR</DText>
+          <DLayoutCol style={{ flex: 1 }}>
+            <Text style={styles.textHeader}>Current </Text>
+            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.current_amount} INR</Text>
           </DLayoutCol>
         </DLayoutRow>
-        <DLayoutRow>
-          <DLayoutCol>
-            <DText>Profit</DText>
-            <DText>{appState.state.position?.positionSummary?.change_amount} INR</DText>
+        <DLayoutRow style={{ flex: 1 }}>
+          <DLayoutCol style={{ flex: 1 }}>
+            <Text style={styles.textHeader}>Profit</Text>
+            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.change_amount} INR</Text>
           </DLayoutCol>
-          <DLayoutCol>
-            <DText>Profit</DText>
-            <DText>{appState.state.position?.positionSummary?.change_per} %</DText>
+          <DLayoutCol style={{ flex: 1 }}>
+            <Text style={styles.textHeader}>Profit</Text>
+            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.change_per} %</Text>
           </DLayoutCol>
         </DLayoutRow>
       </DCard>
@@ -128,6 +137,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
           refreshing={loading}
           data={appState.state.position?.orderList}
           keyExtractor={(item) => item._id}
+          ItemSeparatorComponent={FlatListItemSeparator}
           renderItem={({ item }) => {
             let color = item.change_per > 0 ? "green" : "red";
             return (
@@ -138,21 +148,28 @@ export const PositionScreen = ({ navigation }: TProps) => {
                   }
                 }}
               >
-                <DLayoutCol overrideStyle={{ padding: 10, opacity: item.is_open ? 1 : 0.3 }}>
+                <DLayoutCol style={{ padding: 20, opacity: item.is_open ? 1 : 0.3 }}>
                   <DLayoutRow>
-                    <DLayoutCol>
+                    <DLayoutCol style={{ flex: 1 }}>
                       <Text style={{ color: "#000000", fontSize: 14, marginVertical: 2, textTransform: "uppercase" }}>{item.symbol}</Text>
-                      <DText style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                      <Text style={{ color: color, fontSize: 12 }}>
+                        ltp : {item.last_price} - ({item.ltp_change})
+                      </Text>
+                      <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
                         {item.quantities} X {item.buy_price} = {item.invested_sum}
-                      </DText>
+                      </Text>
                       <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
                     </DLayoutCol>
                     <DLayoutCol style={{ alignItems: "flex-end" }}>
                       <DText style={{ color: color, fontSize: 14 }}>
-                        PL:{item.change}({item.change_per} %)
+                        {item.change} ({item.change_per}%)
                       </DText>
-                      <DText style={{ color: color, fontSize: 14 }}>LTP:{item.last_price}</DText>
-                      <DText style={{ color: "#00000050", fontSize: 14 }}>Quantity</DText>
+                      <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                        {item.quantities} X {item.buy_price} = {item.invested_sum}
+                      </Text>
+                      <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                        {item.quantities} X {item.last_price} = {item.invested_sum}
+                      </Text>
                     </DLayoutCol>
                   </DLayoutRow>
                 </DLayoutCol>
@@ -177,7 +194,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
           <View style={styles.modalView}>
             <Text style={{}}>Add new position for tracking</Text>
             <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
-              {stockList}
+              {xStockList}
             </Picker>
             <TextInput style={styles.TextInputStyle} placeholder="White Stock Price" value={price} onChangeText={setPrice}></TextInput>
             <TextInput style={styles.TextInputStyle} placeholder="Write Stock Qn" value={quantities} onChangeText={setQuantities}></TextInput>
@@ -250,5 +267,16 @@ const styles = StyleSheet.create({
   },
   pickerStyle: {
     backgroundColor: "#00000010",
+  },
+  textHeader: {
+    flex: 1,
+    color: "#00000088",
+    fontSize: 12,
+    margin: 0,
+  },
+  textValue: {
+    flex: 1,
+    color: "#000000ee",
+    fontSize: 15,
   },
 });
