@@ -201,6 +201,7 @@ const RootStackScreen = ({ userToken }: TProps) => {
 
 const RootNavigation = () => {
   const appState = useContext(AppStateContext);
+
   if (appState.state.isBootComplete) {
     return (
       <NavigationContainer>

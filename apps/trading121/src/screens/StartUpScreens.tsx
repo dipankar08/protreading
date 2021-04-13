@@ -10,8 +10,10 @@ import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
 import { processLatestData, processSummaryData } from "../models/processor";
+import { deleteData, getData, saveData } from "../libs/stoarge";
 
-// Spash screen or boot screen is importnat for loading the boot data.
+// Splash screen or boot screen is important for loading the boot data.
+// In this screen we are trying to load data from network or in cache...
 export const SplashScreen = () => {
   const appState = useContext(AppStateContext);
   const [loading, setLoading] = useState(false);
@@ -53,9 +55,26 @@ export const SplashScreen = () => {
 
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
+  const [email, setEmail] = useState("");
   const appState = useContext(AppStateContext);
+
+  useEffect(() => {
+    async function checkSignIn() {
+      if (getData("USER_INFO")) {
+        console.log(getData("USER_INFO"));
+        appState.dispatch({ type: "MARK_USER_SIGN_IN", payload: getData("USER_INFO") });
+      }
+    }
+    //checkSignIn();
+  }, []);
+
   function signIn() {
-    appState.dispatch({ type: "MARK_USER_SIGN_IN" });
+    if (email.trim().length == 0) {
+      return;
+    }
+    let userInfo = { name: "Guest", email: email };
+    saveData("USER_INFO", userInfo);
+    appState.dispatch({ type: "MARK_USER_SIGN_IN", payload: userInfo });
   }
   return (
     <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 40 }}>
@@ -75,12 +94,9 @@ export const SignInScreen = ({ navigation }: TProps) => {
       <DText center secondary dark>
         Enter your email address to sign in.
       </DText>
-      <DTextInput placeholder="enter the text" dark></DTextInput>
+      <DTextInput placeholder="enter the text" dark onChangeText={setEmail}></DTextInput>
       <DButton dark primary onPress={signIn}>
         Sign In
-      </DButton>
-      <DButton dark secondary>
-        Register
       </DButton>
     </DContainer>
   );
@@ -99,7 +115,8 @@ export const SignUpScreen = ({ navigation }: TProps) => {
 // Profile and Signout logic
 export const ProfileScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
-  function signOut() {
+  async function signOut() {
+    await deleteData("USER_INFO");
     appState.dispatch({ type: "MARK_USER_SIGNED_OUT" });
   }
 
@@ -115,7 +132,8 @@ export const ProfileScreen = ({ navigation }: TProps) => {
           }}
         />
         <DSpace />
-        <DText>Dipankar Dutta</DText>
+        <DText>{appState.state.userInfo.name}</DText>
+        <DText>{appState.state.userInfo.email}</DText>
         <DSpace />
         <DSpace />
         <DButton onPress={signOut}>Sign out</DButton>
