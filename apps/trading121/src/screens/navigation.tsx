@@ -1,25 +1,23 @@
 // We use the patterns defined in https://github.com/ReactNativeSchool/getting-started-react-navigation-v5/blob/master/App/index.js
-import LoadingScreen from "./LoadingScreen";
-import React from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AuthContext } from "../components/context";
-import { SignUpScreen, SignInScreen, SplashScreen, SearchScreen, SearchScreen2, DetailsScreen, HomeScreen } from "./Screens";
-import { ProfileScreen } from "./ProfileScreen";
+import { SearchScreen, SearchScreen2, HomeScreen } from "./Screens";
 import { PositionScreen } from "./PositionScreen";
 import { MarketScreen } from "./MarketScreen";
-
-import { Button } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "./types";
-import { loadLatestData, userBoot } from "../libs/boot_helper";
+
+import { SplashScreen, SignInScreen, SignUpScreen, ProfileScreen } from "./StartUpScreens";
+import { AppStateContext } from "../appstate/AppStateStore";
+
 // authstack
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
   <AuthStack.Navigator>
-    <AuthStack.Screen name="SignIn" component={SignInScreen} options={{ title: "Sign In" }} />
+    <AuthStack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
     <AuthStack.Screen name="CreateAccount" component={SignUpScreen} options={{ title: "Create Account" }} />
   </AuthStack.Navigator>
 );
@@ -177,9 +175,10 @@ const DrawerScreen = () => (
 // Root Stack
 const RootStack = createStackNavigator();
 const RootStackScreen = ({ userToken }: TProps) => {
+  const appState = useContext(AppStateContext);
   return (
     <RootStack.Navigator headerMode="none">
-      {userToken ? (
+      {appState.state.isLoggedIn ? (
         <RootStack.Screen
           name="App"
           component={DrawerScreen}
@@ -201,35 +200,12 @@ const RootStackScreen = ({ userToken }: TProps) => {
 };
 
 const RootNavigation = () => {
-  const [userToken, setUserToken] = React.useState<string | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-
-  // define auth context
-  const authContext = React.useMemo(() => {
-    return {
-      signIn: () => {
-        setIsLoading(false);
-        setUserToken("dipankar");
-      },
-      signUp: () => {
-        setIsLoading(false);
-        setUserToken("dipankar");
-      },
-      signOut: () => {
-        setIsLoading(false);
-        setUserToken(null);
-      },
-    };
-  }, []);
-
-  const { isComplete, latestData } = userBoot();
-  if (isComplete) {
+  const appState = useContext(AppStateContext);
+  if (appState.state.isBootComplete) {
     return (
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer>
-          <RootStackScreen userToken={userToken} />
-        </NavigationContainer>
-      </AuthContext.Provider>
+      <NavigationContainer>
+        <RootStackScreen />
+      </NavigationContainer>
     );
   } else {
     return <SplashScreen />;

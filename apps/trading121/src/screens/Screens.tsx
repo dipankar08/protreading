@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, StyleSheet, View, Text } from "react-native";
-import { AuthContext } from "../components/context";
 import { TProps } from "./types";
 import { globalStyle } from "../components/styles";
 import { DCard } from "../components/basic";
@@ -36,23 +35,21 @@ export const SplashScreen = () => {
 };
 
 export const SignInScreen = ({ navigation }: TProps) => {
-  const { signIn } = React.useContext(AuthContext);
   return (
     <ScreenContainer>
       <DCard overrideStyle={{ height: 200 }}>
         <Text style={[globalStyle.PrimaryText]}>Sign In</Text>
-        <Button title="action" onPress={() => signIn()} />
+        <Button title="action" />
       </DCard>
     </ScreenContainer>
   );
 };
 
 export const SignUpScreen = ({ navigation }: TProps) => {
-  const { signUp } = React.useContext(AuthContext);
   return (
     <ScreenContainer>
       <Text>Create a new Account</Text>
-      <Button title="action" onPress={() => signUp()} />
+      <Button title="action" onPress={() => alert("todo")} />
     </ScreenContainer>
   );
 };
@@ -71,12 +68,11 @@ export const HomeScreen = ({ navigation }: TProps) => {
 };
 
 export const ProfileScreen = ({ navigation }: TProps) => {
-  const { signOut } = React.useContext(AuthContext);
   return (
     <ScreenContainer>
       <Text>Profile</Text>
       <Button title="toggle drawer" onPress={() => navigation.toggleDrawer()} />
-      <Button title="Sign Out" onPress={() => signOut()} />
+      <Button title="Sign Out" />
     </ScreenContainer>
   );
 };

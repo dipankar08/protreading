@@ -8,4 +8,7 @@ export type TProps = {
   onPress?: any;
   style?: ViewStyle | TextStyle;
   theme?: string;
+  primary?: any;
+  secondary?: any;
+  center?: any;
 };

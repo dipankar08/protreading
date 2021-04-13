@@ -7,12 +7,37 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Input } from "react-native-elements";
 import { userOrder } from "../libs/order_helper";
 import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Picker } from "@react-native-community/picker";
+import { TKeyText } from "../libs/market_helper";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // state
   const [modalVisible, setModalVisible] = React.useState(false);
   const { orderList, loading, reloadOrder, newStock, createOrder, setNewStock, orderSummary, closeOrder, latestData } = userOrder();
+  const [selectedValue, setSelectedValue] = useState("java");
+  const [stockList, setStockList] = React.useState<Array<TKeyText>>([
+    { key: "REDL", text: "REL" },
+    { key: "REDL1", text: "REL" },
+    { key: "REDL2", text: "REL" },
 
+    { key: "REDL3", text: "REL" },
+
+    { key: "REDL4", text: "REL" },
+
+    { key: "REDL5", text: "REL" },
+
+    { key: "REDL6", text: "REL" },
+
+    { key: "REDL7", text: "REL" },
+
+    { key: "REDL8", text: "REL" },
+
+    { key: "REDL9", text: "REL" },
+  ]);
+
+  let serviceItems = stockList.map((item) => {
+    return <Picker.Item key={item.key} value={item.text} label={item.text} />;
+  });
   return (
     <DContainer>
       <DCard overrideStyle={{ height: 150, backgroundColor: "#bbbbbb" }}>
@@ -96,12 +121,15 @@ export const PositionScreen = ({ navigation }: TProps) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={{}}>Add new position for tracking</Text>
-            <TextInput
-              style={styles.TextInputStyle}
-              placeholder="Select Stock Name"
-              value={newStock.symbol}
-              onChangeText={(text) => setNewStock({ buy_price: newStock.buy_price, quantities: newStock.quantities, symbol: text, sell_price: null })}
-            ></TextInput>
+            <Picker
+              selectedValue={selectedValue}
+              style={styles.pickerStyle}
+              onValueChange={(itemValue, itemIndex) =>
+                setNewStock({ buy_price: newStock.buy_price, quantities: newStock.quantities, symbol: itemValue, sell_price: null })
+              }
+            >
+              {serviceItems}
+            </Picker>
             <TextInput
               style={styles.TextInputStyle}
               placeholder="White Stock Price"
@@ -180,5 +208,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00000010",
     fontSize: 12,
     padding: 10,
+  },
+  pickerStyle: {
+    backgroundColor: "#00000010",
   },
 });

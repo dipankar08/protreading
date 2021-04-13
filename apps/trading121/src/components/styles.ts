@@ -21,3 +21,9 @@ export const globalStyle = StyleSheet.create({
     //color: rgba(0, 0, 0, 0.9),
   },
 });
+
+export const STYLES = {
+  APP_COLOR_PRIMARY: "#00a7e1",
+  APP_COLOR_SECONDARY: "#ffd400",
+  APP_SCREEN_BACKGROUND: "#f5f5f5",
+};

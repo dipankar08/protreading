@@ -11,6 +11,7 @@ export const userBoot = () => {
   const [latestData, setLatestData] = React.useState<Map<string, TObject>>();
   const [isComplete, setIsComplete] = React.useState<boolean>(false);
   async function loadLatestData() {
+    return;
     try {
       let response = await axios.get("https://dev.api.grodok.com:5000/latest?candle_type=5m");
       const jsondata: any = response.data;
@@ -21,7 +22,7 @@ export const userBoot = () => {
         for (let x of Object.keys(data)) {
           result.set(x, data[x]);
         }
-        latestMarketCacheData = result;
+        //latestMarketCacheData = result;
         setLatestData(result);
         setIsComplete(true);
         // Save data
@@ -43,6 +44,7 @@ export const userBoot = () => {
   }
 
   async function bootApp() {
+    return;
     console.log("[BOOT] Staring boot");
     try {
       console.log("latest dtaa trying to get from cache...");

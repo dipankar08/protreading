@@ -13,3 +13,16 @@ export async function loadLatestData() {
     throw new Error("Server sends error");
   }
 }
+
+export async function getRequest(url: string) {
+  console.log("try fetching " + url);
+  let response = await axios.get(url);
+  const jsondata: any = response.data;
+  if (jsondata.status == "success") {
+    console.log("fetch success...");
+    return jsondata.out;
+  } else {
+    console.log("fetch failed....");
+    throw new Error("Server sends error");
+  }
+}
