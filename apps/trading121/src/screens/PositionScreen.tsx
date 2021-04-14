@@ -32,7 +32,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
     setLoading(true);
     try {
       let position = await getRequest(
-        `https://simplestore.dipankar.co.in/api/grodok_position?user_id=${appState.state.userInfo.user_id}`,
+        `https://simplestore.dipankar.co.in/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
         CACHE_KEY_POSITION,
         useCache
       );
