@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Button, Text, StyleSheet, View } from "react-native";
 import { ScreenContainer } from "react-native-screens";
@@ -6,9 +6,34 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { DCard, DContainer, DLayoutCol, DLayoutRow } from "../components/basic";
 import { TProps } from "./types";
 import { globalStyle } from "../components/styles";
+import { getRequest } from "../libs/network";
+import { CACHE_KEY_POSITION } from "../appstate/CONST";
+import { verifyOrCrash } from "../libs/assert";
+import { processPositionData } from "../models/processor";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+  useEffect(() => {
+    async function loadInitData() {
+      try {
+        let position = await getRequest(
+          `https://simplestore.dipankar.co.in/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
+          CACHE_KEY_POSITION,
+          false
+        );
+        verifyOrCrash(appState.state.market != null);
+        appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
+        setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        setError("Not able to get Data");
+      }
+    }
+    loadInitData();
+  }, []);
+
   return (
     <DContainer>
       <DLayoutCol>

@@ -4,14 +4,15 @@ import { Avatar } from "react-native-elements";
 import { DButton, DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput } from "../components/basic";
 import { STYLES } from "../components/styles";
 import { TProps } from "./types";
-import { Image, Text } from "react-native";
+import { Image, Text, View } from "react-native";
 import logo from "../../assets/images/icon_white.png";
 import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
-import { processMarketData, processSummaryData } from "../models/processor";
+import { processMarketData, processPositionData, processSummaryData } from "../models/processor";
 import { deleteData, getData, saveData } from "../libs/stoarge";
-import { CACHE_KEY_MARKET, CACHE_KEY_SUMMARY } from "../appstate/CONST";
+import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, CACHE_KEY_SUMMARY } from "../appstate/CONST";
+import { verifyOrCrash } from "../libs/assert";
 
 // Splash screen or boot screen is important for loading the boot data.
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
@@ -62,6 +63,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
       let userInfo = await getData("USER_INFO");
       if (userInfo) {
         appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
+        appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
       } else {
         console.log("No save user info found");
       }
@@ -124,7 +126,18 @@ export const ProfileScreen = ({ navigation }: TProps) => {
 
   return (
     <DContainer overrideStyle={{ justifyContent: "center", alignItems: "center" }}>
-      <DCard overrideStyle={{ justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingVertical: 20,
+          backgroundColor: "white",
+          borderRadius: 10,
+          marginTop: 20,
+        }}
+      >
         <Avatar
           rounded
           size="large"
@@ -133,14 +146,13 @@ export const ProfileScreen = ({ navigation }: TProps) => {
               "https://media-exp1.licdn.com/dms/image/C4D03AQG7ULIkCmRFTA/profile-displayphoto-shrink_200_200/0/1516571220413?e=1623283200&v=beta&t=zv1tVZEVQ51HgQeIejWGPSqFK5yHw8caNdlMtmXPzJM",
           }}
         />
-        <DSpace />
-        <DText>{appState.state.userInfo.name}</DText>
-        <DText>{appState.state.userInfo.email}</DText>
-        <DText>UserId: =={appState.state.userInfo.user_id}==</DText>
-        <DSpace />
-        <DSpace />
-        <DButton onPress={signOut}>Sign out</DButton>
-      </DCard>
+        <Text style={{ color: "#000000ee", fontSize: 20, marginTop: 20, fontWeight: "bold" }}>{appState.state.userInfo.name}</Text>
+        <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Email - {appState.state.userInfo.email}</Text>
+        <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Id -{appState.state.userInfo.email}</Text>
+        <DButton onPress={signOut} secondary>
+          Sign out
+        </DButton>
+      </View>
     </DContainer>
   );
 };
