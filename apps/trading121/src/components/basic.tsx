@@ -67,7 +67,7 @@ export const DText = ({ children, style, center, bold, primary, secondary, dark,
 
 export const DButton = ({ children, style, primary, secondary, onPress, dark }: TProps) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={{ width: "100%" }}>
       <Text
         style={[
           {

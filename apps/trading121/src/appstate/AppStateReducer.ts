@@ -12,10 +12,16 @@ const AppStateReducer = (state: TAppState, action: TAction): TAppState => {
         ...state,
         isBootComplete: true,
       };
-    case "UPDATE_USER_INFO":
+
+    case "MARK_LOGIN_SUCCESS":
       return {
         ...state,
         isLoggedIn: true,
+      };
+
+    case "UPDATE_USER_INFO":
+      return {
+        ...state,
         userInfo: action.payload,
       };
     case "MARK_USER_SIGNED_OUT":
