@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { STYLES } from "./styles";
+import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -119,12 +120,9 @@ export const DContainer = ({ children, style }: TProps) => {
     <View
       style={[
         {
+          paddingHorizontal: 16,
           backgroundColor: "#ffffff10",
-          paddingRight: 5,
-          paddingLeft: 5,
           flex: 1,
-          width: "100%",
-          height: "100%",
           flexDirection: "column",
         },
         style,

@@ -4,8 +4,8 @@ import { Avatar } from "react-native-elements";
 import { DButton, DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput } from "../components/basic";
 import { STYLES } from "../components/styles";
 import { TProps } from "./types";
-import { Image } from "react-native";
-import logo from "../../assets/images/logo.png";
+import { Image, Text } from "react-native";
+import logo from "../../assets/images/icon_white.png";
 import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
@@ -78,21 +78,22 @@ export const SignInScreen = ({ navigation }: TProps) => {
     appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
   }
   return (
-    <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 40 }}>
+    <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20 }}>
       <Image
         style={{
-          width: 100,
-          height: 100,
+          width: 80,
+          height: 80,
           backgroundColor: "transparent",
           alignSelf: "center",
-          marginBottom: 40,
+          marginBottom: 0,
         }}
         source={logo}
       />
-      <DText center primary bold dark>
-        Welcome to trading121!
-      </DText>
-      <DText center secondary dark>
+      <Text style={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: 26 }}>Welcome to Trading50!</Text>
+      <Text style={{ color: "white", textAlign: "center", marginBottom: 50, marginTop: 10, alignSelf: "center", fontSize: 18, opacity: 0.75 }}>
+        We helps you be a better trader.
+      </Text>
+      <DText secondary dark style={{ fontSize: 15 }}>
         Enter your email address to sign in.
       </DText>
       <DTextInput placeholder="enter the text" dark onChangeText={setEmail}></DTextInput>
