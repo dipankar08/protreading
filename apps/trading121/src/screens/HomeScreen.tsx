@@ -15,7 +15,10 @@ export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
+
+  let name = "Home";
   useEffect(() => {
+    console.log(`Mounted ${name}`);
     async function loadInitData() {
       try {
         let position = await getRequest(
@@ -32,6 +35,9 @@ export const HomeScreen = ({ navigation }: TProps) => {
       }
     }
     loadInitData();
+    return () => {
+      console.log(`Unmounted ${name}`);
+    };
   }, []);
 
   return (

@@ -56,9 +56,9 @@ export const SplashScreen = () => {
 export const SignInScreen = ({ navigation }: TProps) => {
   const [email, setEmail] = useState("");
   const appState = useContext(AppStateContext);
-
+  let name = "SignIn";
   useEffect(() => {
-    console.log("Signin hook");
+    console.log(`Mounted ${name}`);
     async function checkSignIn() {
       let userInfo = await getData("USER_INFO");
       if (userInfo) {
@@ -69,6 +69,9 @@ export const SignInScreen = ({ navigation }: TProps) => {
       }
     }
     checkSignIn();
+    return () => {
+      console.log(`Unmounted ${name}`);
+    };
   }, []);
 
   function signIn() {
@@ -108,6 +111,13 @@ export const SignInScreen = ({ navigation }: TProps) => {
 
 // Sign up logic...
 export const SignUpScreen = ({ navigation }: TProps) => {
+  let name = "SignUp";
+  useEffect(() => {
+    console.log(`Mounted ${name}`);
+    return () => {
+      console.log(`Unmounted ${name}`);
+    };
+  }, []);
   return (
     <DContainer>
       <DText>Create a new Account</DText>
@@ -123,6 +133,13 @@ export const ProfileScreen = ({ navigation }: TProps) => {
     await deleteData("USER_INFO");
     appState.dispatch({ type: "MARK_USER_SIGNED_OUT" });
   }
+  let name = "Profile";
+  useEffect(() => {
+    console.log(`Mounted ${name}`);
+    return () => {
+      console.log(`Unmounted ${name}`);
+    };
+  }, []);
 
   return (
     <DContainer overrideStyle={{ justifyContent: "center", alignItems: "center" }}>

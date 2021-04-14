@@ -16,7 +16,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   let isSubscribed = false;
-
+  let name = "Market";
   async function reload() {
     console.log("[NETWORK] fetching from network ");
     setLoading(true);
@@ -33,10 +33,10 @@ export const MarketScreen = ({ navigation }: TProps) => {
   }
 
   React.useEffect((): any => {
-    console.log("[MOUNT] MArket screen");
+    console.log(`Mounted ${name}`);
     isSubscribed = true;
     return () => {
-      console.log("[Unmount] Market screen");
+      console.log(`Unmounted ${name}`);
       isSubscribed = false;
     };
   }, []);

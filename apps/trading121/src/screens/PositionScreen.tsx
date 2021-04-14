@@ -27,6 +27,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
   const [price, setPrice] = React.useState("");
   const [quantities, setQuantities] = React.useState("");
 
+  let name = "Position";
   async function reload(useCache = true) {
     console.log("[NETWORK] fetching from network ");
     setLoading(true);
@@ -47,9 +48,11 @@ export const PositionScreen = ({ navigation }: TProps) => {
   }
 
   React.useEffect((): any => {
-    let isSubscribed = true;
+    console.log(`Mounted ${name}`);
     reload(false);
-    return () => (isSubscribed = false);
+    return () => {
+      console.log(`Unmounted ${name}`);
+    };
   }, []);
 
   async function createNewOrder() {
