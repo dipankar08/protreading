@@ -15,24 +15,30 @@ export const MarketScreen = ({ navigation }: TProps) => {
   const [selectedListKey, setSelectedListKey] = useState("all_data");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
+  let isSubscribed = false;
 
   async function reload() {
     console.log("[NETWORK] fetching from network ");
     setLoading(true);
     try {
       let summary = await getRequest("https://dev.api.grodok.com:5000/summary", CACHE_KEY_SUMMARY, false);
-      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
       let market = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type_5m", CACHE_KEY_MARKET, false);
+      if (!isSubscribed) return;
+      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
       appState.dispatch({ type: "UPDATE_MARKET", payload: processSummaryData(market) });
-      setLoading(false);
     } catch (e) {
-      setLoading(false);
+      if (!isSubscribed) return;
       setError("Not able to get Data");
     }
   }
 
-  React.useEffect(() => {
-    reload();
+  React.useEffect((): any => {
+    console.log("[MOUNT] MArket screen");
+    isSubscribed = true;
+    return () => {
+      console.log("[Unmount] Market screen");
+      isSubscribed = false;
+    };
   }, []);
 
   function actionOnRow(item: TKeyText) {

@@ -16,8 +16,8 @@ export async function loadLatestData() {
   }
 }
 
-// Be explict if you wnats to improve perf
-export async function getRequest(url: string, cacheKey?: string, cache_first = false) {
+// Defau;lt use cacche
+export async function getRequest(url: string, cacheKey?: string, cache_first = true) {
   console.log("try fetching " + url);
   if (cache_first && cacheKey) {
     console.log("[Network]Trying cache first..");

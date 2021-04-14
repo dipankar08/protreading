@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { SearchScreen, SearchScreen2, HomeScreen } from "./Screens";
+import { SearchScreen, SearchScreen2 } from "./Screens";
 import { PositionScreen } from "./PositionScreen";
 import { MarketScreen } from "./MarketScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -12,6 +12,7 @@ import { TProps } from "./types";
 
 import { SplashScreen, SignInScreen, SignUpScreen, ProfileScreen } from "./StartUpScreens";
 import { AppStateContext } from "../appstate/AppStateStore";
+import { HomeScreen } from "./HomeScreen";
 
 // authstack
 const AuthStack = createStackNavigator();

@@ -36,6 +36,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
         CACHE_KEY_POSITION,
         useCache
       );
+
       verifyOrCrash(appState.state.market != null);
       appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
       setLoading(false);
@@ -45,9 +46,10 @@ export const PositionScreen = ({ navigation }: TProps) => {
     }
   }
 
-  React.useEffect(() => {
+  React.useEffect((): any => {
+    let isSubscribed = true;
     reload(false);
-    //console.log(appState.state.market?.stocks);
+    return () => (isSubscribed = false);
   }, []);
 
   async function createNewOrder() {
@@ -55,9 +57,10 @@ export const PositionScreen = ({ navigation }: TProps) => {
       let response = await postRequest("https://simplestore.dipankar.co.in/api/grodok_position/create", {
         user_id: appState.state.userInfo.user_id,
         symbol: stock,
-        buy_price: parseInt(price),
-        quantities: parseInt(quantities),
+        buy_price: parseFloat(price),
+        quantities: parseFloat(quantities),
       });
+
       // no cache.
       reload(false);
       showNotification("Created a new order");
@@ -83,6 +86,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
               _id: order._id,
               sell_price: parseFloat("10"),
             });
+
             //console.log(response);
             // no cache.
             reload(false);
@@ -104,29 +108,6 @@ export const PositionScreen = ({ navigation }: TProps) => {
 
   return (
     <DContainer>
-      <DCard overrideStyle={{ height: 150, backgroundColor: "#bbbbbb" }}>
-        <DLayoutRow style={{ flex: 1 }}>
-          <DLayoutCol style={{ flex: 1 }}>
-            <Text style={styles.textHeader}>Invested </Text>
-            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.invested_amount} INR</Text>
-          </DLayoutCol>
-          <DLayoutCol style={{ flex: 1 }}>
-            <Text style={styles.textHeader}>Current </Text>
-            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.current_amount} INR</Text>
-          </DLayoutCol>
-        </DLayoutRow>
-        <DLayoutRow style={{ flex: 1 }}>
-          <DLayoutCol style={{ flex: 1 }}>
-            <Text style={styles.textHeader}>Profit</Text>
-            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.change_amount} INR</Text>
-          </DLayoutCol>
-          <DLayoutCol style={{ flex: 1 }}>
-            <Text style={styles.textHeader}>Profit</Text>
-            <Text style={styles.textValue}>{appState.state.position?.positionSummary?.change_per} %</Text>
-          </DLayoutCol>
-        </DLayoutRow>
-      </DCard>
-
       <View
         style={{
           flex: 1,
