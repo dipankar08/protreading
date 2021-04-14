@@ -54,7 +54,7 @@ export const SignUpScreen = ({ navigation }: TProps) => {
   );
 };
 
-export const HomeScreen = ({ navigation }: TProps) => {
+export const HomeScreen1 = ({ navigation }: TProps) => {
   return (
     <ScreenContainer>
       <Text>Main Home Screen</Text>

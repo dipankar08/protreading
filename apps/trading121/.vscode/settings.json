@@ -1,6 +1,7 @@
 {
     "prettier.vueIndentScriptAndStyle": true,
     "cSpell.words": [
+        "Unmount",
         "jsondata"
     ]
 }

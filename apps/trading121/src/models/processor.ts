@@ -88,10 +88,10 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
   }
 
   let positionSummary: TPositionSummary = {
-    invested_amount: invested_amount_total,
-    current_amount: current_amount_total,
-    change_amount: current_amount_total - invested_amount_total,
-    change_per: ((current_amount_total - invested_amount_total) / invested_amount_total) * 100,
+    invested_amount: parseFloat(invested_amount_total + "").toFixed(2),
+    current_amount: parseFloat(current_amount_total + "").toFixed(2),
+    change_amount: parseFloat(current_amount_total - invested_amount_total).toFixed(2),
+    change_per: parseFloat(((current_amount_total - invested_amount_total) / invested_amount_total) * 100).toFixed(2),
   };
 
   let position: TPosition = {

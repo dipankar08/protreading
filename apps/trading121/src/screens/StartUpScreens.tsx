@@ -73,7 +73,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
     if (email.trim().length == 0) {
       return;
     }
-    let userInfo = { name: "Guest", email: email.toLocaleLowerCase(), user_id: email.toLocaleLowerCase() };
+    let userInfo = { name: "Guest", email: email.toLocaleLowerCase().trim(), user_id: email.toLocaleLowerCase().trim() };
     saveData("USER_INFO", userInfo);
     appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
   }
@@ -135,6 +135,7 @@ export const ProfileScreen = ({ navigation }: TProps) => {
         <DSpace />
         <DText>{appState.state.userInfo.name}</DText>
         <DText>{appState.state.userInfo.email}</DText>
+        <DText>UserId: =={appState.state.userInfo.user_id}==</DText>
         <DSpace />
         <DSpace />
         <DButton onPress={signOut}>Sign out</DButton>
