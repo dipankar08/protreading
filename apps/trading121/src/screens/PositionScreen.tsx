@@ -128,20 +128,19 @@ export const PositionScreen = ({ navigation }: TProps) => {
               <TouchableWithoutFeedback
                 onLongPress={() => {
                   if (item.is_open) {
-                    closeOrder(item, "0");
+                    // closeOrder(item, "0"); << DISABLED FOR NOW
                   }
                 }}
               >
-                <DLayoutCol style={{ padding: 20, opacity: item.is_open ? 1 : 0.3 }}>
+                <DLayoutCol style={{ paddingVertical: 20, opacity: item.is_open ? 1 : 0.3 }}>
                   <DLayoutRow>
                     <DLayoutCol style={{ flex: 1 }}>
+                      <Text style={{ color: "#00000077", fontSize: 16, marginVertical: 2 }}>Order# {item.index}</Text>
                       <Text style={{ color: "#000000", fontSize: 14, marginVertical: 2, textTransform: "uppercase" }}>{item.symbol}</Text>
                       <Text style={{ color: color, fontSize: 12 }}>
-                        ltp : {item.last_price} - ({item.ltp_change})
+                        ltp : {item.last_price} ({item.ltp_change}%)
                       </Text>
-                      <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                        {item.quantities} X {item.buy_price} = {item.invested_sum}
-                      </Text>
+
                       <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
                     </DLayoutCol>
                     <DLayoutCol style={{ alignItems: "flex-end" }}>
@@ -152,7 +151,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
                         {item.quantities} X {item.buy_price} = {item.invested_sum}
                       </Text>
                       <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                        {item.quantities} X {item.last_price} = {item.invested_sum}
+                        {item.quantities} X {item.last_price} = {item.current_sum}
                       </Text>
                     </DLayoutCol>
                   </DLayoutRow>

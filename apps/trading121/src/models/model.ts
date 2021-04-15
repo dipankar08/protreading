@@ -31,6 +31,7 @@ export type TMarket = {
 
 export type TOrder = {
   _id: string;
+  index: number;
   symbol: string;
   buy_price: number;
   sell_price: number;
@@ -42,6 +43,7 @@ export type TOrder = {
   is_gain: boolean;
   open_for: string;
   invested_sum: number;
+  current_sum: number;
   change: number;
   change_per: number;
   gross: number;
