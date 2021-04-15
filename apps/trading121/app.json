@@ -16,8 +16,11 @@
       "**/*"
     ],
     "android": {
-      "package": "com.dipankar08.trading121"
+      "package": "com.grodok.trading"
     },
-    "description": ""
+    "description": "",
+    "ios": {
+      "bundleIdentifier": "com.grodok.trading"
+    }
   }
 }

@@ -126,17 +126,21 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+dexOptions {
+   incremental true
+   javaMaxHeapSize "4g"
+}
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        applicationId "com.trading121"
+        applicationId 'com.grodok.trading'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     splits {
         abi {
@@ -153,6 +157,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                   storeFile file(MYAPP_RELEASE_STORE_FILE)
+                   storePassword MYAPP_RELEASE_STORE_PASSWORD
+                   keyAlias MYAPP_RELEASE_KEY_ALIAS
+                   keyPassword MYAPP_RELEASE_KEY_PASSWORD
+             }
+        }
     }
     buildTypes {
         debug {
@@ -161,7 +173,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

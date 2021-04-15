@@ -1,4 +1,4 @@
-package com.trading121;
+package com.grodok.trading;
 
 import android.os.Bundle;
 
