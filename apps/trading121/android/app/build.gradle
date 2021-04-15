@@ -139,7 +139,7 @@ dexOptions {
         applicationId 'com.grodok.trading'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 3
         versionName "1.0.0"
     }
     splits {
