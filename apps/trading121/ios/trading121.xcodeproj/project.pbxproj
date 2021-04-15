@@ -383,11 +383,13 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.trading121;
-				PRODUCT_NAME = trading121;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.grodok.trading";
+				PRODUCT_NAME = trading;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				TARGETED_DEVICE_FAMILY = "1";
+				CODE_SIGN_ENTITLEMENTS = trading121/trading.entitlements;
 			};
 			name = Debug;
 		};
@@ -407,10 +409,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.trading121;
-				PRODUCT_NAME = trading121;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.grodok.trading";
+				PRODUCT_NAME = trading;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				TARGETED_DEVICE_FAMILY = "1";
+				CODE_SIGN_ENTITLEMENTS = trading121/trading.entitlements;
 			};
 			name = Release;
 		};
@@ -471,6 +475,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				CODE_SIGN_ENTITLEMENTS = trading121/trading.entitlements;
 			};
 			name = Debug;
 		};
@@ -524,6 +529,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				CODE_SIGN_ENTITLEMENTS = trading121/trading.entitlements;
 			};
 			name = Release;
 		};
