@@ -42,7 +42,7 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
   let consolidatedList = new Array<TOrder>();
   let invested_amount_total = 0;
   let current_amount_total = 0;
-
+  let index = 0;
   for (var x of obj) {
     //console.log(">>> COMPUTERD");
     let symbol: string = x.symbol;
@@ -62,6 +62,7 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     x.gross = (x.last_price - x.buy_price) * x.quantities;
     let cur_result = {
       _id: x._id,
+      index: index++,
       symbol: x.symbol,
       buy_price: x.buy_price,
       sell_price: x.sell_price || null,
@@ -73,11 +74,12 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
       is_gain: x.buy_price > x.last_price,
       open_for: x.open_for,
       invested_sum: x.invested_amount.toFixed(2),
+      current_sum: x.current_amount.toFixed(2),
       change: x.change.toFixed(2),
       change_per: x.change_per.toFixed(2),
       gross: x.gross.toFixed(2),
       ltp: x.close,
-      ltp_change: "0%", // TODO
+      ltp_change: 0, // TODO
     };
     // console.log(cur_result);
     orderList.push(cur_result);
