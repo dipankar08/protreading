@@ -121,7 +121,7 @@ const PositionStackScreen = () => (
       component={PositionScreen}
       options={{
         title: "Position",
-        headerShown: true,
+        headerShown: false,
         headerStyle: {
           backgroundColor: "#f4511e",
         },
