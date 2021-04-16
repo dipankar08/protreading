@@ -32,6 +32,7 @@ const HomeStackScreen = ({ navigation }: TProps) => (
       component={HomeScreen}
       options={{
         title: "Home",
+        headerShown: false,
         headerStyle: {
           backgroundColor: "#f4511e",
         },
