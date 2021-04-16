@@ -1,5 +1,5 @@
 import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal, useWindowDimensions } from "react-native";
-import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator, ScreenHeader } from "../components/basic";
+import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator, ScreenHeader, DContainerSafe } from "../components/basic";
 import { TProps } from "./types";
 import React, { useEffect } from "react";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -80,7 +80,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
     : [<Picker.Item key="" value="" label="Wait..." />];
 
   return (
-    <DContainer style={{ paddingHorizontal: 0 }}>
+    <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader title={"Position"} style={{ padding: 16 }} icon="sort-reverse-variant"></ScreenHeader>
       <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
       <DButton onPress={() => setModalVisible(true)} style={{ marginHorizontal: 16 }}>
@@ -117,7 +117,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
           </View>
         </View>
       </Modal>
-    </DContainer>
+    </DContainerSafe>
   );
 };
 

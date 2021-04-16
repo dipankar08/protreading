@@ -28,6 +28,10 @@
       ],
       "versionCode": 3
     },
+ "androidStatusBar": {
+      "backgroundColor": "#ff914d",
+      "translucent": false
+    },
     "description": "",
     "ios": {
       "bundleIdentifier": "com.grodok.trading"
