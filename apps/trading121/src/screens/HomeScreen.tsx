@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { Button, Text, StyleSheet, View } from "react-native";
 import { ScreenContainer } from "react-native-screens";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { DCard, DContainer, DLayoutCol, DLayoutRow } from "../components/basic";
+import { DCard, DContainer, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
 import { TProps } from "./types";
 import { globalStyle } from "../components/styles";
 import { getRequest } from "../libs/network";
@@ -43,6 +43,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
   return (
     <DContainer>
       <DLayoutCol>
+        <ScreenHeader title={"Home"} style={{ padding: 0 }} icon="sort-reverse-variant" />
         <Text style={styles.headText}>Summary</Text>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>
