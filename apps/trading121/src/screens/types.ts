@@ -11,4 +11,7 @@ export type TProps = {
   primary?: any;
   secondary?: any;
   center?: any;
+  item?: any;
+  text?: string;
+  icon?: string;
 };

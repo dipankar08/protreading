@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { STYLES } from "./styles";
 import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -164,7 +165,7 @@ export const DLayoutRow = ({ children, row, equal, center, style }: any) => {
   );
 };
 
-export const DLayoutCol = ({ children, row, equal, center, style }: any) => {
+export const DLayoutCol = ({ children, row, equal, center, style }: TProps) => {
   return (
     <View
       style={[
@@ -186,8 +187,59 @@ export const FlatListItemSeparator = () => {
       style={{
         height: 1,
         width: "100%",
-        backgroundColor: "#00000040",
+        backgroundColor: "#00000020",
       }}
     />
+  );
+};
+
+export const DListEmptyComponent = () => {
+  return (
+    <View style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 40 }}>
+      <MaterialCommunityIcons name={"emoticon-sad-outline"} color="black" size={40} />
+      <Text style={{ color: "red", textAlign: "center", marginTop: 16 }}>No item found</Text>
+    </View>
+  );
+};
+
+export const TextWithIcon = ({ style, onPress, text, icon }: TProps) => {
+  return (
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[{ display: "flex", flexDirection: "row", alignItems: "center" }, style]}>
+        <MaterialCommunityIcons name={icon} color="black" size={24} />
+        <TouchableOpacity onPress={onPress}>
+          <Text style={{ fontSize: 16, color: "#000000", marginLeft: 8, textTransform: "capitalize" }}>{text}</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack }: any) => {
+  return (
+    <View
+      style={[
+        {
+          display: "flex",
+          flexDirection: "row",
+          paddingVertical: 10,
+          padding: 0,
+          alignItems: "baseline",
+        },
+        style,
+      ]}
+    >
+      {navigation ? (
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: 20 }}>
+          <MaterialCommunityIcons name={"arrow-left"} color="black" size={24} />
+        </TouchableOpacity>
+      ) : (
+        <View></View>
+      )}
+      <Text style={{ color: "#000000", fontWeight: "bold", fontSize: 22, flex: 1, textTransform: "capitalize" }}>{title}</Text>
+      <TouchableOpacity onPress={onPress}>
+        <MaterialCommunityIcons name={icon || "menu"} color="black" size={24} />
+      </TouchableOpacity>
+    </View>
   );
 };

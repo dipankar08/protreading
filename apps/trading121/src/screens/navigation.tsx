@@ -6,7 +6,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SearchScreen, SearchScreen2 } from "./Screens";
 import { PositionScreen } from "./PositionScreen";
-import { MarketScreen } from "./MarketScreen";
+import { MarketScreen, MarketScreenList } from "./MarketScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "./types";
 
@@ -78,12 +78,28 @@ const ProfileStackScreen = () => (
 // Market Stack
 const MarketStack = createStackNavigator();
 const MarketStackScreen = () => (
-  <MarketStack.Navigator>
+  <MarketStack.Navigator initialRouteName="MarketList">
     <MarketStack.Screen
       name="Market"
       component={MarketScreen}
       options={{
         title: "Market",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+    <MarketStack.Screen
+      name="MarketList"
+      component={MarketScreenList}
+      options={{
+        title: "Market",
+        headerShown: false,
         headerStyle: {
           backgroundColor: "#f4511e",
         },
