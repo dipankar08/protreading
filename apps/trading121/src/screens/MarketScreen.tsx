@@ -4,6 +4,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import {
   DCard,
   DContainer,
+  DContainerSafe,
   DLayoutCol,
   DLayoutRow,
   DListEmptyComponent,
@@ -24,7 +25,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 export const MarketScreenList = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   return (
-    <DContainer style={{ paddingHorizontal: 0 }}>
+    <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="sort-reverse-variant"></ScreenHeader>
       <FlatList
         ItemSeparatorComponent={FlatListItemSeparator}
@@ -63,7 +64,7 @@ export const MarketScreenList = ({ navigation }: TProps) => {
           );
         }}
       />
-    </DContainer>
+    </DContainerSafe>
   );
 };
 
@@ -137,7 +138,7 @@ export const MarketScreen = ({ navigation, route }: TProps) => {
   }
 
   return (
-    <DContainer style={{ paddingHorizontal: 0 }}>
+    <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader
         title={item.key}
         navigation={navigation}
@@ -238,6 +239,6 @@ export const MarketScreen = ({ navigation, route }: TProps) => {
           <TextWithIcon text={"Sort by stock name"} icon={"sort-ascending"} style={{ paddingVertical: 8 }}></TextWithIcon>
         </DLayoutCol>
       </RBSheet>
-    </DContainer>
+    </DContainerSafe>
   );
 };
