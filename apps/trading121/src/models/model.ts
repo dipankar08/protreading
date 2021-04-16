@@ -35,7 +35,6 @@ export type TOrder = {
   symbol: string;
   buy_price: number;
   sell_price: number;
-  last_price: number;
   buy_ts: any;
   sell_ts: any;
   quantities: number;
@@ -49,6 +48,7 @@ export type TOrder = {
   gross: number;
   ltp: number;
   ltp_change: number;
+  orderList: Array<TOrder>;
 };
 
 export type TPositionSummary = {

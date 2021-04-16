@@ -7,9 +7,10 @@ import { DCard, DContainer, DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader
 import { TProps } from "./types";
 import { globalStyle } from "../components/styles";
 import { getRequest } from "../libs/network";
-import { CACHE_KEY_POSITION } from "../appstate/CONST";
+import { CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
 import { verifyOrCrash } from "../libs/assert";
 import { processPositionData } from "../models/processor";
+import { dlog } from "../libs/dlog";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
@@ -18,11 +19,14 @@ export const HomeScreen = ({ navigation }: TProps) => {
 
   let name = "Home";
   useEffect(() => {
-    console.log(`Mounted ${name}`);
+    dlog.d(`Mounted ${name}`);
     async function loadInitData() {
+      if (!appState.state.isLoggedIn) {
+        return;
+      }
       try {
         let position = await getRequest(
-          `https://simplestore.dipankar.co.in/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
+          `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
           CACHE_KEY_POSITION,
           false
         );
@@ -36,9 +40,9 @@ export const HomeScreen = ({ navigation }: TProps) => {
     }
     loadInitData();
     return () => {
-      console.log(`Unmounted ${name}`);
+      dlog.d(`Unmounted ${name}`);
     };
-  }, []);
+  }, [appState.state.isLoggedIn]);
 
   return (
     <DContainerSafe>

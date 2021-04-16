@@ -197,7 +197,7 @@ const RootStackScreen = ({ userToken }: TProps) => {
   const appState = useContext(AppStateContext);
   return (
     <RootStack.Navigator headerMode="none">
-      {appState.state.isLoggedIn ? (
+      {appState.state.isLoggedIn == true ? (
         <RootStack.Screen
           name="App"
           component={DrawerScreen}

@@ -28,7 +28,7 @@
       ],
       "versionCode": 3
     },
- "androidStatusBar": {
+    "androidStatusBar": {
       "backgroundColor": "#ff914d",
       "translucent": false
     },
