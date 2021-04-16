@@ -1,9 +1,11 @@
 import axios from "axios";
+import { PRO_TRADING_SERVER } from "../appstate/CONST";
 import { TObject } from "../models/model";
+import { dlog } from "./dlog";
 import { getData, saveData } from "./stoarge";
 
 export async function loadLatestData() {
-  let response = await axios.get("https://dev.api.grodok.com:5000/latest?candle_type=5m");
+  let response = await axios.get(`${PRO_TRADING_SERVER}/latest?candle_type=5m`);
   const jsondata: any = response.data;
   if (jsondata.status == "success") {
     let data = jsondata.out.data; // This contains the map.
@@ -18,9 +20,9 @@ export async function loadLatestData() {
 
 // Defau;lt use cacche
 export async function getRequest(url: string, cacheKey?: string, cache_first = true) {
-  console.log("try fetching " + url);
+  dlog.d("try fetching " + url);
   if (cache_first && cacheKey) {
-    console.log("[Network]Trying cache first..");
+    dlog.d("[Network]Trying cache first..");
     let data = await getData(cacheKey);
     if (data) {
       return data;
@@ -29,27 +31,27 @@ export async function getRequest(url: string, cacheKey?: string, cache_first = t
   let response = await axios.get(url);
   const jsondata: any = response.data;
   if (jsondata.status == "success") {
-    console.log("fetch success...");
+    dlog.d("fetch success...");
     if (cacheKey) {
       await saveData(cacheKey, jsondata.out);
     }
     return jsondata.out;
   } else {
-    console.log("fetch failed....");
+    dlog.d("fetch failed....");
     throw new Error("Server sends error");
   }
 }
 
 // No try catch here
 export async function postRequest(url: string, data: TObject) {
-  console.log("[Network] posting " + url);
+  dlog.d("[Network] posting " + url);
   let response = await axios.post(url, data);
   const jsondata: any = response.data;
   if (jsondata.status == "success") {
-    console.log("post success...");
+    dlog.d("post success...");
     return jsondata.out;
   } else {
-    console.log("post failed....");
+    dlog.d("post failed....");
     throw new Error("Server sends error");
   }
 }

@@ -16,17 +16,44 @@ import {
 import { TProps } from "./types";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
-import { CACHE_KEY_SUMMARY, CACHE_KEY_MARKET } from "../appstate/CONST";
+import { CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, PRO_TRADING_SERVER } from "../appstate/CONST";
 import { processSummaryData } from "../models/processor";
 import { TKeyText, TMarketEntry } from "../models/model";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { dlog } from "../libs/dlog";
+
+export const useNetwork = () => {
+  const appState = useContext(AppStateContext);
+  const [loading, setLoading] = React.useState(false);
+  async function reLoadAllData() {
+    dlog.d("[NETWORK] fetching from network ");
+    setLoading(true);
+    try {
+      let summary = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY, false);
+      dlog.d("SUMMARY FETACH DONE");
+      let market = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type_5m`, CACHE_KEY_MARKET, false);
+      dlog.d("MARKET FETACH DONE");
+      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
+      appState.dispatch({ type: "UPDATE_MARKET", payload: processSummaryData(market) });
+      setLoading(false);
+      dlog.d("[NETWORK] fetching from network complete ");
+    } catch (e) {
+      //setError("Not able to get Data");
+      setLoading(false);
+      dlog.d("[NETWORK] fetching from network failed ");
+      dlog.ex(e);
+    }
+  }
+  return { loading, reLoadAllData };
+};
 
 export const MarketScreenList = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
+  const { loading, reLoadAllData } = useNetwork();
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="sort-reverse-variant"></ScreenHeader>
+      <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="reload" onPress={reLoadAllData}></ScreenHeader>
       <FlatList
         ItemSeparatorComponent={FlatListItemSeparator}
         showsHorizontalScrollIndicator={false}
@@ -71,38 +98,23 @@ export const MarketScreenList = ({ navigation }: TProps) => {
 export const MarketScreen = ({ navigation, route }: TProps) => {
   const appState = useContext(AppStateContext);
   const { item } = route.params;
-  const [loading, setLoading] = React.useState(false);
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
   const [inverted, setInverted] = useState(false);
+  const { loading, reLoadAllData } = useNetwork();
 
   let isSubscribed = false;
   const refRBSheet = useRef();
   const flatListRef = useRef<FlatList<TMarketEntry>>();
   let name = "Market";
-  async function reload() {
-    console.log("[NETWORK] fetching from network ");
-    setLoading(true);
-    try {
-      let summary = await getRequest("https://dev.api.grodok.com:5000/summary", CACHE_KEY_SUMMARY, false);
-      let market = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type_5m", CACHE_KEY_MARKET, false);
-      if (!isSubscribed) return;
-      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
-      appState.dispatch({ type: "UPDATE_MARKET", payload: processSummaryData(market) });
-    } catch (e) {
-      if (!isSubscribed) return;
-      //setError("Not able to get Data");
-    }
-  }
-
   React.useEffect((): any => {
-    console.log(`Mounted ${name}`);
+    dlog.d(`Mounted ${name}`);
     if (appState.state.summary) {
       setListData(appState.state.summary?.data[item.key]);
     }
-    console.log(item);
+    dlog.d(item);
     isSubscribed = true;
     return () => {
-      console.log(`Unmounted ${name}`);
+      dlog.d(`Unmounted ${name}`);
       isSubscribed = false;
     };
   }, []);
@@ -112,7 +124,7 @@ export const MarketScreen = ({ navigation, route }: TProps) => {
     setInverted(!inverted);
     flatListRef?.current?.scrollToOffset({ animated: true, offset: 0 });
     /*
-    console.log('"performSort" called' + type);
+    dlog.d('"performSort" called' + type);
     let data: TMarketEntry[] = [];
     switch (type) {
       case "change":
@@ -148,7 +160,7 @@ export const MarketScreen = ({ navigation, route }: TProps) => {
       ></ScreenHeader>
       <FlatList
         ref={flatListRef}
-        onRefresh={() => reload()}
+        onRefresh={() => reLoadAllData()}
         refreshing={loading}
         data={listData}
         inverted={inverted}

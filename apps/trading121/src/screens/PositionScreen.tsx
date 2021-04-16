@@ -6,7 +6,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
 import { useContext } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { CACHE_KEY_POSITION } from "../appstate/CONST";
+import { CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
 import { processPositionData } from "../models/processor";
 import { verifyOrCrash } from "../libs/assert";
 import { getRequest, postRequest } from "../libs/network";
@@ -14,6 +14,7 @@ import { showNotification } from "../libs/uihelper";
 import { TOrder } from "../models/model";
 import { Alert } from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
+import { dlog } from "../libs/dlog";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config
@@ -39,11 +40,11 @@ export const PositionScreen = ({ navigation }: TProps) => {
   const [error, setError] = React.useState("");
 
   async function reload(useCache = true) {
-    console.log("[NETWORK] fetching from network ");
+    dlog.d("[NETWORK] fetching from network ");
     setLoading(true);
     try {
       let position = await getRequest(
-        `https://simplestore.dipankar.co.in/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
+        `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
         CACHE_KEY_POSITION,
         useCache
       );
@@ -58,7 +59,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
   }
   async function createNewOrder() {
     try {
-      let response = await postRequest("https://simplestore.dipankar.co.in/api/grodok_position/create", {
+      let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/create`, {
         user_id: appState.state.userInfo.user_id,
         symbol: stock,
         buy_price: parseFloat(price),
@@ -69,7 +70,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
       reload(false);
       showNotification("Created a new order");
     } catch (err) {
-      console.log(err);
+      dlog.d(err);
       showNotification("Not able to create a order");
     }
   }
@@ -160,7 +161,7 @@ export const PositionListView = ({ route }: TProps) => {
                     <Text style={{ color: "#00000077", fontSize: 16, marginVertical: 2 }}>Order# {item.index}</Text>
                     <Text style={{ color: "#000000", fontSize: 14, marginVertical: 2, textTransform: "uppercase" }}>{item.symbol}</Text>
                     <Text style={{ color: color, fontSize: 12 }}>
-                      ltp : {item.last_price} ({item.ltp_change}%)
+                      ltp : {item.ltp} ({item.ltp_change.toFixed(2)}%)
                     </Text>
 
                     <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
@@ -173,7 +174,7 @@ export const PositionListView = ({ route }: TProps) => {
                       {item.quantities} X {item.buy_price} = {item.invested_sum}
                     </Text>
                     <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      {item.quantities} X {item.last_price} = {item.current_sum}
+                      {item.quantities} X {item.ltp} = {item.current_sum}
                     </Text>
                   </DLayoutCol>
                 </DLayoutRow>

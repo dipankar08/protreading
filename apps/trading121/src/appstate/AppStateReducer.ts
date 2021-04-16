@@ -1,6 +1,7 @@
+import { dlog } from "../libs/dlog";
 import { TAction, TAppState } from "./types";
 const AppStateReducer = (state: TAppState, action: TAction): TAppState => {
-  //console.log(`[AppStateReducer] updating app state for ${action.type}`);
+  dlog.d(`[AppStateReducer] updating app state for ${action.type}`);
   switch (action.type) {
     case "SET_COUNTER":
       return {

@@ -11,8 +11,9 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
 import { processMarketData, processPositionData, processSummaryData } from "../models/processor";
 import { deleteData, getData, saveData } from "../libs/stoarge";
-import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, CACHE_KEY_SUMMARY } from "../appstate/CONST";
+import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, CACHE_KEY_SUMMARY, PRO_TRADING_SERVER } from "../appstate/CONST";
 import { verifyOrCrash } from "../libs/assert";
+import { dlog } from "../libs/dlog";
 
 // Splash screen or boot screen is important for loading the boot data.
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
@@ -25,19 +26,19 @@ export const SplashScreen = () => {
       try {
         setLoading(true);
         // try load from cache.
-        let data = await getRequest("https://dev.api.grodok.com:5000/latest?candle_type=5m", CACHE_KEY_MARKET, true);
-        let data1 = await getRequest("https://dev.api.grodok.com:5000/summary", CACHE_KEY_SUMMARY);
+        let data = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type=5m`, CACHE_KEY_MARKET, true);
+        let data1 = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY);
         appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(data) });
         appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(data1) });
         // mark boot complete
         setLoading(false);
         appState.dispatch({ type: "MARK_BOOT_COMPLETE" });
-        console.log("DONE");
+        dlog.d("DONE");
       } catch (e) {
-        console.log(e);
+        dlog.d(e);
         setError("Not able to find data");
-        console.log("ERROR");
-        console.log(e.stack);
+        dlog.d("ERROR");
+        dlog.d(e.stack);
         setLoading(false);
       }
     }
@@ -58,19 +59,19 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   let name = "SignIn";
   useEffect(() => {
-    console.log(`Mounted ${name}`);
+    dlog.d(`Mounted ${name}`);
     async function checkSignIn() {
       let userInfo = await getData("USER_INFO");
       if (userInfo) {
         appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
         appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
       } else {
-        console.log("No save user info found");
+        dlog.d("No save user info found");
       }
     }
     checkSignIn();
     return () => {
-      console.log(`Unmounted ${name}`);
+      dlog.d(`Unmounted ${name}`);
     };
   }, []);
 
@@ -81,6 +82,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
     let userInfo = { name: "Guest", email: email.toLocaleLowerCase().trim(), user_id: email.toLocaleLowerCase().trim() };
     saveData("USER_INFO", userInfo);
     appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
+    appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
   }
   return (
     <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20 }}>
@@ -113,9 +115,9 @@ export const SignInScreen = ({ navigation }: TProps) => {
 export const SignUpScreen = ({ navigation }: TProps) => {
   let name = "SignUp";
   useEffect(() => {
-    console.log(`Mounted ${name}`);
+    dlog.d(`Mounted ${name}`);
     return () => {
-      console.log(`Unmounted ${name}`);
+      dlog.d(`Unmounted ${name}`);
     };
   }, []);
   return (
@@ -135,9 +137,9 @@ export const ProfileScreen = ({ navigation }: TProps) => {
   }
   let name = "Profile";
   useEffect(() => {
-    console.log(`Mounted ${name}`);
+    dlog.d(`Mounted ${name}`);
     return () => {
-      console.log(`Unmounted ${name}`);
+      dlog.d(`Unmounted ${name}`);
     };
   }, []);
 
