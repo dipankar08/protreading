@@ -32,8 +32,6 @@ export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
       style={[
         {
           backgroundColor: "#ffffff10",
-          paddingRight: 5,
-          paddingLeft: 5,
           flex: 1,
           flexDirection: "column",
         },

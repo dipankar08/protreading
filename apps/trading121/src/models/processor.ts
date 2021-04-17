@@ -6,14 +6,12 @@ export function processMarketData(obj: any): TMarket {
   //dlog.d(obj);
   dlog.d("Processing Market data.....")
   obj = obj.data;
-
   let stocks: Array<TMarketEntry> = [];
   let ltpMap: Map<string, number> = new Map();
   let sectorMap :Map<string, TGroupMarketEntry> = new Map();
   for (let c of Object.keys(obj)) {
     ltpMap.set(c, obj[c].close);
     obj[c].symbol = c;
-    obj[c].name = c;
     stocks.push(obj[c]);
     // calculate sector
     if( obj[c].sector){
@@ -39,6 +37,15 @@ export function processMarketData(obj: any): TMarket {
       dlog.d("No sector found...")
     }
   }
+
+  // update stock List.
+  sectorMap.forEach(function(value, key){
+    value.avg_change = value.group.reduce((a, b) => a + b.change, 0)/value.group.length
+    value.group = value.group.sort(function(a, b) {
+      return b.change - a.change;
+    })
+  });
+
   let market: TMarket = {
     stocks: stocks,
     ltpMap: ltpMap,
