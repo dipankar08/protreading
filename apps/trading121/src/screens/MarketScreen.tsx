@@ -32,9 +32,7 @@ export const useNetwork = () => {
     setLoading(true);
     try {
       let summary = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY, false);
-      dlog.d("SUMMARY FETACH DONE");
       let market = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type_5m`, CACHE_KEY_MARKET, false);
-      dlog.d("MARKET FETACH DONE");
       appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
       appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(market) });
       setLoading(false);
@@ -57,8 +55,8 @@ export const MarketScreen = ({ navigation }: TProps) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Indicator View" },
-    { key: "second", title: "Sector View" },
+    { key: "first", title: "Indicator View", navigation: navigation },
+    { key: "second", title: "Sector View", navigation: navigation },
   ]);
 
   const renderScene = SceneMap({
@@ -74,16 +72,15 @@ export const MarketScreen = ({ navigation }: TProps) => {
   );
 };
 
-export const MarketListView = ({ route, navigation }: TProps) => {
+export const MarketListView = ({ route }: TProps) => {
   const appState = useContext(AppStateContext);
   const [listData, setListData] = React.useState<TGroupMarketEntry[]>([]);
 
   useEffect(() => {
-    dlog.obj(appState.state.summary);
     if (route.key == "first") {
-      // if (appState.state.summary) setListData(appState.state.summary.data.values());
+      setListData(Array.from(appState.state.summary.data.values()));
     } else {
-      //setListData(appState.state.market?.sectorList.values());
+      setListData(Array.from(appState.state.market?.sectorList.values()));
     }
   }, [appState.state.summary, appState.state.market]);
 
@@ -114,7 +111,7 @@ export const MarketListView = ({ route, navigation }: TProps) => {
                 <TouchableOpacity
                   onPress={() => {
                     /* 1. Navigate to the Details route with params */
-                    navigation.navigate("MarketGroupListScreen", {
+                    route.navigation.navigate("MarketGroupListScreen", {
                       item: item,
                     });
                   }}
@@ -131,12 +128,10 @@ export const MarketListView = ({ route, navigation }: TProps) => {
 };
 
 export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
-  const appState = useContext(AppStateContext);
   const { item } = route.params;
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
   const [inverted, setInverted] = useState(false);
   const { loading, reLoadAllData } = useNetwork();
-
   let isSubscribed = false;
   const refRBSheet = useRef();
   const flatListRef = useRef<FlatList<TMarketEntry>>();
@@ -184,7 +179,7 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader
-        title={item.key}
+        title={item.title}
         navigation={navigation}
         style={{ padding: 16 }}
         icon="sort-reverse-variant"

@@ -32,7 +32,7 @@ export function processMarketData(obj: any): TMarket {
         symbol: value.symbol,
         name: value.name,
         close: value.close,
-        change: value.change,
+        change: value.close_change_percentage,
       })
       sectorMap.get(sector)!.count = sectorMap.get(sector)!.count+1
     } else {
@@ -44,30 +44,35 @@ export function processMarketData(obj: any): TMarket {
     ltpMap: ltpMap,
     sectorList:sectorMap,
   };
-  dlog.obj(market.sectorList)
+  dlog.map(market.sectorList)
   return market;
 }
 
 export function processSummaryData(obj: any): TSummary {
   dlog.d("Process Summary Data ...")
-  dlog.obj(obj)
-  let data:Map<string, TGroupMarketEntry> = new Map();
-  obj = obj.data
-  for (let c of Object.keys(obj)) {
-    let value = obj[c] as TMarketEntry[]
-    data.set(c, {
-      _id:c,
-      title:c.replace("_"," "),
-      count:value.length,
-      group:value,
-      avg_change:0
-    })
+  let result:Map<string, TGroupMarketEntry> = new Map();
+  try{
+    obj = obj.data
+    for (let c of Object.keys(obj)) {
+      let value = obj[c] as TMarketEntry[]
+      result.set(c, {
+        _id:c,
+        title:c.replace("_"," "),
+        count:value.length,
+        group:value,
+        avg_change:0
+      })
+      dlog.d("added...")
+    }
+    dlog.d("Compltee summary calculation")
+  } catch(e){
+    dlog.e("Error hapens hwile processing summary data")
+    dlog.ex(e)
   }
-
+  //dlog.map(result)
   let summary: TSummary = {
-    data: data,
+    data: result,
   };
-  dlog.obj(summary)
   return summary;
 }
 
