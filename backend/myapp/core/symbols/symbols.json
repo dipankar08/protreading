@@ -1,0 +1,2394 @@
+{
+    "SUPPORTED_SYMBOL": [
+        {
+            "isin": "INE791I01019",
+            "key": "BRIGADE.NS",
+            "name": "Brigade Enterprises Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "BRIGADE",
+            "text": "Brigade Enterprises Ltd."
+        },
+        {
+            "isin": "INE271C01023",
+            "key": "DLF.NS",
+            "name": "DLF Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "DLF",
+            "text": "DLF Ltd."
+        },
+        {
+            "isin": "INE484J01027",
+            "key": "GODREJPROP.NS",
+            "name": "Godrej Properties Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "GODREJPROP",
+            "text": "Godrej Properties Ltd."
+        },
+        {
+            "isin": "INE0AJG01018",
+            "key": "HEMIPROP.NS",
+            "name": "Hemisphere Properties India Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "HEMIPROP",
+            "text": "Hemisphere Properties India Ltd."
+        },
+        {
+            "isin": "INE069I01010",
+            "key": "IBREALEST.NS",
+            "name": "Indiabulls Real Estate Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "IBREALEST",
+            "text": "Indiabulls Real Estate Ltd."
+        },
+        {
+            "isin": "INE093I01010",
+            "key": "OBEROIRLTY.NS",
+            "name": "Oberoi Realty Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "OBEROIRLTY",
+            "text": "Oberoi Realty Ltd."
+        },
+        {
+            "isin": "INE211B01039",
+            "key": "PHOENIXLTD.NS",
+            "name": "Phoenix Mills Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "PHOENIXLTD",
+            "text": "Phoenix Mills Ltd."
+        },
+        {
+            "isin": "INE811K01011",
+            "key": "PRESTIGE.NS",
+            "name": "Prestige Estates Projects Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "PRESTIGE",
+            "text": "Prestige Estates Projects Ltd."
+        },
+        {
+            "isin": "INE671H01015",
+            "key": "SOBHA.NS",
+            "name": "Sobha Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "SOBHA",
+            "text": "Sobha Ltd."
+        },
+        {
+            "isin": "INE805D01034",
+            "key": "SUNTECK.NS",
+            "name": "Sunteck Realty Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "SUNTECK",
+            "text": "Sunteck Realty Ltd."
+        },
+        {
+            "isin": "INE885A01032",
+            "key": "AMARAJABAT.NS",
+            "name": "Amara Raja Batteries Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "AMARAJABAT",
+            "text": "Amara Raja Batteries Ltd."
+        },
+        {
+            "isin": "INE208A01029",
+            "key": "ASHOKLEY.NS",
+            "name": "Ashok Leyland Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "ASHOKLEY",
+            "text": "Ashok Leyland Ltd."
+        },
+        {
+            "isin": "INE917I01010",
+            "key": "BAJAJ-AUTO.NS",
+            "name": "Bajaj Auto Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "BAJAJ-AUTO",
+            "text": "Bajaj Auto Ltd."
+        },
+        {
+            "isin": "INE787D01026",
+            "key": "BALKRISIND.NS",
+            "name": "Balkrishna Industries Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "BALKRISIND",
+            "text": "Balkrishna Industries Ltd."
+        },
+        {
+            "isin": "INE465A01025",
+            "key": "BHARATFORG.NS",
+            "name": "Bharat Forge Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "BHARATFORG",
+            "text": "Bharat Forge Ltd."
+        },
+        {
+            "isin": "INE323A01026",
+            "key": "BOSCHLTD.NS",
+            "name": "Bosch Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "BOSCHLTD",
+            "text": "Bosch Ltd."
+        },
+        {
+            "isin": "INE066A01021",
+            "key": "EICHERMOT.NS",
+            "name": "Eicher Motors Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "EICHERMOT",
+            "text": "Eicher Motors Ltd."
+        },
+        {
+            "isin": "INE302A01020",
+            "key": "EXIDEIND.NS",
+            "name": "Exide Industries Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "EXIDEIND",
+            "text": "Exide Industries Ltd."
+        },
+        {
+            "isin": "INE158A01026",
+            "key": "HEROMOTOCO.NS",
+            "name": "Hero MotoCorp Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "HEROMOTOCO",
+            "text": "Hero MotoCorp Ltd."
+        },
+        {
+            "isin": "INE883A01011",
+            "key": "MRF.NS",
+            "name": "MRF Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "MRF",
+            "text": "MRF Ltd."
+        },
+        {
+            "isin": "INE101A01026",
+            "key": "M&M.NS",
+            "name": "Mahindra & Mahindra Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "M&M",
+            "text": "Mahindra & Mahindra Ltd."
+        },
+        {
+            "isin": "INE585B01010",
+            "key": "MARUTI.NS",
+            "name": "Maruti Suzuki India Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "MARUTI",
+            "text": "Maruti Suzuki India Ltd."
+        },
+        {
+            "isin": "INE775A01035",
+            "key": "MOTHERSUMI.NS",
+            "name": "Motherson Sumi Systems Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "MOTHERSUMI",
+            "text": "Motherson Sumi Systems Ltd."
+        },
+        {
+            "isin": "INE494B01023",
+            "key": "TVSMOTOR.NS",
+            "name": "TVS Motor Company Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "TVSMOTOR",
+            "text": "TVS Motor Company Ltd."
+        },
+        {
+            "isin": "INE155A01022",
+            "key": "TATAMOTORS.NS",
+            "name": "Tata Motors Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "TATAMOTORS",
+            "text": "Tata Motors Ltd."
+        },
+        {
+            "isin": "INE702C01027",
+            "key": "APLAPOLLO.NS",
+            "name": "APL Apollo Tubes Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "APLAPOLLO",
+            "text": "APL Apollo Tubes Ltd."
+        },
+        {
+            "isin": "INE423A01024",
+            "key": "ADANIENT.NS",
+            "name": "Adani Enterprises Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "ADANIENT",
+            "text": "Adani Enterprises Ltd."
+        },
+        {
+            "isin": "INE522F01014",
+            "key": "COALINDIA.NS",
+            "name": "Coal India Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "COALINDIA",
+            "text": "Coal India Ltd."
+        },
+        {
+            "isin": "INE038A01020",
+            "key": "HINDALCO.NS",
+            "name": "Hindalco Industries Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "HINDALCO",
+            "text": "Hindalco Industries Ltd."
+        },
+        {
+            "isin": "INE267A01025",
+            "key": "HINDZINC.NS",
+            "name": "Hindustan Zinc Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "HINDZINC",
+            "text": "Hindustan Zinc Ltd."
+        },
+        {
+            "isin": "INE019A01038",
+            "key": "JSWSTEEL.NS",
+            "name": "JSW Steel Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "JSWSTEEL",
+            "text": "JSW Steel Ltd."
+        },
+        {
+            "isin": "INE749A01030",
+            "key": "JINDALSTEL.NS",
+            "name": "Jindal Steel & Power Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "JINDALSTEL",
+            "text": "Jindal Steel & Power Ltd."
+        },
+        {
+            "isin": "INE490G01020",
+            "key": "MOIL.NS",
+            "name": "MOIL Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "MOIL",
+            "text": "MOIL Ltd."
+        },
+        {
+            "isin": "INE584A01023",
+            "key": "NMDC.NS",
+            "name": "NMDC Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "NMDC",
+            "text": "NMDC Ltd."
+        },
+        {
+            "isin": "INE139A01034",
+            "key": "NATIONALUM.NS",
+            "name": "National Aluminium Co. Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "NATIONALUM",
+            "text": "National Aluminium Co. Ltd."
+        },
+        {
+            "isin": "INE703B01027",
+            "key": "RATNAMANI.NS",
+            "name": "Ratnamani Metals & Tubes Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "RATNAMANI",
+            "text": "Ratnamani Metals & Tubes Ltd."
+        },
+        {
+            "isin": "INE114A01011",
+            "key": "SAIL.NS",
+            "name": "Steel Authority of India Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "SAIL",
+            "text": "Steel Authority of India Ltd."
+        },
+        {
+            "isin": "INE081A01012",
+            "key": "TATASTEEL.NS",
+            "name": "Tata Steel Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "TATASTEEL",
+            "text": "Tata Steel Ltd."
+        },
+        {
+            "isin": "INE205A01025",
+            "key": "VEDL.NS",
+            "name": "Vedanta Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "VEDL",
+            "text": "Vedanta Ltd."
+        },
+        {
+            "isin": "INE191B01025",
+            "key": "WELCORP.NS",
+            "name": "Welspun Corp Ltd.",
+            "sector": [
+                "METALS"
+            ],
+            "symbol": "WELCORP",
+            "text": "Welspun Corp Ltd."
+        },
+        {
+            "isin": "INE012A01025",
+            "key": "ACC.NS",
+            "name": "ACC Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "ACC",
+            "text": "ACC Ltd."
+        },
+        {
+            "isin": "INE358A01014",
+            "key": "ABBOTINDIA.NS",
+            "name": "Abbott India Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "ABBOTINDIA",
+            "text": "Abbott India Ltd."
+        },
+        {
+            "isin": "INE364U01010",
+            "key": "ADANIGREEN.NS",
+            "name": "Adani Green Energy Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "ADANIGREEN",
+            "text": "Adani Green Energy Ltd."
+        },
+        {
+            "isin": "INE742F01042",
+            "key": "ADANIPORTS.NS",
+            "name": "Adani Ports and Special Economic Zone Ltd.",
+            "sector": [
+                "SERVICES"
+            ],
+            "symbol": "ADANIPORTS",
+            "text": "Adani Ports and Special Economic Zone Ltd."
+        },
+        {
+            "isin": "INE931S01010",
+            "key": "ADANITRANS.NS",
+            "name": "Adani Transmission Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "ADANITRANS",
+            "text": "Adani Transmission Ltd."
+        },
+        {
+            "isin": "INE540L01014",
+            "key": "ALKEM.NS",
+            "name": "Alkem Laboratories Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "ALKEM",
+            "text": "Alkem Laboratories Ltd."
+        },
+        {
+            "isin": "INE079A01024",
+            "key": "AMBUJACEM.NS",
+            "name": "Ambuja Cements Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "AMBUJACEM",
+            "text": "Ambuja Cements Ltd."
+        },
+        {
+            "isin": "INE437A01024",
+            "key": "APOLLOHOSP.NS",
+            "name": "Apollo Hospitals Enterprise Ltd.",
+            "sector": [
+                "HEALTHCARE SERVICES"
+            ],
+            "symbol": "APOLLOHOSP",
+            "text": "Apollo Hospitals Enterprise Ltd."
+        },
+        {
+            "isin": "INE021A01026",
+            "key": "ASIANPAINT.NS",
+            "name": "Asian Paints Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "ASIANPAINT",
+            "text": "Asian Paints Ltd."
+        },
+        {
+            "isin": "INE406A01037",
+            "key": "AUROPHARMA.NS",
+            "name": "Aurobindo Pharma Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "AUROPHARMA",
+            "text": "Aurobindo Pharma Ltd."
+        },
+        {
+            "isin": "INE192R01011",
+            "key": "DMART.NS",
+            "name": "Avenue Supermarts Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "DMART",
+            "text": "Avenue Supermarts Ltd."
+        },
+        {
+            "isin": "INE238A01034",
+            "key": "AXISBANK.NS",
+            "name": "Axis Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "AXISBANK",
+            "text": "Axis Bank Ltd."
+        },
+        {
+            "isin": "INE296A01024",
+            "key": "BAJFINANCE.NS",
+            "name": "Bajaj Finance Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "BAJFINANCE",
+            "text": "Bajaj Finance Ltd."
+        },
+        {
+            "isin": "INE918I01018",
+            "key": "BAJAJFINSV.NS",
+            "name": "Bajaj Finserv Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "BAJAJFINSV",
+            "text": "Bajaj Finserv Ltd."
+        },
+        {
+            "isin": "INE118A01012",
+            "key": "BAJAJHLDNG.NS",
+            "name": "Bajaj Holdings & Investment Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "BAJAJHLDNG",
+            "text": "Bajaj Holdings & Investment Ltd."
+        },
+        {
+            "isin": "INE545U01014",
+            "key": "BANDHANBNK.NS",
+            "name": "Bandhan Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "BANDHANBNK",
+            "text": "Bandhan Bank Ltd."
+        },
+        {
+            "isin": "INE463A01038",
+            "key": "BERGEPAINT.NS",
+            "name": "Berger Paints India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "BERGEPAINT",
+            "text": "Berger Paints India Ltd."
+        },
+        {
+            "isin": "INE029A01011",
+            "key": "BPCL.NS",
+            "name": "Bharat Petroleum Corporation Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "BPCL",
+            "text": "Bharat Petroleum Corporation Ltd."
+        },
+        {
+            "isin": "INE397D01024",
+            "key": "BHARTIARTL.NS",
+            "name": "Bharti Airtel Ltd.",
+            "sector": [
+                "TELECOM"
+            ],
+            "symbol": "BHARTIARTL",
+            "text": "Bharti Airtel Ltd."
+        },
+        {
+            "isin": "INE376G01013",
+            "key": "BIOCON.NS",
+            "name": "Biocon Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "BIOCON",
+            "text": "Biocon Ltd."
+        },
+        {
+            "isin": "INE216A01030",
+            "key": "BRITANNIA.NS",
+            "name": "Britannia Industries Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "BRITANNIA",
+            "text": "Britannia Industries Ltd."
+        },
+        {
+            "isin": "INE010B01027",
+            "key": "CADILAHC.NS",
+            "name": "Cadila Healthcare Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "CADILAHC",
+            "text": "Cadila Healthcare Ltd."
+        },
+        {
+            "isin": "INE059A01026",
+            "key": "CIPLA.NS",
+            "name": "Cipla Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "CIPLA",
+            "text": "Cipla Ltd."
+        },
+        {
+            "isin": "INE259A01022",
+            "key": "COLPAL.NS",
+            "name": "Colgate Palmolive (India) Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "COLPAL",
+            "text": "Colgate Palmolive (India) Ltd."
+        },
+        {
+            "isin": "INE016A01026",
+            "key": "DABUR.NS",
+            "name": "Dabur India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "DABUR",
+            "text": "Dabur India Ltd."
+        },
+        {
+            "isin": "INE361B01024",
+            "key": "DIVISLAB.NS",
+            "name": "Divi's Laboratories Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "DIVISLAB",
+            "text": "Divi's Laboratories Ltd."
+        },
+        {
+            "isin": "INE089A01023",
+            "key": "DRREDDY.NS",
+            "name": "Dr. Reddy's Laboratories Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "DRREDDY",
+            "text": "Dr. Reddy's Laboratories Ltd."
+        },
+        {
+            "isin": "INE129A01019",
+            "key": "GAIL.NS",
+            "name": "GAIL (India) Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "GAIL",
+            "text": "GAIL (India) Ltd."
+        },
+        {
+            "isin": "INE102D01028",
+            "key": "GODREJCP.NS",
+            "name": "Godrej Consumer Products Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "GODREJCP",
+            "text": "Godrej Consumer Products Ltd."
+        },
+        {
+            "isin": "INE047A01021",
+            "key": "GRASIM.NS",
+            "name": "Grasim Industries Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "GRASIM",
+            "text": "Grasim Industries Ltd."
+        },
+        {
+            "isin": "INE860A01027",
+            "key": "HCLTECH.NS",
+            "name": "HCL Technologies Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "HCLTECH",
+            "text": "HCL Technologies Ltd."
+        },
+        {
+            "isin": "INE127D01025",
+            "key": "HDFCAMC.NS",
+            "name": "HDFC Asset Management Company Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "HDFCAMC",
+            "text": "HDFC Asset Management Company Ltd."
+        },
+        {
+            "isin": "INE040A01034",
+            "key": "HDFCBANK.NS",
+            "name": "HDFC Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "HDFCBANK",
+            "text": "HDFC Bank Ltd."
+        },
+        {
+            "isin": "INE795G01014",
+            "key": "HDFCLIFE.NS",
+            "name": "HDFC Life Insurance Company Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "HDFCLIFE",
+            "text": "HDFC Life Insurance Company Ltd."
+        },
+        {
+            "isin": "INE176B01034",
+            "key": "HAVELLS.NS",
+            "name": "Havells India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "HAVELLS",
+            "text": "Havells India Ltd."
+        },
+        {
+            "isin": "INE094A01015",
+            "key": "HINDPETRO.NS",
+            "name": "Hindustan Petroleum Corporation Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "HINDPETRO",
+            "text": "Hindustan Petroleum Corporation Ltd."
+        },
+        {
+            "isin": "INE030A01027",
+            "key": "HINDUNILVR.NS",
+            "name": "Hindustan Unilever Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "HINDUNILVR",
+            "text": "Hindustan Unilever Ltd."
+        },
+        {
+            "isin": "INE001A01036",
+            "key": "HDFC.NS",
+            "name": "Housing Development Finance Corporation Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "HDFC",
+            "text": "Housing Development Finance Corporation Ltd."
+        },
+        {
+            "isin": "INE090A01021",
+            "key": "ICICIBANK.NS",
+            "name": "ICICI Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "ICICIBANK",
+            "text": "ICICI Bank Ltd."
+        },
+        {
+            "isin": "INE765G01017",
+            "key": "ICICIGI.NS",
+            "name": "ICICI Lombard General Insurance Company Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "ICICIGI",
+            "text": "ICICI Lombard General Insurance Company Ltd."
+        },
+        {
+            "isin": "INE726G01019",
+            "key": "ICICIPRULI.NS",
+            "name": "ICICI Prudential Life Insurance Company Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "ICICIPRULI",
+            "text": "ICICI Prudential Life Insurance Company Ltd."
+        },
+        {
+            "isin": "INE154A01025",
+            "key": "ITC.NS",
+            "name": "ITC Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "ITC",
+            "text": "ITC Ltd."
+        },
+        {
+            "isin": "INE242A01010",
+            "key": "IOC.NS",
+            "name": "Indian Oil Corporation Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "IOC",
+            "text": "Indian Oil Corporation Ltd."
+        },
+        {
+            "isin": "INE203G01027",
+            "key": "IGL.NS",
+            "name": "Indraprastha Gas Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "IGL",
+            "text": "Indraprastha Gas Ltd."
+        },
+        {
+            "isin": "INE121J01017",
+            "key": "INDUSTOWER.NS",
+            "name": "Indus Towers Ltd.",
+            "sector": [
+                "TELECOM"
+            ],
+            "symbol": "INDUSTOWER",
+            "text": "Indus Towers Ltd."
+        },
+        {
+            "isin": "INE095A01012",
+            "key": "INDUSINDBK.NS",
+            "name": "IndusInd Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "INDUSINDBK",
+            "text": "IndusInd Bank Ltd."
+        },
+        {
+            "isin": "INE663F01024",
+            "key": "NAUKRI.NS",
+            "name": "Info Edge (India) Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "NAUKRI",
+            "text": "Info Edge (India) Ltd."
+        },
+        {
+            "isin": "INE009A01021",
+            "key": "INFY.NS",
+            "name": "Infosys Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "INFY",
+            "text": "Infosys Ltd."
+        },
+        {
+            "isin": "INE646L01027",
+            "key": "INDIGO.NS",
+            "name": "InterGlobe Aviation Ltd.",
+            "sector": [
+                "SERVICES"
+            ],
+            "symbol": "INDIGO",
+            "text": "InterGlobe Aviation Ltd."
+        },
+        {
+            "isin": "INE797F01012",
+            "key": "JUBLFOOD.NS",
+            "name": "Jubilant Foodworks Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "JUBLFOOD",
+            "text": "Jubilant Foodworks Ltd."
+        },
+        {
+            "isin": "INE237A01028",
+            "key": "KOTAKBANK.NS",
+            "name": "Kotak Mahindra Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "KOTAKBANK",
+            "text": "Kotak Mahindra Bank Ltd."
+        },
+        {
+            "isin": "INE214T01019",
+            "key": "LTI.NS",
+            "name": "Larsen & Toubro Infotech Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "LTI",
+            "text": "Larsen & Toubro Infotech Ltd."
+        },
+        {
+            "isin": "INE018A01030",
+            "key": "LT.NS",
+            "name": "Larsen & Toubro Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "LT",
+            "text": "Larsen & Toubro Ltd."
+        },
+        {
+            "isin": "INE326A01037",
+            "key": "LUPIN.NS",
+            "name": "Lupin Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "LUPIN",
+            "text": "Lupin Ltd."
+        },
+        {
+            "isin": "INE196A01026",
+            "key": "MARICO.NS",
+            "name": "Marico Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "MARICO",
+            "text": "Marico Ltd."
+        },
+        {
+            "isin": "INE414G01012",
+            "key": "MUTHOOTFIN.NS",
+            "name": "Muthoot Finance Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "MUTHOOTFIN",
+            "text": "Muthoot Finance Ltd."
+        },
+        {
+            "isin": "INE733E01010",
+            "key": "NTPC.NS",
+            "name": "NTPC Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "NTPC",
+            "text": "NTPC Ltd."
+        },
+        {
+            "isin": "INE239A01016",
+            "key": "NESTLEIND.NS",
+            "name": "Nestle India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "NESTLEIND",
+            "text": "Nestle India Ltd."
+        },
+        {
+            "isin": "INE213A01029",
+            "key": "ONGC.NS",
+            "name": "Oil & Natural Gas Corporation Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "ONGC",
+            "text": "Oil & Natural Gas Corporation Ltd."
+        },
+        {
+            "isin": "INE347G01014",
+            "key": "PETRONET.NS",
+            "name": "Petronet LNG Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "PETRONET",
+            "text": "Petronet LNG Ltd."
+        },
+        {
+            "isin": "INE318A01026",
+            "key": "PIDILITIND.NS",
+            "name": "Pidilite Industries Ltd.",
+            "sector": [
+                "CHEMICALS"
+            ],
+            "symbol": "PIDILITIND",
+            "text": "Pidilite Industries Ltd."
+        },
+        {
+            "isin": "INE140A01024",
+            "key": "PEL.NS",
+            "name": "Piramal Enterprises Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "PEL",
+            "text": "Piramal Enterprises Ltd."
+        },
+        {
+            "isin": "INE752E01010",
+            "key": "POWERGRID.NS",
+            "name": "Power Grid Corporation of India Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "POWERGRID",
+            "text": "Power Grid Corporation of India Ltd."
+        },
+        {
+            "isin": "INE179A01014",
+            "key": "PGHH.NS",
+            "name": "Procter & Gamble Hygiene & Health Care Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "PGHH",
+            "text": "Procter & Gamble Hygiene & Health Care Ltd."
+        },
+        {
+            "isin": "INE160A01022",
+            "key": "PNB.NS",
+            "name": "Punjab National Bank",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "PNB",
+            "text": "Punjab National Bank"
+        },
+        {
+            "isin": "INE002A01018",
+            "key": "RELIANCE.NS",
+            "name": "Reliance Industries Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "RELIANCE",
+            "text": "Reliance Industries Ltd."
+        },
+        {
+            "isin": "INE018E01016",
+            "key": "SBICARD.NS",
+            "name": "SBI Cards and Payment Services Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "SBICARD",
+            "text": "SBI Cards and Payment Services Ltd."
+        },
+        {
+            "isin": "INE123W01016",
+            "key": "SBILIFE.NS",
+            "name": "SBI Life Insurance Company Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "SBILIFE",
+            "text": "SBI Life Insurance Company Ltd."
+        },
+        {
+            "isin": "INE070A01015",
+            "key": "SHREECEM.NS",
+            "name": "Shree Cement Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "SHREECEM",
+            "text": "Shree Cement Ltd."
+        },
+        {
+            "isin": "INE003A01024",
+            "key": "SIEMENS.NS",
+            "name": "Siemens Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "SIEMENS",
+            "text": "Siemens Ltd."
+        },
+        {
+            "isin": "INE062A01020",
+            "key": "SBIN.NS",
+            "name": "State Bank of India",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "SBIN",
+            "text": "State Bank of India"
+        },
+        {
+            "isin": "INE044A01036",
+            "key": "SUNPHARMA.NS",
+            "name": "Sun Pharmaceutical Industries Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "SUNPHARMA",
+            "text": "Sun Pharmaceutical Industries Ltd."
+        },
+        {
+            "isin": "INE467B01029",
+            "key": "TCS.NS",
+            "name": "Tata Consultancy Services Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "TCS",
+            "text": "Tata Consultancy Services Ltd."
+        },
+        {
+            "isin": "INE192A01025",
+            "key": "TATACONSUM.NS",
+            "name": "Tata Consumer Products Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "TATACONSUM",
+            "text": "Tata Consumer Products Ltd."
+        },
+        {
+            "isin": "INE669C01036",
+            "key": "TECHM.NS",
+            "name": "Tech Mahindra Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "TECHM",
+            "text": "Tech Mahindra Ltd."
+        },
+        {
+            "isin": "INE280A01028",
+            "key": "TITAN.NS",
+            "name": "Titan Company Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "TITAN",
+            "text": "Titan Company Ltd."
+        },
+        {
+            "isin": "INE685A01028",
+            "key": "TORNTPHARM.NS",
+            "name": "Torrent Pharmaceuticals Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "TORNTPHARM",
+            "text": "Torrent Pharmaceuticals Ltd."
+        },
+        {
+            "isin": "INE628A01036",
+            "key": "UPL.NS",
+            "name": "UPL Ltd.",
+            "sector": [
+                "FERTILISERS & PESTICIDES"
+            ],
+            "symbol": "UPL",
+            "text": "UPL Ltd."
+        },
+        {
+            "isin": "INE481G01011",
+            "key": "ULTRACEMCO.NS",
+            "name": "UltraTech Cement Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "ULTRACEMCO",
+            "text": "UltraTech Cement Ltd."
+        },
+        {
+            "isin": "INE686F01025",
+            "key": "UBL.NS",
+            "name": "United Breweries Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "UBL",
+            "text": "United Breweries Ltd."
+        },
+        {
+            "isin": "INE854D01024",
+            "key": "MCDOWELL-N.NS",
+            "name": "United Spirits Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "MCDOWELL-N",
+            "text": "United Spirits Ltd."
+        },
+        {
+            "isin": "INE075A01022",
+            "key": "WIPRO.NS",
+            "name": "Wipro Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "WIPRO",
+            "text": "Wipro Ltd."
+        },
+        {
+            "isin": "INE528G01035",
+            "key": "YESBANK.NS",
+            "name": "Yes Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "YESBANK",
+            "text": "Yes Bank Ltd."
+        },
+        {
+            "isin": "INE121A01024",
+            "key": "CHOLAFIN.NS",
+            "name": "Cholamandalam Investment and Finance Company Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "CHOLAFIN",
+            "text": "Cholamandalam Investment and Finance Company Ltd."
+        },
+        {
+            "isin": "INE774D01024",
+            "key": "M&MFIN.NS",
+            "name": "Mahindra & Mahindra Financial Services Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "M&MFIN",
+            "text": "Mahindra & Mahindra Financial Services Ltd."
+        },
+        {
+            "isin": "INE134E01011",
+            "key": "PFC.NS",
+            "name": "Power Finance Corporation Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "PFC",
+            "text": "Power Finance Corporation Ltd."
+        },
+        {
+            "isin": "INE020B01018",
+            "key": "RECLTD.NS",
+            "name": "REC Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "RECLTD",
+            "text": "REC Ltd."
+        },
+        {
+            "isin": "INE721A01013",
+            "key": "SRTRANSFIN.NS",
+            "name": "Shriram Transport Finance Co. Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "SRTRANSFIN",
+            "text": "Shriram Transport Finance Co. Ltd."
+        },
+        {
+            "isin": "INE600L01024",
+            "key": "LALPATHLAB.NS",
+            "name": "Dr. Lal Path Labs Ltd.",
+            "sector": [
+                "HEALTHCARE SERVICES"
+            ],
+            "symbol": "LALPATHLAB",
+            "text": "Dr. Lal Path Labs Ltd."
+        },
+        {
+            "isin": "INE061F01013",
+            "key": "FORTIS.NS",
+            "name": "Fortis Healthcare Ltd.",
+            "sector": [
+                "HEALTHCARE SERVICES"
+            ],
+            "symbol": "FORTIS",
+            "text": "Fortis Healthcare Ltd."
+        },
+        {
+            "isin": "INE159A01016",
+            "key": "GLAXO.NS",
+            "name": "Glaxosmithkline Pharmaceuticals Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "GLAXO",
+            "text": "Glaxosmithkline Pharmaceuticals Ltd."
+        },
+        {
+            "isin": "INE935A01035",
+            "key": "GLENMARK.NS",
+            "name": "Glenmark Pharmaceuticals Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "GLENMARK",
+            "text": "Glenmark Pharmaceuticals Ltd."
+        },
+        {
+            "isin": "INE571A01020",
+            "key": "IPCALAB.NS",
+            "name": "Ipca Laboratories Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "IPCALAB",
+            "text": "Ipca Laboratories Ltd."
+        },
+        {
+            "isin": "INE987B01026",
+            "key": "NATCOPHARM.NS",
+            "name": "NATCO Pharma Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "NATCOPHARM",
+            "text": "NATCO Pharma Ltd."
+        },
+        {
+            "isin": "INE182A01018",
+            "key": "PFIZER.NS",
+            "name": "Pfizer Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "PFIZER",
+            "text": "Pfizer Ltd."
+        },
+        {
+            "isin": "INE058A01010",
+            "key": "SANOFI.NS",
+            "name": "Sanofi India Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "SANOFI",
+            "text": "Sanofi India Ltd."
+        },
+        {
+            "isin": "INE950I01011",
+            "key": "DBCORP.NS",
+            "name": "D.B.Corp Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "DBCORP",
+            "text": "D.B.Corp Ltd."
+        },
+        {
+            "isin": "INE836F01026",
+            "key": "DISHTV.NS",
+            "name": "Dish TV India Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "DISHTV",
+            "text": "Dish TV India Ltd."
+        },
+        {
+            "isin": "INE312H01016",
+            "key": "INOXLEISUR.NS",
+            "name": "Inox Leisure Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "INOXLEISUR",
+            "text": "Inox Leisure Ltd."
+        },
+        {
+            "isin": "INE199G01027",
+            "key": "JAGRAN.NS",
+            "name": "Jagran Prakashan Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "JAGRAN",
+            "text": "Jagran Prakashan Ltd."
+        },
+        {
+            "isin": "INE870H01013",
+            "key": "NETWORK18.NS",
+            "name": "Network18 Media & Investments Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "NETWORK18",
+            "text": "Network18 Media & Investments Ltd."
+        },
+        {
+            "isin": "INE191H01014",
+            "key": "PVR.NS",
+            "name": "PVR Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "PVR",
+            "text": "PVR Ltd."
+        },
+        {
+            "isin": "INE424H01027",
+            "key": "SUNTV.NS",
+            "name": "Sun TV Network Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "SUNTV",
+            "text": "Sun TV Network Ltd."
+        },
+        {
+            "isin": "INE038F01029",
+            "key": "TVTODAY.NS",
+            "name": "TV Today Network Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "TVTODAY",
+            "text": "TV Today Network Ltd."
+        },
+        {
+            "isin": "INE886H01027",
+            "key": "TV18BRDCST.NS",
+            "name": "TV18 Broadcast Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "TV18BRDCST",
+            "text": "TV18 Broadcast Ltd."
+        },
+        {
+            "isin": "INE256A01028",
+            "key": "ZEEL.NS",
+            "name": "Zee Entertainment Enterprises Ltd.",
+            "sector": [
+                "MEDIA ENTERTAINMENT & PUBLICATION"
+            ],
+            "symbol": "ZEEL",
+            "text": "Zee Entertainment Enterprises Ltd."
+        },
+        {
+            "isin": "INE399L01023",
+            "key": "ATGL.NS",
+            "name": "Adani Total Gas Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "ATGL",
+            "text": "Adani Total Gas Ltd."
+        },
+        {
+            "isin": "INE172A01027",
+            "key": "CASTROLIND.NS",
+            "name": "Castrol India Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "CASTROLIND",
+            "text": "Castrol India Ltd."
+        },
+        {
+            "isin": "INE844O01030",
+            "key": "GUJGASLTD.NS",
+            "name": "Gujarat Gas Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "GUJGASLTD",
+            "text": "Gujarat Gas Ltd."
+        },
+        {
+            "isin": "INE246F01010",
+            "key": "GSPL.NS",
+            "name": "Gujarat State Petronet Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "GSPL",
+            "text": "Gujarat State Petronet Ltd."
+        },
+        {
+            "isin": "INE635Q01029",
+            "key": "GULFOILLUB.NS",
+            "name": "Gulf Oil Lubricants India Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "GULFOILLUB",
+            "text": "Gulf Oil Lubricants India Ltd."
+        },
+        {
+            "isin": "INE002S01010",
+            "key": "MGL.NS",
+            "name": "Mahanagar Gas Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "MGL",
+            "text": "Mahanagar Gas Ltd."
+        },
+        {
+            "isin": "INE274J01014",
+            "key": "OIL.NS",
+            "name": "Oil India Ltd.",
+            "sector": [
+                "OIL & GAS"
+            ],
+            "symbol": "OIL",
+            "text": "Oil India Ltd."
+        },
+        {
+            "isin": "INE171A01029",
+            "key": "FEDERALBNK.NS",
+            "name": "Federal Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "FEDERALBNK",
+            "text": "Federal Bank Ltd."
+        },
+        {
+            "isin": "INE092T01019",
+            "key": "IDFCFIRSTB.NS",
+            "name": "IDFC First Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "IDFCFIRSTB",
+            "text": "IDFC First Bank Ltd."
+        },
+        {
+            "isin": "INE976G01028",
+            "key": "RBLBANK.NS",
+            "name": "RBL Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "RBLBANK",
+            "text": "RBL Bank Ltd."
+        },
+        {
+            "isin": "INE548C01032",
+            "key": "EMAMILTD.NS",
+            "name": "Emami Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "EMAMILTD",
+            "text": "Emami Ltd."
+        },
+        {
+            "isin": "INE200M01013",
+            "key": "VBL.NS",
+            "name": "Varun Beverages Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "VBL",
+            "text": "Varun Beverages Ltd."
+        },
+        {
+            "isin": "INE949L01017",
+            "key": "AUBANK.NS",
+            "name": "AU Small Finance Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "AUBANK",
+            "text": "AU Small Finance Bank Ltd."
+        },
+        {
+            "isin": "INE769A01020",
+            "key": "AARTIIND.NS",
+            "name": "Aarti Industries Ltd.",
+            "sector": [
+                "CHEMICALS"
+            ],
+            "symbol": "AARTIIND",
+            "text": "Aarti Industries Ltd."
+        },
+        {
+            "isin": "INE674K01013",
+            "key": "ABCAPITAL.NS",
+            "name": "Aditya Birla Capital Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "ABCAPITAL",
+            "text": "Aditya Birla Capital Ltd."
+        },
+        {
+            "isin": "INE647O01011",
+            "key": "ABFRL.NS",
+            "name": "Aditya Birla Fashion and Retail Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "ABFRL",
+            "text": "Aditya Birla Fashion and Retail Ltd."
+        },
+        {
+            "isin": "INE031B01049",
+            "key": "AJANTPHARM.NS",
+            "name": "Ajanta Pharmaceuticals Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "AJANTPHARM",
+            "text": "Ajanta Pharmaceuticals Ltd."
+        },
+        {
+            "isin": "INE901L01018",
+            "key": "APLLTD.NS",
+            "name": "Alembic Pharmaceuticals Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "APLLTD",
+            "text": "Alembic Pharmaceuticals Ltd."
+        },
+        {
+            "isin": "INE438A01022",
+            "key": "APOLLOTYRE.NS",
+            "name": "Apollo Tyres Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "APOLLOTYRE",
+            "text": "Apollo Tyres Ltd."
+        },
+        {
+            "isin": "INE028A01039",
+            "key": "BANKBARODA.NS",
+            "name": "Bank of Baroda",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "BANKBARODA",
+            "text": "Bank of Baroda"
+        },
+        {
+            "isin": "INE084A01016",
+            "key": "BANKINDIA.NS",
+            "name": "Bank of India",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "BANKINDIA",
+            "text": "Bank of India"
+        },
+        {
+            "isin": "INE176A01028",
+            "key": "BATAINDIA.NS",
+            "name": "Bata India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "BATAINDIA",
+            "text": "Bata India Ltd."
+        },
+        {
+            "isin": "INE263A01024",
+            "key": "BEL.NS",
+            "name": "Bharat Electronics Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "BEL",
+            "text": "Bharat Electronics Ltd."
+        },
+        {
+            "isin": "INE257A01026",
+            "key": "BHEL.NS",
+            "name": "Bharat Heavy Electricals Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "BHEL",
+            "text": "Bharat Heavy Electricals Ltd."
+        },
+        {
+            "isin": "INE050A01025",
+            "key": "BBTC.NS",
+            "name": "Bombay Burmah Trading Corporation Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "BBTC",
+            "text": "Bombay Burmah Trading Corporation Ltd."
+        },
+        {
+            "isin": "INE486A01013",
+            "key": "CESC.NS",
+            "name": "CESC Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "CESC",
+            "text": "CESC Ltd."
+        },
+        {
+            "isin": "INE476A01014",
+            "key": "CANBK.NS",
+            "name": "Canara Bank",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "CANBK",
+            "text": "Canara Bank"
+        },
+        {
+            "isin": "INE491A01021",
+            "key": "CUB.NS",
+            "name": "City Union Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "CUB",
+            "text": "City Union Bank Ltd."
+        },
+        {
+            "isin": "INE591G01017",
+            "key": "COFORGE.NS",
+            "name": "Coforge Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "COFORGE",
+            "text": "Coforge Ltd."
+        },
+        {
+            "isin": "INE111A01025",
+            "key": "CONCOR.NS",
+            "name": "Container Corporation of India Ltd.",
+            "sector": [
+                "SERVICES"
+            ],
+            "symbol": "CONCOR",
+            "text": "Container Corporation of India Ltd."
+        },
+        {
+            "isin": "INE169A01031",
+            "key": "COROMANDEL.NS",
+            "name": "Coromandel International Ltd.",
+            "sector": [
+                "FERTILISERS & PESTICIDES"
+            ],
+            "symbol": "COROMANDEL",
+            "text": "Coromandel International Ltd."
+        },
+        {
+            "isin": "INE299U01018",
+            "key": "CROMPTON.NS",
+            "name": "Crompton Greaves Consumer Electricals Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "CROMPTON",
+            "text": "Crompton Greaves Consumer Electricals Ltd."
+        },
+        {
+            "isin": "INE298A01020",
+            "key": "CUMMINSIND.NS",
+            "name": "Cummins India Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "CUMMINSIND",
+            "text": "Cummins India Ltd."
+        },
+        {
+            "isin": "INE00R701025",
+            "key": "DALBHARAT.NS",
+            "name": "Dalmia Bharat Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "DALBHARAT",
+            "text": "Dalmia Bharat Ltd."
+        },
+        {
+            "isin": "INE288B01029",
+            "key": "DEEPAKNTR.NS",
+            "name": "Deepak Nitrite Ltd.",
+            "sector": [
+                "CHEMICALS"
+            ],
+            "symbol": "DEEPAKNTR",
+            "text": "Deepak Nitrite Ltd."
+        },
+        {
+            "isin": "INE274G01010",
+            "key": "DHANI.NS",
+            "name": "Dhani Services Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "DHANI",
+            "text": "Dhani Services Ltd."
+        },
+        {
+            "isin": "INE935N01020",
+            "key": "DIXON.NS",
+            "name": "Dixon Technologies (India) Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "DIXON",
+            "text": "Dixon Technologies (India) Ltd."
+        },
+        {
+            "isin": "INE913H01037",
+            "key": "ENDURANCE.NS",
+            "name": "Endurance Technologies Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "ENDURANCE",
+            "text": "Endurance Technologies Ltd."
+        },
+        {
+            "isin": "INE042A01014",
+            "key": "ESCORTS.NS",
+            "name": "Escorts Ltd.",
+            "sector": [
+                "AUTOMOBILE"
+            ],
+            "symbol": "ESCORTS",
+            "text": "Escorts Ltd."
+        },
+        {
+            "isin": "INE776C01039",
+            "key": "GMRINFRA.NS",
+            "name": "GMR Infrastructure Ltd.",
+            "sector": [
+                "CONSTRUCTION"
+            ],
+            "symbol": "GMRINFRA",
+            "text": "GMR Infrastructure Ltd."
+        },
+        {
+            "isin": "INE850D01014",
+            "key": "GODREJAGRO.NS",
+            "name": "Godrej Agrovet Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "GODREJAGRO",
+            "text": "Godrej Agrovet Ltd."
+        },
+        {
+            "isin": "INE233A01035",
+            "key": "GODREJIND.NS",
+            "name": "Godrej Industries Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "GODREJIND",
+            "text": "Godrej Industries Ltd."
+        },
+        {
+            "isin": "INE066F01012",
+            "key": "HAL.NS",
+            "name": "Hindustan Aeronautics Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "HAL",
+            "text": "Hindustan Aeronautics Ltd."
+        },
+        {
+            "isin": "INE763G01038",
+            "key": "ISEC.NS",
+            "name": "ICICI Securities Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "ISEC",
+            "text": "ICICI Securities Ltd."
+        },
+        {
+            "isin": "INE148I01020",
+            "key": "IBULHSGFIN.NS",
+            "name": "Indiabulls Housing Finance Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "IBULHSGFIN",
+            "text": "Indiabulls Housing Finance Ltd."
+        },
+        {
+            "isin": "INE933S01016",
+            "key": "INDIAMART.NS",
+            "name": "Indiamart Intermesh Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "INDIAMART",
+            "text": "Indiamart Intermesh Ltd."
+        },
+        {
+            "isin": "INE053A01029",
+            "key": "INDHOTEL.NS",
+            "name": "Indian Hotels Co. Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "INDHOTEL",
+            "text": "Indian Hotels Co. Ltd."
+        },
+        {
+            "isin": "INE335Y01012",
+            "key": "IRCTC.NS",
+            "name": "Indian Railway Catering And Tourism Corporation Ltd.",
+            "sector": [
+                "SERVICES"
+            ],
+            "symbol": "IRCTC",
+            "text": "Indian Railway Catering And Tourism Corporation Ltd."
+        },
+        {
+            "isin": "INE121E01018",
+            "key": "JSWENERGY.NS",
+            "name": "JSW Energy Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "JSWENERGY",
+            "text": "JSW Energy Ltd."
+        },
+        {
+            "isin": "INE498L01015",
+            "key": "L&TFH.NS",
+            "name": "L&T Finance Holdings Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "L&TFH",
+            "text": "L&T Finance Holdings Ltd."
+        },
+        {
+            "isin": "INE010V01017",
+            "key": "LTTS.NS",
+            "name": "L&T Technology Services Ltd.",
+            "sector": [
+                "SERVICES"
+            ],
+            "symbol": "LTTS",
+            "text": "L&T Technology Services Ltd."
+        },
+        {
+            "isin": "INE115A01026",
+            "key": "LICHSGFIN.NS",
+            "name": "LIC Housing Finance Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "LICHSGFIN",
+            "text": "LIC Housing Finance Ltd."
+        },
+        {
+            "isin": "INE947Q01028",
+            "key": "LAURUSLABS.NS",
+            "name": "Laurus Labs Ltd.",
+            "sector": [
+                "PHARMA"
+            ],
+            "symbol": "LAURUSLABS",
+            "text": "Laurus Labs Ltd."
+        },
+        {
+            "isin": "INE522D01027",
+            "key": "MANAPPURAM.NS",
+            "name": "Manappuram Finance Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "MANAPPURAM",
+            "text": "Manappuram Finance Ltd."
+        },
+        {
+            "isin": "INE180A01020",
+            "key": "MFSL.NS",
+            "name": "Max Financial Services Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "MFSL",
+            "text": "Max Financial Services Ltd."
+        },
+        {
+            "isin": "INE018I01017",
+            "key": "MINDTREE.NS",
+            "name": "MindTree Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "MINDTREE",
+            "text": "MindTree Ltd."
+        },
+        {
+            "isin": "INE356A01018",
+            "key": "MPHASIS.NS",
+            "name": "MphasiS Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "MPHASIS",
+            "text": "MphasiS Ltd."
+        },
+        {
+            "isin": "INE048G01026",
+            "key": "NAVINFLUOR.NS",
+            "name": "Navin Fluorine International Ltd.",
+            "sector": [
+                "CHEMICALS"
+            ],
+            "symbol": "NAVINFLUOR",
+            "text": "Navin Fluorine International Ltd."
+        },
+        {
+            "isin": "INE298J01013",
+            "key": "NAM-INDIA.NS",
+            "name": "Nippon Life India Asset Management Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "NAM-INDIA",
+            "text": "Nippon Life India Asset Management Ltd."
+        },
+        {
+            "isin": "INE603J01030",
+            "key": "PIIND.NS",
+            "name": "PI Industries Ltd.",
+            "sector": [
+                "FERTILISERS & PESTICIDES"
+            ],
+            "symbol": "PIIND",
+            "text": "PI Industries Ltd."
+        },
+        {
+            "isin": "INE761H01022",
+            "key": "PAGEIND.NS",
+            "name": "Page Industries Ltd.",
+            "sector": [
+                "TEXTILES"
+            ],
+            "symbol": "PAGEIND",
+            "text": "Page Industries Ltd."
+        },
+        {
+            "isin": "INE455K01017",
+            "key": "POLYCAB.NS",
+            "name": "Polycab India Ltd.",
+            "sector": [
+                "INDUSTRIAL MANUFACTURING"
+            ],
+            "symbol": "POLYCAB",
+            "text": "Polycab India Ltd."
+        },
+        {
+            "isin": "INE647A01010",
+            "key": "SRF.NS",
+            "name": "SRF Ltd.",
+            "sector": [
+                "CHEMICALS"
+            ],
+            "symbol": "SRF",
+            "text": "SRF Ltd."
+        },
+        {
+            "isin": "INE398R01022",
+            "key": "SYNGENE.NS",
+            "name": "Syngene International Ltd.",
+            "sector": [
+                "HEALTHCARE SERVICES"
+            ],
+            "symbol": "SYNGENE",
+            "text": "Syngene International Ltd."
+        },
+        {
+            "isin": "INE092A01019",
+            "key": "TATACHEM.NS",
+            "name": "Tata Chemicals Ltd.",
+            "sector": [
+                "CHEMICALS"
+            ],
+            "symbol": "TATACHEM",
+            "text": "Tata Chemicals Ltd."
+        },
+        {
+            "isin": "INE670A01012",
+            "key": "TATAELXSI.NS",
+            "name": "Tata Elxsi Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "TATAELXSI",
+            "text": "Tata Elxsi Ltd."
+        },
+        {
+            "isin": "INE245A01021",
+            "key": "TATAPOWER.NS",
+            "name": "Tata Power Co. Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "TATAPOWER",
+            "text": "Tata Power Co. Ltd."
+        },
+        {
+            "isin": "INE331A01037",
+            "key": "RAMCOCEM.NS",
+            "name": "The Ramco Cements Ltd.",
+            "sector": [
+                "CEMENT & CEMENT PRODUCTS"
+            ],
+            "symbol": "RAMCOCEM",
+            "text": "The Ramco Cements Ltd."
+        },
+        {
+            "isin": "INE813H01021",
+            "key": "TORNTPOWER.NS",
+            "name": "Torrent Power Ltd.",
+            "sector": [
+                "POWER"
+            ],
+            "symbol": "TORNTPOWER",
+            "text": "Torrent Power Ltd."
+        },
+        {
+            "isin": "INE849A01020",
+            "key": "TRENT.NS",
+            "name": "Trent Ltd.",
+            "sector": [
+                "CONSUMER SERVICES"
+            ],
+            "symbol": "TRENT",
+            "text": "Trent Ltd."
+        },
+        {
+            "isin": "INE692A01016",
+            "key": "UNIONBANK.NS",
+            "name": "Union Bank of India",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "UNIONBANK",
+            "text": "Union Bank of India"
+        },
+        {
+            "isin": "INE951I01027",
+            "key": "VGUARD.NS",
+            "name": "V-Guard Industries Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "VGUARD",
+            "text": "V-Guard Industries Ltd."
+        },
+        {
+            "isin": "INE669E01016",
+            "key": "IDEA.NS",
+            "name": "Vodafone Idea Ltd.",
+            "sector": [
+                "TELECOM"
+            ],
+            "symbol": "IDEA",
+            "text": "Vodafone Idea Ltd."
+        },
+        {
+            "isin": "INE226A01021",
+            "key": "VOLTAS.NS",
+            "name": "Voltas Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "VOLTAS",
+            "text": "Voltas Ltd."
+        },
+        {
+            "isin": "INE716A01013",
+            "key": "WHIRLPOOL.NS",
+            "name": "Whirlpool of India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "WHIRLPOOL",
+            "text": "Whirlpool of India Ltd."
+        },
+        {
+            "isin": "INE457A01014",
+            "key": "MAHABANK.NS",
+            "name": "Bank of Maharashtra.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "MAHABANK",
+            "text": "Bank of Maharashtra."
+        },
+        {
+            "isin": "INE483A01010",
+            "key": "CENTRALBK.NS",
+            "name": "Central Bank of India",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "CENTRALBK",
+            "text": "Central Bank of India"
+        },
+        {
+            "isin": "INE562A01011",
+            "key": "INDIANB.NS",
+            "name": "Indian Bank",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "INDIANB",
+            "text": "Indian Bank"
+        },
+        {
+            "isin": "INE565A01014",
+            "key": "IOB.NS",
+            "name": "Indian Overseas Bank",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "IOB",
+            "text": "Indian Overseas Bank"
+        },
+        {
+            "isin": "INE168A01041",
+            "key": "J&KBANK.NS",
+            "name": "Jammu & Kashmir Bank Ltd.",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "J&KBANK",
+            "text": "Jammu & Kashmir Bank Ltd."
+        },
+        {
+            "isin": "INE608A01012",
+            "key": "PSB.NS",
+            "name": "Punjab & Sind Bank",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "PSB",
+            "text": "Punjab & Sind Bank"
+        },
+        {
+            "isin": "INE691A01018",
+            "key": "UCOBANK.NS",
+            "name": "UCO Bank",
+            "sector": [
+                "FINANCIAL SERVICES"
+            ],
+            "symbol": "UCOBANK",
+            "text": "UCO Bank"
+        },
+        {
+            "isin": "INE371P01015",
+            "key": "AMBER.NS",
+            "name": "Amber Enterprises India Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "AMBER",
+            "text": "Amber Enterprises India Ltd."
+        },
+        {
+            "isin": "INE472A01039",
+            "key": "BLUESTARCO.NS",
+            "name": "Blue Star Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "BLUESTARCO",
+            "text": "Blue Star Ltd."
+        },
+        {
+            "isin": "INE217B01036",
+            "key": "KAJARIACER.NS",
+            "name": "Kajaria Ceramics Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "KAJARIACER",
+            "text": "Kajaria Ceramics Ltd."
+        },
+        {
+            "isin": "INE142Z01019",
+            "key": "ORIENTELEC.NS",
+            "name": "Orient Electric Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "ORIENTELEC",
+            "text": "Orient Electric Ltd."
+        },
+        {
+            "isin": "INE343B01030",
+            "key": "RAJESHEXPO.NS",
+            "name": "Rajesh Exports Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "RAJESHEXPO",
+            "text": "Rajesh Exports Ltd."
+        },
+        {
+            "isin": "INE131B01039",
+            "key": "RELAXO.NS",
+            "name": "Relaxo Footwears Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "RELAXO",
+            "text": "Relaxo Footwears Ltd."
+        },
+        {
+            "isin": "INE690A01010",
+            "key": "TTKPRESTIG.NS",
+            "name": "TTK Prestige Ltd.",
+            "sector": [
+                "CONSUMER GOODS"
+            ],
+            "symbol": "TTKPRESTIG",
+            "text": "TTK Prestige Ltd."
+        },
+        {
+            "isin": "INE881D01027",
+            "key": "OFSS.NS",
+            "name": "Oracle Financial Services Software Ltd.",
+            "sector": [
+                "IT"
+            ],
+            "symbol": "OFSS",
+            "text": "Oracle Financial Services Software Ltd."
+        },
+        {
+            "isin": "INE000001",
+            "key": "^NSEI.NS",
+            "name": "NIFTY 50",
+            "sector": [
+                "INDEX"
+            ],
+            "symbol": "^NSEI",
+            "text": "NIFTY 50"
+        },
+        {
+            "isin": "INE000002",
+            "key": "^NSEBANK.NS",
+            "name": "NIFTY BANK",
+            "sector": [
+                "INDEX"
+            ],
+            "symbol": "^NSEBANK",
+            "text": "NIFTY BANK"
+        },
+        {
+            "isin": "INE000003",
+            "key": "^CNXIT.NS",
+            "name": "NIFTY IT",
+            "sector": [
+                "INDEX"
+            ],
+            "symbol": "^CNXIT",
+            "text": "NIFTY IT"
+        }
+    ]
+}

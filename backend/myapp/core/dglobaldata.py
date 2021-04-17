@@ -1,4 +1,5 @@
 from logging import log
+from myapp.core.sync import SUPPORTED_SYMBOL
 from pandas.core.frame import DataFrame
 
 import redis
@@ -51,6 +52,7 @@ import json
 from ast import literal_eval
 
 
+# This function get the last row of the dataframe
 def getLatestDataInJson(df: DataFrame):
     final_result = {}
     try:
@@ -69,6 +71,9 @@ def getLatestDataInJson(df: DataFrame):
     except Exception as e:
         dlog.ex(e)
         danalytics.reportException(e)
+    # More some info.
+    for x in final_result.keys():
+        final_result[x]['sector'] = SUPPORTED_SYMBOL[x]['sector']
     return final_result
 
 

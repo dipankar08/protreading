@@ -74,11 +74,12 @@ export const PositionScreen = ({ navigation }: TProps) => {
       showNotification("Not able to create a order");
     }
   }
-  let xStockList = appState.state.market
-    ? appState.state.market.stocks.map((item) => {
-        return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol} />;
-      })
-    : [<Picker.Item key="" value="" label="Wait..." />];
+  let xStockList =
+    appState.state.market && appState.state.market.stocks
+      ? appState.state.market.stocks.map((item) => {
+          return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol} />;
+        })
+      : [<Picker.Item key="" value="" label="Wait..." />];
 
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>

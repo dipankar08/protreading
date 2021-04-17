@@ -12,6 +12,7 @@ export type TAction = {
   payload?: any;
 };
 
+// Some info
 export type TUserInfo = {
   name: string;
   email: string;
