@@ -94,20 +94,40 @@ export const MarketListView = ({ route }: TProps) => {
         ListEmptyComponent={DListEmptyComponent}
         renderItem={({ item }) => {
           return (
-            <TouchableWithoutFeedback onPress={() => {}}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                route.navigation.navigate("MarketGroupListScreen", {
+                  item: item,
+                });
+              }}
+            >
               <DLayoutRow style={{ alignItems: "center", padding: 20 }}>
-                <Text
-                  style={{
-                    // backgroundColor: color,
-                    color: "black",
-                    fontSize: 16,
-                    borderRadius: 15,
-                    textTransform: "uppercase",
-                    flex: 1,
-                  }}
-                >
-                  {item.title}
-                </Text>
+                <DLayoutCol style={{ flex: 1 }}>
+                  <Text
+                    style={{
+                      // backgroundColor: color,
+                      color: "black",
+                      fontSize: 16,
+                      borderRadius: 15,
+                      textTransform: "uppercase",
+                      flex: 1,
+                    }}
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    style={{
+                      // backgroundColor: color,
+                      color: item.avg_change > 0 ? "green" : "red",
+                      fontSize: 12,
+                      flex: 1,
+                      marginTop: 6,
+                      opacity: 0.7,
+                    }}
+                  >
+                    {item.count} stocks {"\u2022"} {item.avg_change.toFixed(2)}% change
+                  </Text>
+                </DLayoutCol>
                 <TouchableOpacity
                   onPress={() => {
                     /* 1. Navigate to the Details route with params */
