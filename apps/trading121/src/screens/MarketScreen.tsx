@@ -1,5 +1,5 @@
-import React, { useContext, useRef, useState } from "react";
-import { Button, FlatList, Text, TouchableOpacity, View } from "react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Button, FlatList, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import {
   DCard,
@@ -18,10 +18,11 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
 import { CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, PRO_TRADING_SERVER } from "../appstate/CONST";
 import { processMarketData, processSummaryData } from "../models/processor";
-import { TKeyText, TMarketEntry } from "../models/model";
+import { TGroupMarketEntry, TKeyText, TMarketEntry } from "../models/model";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { dlog } from "../libs/dlog";
+import { SceneMap, TabView } from "react-native-tab-view";
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
@@ -48,17 +49,51 @@ export const useNetwork = () => {
   return { loading, reLoadAllData };
 };
 
-export const MarketScreenList = ({ navigation }: TProps) => {
+export const MarketScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const { loading, reLoadAllData } = useNetwork();
+
+  // tab config
+  const layout = useWindowDimensions();
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Indicator View" },
+    { key: "second", title: "Sector View" },
+  ]);
+
+  const renderScene = SceneMap({
+    first: MarketListView,
+    second: MarketListView,
+  });
+
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="reload" onPress={reLoadAllData}></ScreenHeader>
+      <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
+    </DContainerSafe>
+  );
+};
+
+export const MarketListView = ({ route, navigation }: TProps) => {
+  const appState = useContext(AppStateContext);
+  const [listData, setListData] = React.useState<TGroupMarketEntry[]>([]);
+
+  useEffect(() => {
+    dlog.obj(appState.state.summary);
+    if (route.key == "first") {
+      // if (appState.state.summary) setListData(appState.state.summary.data.values());
+    } else {
+      //setListData(appState.state.market?.sectorList.values());
+    }
+  }, [appState.state.summary, appState.state.market]);
+
+  return (
+    <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <FlatList
         ItemSeparatorComponent={FlatListItemSeparator}
         showsHorizontalScrollIndicator={false}
-        data={appState.state.summary?.tags}
-        keyExtractor={(item) => item.key}
+        data={listData}
+        keyExtractor={(item) => item._id}
         ListEmptyComponent={DListEmptyComponent}
         renderItem={({ item }) => {
           return (
@@ -74,12 +109,12 @@ export const MarketScreenList = ({ navigation }: TProps) => {
                     flex: 1,
                   }}
                 >
-                  {item.text}
+                  {item.title}
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
                     /* 1. Navigate to the Details route with params */
-                    navigation.navigate("Market", {
+                    navigation.navigate("MarketGroupListScreen", {
                       item: item,
                     });
                   }}
@@ -95,7 +130,7 @@ export const MarketScreenList = ({ navigation }: TProps) => {
   );
 };
 
-export const MarketScreen = ({ navigation, route }: TProps) => {
+export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
   const appState = useContext(AppStateContext);
   const { item } = route.params;
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
@@ -108,10 +143,7 @@ export const MarketScreen = ({ navigation, route }: TProps) => {
   let name = "Market";
   React.useEffect((): any => {
     dlog.d(`Mounted ${name}`);
-    if (appState.state.summary) {
-      setListData(appState.state.summary?.data[item.key]);
-    }
-    dlog.d(item);
+    setListData(item.group);
     isSubscribed = true;
     return () => {
       dlog.d(`Unmounted ${name}`);

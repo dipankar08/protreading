@@ -19,15 +19,23 @@ export type TMarketEntry = {
   change: number;
 };
 
+export type TGroupMarketEntry = {
+  count: number;
+  avg_change: number;
+  _id: string;
+  title: string;
+  subtitle?: string;
+  group: Array<TMarketEntry>;
+};
+
 export type TSummary = {
-  tags: TKeyText[];
-  data: { [key: string]: Array<TMarketEntry> };
+  data: Map<string, TGroupMarketEntry>;
 };
 
 export type TMarket = {
   stocks: Array<TMarketEntry>;
   ltpMap: Map<string, number>;
-  sectorList: Map<string, Array<TMarketEntry>>;
+  sectorList: Map<string, TGroupMarketEntry>;
 };
 
 export type TOrder = {

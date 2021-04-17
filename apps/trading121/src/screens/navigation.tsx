@@ -6,7 +6,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SearchScreen, SearchScreen2 } from "./Screens";
 import { PositionScreen } from "./PositionScreen";
-import { MarketScreen, MarketScreenList } from "./MarketScreen";
+import { MarketScreen, MarketGroupListScreen } from "./MarketScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "./types";
 
@@ -96,8 +96,8 @@ const MarketStackScreen = () => (
       }}
     />
     <MarketStack.Screen
-      name="MarketList"
-      component={MarketScreenList}
+      name="MarketGroupListScreen"
+      component={MarketGroupListScreen}
       options={{
         title: "Market",
         headerShown: false,
