@@ -1,6 +1,6 @@
 // convert network json data to right data format.
 import { dlog } from "../libs/dlog";
-import { TKeyText, TMarket, TMarketEntry, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
+import { TGroupMarketEntry, TKeyText, TMarket, TMarketEntry, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
 
 export function processMarketData(obj: any): TMarket {
   //dlog.d(obj);
@@ -9,7 +9,7 @@ export function processMarketData(obj: any): TMarket {
 
   let stocks: Array<TMarketEntry> = [];
   let ltpMap: Map<string, number> = new Map();
-  let sectorMap :Map<string, Array<TMarketEntry>> = new Map();
+  let sectorMap :Map<string, TGroupMarketEntry> = new Map();
   for (let c of Object.keys(obj)) {
     ltpMap.set(c, obj[c].close);
     obj[c].symbol = c;
@@ -19,15 +19,22 @@ export function processMarketData(obj: any): TMarket {
     if( obj[c].sector){
       let sector = obj[c].sector[0];
       if(!sectorMap.has(sector)){
-          sectorMap.set(sector, new Array());
+          sectorMap.set(sector, {
+            title:sector,
+            _id:sector,
+            group:[],
+            count:0,
+            avg_change:0,
+          });
       }
       let value = obj[c]
-      sectorMap.get(sector)?.push({
+      sectorMap.get(sector)!.group.push({
         symbol: value.symbol,
         name: value.name,
         close: value.close,
         change: value.change,
       })
+      sectorMap.get(sector)!.count = sectorMap.get(sector)!.count+1
     } else {
       dlog.d("No sector found...")
     }
@@ -42,23 +49,30 @@ export function processMarketData(obj: any): TMarket {
 }
 
 export function processSummaryData(obj: any): TSummary {
-  let tags: TKeyText[] = new Array();
-  let data = {};
-  obj = obj.data;
+  dlog.d("Process Summary Data ...")
+  dlog.obj(obj)
+  let data:Map<string, TGroupMarketEntry> = new Map();
+  obj = obj.data
   for (let c of Object.keys(obj)) {
-    data[c] = obj[c];
-    tags.push({ key: c, text: c.replace("_", "") });
+    let value = obj[c] as TMarketEntry[]
+    data.set(c, {
+      _id:c,
+      title:c.replace("_"," "),
+      count:value.length,
+      group:value,
+      avg_change:0
+    })
   }
 
   let summary: TSummary = {
-    tags: tags,
     data: data,
   };
+  dlog.obj(summary)
   return summary;
 }
 
 export function processPositionData(obj: any, curMarket: TMarket): TPosition {
-  dlog.obj(obj)
+  //dlog.obj(obj)
   let orderList = new Array<TOrder>();
 
   let consolidatedList = new Array<TOrder>();
@@ -167,6 +181,6 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     positionSummary: positionSummary,
     consolidatedList: consolidatedList,
   };
-  dlog.obj(position)
+  //dlog.obj(position)
   return position;
 }
