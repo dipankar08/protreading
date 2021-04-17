@@ -4,7 +4,7 @@ from myapp.core.ddecorators import trace_perf
 from pandas.core.frame import DataFrame
 from myapp.core.dtypes import TCandleType
 import yfinance as yf
-from myapp.core.symbols import symbols
+from myapp.core.sync import SUPPORTED_SYMBOL
 from myapp.core.dlog import stack
 from myapp.core.convertion import covert_to_period_from_duration
 from myapp.core import dredis, dlog, danalytics
@@ -21,7 +21,7 @@ def download(interval: TCandleType = TCandleType.DAY_1, period=100) -> [bool, Da
     dredis.set(key, "1")
     try:
         # stack()
-        ticker = [x for x in symbols.keys()]
+        ticker = [x for x in SUPPORTED_SYMBOL.keys()]
         data = yf.download(
             tickers=ticker,
             period=covert_to_period_from_duration(interval, period),

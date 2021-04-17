@@ -1,24 +1,43 @@
 // convert network json data to right data format.
-import { dlog, log } from "../libs/dlog";
+import { dlog } from "../libs/dlog";
 import { TKeyText, TMarket, TMarketEntry, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
 
 export function processMarketData(obj: any): TMarket {
   //dlog.d(obj);
+  dlog.d("Processing Market data.....")
   obj = obj.data;
 
   let stocks: Array<TMarketEntry> = [];
   let ltpMap: Map<string, number> = new Map();
+  let sectorMap :Map<string, Array<TMarketEntry>> = new Map();
   for (let c of Object.keys(obj)) {
     ltpMap.set(c, obj[c].close);
     obj[c].symbol = c;
     obj[c].name = c;
     stocks.push(obj[c]);
+    // calculate sector
+    if( obj[c].sector){
+      let sector = obj[c].sector[0];
+      if(!sectorMap.has(sector)){
+          sectorMap.set(sector, new Array());
+      }
+      let value = obj[c]
+      sectorMap.get(sector)?.push({
+        symbol: value.symbol,
+        name: value.name,
+        close: value.close,
+        change: value.change,
+      })
+    } else {
+      dlog.d("No sector found...")
+    }
   }
   let market: TMarket = {
     stocks: stocks,
     ltpMap: ltpMap,
+    sectorList:sectorMap,
   };
-  dlog.obj(ltpMap)
+  dlog.obj(market.sectorList)
   return market;
 }
 

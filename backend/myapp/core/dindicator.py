@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import talib
 from pandas import DataFrame
-from myapp.core.symbols import symbols
+from myapp.core.sync import SUPPORTED_SYMBOL
 from myapp.core.RetHelper import fixDict, fixRound, verifyOrThrow
 from myapp.core.ddecorators import trace_perf
 from myapp.core import dlog, danalytics
@@ -14,8 +14,11 @@ all_range = [5, 8, 13, 50, 100, 200]
 def process_inplace(df: DataFrame):
     # If somevalue is nan and all calculation just dont work
     df.fillna(method='ffill', inplace=True)
-    for ticker in symbols:
+    for ticker in SUPPORTED_SYMBOL.keys():
         # Make lower case << Validated
+        df[ticker, 'name'] = SUPPORTED_SYMBOL[ticker]['name']
+        df[ticker, 'symbol'] = SUPPORTED_SYMBOL[ticker]['symbol']
+        #df[ticker, 'sector'] = SUPPORTED_SYMBOL[ticker]['sector']
         df[ticker, 'open'] = np.round(df[ticker, 'Open'], 2)
         df[ticker, 'close'] = np.round(df[ticker, 'Close'], 2)
         df[ticker, 'high'] = np.round(df[ticker, 'High'], 2)

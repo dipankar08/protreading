@@ -27,6 +27,7 @@ export type TSummary = {
 export type TMarket = {
   stocks: Array<TMarketEntry>;
   ltpMap: Map<string, number>;
+  sectorList: Map<string, Array<TMarketEntry>>;
 };
 
 export type TOrder = {

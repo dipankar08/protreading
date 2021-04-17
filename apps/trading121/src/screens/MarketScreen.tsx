@@ -17,7 +17,7 @@ import { TProps } from "./types";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { getRequest } from "../libs/network";
 import { CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, PRO_TRADING_SERVER } from "../appstate/CONST";
-import { processSummaryData } from "../models/processor";
+import { processMarketData, processSummaryData } from "../models/processor";
 import { TKeyText, TMarketEntry } from "../models/model";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -35,7 +35,7 @@ export const useNetwork = () => {
       let market = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type_5m`, CACHE_KEY_MARKET, false);
       dlog.d("MARKET FETACH DONE");
       appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
-      appState.dispatch({ type: "UPDATE_MARKET", payload: processSummaryData(market) });
+      appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(market) });
       setLoading(false);
       dlog.d("[NETWORK] fetching from network complete ");
     } catch (e) {
