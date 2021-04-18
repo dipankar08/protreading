@@ -13,6 +13,7 @@ import { TProps } from "./types";
 import { SplashScreen, SignInScreen, SignUpScreen, ProfileScreen } from "./StartUpScreens";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { HomeScreen } from "./HomeScreen";
+import { DebugScreen } from "./DebugScreen";
 
 // authstack
 const AuthStack = createStackNavigator();
@@ -188,6 +189,7 @@ const DrawerScreen = () => (
   <Drawer.Navigator initialRouteName="Home">
     <Drawer.Screen name="Home" component={TabsScreen} />
     <Drawer.Screen name="Profile" component={ProfileStackScreen} />
+    <Drawer.Screen name="Debug" component={DebugScreen} />
   </Drawer.Navigator>
 );
 

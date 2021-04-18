@@ -6,6 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { STYLES } from "./styles";
 import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -241,3 +242,17 @@ export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack
     </View>
   );
 };
+
+// It should be start as a capital letter
+export const B = (props: any) => <Text style={{ fontWeight: "bold", marginEnd: 6 }}>{props.children}</Text>;
+export const Span = ({ style, children }: TProps) => (
+  <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", marginEnd: 6 }}>{children}</View>
+);
+export const I = ({ children }: TProps) => <Text style={{ fontStyle: "italic" }}>{children}</Text>;
+export const P = ({ children }: TProps) => <Text style={{ color: "#111111" }}>{children}</Text>;
+export const Sub = ({ children }: TProps) => <Text style={{ color: "#11111160", marginEnd: 6 }}>{children}</Text>;
+export const A = (props: any) => (
+  <TouchableOpacity onPress={props.onPress}>
+    <Text style={{ fontStyle: "italic", color: "red" }}>{props.children}</Text>;
+  </TouchableOpacity>
+);

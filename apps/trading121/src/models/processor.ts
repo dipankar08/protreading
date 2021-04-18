@@ -1,6 +1,7 @@
 // convert network json data to right data format.
+import { Value } from "react-native-reanimated";
 import { dlog } from "../libs/dlog";
-import { TGroupMarketEntry, TKeyText, TMarket, TMarketEntry, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
+import { TGroupMarketEntry, TKeyText, TMarket, TMarketEntry, TObject, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
 
 export function processMarketData(obj: any): TMarket {
   //dlog.d(obj);
@@ -9,10 +10,31 @@ export function processMarketData(obj: any): TMarket {
   let stocks: Array<TMarketEntry> = [];
   let ltpMap: Map<string, number> = new Map();
   let sectorMap :Map<string, TGroupMarketEntry> = new Map();
+  sectorMap.set("all_stocks", {
+            title:"All Stock",
+            _id:"all_stock",
+            group:[],
+            count:0,
+            avg_change:0,
+          });
   for (let c of Object.keys(obj)) {
     ltpMap.set(c, obj[c].close);
     obj[c].symbol = c;
-    stocks.push(obj[c]);
+    const stockdata:TMarketEntry = {
+        _id:c,
+        symbol:obj[c].symbol,
+        name:obj[c].name,
+        close:obj[c].close,
+        change:obj[c].close_change_percentage
+    }
+    const rsi = obj[c].rsi_14
+    if(rsi!= -1 && rsi > 70){
+      stockdata.recommended_to_sell = "We recommended to sell this stock as this stock moved to overbought zone. It's expected that the people will start selling now.";
+    }
+    if(rsi != -1 && rsi < 30){
+       stockdata.recommended_to_buy = "We recommended to buy this stock as this stock moved to oversold zone. It's expected that the people will start buying now.";
+    }
+    stocks.push(stockdata);
     // calculate sector
     if( obj[c].sector){
       let sector = obj[c].sector[0];
@@ -25,18 +47,15 @@ export function processMarketData(obj: any): TMarket {
             avg_change:0,
           });
       }
-      let value = obj[c]
-      sectorMap.get(sector)!.group.push({
-        symbol: value.symbol,
-        name: value.name,
-        close: value.close,
-        change: value.close_change_percentage,
-      })
+      sectorMap.get(sector)!.group.push(stockdata)
+        sectorMap.get("all_stocks")!.group.push(stockdata)
       sectorMap.get(sector)!.count = sectorMap.get(sector)!.count+1
     } else {
       dlog.d("No sector found...")
     }
   }
+
+  dlog.obj(stocks);
 
   // update stock List.
   sectorMap.forEach(function(value, key){
@@ -51,7 +70,7 @@ export function processMarketData(obj: any): TMarket {
     ltpMap: ltpMap,
     sectorList:sectorMap,
   };
-  dlog.map(market.sectorList)
+  //dlog.map(market.sectorList)
   return market;
 }
 
@@ -81,6 +100,10 @@ export function processSummaryData(obj: any): TSummary {
     data: result,
   };
   return summary;
+}
+
+export function annotateRecommendation(obj:TObject){
+  obj.recomendation
 }
 
 export function processPositionData(obj: any, curMarket: TMarket): TPosition {
