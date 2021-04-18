@@ -13,10 +13,13 @@ export type TStockEntry = {
 };
 
 export type TMarketEntry = {
+  _id: string;
   symbol: string;
   name: string;
   close: number;
   change: number;
+  recommended_to_buy?: string;
+  recommended_to_sell?: string;
 };
 
 export type TGroupMarketEntry = {

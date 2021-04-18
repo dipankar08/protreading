@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Button, FlatList, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Button, FlatList, Text, TouchableOpacity, useWindowDimensions, View, StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import {
+  P,
+  Sub,
+  A,
+  B,
   DCard,
   DContainer,
   DContainerSafe,
@@ -12,6 +16,9 @@ import {
   FlatListItemSeparator,
   ScreenHeader,
   TextWithIcon,
+  Span,
+  I,
+  DButton,
 } from "../components/basic";
 import { TProps } from "./types";
 import { AppStateContext } from "../appstate/AppStateStore";
@@ -166,34 +173,11 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
     };
   }, []);
 
-  let sortState = 1;
-  function performSort(type: "name" | "change") {
-    setInverted(!inverted);
-    flatListRef?.current?.scrollToOffset({ animated: true, offset: 0 });
-    /*
-    dlog.d('"performSort" called' + type);
-    let data: TMarketEntry[] = [];
-    switch (type) {
-      case "change":
-        sortState = -1 * sortState;
-        data = listData.sort(function (a, b) {
-          return a.change < b.change ? sortState : -1 * sortState;
-        });
-      case "name":
-        setListData(
-          listData.sort(function (a, b) {
-            if (a.change < b.change) {
-              return -1;
-            }
-            if (a.change > b.change) {
-              return 1;
-            }
-            return 0;
-          })
-        );
-    }
-    setListData(data.slice(1, 3));
-    setListData(data.reverse()); */
+  const refRecommendationSheet = useRef<RBSheet>();
+  const [recommendationItem, setRecommendationItem] = useState<TMarketEntry>();
+  function openBottomSheet(item: TMarketEntry) {
+    setRecommendationItem(item);
+    refRecommendationSheet.current?.open();
   }
 
   return (
@@ -221,6 +205,7 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
               <View
                 style={{
                   flex: 2,
+                  display: "flex",
                   flexDirection: "column",
                 }}
               >
@@ -241,6 +226,14 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
                 >
                   {item.symbol}
                 </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    openBottomSheet(item);
+                  }}
+                >
+                  {item.recommended_to_buy != undefined && <Text style={styles.tag_green}>Recommend to buy</Text>}
+                  {item.recommended_to_sell && <Text style={styles.tag_red}>Recommend to sell</Text>}
+                </TouchableOpacity>
               </View>
               <View
                 style={{
@@ -286,18 +279,77 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
         }}
       >
         <DLayoutCol style={{ paddingHorizontal: 16 }}>
-          <Button onPress={() => performSort("change")} title="Sort By Change"></Button>
+          <Button onPress={() => {}} title="Sort By Change"></Button>
           <DSpace />
-          <Button onPress={() => performSort("name")} title="Sort By Name"></Button>
-          <TextWithIcon
-            text={"Sort based on onChangeText"}
-            icon={"sort-ascending"}
-            style={{ paddingVertical: 8 }}
-            onPress={() => performSort("change")}
-          ></TextWithIcon>
+          <Button onPress={() => {}} title="Sort By Name"></Button>
+          <TextWithIcon text={"Sort based on onChangeText"} icon={"sort-ascending"} style={{ paddingVertical: 8 }} onPress={() => {}}></TextWithIcon>
           <TextWithIcon text={"Sort by stock name"} icon={"sort-ascending"} style={{ paddingVertical: 8 }}></TextWithIcon>
+        </DLayoutCol>
+      </RBSheet>
+
+      {/* Button sheet to show the recomendation */}
+      <RBSheet
+        ref={refRecommendationSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "transparent",
+          },
+          draggableIcon: {
+            backgroundColor: "#000",
+          },
+          container: {
+            height: 350,
+          },
+        }}
+      >
+        <DLayoutCol style={{ paddingHorizontal: 16 }}>
+          <Text style={{ marginTop: 16, fontWeight: "bold", fontSize: 12, color: "#00000066", textTransform: "uppercase", marginBottom: 6 }}>
+            Recommendation
+          </Text>
+
+          {recommendationItem?.recommended_to_buy && <Text style={{ fontSize: 20, color: "black" }}>Recommend to buy</Text>}
+          {recommendationItem?.recommended_to_sell && <Text style={{ fontSize: 20, color: "black" }}>Recommend to sell</Text>}
+
+          <Text style={{ marginTop: 16, fontWeight: "bold", fontSize: 12, color: "#00000088", textTransform: "uppercase", marginBottom: 10 }}>
+            What we recommending this?
+          </Text>
+
+          {recommendationItem?.recommended_to_buy && <Text style={{ fontSize: 13, color: "black" }}>{recommendationItem.recommended_to_buy} </Text>}
+          {recommendationItem?.recommended_to_sell && <Text style={{ fontSize: 13, color: "black" }}>{recommendationItem.recommended_to_sell}</Text>}
+
+          <Text style={{ marginTop: 30, fontWeight: "bold" }}>Love this Recommendation?</Text>
+          <DButton> Get a Free invitation for Intra day!</DButton>
         </DLayoutCol>
       </RBSheet>
     </DContainerSafe>
   );
 };
+
+const styles = StyleSheet.create({
+  tag_green: {
+    color: "white",
+    backgroundColor: "#1e6f5c",
+    width: 150,
+    textAlign: "center",
+    fontSize: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    textTransform: "uppercase",
+    marginTop: 10,
+  },
+  tag_red: {
+    color: "white",
+    backgroundColor: "#ff8303",
+    width: 150,
+    textAlign: "center",
+    fontSize: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    textTransform: "uppercase",
+    marginTop: 10,
+  },
+});

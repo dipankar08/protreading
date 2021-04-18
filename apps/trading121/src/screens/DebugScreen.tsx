@@ -1,11 +1,12 @@
+import React, { useContext } from "react";
 import { Component } from "react";
-import { DButton, DContainer, DLayoutCol, DText } from "../components/basic";
+import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
 import CodePush from "react-native-code-push";
 import Analytics from "appcenter-analytics";
 import Crashes from "appcenter-crashes";
 export class DebugScreen extends Component {
   componentDidMount() {
-    CodePush.sync({ installMode: CodePush.InstallMode.ON_NEXT_RESUME }, this.syncWithCodePush);
+    //CodePush.sync({ installMode: CodePush.InstallMode.ON_NEXT_RESUME }, this.syncWithCodePush);
     this.checkEnable();
   }
 
@@ -39,15 +40,16 @@ export class DebugScreen extends Component {
 
   render() {
     return (
-      <DContainer>
-        <DLayoutCol>
+      <DContainerSafe>
+        <DLayoutCol style={{ padding: 16 }}>
+          <ScreenHeader title={"Debug Settings"} style={{ padding: 0 }} icon="sort-reverse-variant" />
           <DText>Debug Menu</DText>
           <DButton onPress={this.sendEvent}>Send Event</DButton>
           <DButton onPress={this.createNativeCrash}>Test Crash(Native)</DButton>
           <DButton onPress={this.createJSCrash}>Test Crash(JS)</DButton>
           <DButton onPress={this.syncWithCodePush}>CodePush</DButton>
         </DLayoutCol>
-      </DContainer>
+      </DContainerSafe>
     );
   }
 }
