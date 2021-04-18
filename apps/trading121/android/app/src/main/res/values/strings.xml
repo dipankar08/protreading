@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resources>
   <string name="app_name">trading121</string>
+  <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+  <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+  <string moduleConfig="true" name="CodePushDeploymentKey">sE10ndp8c644CZuD4U8sGgbWa2MJKr_JpM63h</string>
+  <string moduleConfig="true" name="CodePushDeploymentKeyProd">dEjTf1kHmv8xj2Ac5Kn7XREbye-srXAy11zAc</string>
 </resources>
