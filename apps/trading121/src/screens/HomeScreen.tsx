@@ -1,44 +1,20 @@
 import React, { useContext, useEffect } from "react";
 
 import { Button, Text, StyleSheet, View } from "react-native";
-import { ScreenContainer } from "react-native-screens";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { DCard, DContainer, DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
 import { TProps } from "./types";
-import { globalStyle } from "../components/styles";
-import { getRequest } from "../libs/network";
-import { CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
-import { verifyOrCrash } from "../libs/assert";
-import { processPositionData } from "../models/processor";
 import { dlog } from "../libs/dlog";
+import { useNetwork } from "../hooks/useNetwork";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const network = useNetwork();
 
   let name = "Home";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    async function loadInitData() {
-      if (!appState.state.isLoggedIn) {
-        return;
-      }
-      try {
-        let position = await getRequest(
-          `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
-          CACHE_KEY_POSITION,
-          false
-        );
-        verifyOrCrash(appState.state.market != null);
-        appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
-        setLoading(false);
-      } catch (e) {
-        setLoading(false);
-        setError("Not able to get Data");
-      }
-    }
-    loadInitData();
+    network.fetchUserInfo();
     return () => {
       dlog.d(`Unmounted ${name}`);
     };

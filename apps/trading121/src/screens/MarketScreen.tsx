@@ -22,41 +22,16 @@ import {
 } from "../components/basic";
 import { TProps } from "./types";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { getRequest } from "../libs/network";
-import { CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, PRO_TRADING_SERVER } from "../appstate/CONST";
-import { processMarketData, processSummaryData } from "../models/processor";
 import { TGroupMarketEntry, TKeyText, TMarketEntry } from "../models/model";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { dlog } from "../libs/dlog";
 import { SceneMap, TabView } from "react-native-tab-view";
-
-export const useNetwork = () => {
-  const appState = useContext(AppStateContext);
-  const [loading, setLoading] = React.useState(false);
-  async function reLoadAllData() {
-    dlog.d("[NETWORK] fetching from network ");
-    setLoading(true);
-    try {
-      let summary = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY, false);
-      let market = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type_5m`, CACHE_KEY_MARKET, false);
-      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
-      appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(market) });
-      setLoading(false);
-      dlog.d("[NETWORK] fetching from network complete ");
-    } catch (e) {
-      //setError("Not able to get Data");
-      setLoading(false);
-      dlog.d("[NETWORK] fetching from network failed ");
-      dlog.ex(e);
-    }
-  }
-  return { loading, reLoadAllData };
-};
+import { useNetwork } from "../hooks/useNetwork";
 
 export const MarketScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
-  const { loading, reLoadAllData } = useNetwork();
+  const network = useNetwork();
 
   // tab config
   const layout = useWindowDimensions();
@@ -73,7 +48,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
 
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="reload" onPress={reLoadAllData}></ScreenHeader>
+      <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="reload" onPress={network.reLoadAllData}></ScreenHeader>
       <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
     </DContainerSafe>
   );
@@ -158,7 +133,7 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
   const { item } = route.params;
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
   const [inverted, setInverted] = useState(false);
-  const { loading, reLoadAllData } = useNetwork();
+  const network = useNetwork();
   let isSubscribed = false;
   const refRBSheet = useRef();
   const flatListRef = useRef<FlatList<TMarketEntry>>();
@@ -191,8 +166,8 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
       ></ScreenHeader>
       <FlatList
         ref={flatListRef}
-        onRefresh={() => reLoadAllData()}
-        refreshing={loading}
+        onRefresh={() => network.reLoadAllData()}
+        refreshing={network.loading}
         data={listData}
         inverted={inverted}
         keyExtractor={(item, index) => item.name}

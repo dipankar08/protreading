@@ -6,15 +6,9 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
 import { useContext } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
-import { processPositionData } from "../models/processor";
-import { verifyOrCrash } from "../libs/assert";
-import { getRequest, postRequest } from "../libs/network";
-import { showNotification } from "../libs/uihelper";
 import { TOrder } from "../models/model";
-import { Alert } from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { dlog } from "../libs/dlog";
+import { useNetwork } from "../hooks/useNetwork";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config
@@ -36,44 +30,8 @@ export const PositionScreen = ({ navigation }: TProps) => {
   const [quantities, setQuantities] = React.useState("");
   const [modalVisible, setModalVisible] = React.useState(false);
   const appState = useContext(AppStateContext);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const network = useNetwork();
 
-  async function reload(useCache = true) {
-    dlog.d("[NETWORK] fetching from network ");
-    setLoading(true);
-    try {
-      let position = await getRequest(
-        `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
-        CACHE_KEY_POSITION,
-        useCache
-      );
-
-      verifyOrCrash(appState.state.market != null);
-      appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      setError("Not able to get Data");
-    }
-  }
-  async function createNewOrder() {
-    try {
-      let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/create`, {
-        user_id: appState.state.userInfo.user_id,
-        symbol: stock,
-        buy_price: parseFloat(price),
-        quantities: parseFloat(quantities),
-      });
-
-      // no cache.
-      reload(false);
-      showNotification("Created a new order");
-    } catch (err) {
-      dlog.d(err);
-      showNotification("Not able to create a order");
-    }
-  }
   let xStockList =
     appState.state.market && appState.state.market.stocks
       ? appState.state.market.stocks.map((item) => {
@@ -109,7 +67,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
               <Button
                 onPress={() => {
-                  createNewOrder();
+                  network.createOrder(stock, price, quantities);
                   setModalVisible(false);
                 }}
                 title="add New"
