@@ -55,7 +55,7 @@ export function processMarketData(obj: any): TMarket {
     }
   }
 
-  dlog.obj(stocks);
+  //dlog.obj(stocks);
 
   // update stock List.
   sectorMap.forEach(function(value, key){

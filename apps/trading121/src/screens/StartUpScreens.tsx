@@ -8,47 +8,25 @@ import { Image, Text, View } from "react-native";
 import logo from "../../assets/images/icon_white.png";
 import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { getRequest } from "../libs/network";
-import { processMarketData, processPositionData, processSummaryData } from "../models/processor";
 import { deleteData, getData, saveData } from "../libs/stoarge";
-import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, CACHE_KEY_SUMMARY, PRO_TRADING_SERVER } from "../appstate/CONST";
-import { verifyOrCrash } from "../libs/assert";
 import { dlog } from "../libs/dlog";
+import { useNetwork } from "../hooks/useNetwork";
 
 // Splash screen or boot screen is important for loading the boot data.
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
 export const SplashScreen = () => {
   const appState = useContext(AppStateContext);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const network = useNetwork();
   useEffect(() => {
-    async function fetchAllData() {
-      try {
-        setLoading(true);
-        // try load from cache.
-        let data = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type=5m`, CACHE_KEY_MARKET, true);
-        let data1 = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY);
-        appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(data) });
-        appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(data1) });
-        // mark boot complete
-        setLoading(false);
-        appState.dispatch({ type: "MARK_BOOT_COMPLETE" });
-        dlog.d("DONE");
-      } catch (e) {
-        dlog.d(e);
-        setError("Not able to find data");
-        dlog.d("ERROR");
-        dlog.d(e.stack);
-        setLoading(false);
-      }
-    }
-    fetchAllData();
+    network.reLoadAllData(() => {
+      appState.dispatch({ type: "MARK_BOOT_COMPLETE" });
+    });
   }, []);
 
   return (
     <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", alignItems: "center", paddingHorizontal: 40 }}>
       <DText dark>Loading .....</DText>
-      {error.length > 0 ? <DText dark>{error}</DText> : <DText>Please wait....</DText>}
+      {network.error.length > 0 ? <DText dark>{network.error}</DText> : <DText>Please wait....</DText>}
     </DContainer>
   );
 };
