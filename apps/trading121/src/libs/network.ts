@@ -14,12 +14,12 @@ export async function loadLatestData() {
     }
     return data;
   } else {
-    throw new Error("Server sends error");
+    throw new Error(`Server sends error:${response.data}`);
   }
 }
 
 // Defau;lt use cacche
-export async function getRequest(url: string, cacheKey?: string, cache_first = true) {
+export async function getRequest(url: string, cacheKey?: string | null, cache_first = true) {
   dlog.d("try fetching " + url);
   if (cache_first && cacheKey) {
     dlog.d("[Network]Trying cache first..");
@@ -37,21 +37,21 @@ export async function getRequest(url: string, cacheKey?: string, cache_first = t
     }
     return jsondata.out;
   } else {
-    dlog.d("fetch failed....");
+    dlog.d(`get failed....${JSON.stringify(response.data)}`);
     throw new Error("Server sends error");
   }
 }
 
 // No try catch here
 export async function postRequest(url: string, data: TObject) {
-  dlog.d("[Network] posting " + url);
+  dlog.d(`[Network] posting url:${url}, data: ${JSON.stringify(data)}`);
   let response = await axios.post(url, data);
   const jsondata: any = response.data;
   if (jsondata.status == "success") {
     dlog.d("post success...");
     return jsondata.out;
   } else {
-    dlog.d("post failed....");
+    dlog.d(`post failed....${JSON.stringify(response.data)}`);
     throw new Error("Server sends error");
   }
 }

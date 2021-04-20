@@ -55,19 +55,26 @@ export type TOrder = {
   open_for: string;
   invested_sum: number;
   current_sum: number;
+  closed_sum: number;
   change: number;
   change_per: number;
   gross: number;
   ltp: number;
   ltp_change: number;
   orderList: Array<TOrder>;
+  isBreakOrder: boolean;
 };
 
 export type TPositionSummary = {
   invested_amount: number;
   current_amount: number;
-  change_amount: number;
-  change_per: number;
+  total_pl: number;
+  total_change: number;
+  committed_pl: number;
+  committed_change: number;
+  uncommitted_pl: number;
+  uncommitted_change: number;
+  open_order_count: number;
 };
 
 export type TPosition = {

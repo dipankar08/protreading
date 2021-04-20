@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Avatar } from "react-native-elements";
-import { DButton, DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput } from "../components/basic";
+import { DButton, DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput, DContainerSafe, ScreenHeader, DLayoutRow } from "../components/basic";
 import { STYLES } from "../components/styles";
 import { TProps } from "./types";
 import { Image, Text, View } from "react-native";
@@ -109,6 +109,7 @@ export const SignUpScreen = ({ navigation }: TProps) => {
 // Profile and Signout logic
 export const ProfileScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
+  const network = useNetwork();
   async function signOut() {
     await deleteData("USER_INFO");
     appState.dispatch({ type: "MARK_USER_SIGNED_OUT" });
@@ -122,19 +123,9 @@ export const ProfileScreen = ({ navigation }: TProps) => {
   }, []);
 
   return (
-    <DContainer overrideStyle={{ justifyContent: "center", alignItems: "center" }}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingVertical: 20,
-          backgroundColor: "white",
-          borderRadius: 10,
-          marginTop: 20,
-        }}
-      >
+    <DContainerSafe style={{ padding: 16 }}>
+      <DLayoutCol style={{ alignContent: "center" }}>
+        <ScreenHeader title="Market Summary" style={{ padding: 16 }}></ScreenHeader>
         <Avatar
           rounded
           size="large"
@@ -146,10 +137,16 @@ export const ProfileScreen = ({ navigation }: TProps) => {
         <Text style={{ color: "#000000ee", fontSize: 20, marginTop: 20, fontWeight: "bold" }}>{appState.state.userInfo.name}</Text>
         <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Email - {appState.state.userInfo.email}</Text>
         <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Id -{appState.state.userInfo.email}</Text>
+        <Text style={{ fontSize: 20, marginTop: 10, paddingTop: 10, borderTopWidth: 1 }}>Update Data</Text>
+        <DButton style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
+          Refresh Data in backend
+        </DButton>
+
+        <Text style={{ flex: 1 }}>Hello</Text>
         <DButton onPress={signOut} secondary>
           Sign out
         </DButton>
-      </View>
-    </DContainer>
+      </DLayoutCol>
+    </DContainerSafe>
   );
 };

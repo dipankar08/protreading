@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { PRO_TRADING_SERVER, CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
-import { verifyOrCrash } from "../libs/assert";
+import { assertNotEmptyOrNotify, verifyOrCrash } from "../libs/assert";
 import { dlog } from "../libs/dlog";
 import { getRequest, postRequest } from "../libs/network";
 import { showNotification } from "../libs/uihelper";
@@ -65,6 +65,10 @@ export const useNetwork = () => {
   }
 
   async function createOrder(stock: string, price: string, quantities: string, onSuccess?: Function, onError?: Function) {
+    if (!(assertNotEmptyOrNotify(stock) && assertNotEmptyOrNotify(price) && assertNotEmptyOrNotify(quantities))) {
+      onError?.();
+      return;
+    }
     try {
       let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/create`, {
         user_id: appState.state.userInfo.user_id,
@@ -74,11 +78,58 @@ export const useNetwork = () => {
       });
       await fetchUserInfo();
       showNotification("Created a new order");
+      onSuccess?.();
     } catch (err) {
       dlog.d(err);
       showNotification("Not able to create a order");
+      onError?.();
     }
   }
 
-  return { loading, error, reLoadAllData, fetchUserInfo, createOrder };
+  async function closeOrder(id: string, price: string, onSuccess?: Function, onError?: Function) {
+    if (!(assertNotEmptyOrNotify(id) && assertNotEmptyOrNotify(price))) {
+      onError?.();
+      return;
+    }
+    try {
+      let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/update`, {
+        _id: id,
+        sell_price: parseFloat(price),
+        is_sold: true,
+      });
+      await fetchUserInfo();
+      showNotification("Order is closed");
+      onSuccess?.();
+    } catch (err) {
+      dlog.d(err);
+      showNotification("Not able to close this order");
+      onError?.();
+    }
+  }
+
+  async function forceUpdateData(onSuccess?: Function, onError?: Function) {
+    dlog.d("[NETWORK] forceUpdateData");
+    setLoading(true);
+    try {
+      let task1 = await getRequest(`${PRO_TRADING_SERVER}/snapshot?candle_type=1d&force=1`, null, false);
+      let task2 = await getRequest(`${PRO_TRADING_SERVER}//snapshot?candle_type=5m&force=1`, null, false);
+      setLoading(false);
+      dlog.d(`[NETWORK] forceUpdateData complete task1:${JSON.stringify(task1)}  task2:${JSON.stringify(task2)} `);
+      showNotification("task submitted");
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (e) {
+      //setError("Not able to get Data");
+      setLoading(false);
+      showNotification("Not able to submit task");
+      dlog.d("[NETWORK] forceUpdateData failed ");
+      dlog.ex(e);
+      if (onError) {
+        onError();
+      }
+    }
+  }
+
+  return { loading, error, reLoadAllData, fetchUserInfo, createOrder, closeOrder, forceUpdateData };
 };
