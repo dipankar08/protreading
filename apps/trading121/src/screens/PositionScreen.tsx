@@ -1,14 +1,14 @@
 import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal, useWindowDimensions } from "react-native";
 import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator, ScreenHeader, DContainerSafe } from "../components/basic";
 import { TProps } from "./types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Picker } from "@react-native-community/picker";
+
 import { useContext } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { TOrder } from "../models/model";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { useNetwork } from "../hooks/useNetwork";
+import { OrderCloseDialog, OrderCreateDialog } from "./Dialog";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config
@@ -18,65 +18,20 @@ export const PositionScreen = ({ navigation }: TProps) => {
     { key: "first", title: "Break View" },
     { key: "second", title: "Consolidated View" },
   ]);
-
   const renderScene = SceneMap({
     first: PositionListView,
     second: PositionListView,
   });
   // new order
-  const [stockList, setStockList] = React.useState([<Picker.Item key="" value="" label="Wait..." />]);
-  const [stock, setStock] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [quantities, setQuantities] = React.useState("");
   const [modalVisible, setModalVisible] = React.useState(false);
-  const appState = useContext(AppStateContext);
-  const network = useNetwork();
-
-  let xStockList =
-    appState.state.market && appState.state.market.stocks
-      ? appState.state.market.stocks.map((item) => {
-          return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol} />;
-        })
-      : [<Picker.Item key="" value="" label="Wait..." />];
-
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader title={"Position"} style={{ padding: 16 }} icon="sort-reverse-variant"></ScreenHeader>
+      <ScreenHeader title={"Smart Portfolio"} style={{ padding: 16 }} icon="sort-reverse-variant"></ScreenHeader>
       <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
       <DButton onPress={() => setModalVisible(true)} style={{ marginHorizontal: 16 }}>
         Add new Buy
       </DButton>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          //Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={{}}>Add new position for tracking</Text>
-            <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
-              {xStockList}
-            </Picker>
-            <TextInput style={styles.TextInputStyle} placeholder="White Stock Price" value={price} onChangeText={setPrice}></TextInput>
-            <TextInput style={styles.TextInputStyle} placeholder="Write Stock Qn" value={quantities} onChangeText={setQuantities}></TextInput>
-            <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-              <Button
-                onPress={() => {
-                  network.createOrder(stock, price, quantities);
-                  setModalVisible(false);
-                }}
-                title="add New"
-              />
-              <Button onPress={() => setModalVisible(false)} title="Cancel" />
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <OrderCreateDialog visible={modalVisible} onClose={() => setModalVisible(false)} />
     </DContainerSafe>
   );
 };
@@ -84,6 +39,9 @@ export const PositionScreen = ({ navigation }: TProps) => {
 export const PositionListView = ({ route }: TProps) => {
   const appState = useContext(AppStateContext);
   const [listData, setListData] = React.useState<TOrder[]>([]);
+  const [selectedItem, setSelectedItem] = useState<TOrder>();
+  const [dialogVisible, setDialogVisible] = useState(false);
+
   useEffect(() => {
     if (!appState.state.position) {
       return;
@@ -122,18 +80,28 @@ export const PositionListView = ({ route }: TProps) => {
                     <Text style={{ color: color, fontSize: 12 }}>
                       ltp : {item.ltp} ({item.ltp_change.toFixed(2)}%)
                     </Text>
-
                     <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
+                    {item.isBreakOrder && (
+                      <DButton
+                        style={{ padding: 1, width: 100 }}
+                        onPress={() => {
+                          setSelectedItem(item);
+                          setDialogVisible(true);
+                        }}
+                      >
+                        closeOrder
+                      </DButton>
+                    )}
                   </DLayoutCol>
                   <DLayoutCol style={{ alignItems: "flex-end" }}>
                     <DText style={{ color: color, fontSize: 14 }}>
-                      {item.change} ({item.change_per}%)
+                      {item.change.toFixed(2)} ({item.change_per.toFixed(2)}%)
                     </DText>
                     <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      {item.quantities} X {item.buy_price} = {item.invested_sum}
+                      {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
                     </Text>
                     <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      {item.quantities} X {item.ltp} = {item.current_sum}
+                      {item.quantities} X {item.ltp.toFixed(2)} = {item.current_sum.toFixed(2)}
                     </Text>
                   </DLayoutCol>
                 </DLayoutRow>
@@ -142,72 +110,13 @@ export const PositionListView = ({ route }: TProps) => {
           );
         }}
       ></FlatList>
+      <OrderCloseDialog
+        item={selectedItem}
+        visible={dialogVisible}
+        onClose={() => {
+          setDialogVisible(false);
+        }}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "grey",
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  input: {
-    backgroundColor: "#00000010",
-    fontSize: 12,
-    borderColor: "#00000020",
-    borderRadius: 5,
-    padding: 8,
-    borderBottomColor: "yellow",
-    borderBottomWidth: 0,
-    marginBottom: 20,
-  },
-
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 10,
-    width: "90%",
-    backgroundColor: "white",
-    borderRadius: 5,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    display: "flex",
-    flexDirection: "column",
-    elevation: 5,
-  },
-  TextInputStyle: {
-    marginVertical: 10,
-    backgroundColor: "#00000010",
-    fontSize: 12,
-    padding: 10,
-  },
-  pickerStyle: {
-    backgroundColor: "#00000010",
-  },
-  textHeader: {
-    flex: 1,
-    color: "#00000088",
-    fontSize: 12,
-    margin: 0,
-  },
-  textValue: {
-    flex: 1,
-    color: "#000000ee",
-    fontSize: 15,
-  },
-});

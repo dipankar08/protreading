@@ -65,6 +65,7 @@ const ProfileStackScreen = () => (
       component={ProfileScreen}
       options={{
         title: "Profile",
+        headerShown: false,
         headerStyle: {
           backgroundColor: "#f4511e",
         },

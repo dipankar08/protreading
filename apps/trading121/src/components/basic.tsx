@@ -236,9 +236,11 @@ export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack
         <View></View>
       )}
       <Text style={{ color: "#000000", fontWeight: "bold", fontSize: 22, flex: 1, textTransform: "capitalize" }}>{title}</Text>
-      <TouchableOpacity onPress={onPress}>
-        <MaterialCommunityIcons name={icon || "menu"} color="black" size={24} />
-      </TouchableOpacity>
+      {icon && (
+        <TouchableOpacity onPress={onPress}>
+          <MaterialCommunityIcons name={icon || "menu"} color="black" size={24} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
