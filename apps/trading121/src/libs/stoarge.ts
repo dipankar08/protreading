@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TObject } from "../models/model";
 import { dlog } from "./dlog";
 export async function saveData(key: string, value: TObject) {
