@@ -1,5 +1,16 @@
 import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal, useWindowDimensions } from "react-native";
-import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator, ScreenHeader, DContainerSafe } from "../components/basic";
+import {
+  DContainer,
+  DLayoutCol,
+  DLayoutRow,
+  DCard,
+  DText,
+  DButton,
+  FlatListItemSeparator,
+  ScreenHeader,
+  DContainerSafe,
+  QuickButton,
+} from "../components/basic";
 import { TProps } from "./types";
 import React, { useEffect, useState } from "react";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -8,7 +19,10 @@ import { useContext } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { TOrder } from "../models/model";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { OrderCloseDialog, OrderCreateDialog } from "./Dialog";
+import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
+import { globalStyle, STYLES } from "../components/styles";
+import { useNetwork } from "../hooks/useNetwork";
+import { colors } from "../styles/colors";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config
@@ -38,9 +52,11 @@ export const PositionScreen = ({ navigation }: TProps) => {
 
 export const PositionListView = ({ route }: TProps) => {
   const appState = useContext(AppStateContext);
+  const network = useNetwork();
   const [listData, setListData] = React.useState<TOrder[]>([]);
   const [selectedItem, setSelectedItem] = useState<TOrder>();
   const [dialogVisible, setDialogVisible] = useState(false);
+  const [viewDialogVisible, setViewDialogVisible] = useState(false);
 
   useEffect(() => {
     if (!appState.state.position) {
@@ -72,36 +88,57 @@ export const PositionListView = ({ route }: TProps) => {
                 }
               }}
             >
-              <DLayoutCol style={{ padding: 16, opacity: item.is_open ? 1 : 0.3 }}>
+              <DLayoutCol style={{ padding: 16, opacity: item.is_open ? 1 : 0.6 }}>
                 <DLayoutRow>
                   <DLayoutCol style={{ flex: 1 }}>
                     <Text style={{ color: "#00000077", fontSize: 16, marginVertical: 2 }}>Order# {item.index}</Text>
-                    <Text style={{ color: "#000000", fontSize: 14, marginVertical: 2, textTransform: "uppercase" }}>{item.symbol}</Text>
-                    <Text style={{ color: color, fontSize: 12 }}>
-                      ltp : {item.ltp} ({item.ltp_change.toFixed(2)}%)
-                    </Text>
+                    <Text style={{ color: "#000000", fontSize: 14, marginTop: 2, textTransform: "uppercase" }}>{item.symbol}</Text>
+                    <DText style={{ color: color, fontSize: 14 }}>
+                      Long: {item.quantities} @ {item.buy_price.toFixed(2)}
+                    </DText>
                     <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
-                    {item.isBreakOrder && (
-                      <DButton
-                        style={{ padding: 1, width: 100 }}
+                    <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
+                      {item.isBreakOrder && item.is_open && (
+                        <QuickButton
+                          style={{ backgroundColor: colors.orange600 }}
+                          onPress={() => {
+                            setSelectedItem(item);
+                            setDialogVisible(true);
+                          }}
+                        >
+                          closeOrder
+                        </QuickButton>
+                      )}
+                      {item.isBreakOrder && !item.is_open && (
+                        <QuickButton
+                          style={{ backgroundColor: colors.yellow400 }}
+                          onPress={() => {
+                            network.reopenOrder(item._id);
+                          }}
+                        >
+                          reopen Order
+                        </QuickButton>
+                      )}
+                      <QuickButton
+                        style={{ backgroundColor: colors.green600 }}
                         onPress={() => {
                           setSelectedItem(item);
-                          setDialogVisible(true);
+                          setViewDialogVisible(true);
                         }}
                       >
-                        closeOrder
-                      </DButton>
-                    )}
+                        View Order
+                      </QuickButton>
+                    </View>
                   </DLayoutCol>
                   <DLayoutCol style={{ alignItems: "flex-end" }}>
                     <DText style={{ color: color, fontSize: 14 }}>
                       {item.change.toFixed(2)} ({item.change_per.toFixed(2)}%)
                     </DText>
                     <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
+                      Buy: {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
                     </Text>
                     <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      {item.quantities} X {item.ltp.toFixed(2)} = {item.current_sum.toFixed(2)}
+                      Latest:{item.quantities} X {item.ltp.toFixed(2)} = {item.current_sum.toFixed(2)}
                     </Text>
                   </DLayoutCol>
                 </DLayoutRow>
@@ -115,6 +152,13 @@ export const PositionListView = ({ route }: TProps) => {
         visible={dialogVisible}
         onClose={() => {
           setDialogVisible(false);
+        }}
+      />
+      <OrderViewDialog
+        items={selectedItem}
+        visible={viewDialogVisible}
+        onClose={() => {
+          setViewDialogVisible(false);
         }}
       />
     </View>

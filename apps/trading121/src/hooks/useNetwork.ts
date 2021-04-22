@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { Alert } from "react-native";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { PRO_TRADING_SERVER, CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
 import { assertNotEmptyOrNotify, verifyOrCrash } from "../libs/assert";
@@ -131,5 +132,31 @@ export const useNetwork = () => {
     }
   }
 
-  return { loading, error, reLoadAllData, fetchUserInfo, createOrder, closeOrder, forceUpdateData };
+  async function reopenOrder(id: string) {
+    async function reopen(id: string) {
+      let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/update`, {
+        _id: id,
+        sell_price: 0,
+        is_sold: true,
+      });
+      await fetchUserInfo();
+      showNotification("Order is closed");
+    }
+    Alert.alert("Re-Open Order?", "Do you want to reopen this order?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          console.log("OK Pressed");
+          reopen(id);
+        },
+      },
+    ]);
+  }
+
+  return { loading, error, reLoadAllData, fetchUserInfo, createOrder, closeOrder, forceUpdateData, reopenOrder };
 };

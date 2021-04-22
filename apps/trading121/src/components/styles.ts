@@ -22,8 +22,15 @@ export const globalStyle = StyleSheet.create({
   },
 });
 
+// Please move this to colors.ts
 export const STYLES = {
   APP_COLOR_PRIMARY: "#ff914d",
   APP_COLOR_SECONDARY: "#ffd400",
-  APP_SCREEN_BACKGROUND: "#f5f5f5",
+  APP_SCREEN_BACKGROUND: "#ffffff",
+  RED: "red",
+  GREEN: "green",
+  BLUE: "blue",
+  YELLOW: "yellow",
+  WHITE: "#ffffff",
+  BLACK: "#111111",
 };

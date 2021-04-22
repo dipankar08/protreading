@@ -5,6 +5,7 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { useNetwork } from "../hooks/useNetwork";
 import { Picker } from "@react-native-community/picker";
 import { Item } from "react-native-paper/lib/typescript/components/Drawer/Drawer";
+import { DKeyValueList } from "../components/basic";
 
 export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const network = useNetwork();
@@ -36,8 +37,8 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
           <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
             {xStockList}
           </Picker>
-          <TextInput style={styles.TextInputStyle} placeholder="White Stock Price" value={price} onChangeText={setPrice}></TextInput>
-          <TextInput style={styles.TextInputStyle} placeholder="Write Stock Qn" value={quantities} onChangeText={setQuantities}></TextInput>
+          <TextInput style={styles.TextInputStyle} placeholder="Please enter Stock Price" value={price} onChangeText={setPrice}></TextInput>
+          <TextInput style={styles.TextInputStyle} placeholder="Write Stock quantities" value={quantities} onChangeText={setQuantities}></TextInput>
           <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
             <Button
               onPress={() => {
@@ -49,6 +50,25 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
             />
             <Button onPress={() => onClose()} title="Cancel" />
           </View>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+export const OrderViewDialog = ({ items, visible, onClose }: any) => {
+  return (
+    <Modal
+      animationType="fade"
+      visible={visible}
+      transparent={true}
+      onRequestClose={() => {
+        onClose();
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <DKeyValueList items={items}></DKeyValueList>
         </View>
       </View>
     </Modal>
@@ -114,6 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalView: {
     margin: 10,
