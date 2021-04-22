@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -32,7 +32,7 @@ export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
     <SafeAreaView
       style={[
         {
-          backgroundColor: "#ffffff10",
+          backgroundColor: STYLES.APP_SCREEN_BACKGROUND,
           flex: 1,
           flexDirection: "column",
         },
@@ -90,6 +90,31 @@ export const DButton = ({ children, style, primary, secondary, onPress, dark }: 
   );
 };
 
+export const QuickButton = ({ children, onPress, style }: TProps) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={{ width: "100%" }}>
+      <Text
+        style={[
+          {
+            backgroundColor: STYLES.APP_COLOR_PRIMARY,
+            color: "white",
+            textAlign: "center",
+            paddingVertical: 2,
+            paddingHorizontal: 10,
+            marginRight: 10,
+            borderRadius: 10,
+            fontSize: 14,
+            textTransform: "capitalize",
+          },
+          style,
+        ]}
+      >
+        {children}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
 export const DTextInput = ({ children, style, dark, placeholder, onChangeText }: TProps) => {
   return (
     <TextInput
@@ -121,7 +146,7 @@ export const DContainer = ({ children, style }: TProps) => {
       style={[
         {
           paddingHorizontal: 16,
-          backgroundColor: "#ffffff10",
+          backgroundColor: STYLES.APP_SCREEN_BACKGROUND,
           flex: 1,
           flexDirection: "column",
         },
@@ -198,6 +223,19 @@ export const DListEmptyComponent = () => {
       <MaterialCommunityIcons name={"emoticon-sad-outline"} color="black" size={40} />
       <Text style={{ color: "red", textAlign: "center", marginTop: 16 }}>No item found</Text>
     </View>
+  );
+};
+
+export const DKeyValueList = ({ items }: any) => {
+  return (
+    <ScrollView style={{ height: "80%" }}>
+      {Object.keys(items).map((key) => (
+        <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 5 }} key={key}>
+          <Text>{key}:</Text>
+          <Text style={{ paddingRight: 10 }}>{items[key] ? items[key] + "" : "-"}</Text>
+        </DLayoutRow>
+      ))}
+    </ScrollView>
   );
 };
 
