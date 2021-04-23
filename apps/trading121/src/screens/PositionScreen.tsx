@@ -80,6 +80,7 @@ export const PositionListView = ({ route }: TProps) => {
         ItemSeparatorComponent={FlatListItemSeparator}
         renderItem={({ item }) => {
           let color = item.change_per > 0 ? "green" : "red";
+          let color_close = item.closed_sum > item.invested_sum ? "green" : "red";
           return (
             <TouchableWithoutFeedback
               onLongPress={() => {
@@ -131,15 +132,33 @@ export const PositionListView = ({ route }: TProps) => {
                     </View>
                   </DLayoutCol>
                   <DLayoutCol style={{ alignItems: "flex-end" }}>
-                    <DText style={{ color: color, fontSize: 14 }}>
-                      {item.change.toFixed(2)} ({item.change_per.toFixed(2)}%)
-                    </DText>
-                    <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      Buy: {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
-                    </Text>
-                    <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
-                      Latest:{item.quantities} X {item.ltp.toFixed(2)} = {item.current_sum.toFixed(2)}
-                    </Text>
+                    {item.is_open ? ( // opened
+                      <>
+                        <DText style={{ color: color, fontSize: 14 }}>
+                          {item.change.toFixed(2)} ({item.change_per.toFixed(2)}%)
+                        </DText>
+                        <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                          Buy: {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
+                        </Text>
+                        <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                          Latest:{item.quantities} X {item.ltp.toFixed(2)} = {item.current_sum.toFixed(2)}
+                        </Text>
+                      </>
+                    ) : (
+                      // closed
+                      <>
+                        <DText style={{ color: color_close, fontSize: 14 }}>
+                          Gain: {(item.closed_sum - item.invested_sum).toFixed(2)} (
+                          {((item.closed_sum - item.invested_sum) / item.invested_sum).toFixed(2)}%)
+                        </DText>
+                        <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                          Buy: {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
+                        </Text>
+                        <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
+                          Sold:{item.quantities} X {item.sell_price.toFixed(2)} = {item.closed_sum.toFixed(2)}
+                        </Text>
+                      </>
+                    )}
                   </DLayoutCol>
                 </DLayoutRow>
               </DLayoutCol>

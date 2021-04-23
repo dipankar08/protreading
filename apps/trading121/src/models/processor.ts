@@ -169,12 +169,18 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     let total_stock = 0;
     let total_invested = 0;
     for (var x:TOrder of value) {
+      if(!x.is_open){
+        continue;
+      }
       total_stock+= x.quantities
       total_invested+= x.quantities * x.buy_price;
     }
     let ltp = curMarket.ltpMap.get(symbol.toUpperCase());
     if(!ltp){
       dlog.e("Not found LTP for stock:")
+      continue;
+    }
+    if(total_stock == 0){
       continue;
     }
     consolidatedList.push({
@@ -241,6 +247,10 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
   positionSummary1.total_pl = positionSummary1.committed_pl + positionSummary1.uncommitted_pl
   positionSummary1.total_change = positionSummary1.committed_change+ positionSummary1.uncommitted_change 
 
+  // sort order list based on the open order first.
+  orderList.sort((a:TOrder,b:TOrder)=>{
+    return a.is_open ? -1:1
+  })
   
   let position: TPosition = {
     orderList: orderList,
