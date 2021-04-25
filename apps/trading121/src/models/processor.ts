@@ -2,6 +2,7 @@
 import { Value } from "react-native-reanimated";
 import { dlog } from "../libs/dlog";
 import { TGroupMarketEntry, TKeyText, TMarket, TMarketEntry, TObject, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
+import { getAgoString } from '../libs/time';
 
 export function processMarketData(obj: any): TMarket {
   //dlog.d(obj);
@@ -123,7 +124,7 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     }
     x.ltp = ltp; //x.latest;
     //dlog.d(latest);
-    x.open_for = "4 days";
+    x.open_for = getAgoString(x.buy_ts);
     //dlog.d(x.sell_price == 0);
     x.invested_amount = x.buy_price * x.quantities;
     x.current_amount = x.ltp * x.quantities;
@@ -153,6 +154,7 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
       change_per: x.change_per,
       gross: x.gross,
       isBreakOrder:true,
+      orderList:[]
     };
     // dlog.d(cur_result);
     orderList.push(cur_result);

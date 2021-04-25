@@ -8,6 +8,7 @@ import { dlog } from "../libs/dlog";
 import { getRequest, postRequest } from "../libs/network";
 import { showNotification } from "../libs/uihelper";
 import { processSummaryData, processMarketData, processPositionData } from "../models/processor";
+import { getCurrentDate } from "../libs/time";
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
@@ -76,6 +77,7 @@ export const useNetwork = () => {
         symbol: stock,
         buy_price: parseFloat(price),
         quantities: parseFloat(quantities),
+        buy_ts: getCurrentDate(),
       });
       await fetchUserInfo();
       showNotification("Created a new order");
@@ -97,6 +99,7 @@ export const useNetwork = () => {
         _id: id,
         sell_price: parseFloat(price),
         is_sold: true,
+        sell_ts: getCurrentDate(),
       });
       await fetchUserInfo();
       showNotification("Order is closed");
