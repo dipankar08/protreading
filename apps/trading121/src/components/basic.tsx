@@ -7,6 +7,7 @@ import { STYLES } from "./styles";
 import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
+import _ from "underscore";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -226,13 +227,23 @@ export const DListEmptyComponent = () => {
   );
 };
 
+function toString(data: any) {
+  if (data == undefined || data == null) {
+    return "-";
+  }
+  if (_.isObject(data)) {
+    return JSON.stringify(data);
+  }
+  return data + "";
+}
+
 export const DKeyValueList = ({ items }: any) => {
   return (
     <ScrollView style={{ height: "80%" }}>
       {Object.keys(items).map((key) => (
         <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 5 }} key={key}>
           <Text>{key}:</Text>
-          <Text style={{ paddingRight: 10 }}>{items[key] ? items[key] + "" : "-"}</Text>
+          <Text style={{ paddingRight: 10 }}>{toString(items[key])}</Text>
         </DLayoutRow>
       ))}
     </ScrollView>
