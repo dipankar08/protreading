@@ -10,19 +10,12 @@ import { MarketScreen, MarketGroupListScreen } from "./MarketScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "./types";
 
-import { SplashScreen, SignInScreen, SignUpScreen, ProfileScreen } from "./StartUpScreens";
-import { AppStateContext } from "../appstate/AppStateStore";
+import { ProfileScreen } from "./StartUpScreens";
 import { HomeScreen } from "./HomeScreen";
 import { DebugScreen } from "./DebugScreen";
-
-// authstack
-const AuthStack = createStackNavigator();
-const AuthStackScreen = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
-    <AuthStack.Screen name="CreateAccount" component={SignUpScreen} options={{ title: "Create Account" }} />
-  </AuthStack.Navigator>
-);
+import { TestScreen } from "./StartUpScreens";
+import { CoreStateContext } from "../core/CoreContext";
+import { CoreStackScreen } from "../core/core_navigation";
 
 // Home Stack
 const HomeStack = createStackNavigator();
@@ -59,12 +52,27 @@ const SearchStackScreen = () => (
 // Profile Stack
 const ProfileStack = createStackNavigator();
 const ProfileStackScreen = () => (
-  <ProfileStack.Navigator>
+  <ProfileStack.Navigator initialRouteName="Profile">
     <ProfileStack.Screen
       name="Profile"
       component={ProfileScreen}
       options={{
         title: "Profile",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+    <ProfileStack.Screen
+      name="TestScreen"
+      component={TestScreen}
+      options={{
+        title: "Test",
         headerShown: false,
         headerStyle: {
           backgroundColor: "#f4511e",
@@ -197,10 +205,10 @@ const DrawerScreen = () => (
 // Root Stack
 const RootStack = createStackNavigator();
 const RootStackScreen = ({ userToken }: TProps) => {
-  const appState = useContext(AppStateContext);
+  const coreState = useContext(CoreStateContext);
   return (
     <RootStack.Navigator headerMode="none">
-      {appState.state.isLoggedIn == true ? (
+      {coreState.state.showHomeScreen == true ? (
         <RootStack.Screen
           name="App"
           component={DrawerScreen}
@@ -210,8 +218,8 @@ const RootStackScreen = ({ userToken }: TProps) => {
         />
       ) : (
         <RootStack.Screen
-          name="Auth"
-          component={AuthStackScreen}
+          name="Core"
+          component={CoreStackScreen}
           options={{
             animationEnabled: false,
           }}
@@ -222,17 +230,11 @@ const RootStackScreen = ({ userToken }: TProps) => {
 };
 
 const RootNavigation = () => {
-  const appState = useContext(AppStateContext);
-
-  if (appState.state.isBootComplete) {
-    return (
-      <NavigationContainer>
-        <RootStackScreen />
-      </NavigationContainer>
-    );
-  } else {
-    return <SplashScreen />;
-  }
+  return (
+    <NavigationContainer>
+      <RootStackScreen />
+    </NavigationContainer>
+  );
 };
 
 export default RootNavigation;

@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements";
 import { DButton, DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput, DContainerSafe, ScreenHeader, DLayoutRow } from "../components/basic";
 import { STYLES } from "../components/styles";
 import { TProps } from "./types";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, StyleSheet } from "react-native";
 import logo from "../../assets/images/icon_white.png";
 import { useContext, useEffect, useState } from "react";
 import { AppStateContext } from "../appstate/AppStateStore";
@@ -12,102 +12,8 @@ import { deleteData, getData, saveData } from "../libs/stoarge";
 import { dlog } from "../libs/dlog";
 import { useNetwork } from "../hooks/useNetwork";
 
-// Splash screen or boot screen is important for loading the boot data.
-// In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
-export const SplashScreen = () => {
-  const appState = useContext(AppStateContext);
-  const network = useNetwork();
-  useEffect(() => {
-    network.reLoadAllData(() => {
-      appState.dispatch({ type: "MARK_BOOT_COMPLETE" });
-    });
-  }, []);
-
-  return (
-    <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", alignItems: "center", paddingHorizontal: 40 }}>
-      <DText dark>Loading .....</DText>
-      {network.error.length > 0 ? <DText dark>{network.error}</DText> : <DText>Please wait....</DText>}
-    </DContainer>
-  );
-};
-
-// Sign in Logics
-export const SignInScreen = ({ navigation }: TProps) => {
-  const [email, setEmail] = useState("");
-  const appState = useContext(AppStateContext);
-  let name = "SignIn";
-  useEffect(() => {
-    dlog.d(`Mounted ${name}`);
-    async function checkSignIn() {
-      let userInfo = await getData("USER_INFO");
-      if (userInfo) {
-        appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
-        appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
-      } else {
-        dlog.d("No save user info found");
-      }
-    }
-    checkSignIn();
-    return () => {
-      dlog.d(`Unmounted ${name}`);
-    };
-  }, []);
-
-  function signIn() {
-    if (email.trim().length == 0) {
-      return;
-    }
-    let userInfo = { name: "Guest", email: email.toLocaleLowerCase().trim(), user_id: email.toLocaleLowerCase().trim() };
-    saveData("USER_INFO", userInfo);
-    appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
-    appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
-  }
-  return (
-    <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20 }}>
-      <Image
-        style={{
-          width: 80,
-          height: 80,
-          backgroundColor: "transparent",
-          alignSelf: "center",
-          marginBottom: 0,
-        }}
-        source={logo}
-      />
-      <Text style={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: 26 }}>Welcome to Trading50!</Text>
-      <Text style={{ color: "white", textAlign: "center", marginBottom: 50, marginTop: 10, alignSelf: "center", fontSize: 18, opacity: 0.75 }}>
-        We helps you be a better trader.
-      </Text>
-      <DText secondary dark style={{ fontSize: 15 }}>
-        Enter your email address to sign in.
-      </DText>
-      <DTextInput placeholder="enter the text" dark onChangeText={setEmail}></DTextInput>
-      <DButton dark primary onPress={signIn}>
-        Sign In
-      </DButton>
-    </DContainer>
-  );
-};
-
-// Sign up logic...
-export const SignUpScreen = ({ navigation }: TProps) => {
-  let name = "SignUp";
-  useEffect(() => {
-    dlog.d(`Mounted ${name}`);
-    return () => {
-      dlog.d(`Unmounted ${name}`);
-    };
-  }, []);
-  return (
-    <DContainer>
-      <DText>Create a new Account</DText>
-      <DButton />
-    </DContainer>
-  );
-};
-
 // Profile and Signout logic
-export const ProfileScreen = ({ navigation }: TProps) => {
+export const ProfileScreen = ({ navigation, route }: TProps) => {
   const appState = useContext(AppStateContext);
   const network = useNetwork();
   async function signOut() {
@@ -146,7 +52,41 @@ export const ProfileScreen = ({ navigation }: TProps) => {
         <DButton onPress={signOut} secondary>
           Sign out
         </DButton>
+        <DButton
+          onPress={() => {
+            navigation.push("TestScreen");
+          }}
+          secondary
+        >
+          Test
+        </DButton>
       </DLayoutCol>
     </DContainerSafe>
   );
 };
+
+// Use this cscreen for testing purpose
+import { WebView } from "react-native-webview";
+export const TestScreen = () => {
+  return (
+    <DContainerSafe style={{ flex: 1 }}>
+      <DLayoutCol style={{ flex: 1 }}>
+        <WebView source={{ uri: "https://uk.tradingview.com/symbols/NSE-TCS/" }} style={{ flex: 1 }} />
+      </DLayoutCol>
+    </DContainerSafe>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  video: {
+    marginTop: 20,
+    maxHeight: 200,
+    width: 320,
+    flex: 1,
+  },
+});
