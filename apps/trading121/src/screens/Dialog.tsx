@@ -18,7 +18,7 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
   let xStockList =
     appState.state.market && appState.state.market.stocks
       ? appState.state.market.stocks.map((item) => {
-          return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol} />;
+          return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol + " - " + item.name} />;
         })
       : [<Picker.Item key="" value="" label="Wait..." />];
   return (
