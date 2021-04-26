@@ -5,7 +5,7 @@ import { CoreStateContext } from "./CoreContext";
 import { CompleteSignInScreen } from "./CompleteSignInScreen";
 import { SignInScreen } from "../screens/ThemeTest";
 import { NuxScreen } from "./NUXScreen";
-import { TCoreScreenType, TVoidCalBack } from "./core_model";
+import { TAuthInfo, TCoreScreenType, TErrorCallback, TVoidCalBack } from "./core_model";
 
 export const useCoreApi = () => {
   const coreState = useContext(CoreStateContext);
@@ -14,17 +14,24 @@ export const useCoreApi = () => {
 
   // find-out the right navigation
   async function navigateNext(curScreen: TCoreScreenType, navigation: any) {
-    // Order of this ladder is important
+    dlog.d("Navigation Netx called==>");
+    console.log(coreState.state);
     if (!coreState.state.isNuxShown) {
+      console.log("Nix...");
       navigation.push("NuxScreen");
       return;
     }
 
     // If no login information.
-    if (!coreState.state.authInfo == null) {
+    if (coreState.state.authInfo == null) {
       navigation.push("SignInScreen");
       return;
     }
+    if (!coreState.state.isSilentSignInComplete) {
+      navigation.push("CompleteSignInScreen");
+      return;
+    }
+    // We have done everything.. DO not do anything now
   }
 
   async function doAppBoot(onSuccess: Function) {
@@ -50,7 +57,8 @@ export const useCoreApi = () => {
   }
 
   async function isNUXShown() {
-    return await getBool("NUX_SHOWN");
+    let val = await getBool("NUX_SHOWN");
+    return val;
   }
 
   async function doMarkNuxShown(onSuccess: TVoidCalBack) {
@@ -58,9 +66,14 @@ export const useCoreApi = () => {
     onSuccess();
   }
 
-  async function doSignIn() {
+  async function doSignIn(authInfo: TAuthInfo, onSuccess: TVoidCalBack, onError?: TErrorCallback) {
     try {
-      //pass
+      if (authInfo.user_id.length > 0) {
+        onError?.("Please enter user_id");
+      }
+      await coreState.dispatch({ type: "MERGE_STATE", payload: { authInfo: authInfo } });
+      await saveData("AUTH_INFO", authInfo);
+      onSuccess();
     } catch (err) {
       dlog.ex(err);
       setError("Not able to signin the app");
@@ -70,6 +83,8 @@ export const useCoreApi = () => {
   async function doCompleteSignIn(onSuccess: TVoidCalBack) {
     try {
       // fetch info after sign-in.
+      // do some work..
+      coreState.dispatch({ type: "MERGE_STATE", payload: { isSilentSignInComplete: true } });
       onSuccess();
     } catch (err) {
       dlog.ex(err);

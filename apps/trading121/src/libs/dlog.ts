@@ -1,6 +1,6 @@
 export namespace dlog {
   export function d(msg: string) {
-    console.log(`[DEBUG]${msg}`);
+    console.log(`\n[DEBUG]${msg}`);
   }
   export function e(msg: string) {
     console.log(`[ERROR]${msg}`);

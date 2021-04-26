@@ -14,7 +14,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
   let name = "Home";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    network.fetchUserInfo();
+    network.doAllNetworkCallOnBoot();
     return () => {
       dlog.d(`Unmounted ${name}`);
     };

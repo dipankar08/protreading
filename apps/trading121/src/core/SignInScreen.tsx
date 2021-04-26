@@ -3,39 +3,30 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainer, DText, DTextInput, DButton } from "../components/basic";
 import { STYLES } from "../components/styles";
 import { dlog } from "../libs/dlog";
+import logo from "../../assets/images/icon_white.png";
 import { getData, saveData } from "../libs/stoarge";
 import { TProps } from "../screens/types";
 import { Image, Text, View, StyleSheet } from "react-native";
+import { CoreStateContext } from "./CoreContext";
+import { useCoreApi } from "./useCoreApi";
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
   const [email, setEmail] = useState("");
-  const appState = useContext(AppStateContext);
+  const coreState = useContext(CoreStateContext);
+  const coreApi = useCoreApi();
   let name = "SignIn";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    async function checkSignIn() {
-      let userInfo = await getData("USER_INFO");
-      if (userInfo) {
-        appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
-        appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
-      } else {
-        dlog.d("No save user info found");
-      }
-    }
-    checkSignIn();
     return () => {
       dlog.d(`Unmounted ${name}`);
     };
   }, []);
 
   function signIn() {
-    if (email.trim().length == 0) {
-      return;
-    }
     let userInfo = { name: "Guest", email: email.toLocaleLowerCase().trim(), user_id: email.toLocaleLowerCase().trim() };
-    saveData("USER_INFO", userInfo);
-    appState.dispatch({ type: "UPDATE_USER_INFO", payload: userInfo });
-    appState.dispatch({ type: "MARK_LOGIN_SUCCESS", payload: null });
+    coreApi.doSignIn(userInfo, () => {
+      coreApi.navigateNext("SIGN_IN", navigation);
+    });
   }
   return (
     <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20 }}>

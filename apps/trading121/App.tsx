@@ -3,14 +3,17 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import RootNavigation from "./src/screens/navigation";
 import { registerRootComponent } from "expo";
 import AppStateStoreProvider from "./src/appstate/AppStateStore";
+import CoreStateStoreProvider from "./src/core/CoreContext";
 
 // You must given a name app
 export default function App() {
   return (
     <SafeAreaProvider>
-      <AppStateStoreProvider>
-        <RootNavigation />
-      </AppStateStoreProvider>
+      <CoreStateStoreProvider>
+        <AppStateStoreProvider>
+          <RootNavigation />
+        </AppStateStoreProvider>
+      </CoreStateStoreProvider>
     </SafeAreaProvider>
   );
 }
