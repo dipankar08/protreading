@@ -1,3 +1,4 @@
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { BootScreen } from "./BootScreen";
 import { NuxScreen } from "./NUXScreen";
