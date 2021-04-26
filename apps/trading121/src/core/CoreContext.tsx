@@ -5,11 +5,13 @@ import { dlog } from "../libs/dlog";
 import { TCoreAction, TCoreState } from "./core_model";
 
 // reducer
-const AppStateReducer = (state: TCoreState, action: TCoreAction): TCoreState => {
-  dlog.d(`[AppStateReducer] updating app state for ${action.type}`);
+const CoreStateReducer = (state: TCoreState, action: TCoreAction): TCoreState => {
+  dlog.d(`[CoreStateReducer] updating app state for ${action.type}`);
   switch (action.type) {
     case "MERGE_STATE":
-      return _.extend({}, state, action.payload);
+      let state1 = _.extend({}, state, action.payload);
+      console.log(state1);
+      return state1;
     default:
       return state;
   }
@@ -33,7 +35,7 @@ type TBind = {
 export const CoreStateContext = createContext<TBind>({ state: initialCoreState, dispatch: () => {} });
 
 const CoreStateStoreProvider = ({ children }: any) => {
-  const [state, dispatch]: [TCoreState, React.Dispatch<any>] = useReducer(AppStateReducer, initialCoreState);
+  const [state, dispatch]: [TCoreState, React.Dispatch<any>] = useReducer(CoreStateReducer, initialCoreState);
   return <CoreStateContext.Provider value={{ state: state, dispatch: dispatch }}>{children}</CoreStateContext.Provider>;
 };
 

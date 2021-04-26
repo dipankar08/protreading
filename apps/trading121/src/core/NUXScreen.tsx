@@ -41,6 +41,8 @@ export const NuxScreen = ({ navigation }: TProps) => {
   const coreApi = useCoreApi();
   function completeNux() {
     coreApi.doMarkNuxShown(() => {
+      coreState.dispatch({ type: "MERGE_STATE", payload: { isNuxShown: true } });
+      console.log(coreState.state.isNuxShown);
       coreApi.navigateNext("NUX", navigation);
     });
   }
@@ -64,7 +66,7 @@ export const NuxScreen = ({ navigation }: TProps) => {
           );
         }}
         data={slides}
-        //onDone={completeNux}
+        onDone={completeNux}
         renderDoneButton={() => {
           return (
             <View style={styles.buttonCircle}>

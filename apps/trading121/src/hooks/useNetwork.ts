@@ -15,6 +15,11 @@ export const useNetwork = () => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
+  async function doAllNetworkCallOnBoot() {
+    await reLoadAllData();
+    await fetchUserInfo();
+  }
+
   // realod all market Data
   async function reLoadAllData(onSuccess?: Function, onError?: Function) {
     dlog.d("[NETWORK] fetching from network ");
@@ -161,5 +166,5 @@ export const useNetwork = () => {
     ]);
   }
 
-  return { loading, error, reLoadAllData, fetchUserInfo, createOrder, closeOrder, forceUpdateData, reopenOrder };
+  return { loading, error, reLoadAllData, fetchUserInfo, createOrder, closeOrder, forceUpdateData, reopenOrder, doAllNetworkCallOnBoot };
 };

@@ -5,7 +5,7 @@ import { dlog } from "./dlog";
 export async function setBool(key: string, value: boolean) {
   try {
     await AsyncStorage.setItem(key, value ? "1" : "0");
-    dlog.d("[STORAGE] latest data  saved in cache");
+    dlog.d(`[STORAGE] set boot ${key} to ${value}`);
   } catch (e) {
     dlog.d("[STORAGE] Not able to store latest data in the cache");
   }
@@ -13,7 +13,9 @@ export async function setBool(key: string, value: boolean) {
 
 export async function getBool(key: string) {
   try {
-    return (await AsyncStorage.getItem(key)) == "1";
+    let value = (await AsyncStorage.getItem(key)) == "1";
+    dlog.d(`[STORAGE] get boot ${key} to ${value}`);
+    return value;
   } catch (e) {
     dlog.d(e);
     return false;

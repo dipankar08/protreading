@@ -208,7 +208,7 @@ const RootStackScreen = ({ userToken }: TProps) => {
   const coreState = useContext(CoreStateContext);
   return (
     <RootStack.Navigator headerMode="none">
-      {coreState.state.showHomeScreen == true ? (
+      {coreState.state.isSilentSignInComplete == true ? (
         <RootStack.Screen
           name="App"
           component={DrawerScreen}

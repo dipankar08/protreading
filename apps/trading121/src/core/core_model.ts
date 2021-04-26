@@ -1,12 +1,13 @@
 export type TCoreScreenType = "BOOT" | "NUX" | "SIGN_IN" | "SIGN_UP" | "SIGN_OUT" | "SIGN_IN_COMPLETE";
 
-export type TVoidCalBack = Function;
+export type TVoidCalBack = () => void;
+export type TErrorCallback = (str: string) => void;
 
 export type TAuthInfo = {
   user_id: string;
   name: string;
   email?: string;
-  profile_image: string;
+  profile_image?: string;
 };
 
 export type TCoreAction = {
