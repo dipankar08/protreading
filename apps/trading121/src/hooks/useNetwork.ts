@@ -9,9 +9,11 @@ import { getRequest, postRequest } from "../libs/network";
 import { showNotification } from "../libs/uihelper";
 import { processSummaryData, processMarketData, processPositionData } from "../models/processor";
 import { getCurrentDate } from "../libs/time";
+import { CoreStateContext } from "../core/CoreContext";
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
+  const coreState = useContext(CoreStateContext);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
@@ -52,7 +54,7 @@ export const useNetwork = () => {
     }
     try {
       let position = await getRequest(
-        `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${appState.state.userInfo.user_id}&_limit=100`,
+        `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100`,
         CACHE_KEY_POSITION,
         false
       );
@@ -78,7 +80,7 @@ export const useNetwork = () => {
     }
     try {
       let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/create`, {
-        user_id: appState.state.userInfo.user_id,
+        user_id: coreState.state.authInfo?.user_id,
         symbol: stock,
         buy_price: parseFloat(price),
         quantities: parseFloat(quantities),

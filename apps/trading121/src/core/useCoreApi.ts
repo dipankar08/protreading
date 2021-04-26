@@ -95,6 +95,17 @@ export const useCoreApi = () => {
   async function doSignOut() {
     try {
       //pass
+      coreState.dispatch({
+        type: "MERGE_STATE",
+        payload: {
+          isBootComplete: true,
+          isNUXShown: false,
+          authInfo: null,
+          isUserLoggedIn: false,
+          isSilentSignInComplete: false,
+          showHomeScreen: false,
+        },
+      });
     } catch (err) {
       dlog.ex(err);
       setError("Not able to SignOut");
