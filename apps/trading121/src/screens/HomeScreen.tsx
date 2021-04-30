@@ -6,9 +6,12 @@ import { DCard, DContainer, DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader
 import { TProps } from "./types";
 import { dlog } from "../libs/dlog";
 import { useNetwork } from "../hooks/useNetwork";
+import { useCoreApi } from "../core/useCoreApi";
+import { CoreStateContext } from "../core/CoreContext";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
+  const coreState = useContext(CoreStateContext);
   const network = useNetwork();
 
   let name = "Home";
@@ -18,7 +21,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
     return () => {
       dlog.d(`Unmounted ${name}`);
     };
-  }, [appState.state.isLoggedIn]);
+  }, [coreState.state.authInfo]);
 
   return (
     <DContainerSafe>
@@ -47,6 +50,8 @@ export const HomeScreen = ({ navigation }: TProps) => {
                 {appState.state.position?.positionSummary?.committed_pl.toFixed(2)} (
                 {appState.state.position?.positionSummary?.committed_change.toFixed(2)}%)
               </Text>
+              <Text style={styles.textHeader}>Net Profit</Text>
+              <Text style={styles.textValue}>{appState.state.position?.positionSummary?.net_profit.toFixed(2)}</Text>
             </DLayoutCol>
             <DLayoutCol style={{ flex: 1, justifyContent: "flex-end", textAlign: "right", alignContent: "flex-end" }}>
               <Text style={[styles.textHeader, styles.right]}>Current </Text>
@@ -82,6 +87,8 @@ export const HomeScreen = ({ navigation }: TProps) => {
                 {appState.state.position?.positionSummary?.uncommitted_pl.toFixed(2)}(
                 {appState.state.position?.positionSummary?.uncommitted_change.toFixed(2)}%)
               </Text>
+              <Text style={[styles.textHeader, styles.right]}>Total Tax</Text>
+              <Text style={[styles.textValue, styles.right]}>{appState.state.position?.positionSummary?.total_tax.toFixed(2)}</Text>
             </DLayoutCol>
           </DLayoutRow>
         </View>
@@ -103,7 +110,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#1584dc",
-    height: 210,
+    height: 250,
     marginVertical: 10,
     padding: 10,
     borderRadius: 5,

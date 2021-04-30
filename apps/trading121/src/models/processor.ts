@@ -3,6 +3,8 @@ import { Value } from "react-native-reanimated";
 import { dlog } from "../libs/dlog";
 import { TGroupMarketEntry, TKeyText, TMarket, TMarketEntry, TObject, TOrder, TPosition, TPositionSummary, TSummary } from "./model";
 import { getAgoString } from '../libs/time';
+import { isSameDay } from '../libs/time';
+import { cal_delivery_tax, cal_intraday_tax } from './taxcalculator';
 
 export function processMarketData(obj: any): TMarket {
   //dlog.d(obj);
@@ -133,6 +135,18 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     x.gross = (x.ltp - x.buy_price) * x.quantities;
     let is_open =  x.sell_price == undefined ||  x.sell_price == null || x.sell_price == 0
     let closed_sum = is_open?0:x.sell_price * x.quantities
+
+    let tax_info = undefined
+    let total_tax = 0;
+    if (isSameDay(x.buy_ts, x.sell_ts)){
+      tax_info = cal_intraday_tax(x.buy_price, x.sell_price || ltp, x.quantities)
+      total_tax = tax_info.total_tax
+    } else {
+       tax_info = cal_delivery_tax(x.buy_price, x.sell_price || ltp, x.quantities)
+       total_tax = tax_info.total_tax
+    }
+
+
     let cur_result:TOrder = {
       _id: x._id,
       index: index++,
@@ -154,7 +168,9 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
       change_per: x.change_per,
       gross: x.gross,
       isBreakOrder:true,
-      orderList:[]
+      orderList:[],
+      taxInfo:tax_info,
+      total_tax:total_tax,
     };
     // dlog.d(cur_result);
     orderList.push(cur_result);
@@ -170,12 +186,14 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
   for (let [symbol, value:TOrder[]] of consolidatedMap) {
     let total_stock = 0;
     let total_invested = 0;
+    let total_tax =0;
     for (var x:TOrder of value) {
       if(!x.is_open){
         continue;
       }
       total_stock+= x.quantities
       total_invested+= x.quantities * x.buy_price;
+      total_tax += x.total_tax
     }
     let ltp = curMarket.ltpMap.get(symbol.toUpperCase());
     if(!ltp){
@@ -208,6 +226,7 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
       gross:0,
       isBreakOrder:false,
       closed_sum:0,
+      total_tax:total_tax
     })
   }
 
@@ -221,10 +240,13 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     total_change:0,
     total_pl:0,
     uncommitted_change:0,
-    uncommitted_pl:0
+    uncommitted_pl:0,
+    total_tax:0,
+    net_profit:0
   }
   let closed_order_invested_sum  = 0;
   let closed_order_closed_sum  = 0;
+  let total_tax = 0;
 
   for(var order of orderList){
     if(order.is_open){
@@ -234,8 +256,11 @@ export function processPositionData(obj: any, curMarket: TMarket): TPosition {
     } else {
        closed_order_invested_sum  +=  order.invested_sum;
        closed_order_closed_sum  += order.closed_sum;
+       total_tax += order.total_tax;
     }
   }
+    positionSummary1.total_tax = total_tax;
+    positionSummary1.net_profit = closed_order_closed_sum - closed_order_invested_sum - total_tax;
   positionSummary1.committed_pl = closed_order_closed_sum - closed_order_invested_sum;
   if(closed_order_invested_sum != 0){
     positionSummary1.committed_change = (closed_order_closed_sum - closed_order_invested_sum)/closed_order_invested_sum*100

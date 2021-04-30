@@ -49,7 +49,8 @@ export const useNetwork = () => {
 
   // fetch the User info like position
   async function fetchUserInfo(onSuccess?: Function, onError?: Function) {
-    if (!appState.state.isLoggedIn) {
+    if (coreState.state.authInfo == null) {
+      dlog.d("early return");
       return;
     }
     try {
@@ -65,6 +66,7 @@ export const useNetwork = () => {
         onSuccess();
       }
     } catch (e) {
+      dlog.ex(e);
       setLoading(false);
       setError("Not able to get Data");
       if (onError) {
@@ -90,7 +92,7 @@ export const useNetwork = () => {
       showNotification("Created a new order");
       onSuccess?.();
     } catch (err) {
-      dlog.d(err);
+      dlog.ex(err);
       showNotification("Not able to create a order");
       onError?.();
     }
