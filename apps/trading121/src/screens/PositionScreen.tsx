@@ -143,6 +143,9 @@ export const PositionListView = ({ route }: TProps) => {
                         <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
                           Latest:{item.quantities} X {item.ltp.toFixed(2)} = {item.current_sum.toFixed(2)}
                         </Text>
+                        <Text style={{ color: colors.purple700, fontSize: 12, marginVertical: 2 }}>
+                          breakeven: {item.taxInfo?.breakeven.toFixed(2)}
+                        </Text>
                       </>
                     ) : (
                       // closed
