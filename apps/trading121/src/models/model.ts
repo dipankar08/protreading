@@ -63,6 +63,8 @@ export type TOrder = {
   ltp_change: number;
   orderList: Array<TOrder>;
   isBreakOrder: boolean;
+  taxInfo?: Object;
+  total_tax: number;
 };
 
 export type TPositionSummary = {
@@ -75,6 +77,8 @@ export type TPositionSummary = {
   uncommitted_pl: number;
   uncommitted_change: number;
   open_order_count: number;
+  net_profit: number;
+  total_tax: number;
 };
 
 export type TPosition = {

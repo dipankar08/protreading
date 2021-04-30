@@ -21,12 +21,9 @@ export type TUserInfo = {
 
 export type TAppState = {
   //test
-  counter: number;
 
-  isBootComplete: boolean;
   //user info
-  isLoggedIn: boolean;
-  userInfo: TUserInfo;
+
   //summary
   isSummaryLoaded: boolean;
   summary?: TSummary;
@@ -40,15 +37,7 @@ export type TAppState = {
 };
 
 export const initialState: TAppState = {
-  counter: 1,
-  isLoggedIn: false,
-  userInfo: {
-    name: "Guest",
-    email: "",
-    user_id: "unknown",
-  },
   isSummaryLoaded: false,
   isPositionLoaded: false,
   isLatestMarketDataLoaded: false,
-  isBootComplete: false,
 };

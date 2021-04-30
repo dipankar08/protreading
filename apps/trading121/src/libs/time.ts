@@ -25,3 +25,8 @@ export function getFormattedDate(str: string) {
   let d = new Date(str);
   return d.toLocaleString();
 }
+
+export function isSameDay(day1: string, day2: string) {
+  // todo
+  return false;
+}
