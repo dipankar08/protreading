@@ -12,7 +12,7 @@ import { useCoreApi } from "./useCoreApi";
 import { DStatusBar } from "../components/DStatusBar";
 import { STRINGS } from "../res/strings";
 import { DTextFooter, DTextSubTitle, DTextTitle } from "../components/DText";
-import { DButtonWithIcon } from "../components/DButton";
+import { DButtonLink, DButtonWithIcon } from "../components/DButton";
 import { colors } from "../styles/colors";
 import { DIMENS } from "../res/dimens";
 import { showNotification } from "../libs/uihelper";
@@ -22,6 +22,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const coreState = useContext(CoreStateContext);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFacebook, setLoadingFacebook] = useState(false);
+  const [loadingGuest, setLoadingGuest] = useState(false);
   const coreApi = useCoreApi();
   let name = "SignIn";
   useEffect(() => {
@@ -31,12 +32,6 @@ export const SignInScreen = ({ navigation }: TProps) => {
     };
   }, []);
 
-  function signIn() {
-    let userInfo = { name: "Guest", email: email.toLocaleLowerCase().trim(), user_id: email.toLocaleLowerCase().trim() };
-    coreApi.doSignIn(userInfo, () => {
-      coreApi.navigateNext("SIGN_IN", navigation);
-    });
-  }
   return (
     <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20 }}>
       <Image
@@ -60,8 +55,8 @@ export const SignInScreen = ({ navigation }: TProps) => {
         onPress={() =>
           coreApi.FacebookSignIn({
             onSuccess() {
+              dlog.d("facebook logic success");
               coreApi.navigateTo(navigation, "CompleteSignInScreen");
-              setTimeout(() => coreApi.navigateNext("SIGN_IN", navigation), 10);
             },
             onBefore() {
               setLoadingFacebook(true);
@@ -85,7 +80,6 @@ export const SignInScreen = ({ navigation }: TProps) => {
           coreApi.GoogleSignIn({
             onSuccess() {
               coreApi.navigateTo(navigation, "CompleteSignInScreen");
-              setTimeout(() => coreApi.navigateNext("SIGN_IN", navigation), 10);
             },
             onBefore() {
               setLoadingGoogle(true);
@@ -101,6 +95,24 @@ export const SignInScreen = ({ navigation }: TProps) => {
       >
         Login as Google
       </DButtonWithIcon>
+      <DButtonLink
+        style={{
+          marginTop: 10,
+          textAlign: "center",
+          width: "100%",
+          justifyContent: "center",
+          alignSelf: "center",
+        }}
+        onPress={() =>
+          coreApi.loginAsGuest({
+            onSuccess() {
+              coreApi.navigateTo(navigation, "CompleteSignInScreen");
+            },
+          })
+        }
+      >
+        Login as Guest
+      </DButtonLink>
       <DTextFooter style={{ color: "white", textAlign: "center" }}>
         (You can use your google and facebook account to get signin. You can login using anyone of this if they have same email address. )
       </DTextFooter>

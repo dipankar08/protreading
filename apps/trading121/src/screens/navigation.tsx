@@ -10,10 +10,10 @@ import { MarketScreen, MarketGroupListScreen } from "./MarketScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "./types";
 
-import { ProfileScreen } from "./StartUpScreens";
+import { ProfileScreen } from "./ProfileScreen";
 import { HomeScreen } from "./HomeScreen";
 import { DebugScreen } from "./DebugScreen";
-import { TestScreen } from "./StartUpScreens";
+import { TestScreen } from "./ProfileScreen";
 import { CoreStateContext } from "../core/CoreContext";
 import { CoreStackScreen } from "../core/core_navigation";
 

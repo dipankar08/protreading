@@ -1,25 +1,33 @@
 // Splash screen or boot screen is important for loading the boot data.
 import React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { STYLES } from "../components/styles";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { DLoadingText } from "../components/DText";
+import { DLoadingText, DTextFooter } from "../components/DText";
 import { DAppLogo } from "../components/DImage";
 import logo from "../../assets/images/icon_white.png";
-import { DIMENS } from "../res/dimens";
+import { CoreConstant } from "./constant";
+import * as Updates from "expo-updates";
 
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
 export const BootScreen = ({ navigation }: any) => {
   const coreState = useContext(CoreStateContext);
+  const [update, setUpdate] = useState(false);
   const coreApi = useCoreApi();
   useEffect(() => {
+    console.log(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
+    Updates.checkForUpdateAsync().then((update) => {
+      if (update.isAvailable) {
+        setUpdate(true);
+      }
+    });
     coreApi.doAppBoot(() => {
       setTimeout(() => {
         coreApi.navigateNext("BOOT", navigation);
-      }, 500);
+      }, CoreConstant.BOOT_SCREEN_TIMEOUT);
     });
   }, []);
 
@@ -39,6 +47,8 @@ export const BootScreen = ({ navigation }: any) => {
         <DLoadingText color="white" style={{ justifyContent: "flex-end", marginTop: 80 }}>
           Staring the app...
         </DLoadingText>
+
+        <DTextFooter style={{ color: "white" }}> you are running {update ? "old build" : "latest build"}</DTextFooter>
       </DLayoutCol>
     </DContainer>
   );

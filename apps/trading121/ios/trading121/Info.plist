@@ -77,10 +77,37 @@
           <string>com.grodok.trading</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>OAuthRedirect</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.grodok.trading</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb223411552837244</string>
+        </array>
+      </dict>
     </array>
     <key>UIRequiresFullScreen</key>
     <true/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
+    </array>
     <key>CFBundleDisplayName</key>
-    <string>trading121</string>
+    <string>trad50</string>
+    <key>FacebookAppID</key>
+    <string>223411552837244</string>
+    <key>FacebookDisplayName</key>
+    <string>Trading 50</string>
   </dict>
 </plist>
