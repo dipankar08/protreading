@@ -16,10 +16,28 @@ export const HomeScreen = ({ navigation }: TProps) => {
   const network = useNetwork();
   const [loading, setLoading] = useState(false);
 
+  async function refreshData() {
+    await network.reLoadAllData();
+    await network.fetchUserInfo({
+      onBefore() {
+        setLoading(true);
+      },
+      onComplete() {
+        setLoading(false);
+      },
+      onSuccess() {
+        showNotification("Data updated");
+      },
+      onError(error) {
+        showNotification(error);
+      },
+    });
+  }
+
   let name = "Home";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    network.doAllNetworkCallOnBoot();
+    refreshData();
     return () => {
       dlog.d(`Unmounted ${name}`);
     };
@@ -28,29 +46,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
   return (
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
-        <ScreenHeader
-          loading={loading}
-          title={"Home"}
-          style={{ padding: 0 }}
-          icon="reload"
-          onPress={() => {
-            console.log("onpres called");
-            network.fetchUserInfo({
-              onBefore() {
-                setLoading(true);
-              },
-              onComplete() {
-                setLoading(false);
-              },
-              onSuccess() {
-                showNotification("Data updated");
-              },
-              onError(error) {
-                showNotification(error);
-              },
-            });
-          }}
-        />
+        <ScreenHeader loading={loading} title={"Home"} style={{ padding: 0 }} icon="reload" onPress={refreshData} />
         <Text style={styles.headText}>Summary</Text>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>

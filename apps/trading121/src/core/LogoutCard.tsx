@@ -36,8 +36,7 @@ export const LogoutCard = ({ navigation, route }: TProps) => {
           rounded
           size="large"
           source={{
-            uri:
-              "https://media-exp1.licdn.com/dms/image/C4D03AQG7ULIkCmRFTA/profile-displayphoto-shrink_200_200/0/1516571220413?e=1623283200&v=beta&t=zv1tVZEVQ51HgQeIejWGPSqFK5yHw8caNdlMtmXPzJM",
+            uri: coreState.state.authInfo?.profile_image,
           }}
         />
         <DLayoutCol style={{ flex: 1, marginLeft: 50 }}>

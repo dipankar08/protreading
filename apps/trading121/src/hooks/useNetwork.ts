@@ -18,9 +18,9 @@ export const useNetwork = () => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
-  async function doAllNetworkCallOnBoot() {
+  async function doAllNetworkCallOnBoot(callback: TCallback) {
     await reLoadAllData();
-    await fetchUserInfo();
+    await fetchUserInfo(callback);
   }
 
   // realod all market Data
