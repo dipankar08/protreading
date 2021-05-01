@@ -15,6 +15,7 @@ import * as Application from "expo-application";
 import { DKeyValueList } from "../components/DList";
 import * as Updates from "expo-updates";
 import { DButtonPrimary } from "../components/DButton";
+import { showNotification } from "../libs/uihelper";
 
 // Simple Logout card which should be embedit in the app
 export const AppInfoCard = ({ navigation, route }: TProps) => {
@@ -33,10 +34,16 @@ export const AppInfoCard = ({ navigation, route }: TProps) => {
   }, []);
   async function doUpdate() {
     setLoading(true);
-    let result = await Updates.fetchUpdateAsync();
+    try {
+      let result = await Updates.fetchUpdateAsync();
+      showNotification("Update done");
+    } catch (err) {
+      dlog.ex(err);
+      showNotification("not able to updated");
+    }
     setLoading(false);
   }
-  console.log(Updates);
+  //console.log(Updates);
   return (
     <DLayoutCol>
       <DLayoutCol style={{ alignContent: "center", alignItems: "center", width: "100%", backgroundColor: "#00000010", padding: 20, borderRadius: 4 }}>
@@ -51,11 +58,11 @@ export const AppInfoCard = ({ navigation, route }: TProps) => {
           }}
         ></DKeyValueList>
       </DLayoutCol>
-      {update && (
+      {
         <DButtonPrimary onPress={doUpdate} loading={loading}>
           Update the app
         </DButtonPrimary>
-      )}
+      }
     </DLayoutCol>
   );
 };

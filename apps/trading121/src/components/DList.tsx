@@ -9,12 +9,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
 import _ from "underscore";
 import { ButtonIcon } from "./DButton";
-import { DLayoutRow } from "./basic";
+import { DLayoutCol, DLayoutRow } from "./basic";
 
 export const DKeyValueList = ({ object }: TProps) => {
   console.log(object);
   return (
-    <ScrollView style={{ width: "100%" }}>
+    <DLayoutCol style={{ width: "100%" }}>
       {object &&
         Object.keys(object).map((key) => (
           <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 5 }} key={key}>
@@ -22,6 +22,6 @@ export const DKeyValueList = ({ object }: TProps) => {
             <Text style={{ paddingRight: 10 }}>{object[key]}</Text>
           </DLayoutRow>
         ))}
-    </ScrollView>
+    </DLayoutCol>
   );
 };
