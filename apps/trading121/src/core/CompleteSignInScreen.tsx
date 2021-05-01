@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { DContainer, DText, DButton } from "../components/basic";
+import { DContainer, DText, DButton, DLayoutCol } from "../components/basic";
 import { dlog } from "../libs/dlog";
 import { TProps } from "../screens/types";
 import { CoreStateContext } from "./CoreContext";
@@ -7,6 +7,9 @@ import { useCoreApi } from "./useCoreApi";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { colors } from "../styles/colors";
 import { STYLES } from "../components/styles";
+import { DAppLogo } from "../components/DImage";
+import { DLoadingText } from "../components/DText";
+import logo from "../../assets/images/icon_white.png";
 
 // Sign up logic...
 export const CompleteSignInScreen = ({ navigation }: TProps) => {
@@ -31,9 +34,12 @@ export const CompleteSignInScreen = ({ navigation }: TProps) => {
         flexDirection: "column",
       }}
     >
-      <ActivityIndicator size="small" color="white" />
-      <Text style={{ color: "white", marginTop: 14, textAlign: "center", fontWeight: "bold" }}>Loading....</Text>
-      <Text style={{ color: colors.white, marginTop: 10, textAlign: "center" }}>(getting login sessions)</Text>
+      <DLayoutCol>
+        <DAppLogo logo={logo} size={80}></DAppLogo>
+        <DLoadingText color="white" style={{ justifyContent: "flex-end", marginTop: 80 }}>
+          Log you in....
+        </DLoadingText>
+      </DLayoutCol>
     </DContainer>
   );
 };

@@ -14,4 +14,7 @@ export type TProps = {
   item?: any;
   text?: string;
   icon?: string;
+  loading?: boolean;
+  size?: number;
+  color?: string;
 };

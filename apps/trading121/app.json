@@ -15,8 +15,12 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "facebookScheme" : "fb223411552837244",
+    "facebookAppId":"223411552837244",
+    "facebookDisplayName":"Trading 50",
     "android": {
       "package": "com.grodok.trading",
+      "googleServicesFile": "./google-services.json",
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO",

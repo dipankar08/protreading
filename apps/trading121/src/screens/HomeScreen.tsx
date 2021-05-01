@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Button, Text, StyleSheet, View } from "react-native";
 import { AppStateContext } from "../appstate/AppStateStore";
@@ -8,11 +8,13 @@ import { dlog } from "../libs/dlog";
 import { useNetwork } from "../hooks/useNetwork";
 import { useCoreApi } from "../core/useCoreApi";
 import { CoreStateContext } from "../core/CoreContext";
+import { showNotification } from "../libs/uihelper";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const coreState = useContext(CoreStateContext);
   const network = useNetwork();
+  const [loading, setLoading] = useState(false);
 
   let name = "Home";
   useEffect(() => {
@@ -26,7 +28,29 @@ export const HomeScreen = ({ navigation }: TProps) => {
   return (
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
-        <ScreenHeader title={"Home"} style={{ padding: 0 }} icon="reload" onPress={network.fetchUserInfo} />
+        <ScreenHeader
+          loading={loading}
+          title={"Home"}
+          style={{ padding: 0 }}
+          icon="reload"
+          onPress={() => {
+            console.log("onpres called");
+            network.fetchUserInfo({
+              onBefore() {
+                setLoading(true);
+              },
+              onComplete() {
+                setLoading(false);
+              },
+              onSuccess() {
+                showNotification("Data updated");
+              },
+              onError(error) {
+                showNotification(error);
+              },
+            });
+          }}
+        />
         <Text style={styles.headText}>Summary</Text>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>
