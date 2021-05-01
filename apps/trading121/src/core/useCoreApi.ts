@@ -176,11 +176,13 @@ export const useCoreApi = () => {
     console.log("Trying google signin");
     callback.onBefore?.();
     try {
-      console.log(process.env.GOOGLE_AUTH_KEY);
       const result = await Google.logInAsync({
         androidClientId: "290736876800-h120tsplv4jdcf2676dogtjd26f2ftgd.apps.googleusercontent.com", //process.env.GOOGLE_AUTH_KEY,
+        androidStandaloneAppClientId: "290736876800-h120tsplv4jdcf2676dogtjd26f2ftgd.apps.googleusercontent.com",
         scopes: ["profile", "email"],
       });
+
+      console.log(result);
 
       if (result.type === "success" && result.user.email) {
         // console.log(result);
