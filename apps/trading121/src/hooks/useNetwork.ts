@@ -10,6 +10,7 @@ import { showNotification } from "../libs/uihelper";
 import { processSummaryData, processMarketData, processPositionData } from "../models/processor";
 import { getCurrentDate } from "../libs/time";
 import { CoreStateContext } from "../core/CoreContext";
+import { TCallback } from "../core/core_model";
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
@@ -48,11 +49,12 @@ export const useNetwork = () => {
   }
 
   // fetch the User info like position
-  async function fetchUserInfo(onSuccess?: Function, onError?: Function) {
+  async function fetchUserInfo(callback?: TCallback) {
     if (coreState.state.authInfo == null) {
       dlog.d("early return");
       return;
     }
+    callback?.onBefore?.();
     try {
       let position = await getRequest(
         `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100`,
@@ -62,16 +64,14 @@ export const useNetwork = () => {
       verifyOrCrash(appState.state.market != null);
       appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
       setLoading(false);
-      if (onSuccess) {
-        onSuccess();
-      }
+      callback?.onSuccess?.({});
+      callback?.onComplete?.();
     } catch (e) {
       dlog.ex(e);
       setLoading(false);
       setError("Not able to get Data");
-      if (onError) {
-        onError();
-      }
+      callback?.onError?.("Not able to get data");
+      callback?.onComplete?.();
     }
   }
 

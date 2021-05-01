@@ -4,6 +4,7 @@ import RootNavigation from "./src/screens/navigation";
 import { registerRootComponent } from "expo";
 import AppStateStoreProvider from "./src/appstate/AppStateStore";
 import CoreStateStoreProvider from "./src/core/CoreContext";
+import { DStatusBar } from "./src/components/DStatusBar";
 
 // You must given a name app
 export default function App() {

@@ -8,6 +8,7 @@ import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
 import _ from "underscore";
+import { ButtonIcon } from "./DButton";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -263,14 +264,13 @@ export const TextWithIcon = ({ style, onPress, text, icon }: TProps) => {
   );
 };
 
-export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack }: any) => {
+export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack, loading }: any) => {
   return (
     <View
       style={[
         {
           display: "flex",
           flexDirection: "row",
-          paddingVertical: 10,
           padding: 0,
           alignItems: "baseline",
         },
@@ -285,11 +285,7 @@ export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack
         <View></View>
       )}
       <Text style={{ color: "#000000", fontWeight: "bold", fontSize: 22, flex: 1, textTransform: "capitalize" }}>{title}</Text>
-      {icon && (
-        <TouchableOpacity onPress={onPress}>
-          <MaterialCommunityIcons name={icon || "menu"} color="black" size={24} />
-        </TouchableOpacity>
-      )}
+      {icon && <ButtonIcon icon={icon} size={24} color="black" loading={loading || false} onPress={onPress}></ButtonIcon>}
     </View>
   );
 };

@@ -9,10 +9,19 @@ import { TProps } from "../screens/types";
 import { Image, Text, View, StyleSheet } from "react-native";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
+import { DStatusBar } from "../components/DStatusBar";
+import { STRINGS } from "../res/strings";
+import { DTextFooter, DTextSubTitle, DTextTitle } from "../components/DText";
+import { DButtonWithIcon } from "../components/DButton";
+import { colors } from "../styles/colors";
+import { DIMENS } from "../res/dimens";
+import { showNotification } from "../libs/uihelper";
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
   const [email, setEmail] = useState("");
   const coreState = useContext(CoreStateContext);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
+  const [loadingFacebook, setLoadingFacebook] = useState(false);
   const coreApi = useCoreApi();
   let name = "SignIn";
   useEffect(() => {
@@ -40,17 +49,61 @@ export const SignInScreen = ({ navigation }: TProps) => {
         }}
         source={logo}
       />
-      <Text style={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: 26 }}>Welcome to Trading50!</Text>
-      <Text style={{ color: "white", textAlign: "center", marginBottom: 50, marginTop: 10, alignSelf: "center", fontSize: 18, opacity: 0.75 }}>
-        We helps you be a better trader.
-      </Text>
-      <DText secondary dark style={{ fontSize: 15 }}>
-        Enter your email address to sign in.
-      </DText>
-      <DTextInput placeholder="enter the text" dark onChangeText={setEmail}></DTextInput>
-      <DButton dark primary onPress={signIn}>
-        Sign In
-      </DButton>
+      <DTextTitle style={{ color: "white", textAlign: "center" }}>{STRINGS.APP_NAME}</DTextTitle>
+
+      <DTextSubTitle style={{ color: "white", textAlign: "center", marginTop: 40 }}>Please login using your social account</DTextSubTitle>
+
+      <DButtonWithIcon
+        loading={loadingFacebook}
+        icon="facebook"
+        style={{ backgroundColor: colors.blue600, marginTop: DIMENS.GAP_4X }}
+        onPress={() =>
+          coreApi.FacebookSignIn({
+            onSuccess() {
+              coreApi.navigateTo(navigation, "CompleteSignInScreen");
+              setTimeout(() => coreApi.navigateNext("SIGN_IN", navigation), 10);
+            },
+            onBefore() {
+              setLoadingFacebook(true);
+            },
+            onComplete() {
+              setLoadingFacebook(false);
+            },
+            onError(msg: string) {
+              showNotification(msg);
+            },
+          })
+        }
+      >
+        Login as Facebook
+      </DButtonWithIcon>
+      <DButtonWithIcon
+        loading={loadingGoogle}
+        icon="google"
+        style={{ backgroundColor: colors.red600 }}
+        onPress={() =>
+          coreApi.GoogleSignIn({
+            onSuccess() {
+              coreApi.navigateTo(navigation, "CompleteSignInScreen");
+              setTimeout(() => coreApi.navigateNext("SIGN_IN", navigation), 10);
+            },
+            onBefore() {
+              setLoadingGoogle(true);
+            },
+            onComplete() {
+              setLoadingGoogle(false);
+            },
+            onError(msg: string) {
+              showNotification(msg);
+            },
+          })
+        }
+      >
+        Login as Google
+      </DButtonWithIcon>
+      <DTextFooter style={{ color: "white", textAlign: "center" }}>
+        (You can use your google and facebook account to get signin. You can login using anyone of this if they have same email address. )
+      </DTextFooter>
     </DContainer>
   );
 };

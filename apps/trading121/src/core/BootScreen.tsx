@@ -6,7 +6,10 @@ import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { colors } from "../styles/colors";
+import { DLoadingText } from "../components/DText";
+import { DAppLogo } from "../components/DImage";
+import logo from "../../assets/images/icon_white.png";
+import { DIMENS } from "../res/dimens";
 
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
 export const BootScreen = ({ navigation }: any) => {
@@ -16,7 +19,7 @@ export const BootScreen = ({ navigation }: any) => {
     coreApi.doAppBoot(() => {
       setTimeout(() => {
         coreApi.navigateNext("BOOT", navigation);
-      }, 1000);
+      }, 500);
     });
   }, []);
 
@@ -31,9 +34,12 @@ export const BootScreen = ({ navigation }: any) => {
         flexDirection: "column",
       }}
     >
-      <ActivityIndicator size="small" color="white" />
-      <Text style={{ color: "white", marginTop: 14, textAlign: "center", fontWeight: "bold" }}>Loading....</Text>
-      <Text style={{ color: colors.white, marginTop: 10, textAlign: "center" }}>(Trying to load boot config)</Text>
+      <DLayoutCol>
+        <DAppLogo logo={logo} size={80}></DAppLogo>
+        <DLoadingText color="white" style={{ justifyContent: "flex-end", marginTop: 80 }}>
+          Staring the app...
+        </DLoadingText>
+      </DLayoutCol>
     </DContainer>
   );
 };
