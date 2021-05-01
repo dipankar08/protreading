@@ -144,7 +144,7 @@ export const useCoreApi = () => {
         const data = await response.json();
         //const resp1 = await fetch(`https://graph.facebook.com/${data.id}/picture?type=square`);
         //const profile_pic = await resp1.json();
-        console.log(profile_pic);
+        // console.log(profile_pic);
         let authInfo: TAuthInfo = {
           user_id: data.email || data.id,
           email: data.email || data.id,
@@ -158,7 +158,6 @@ export const useCoreApi = () => {
             authInfo: authInfo,
           },
         });
-        Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
         callback.onSuccess?.({});
         callback.onComplete?.();
       } else {
@@ -212,6 +211,23 @@ export const useCoreApi = () => {
     }
   };
 
+  const loginAsGuest = function (callback: TCallback) {
+    let authInfo: TAuthInfo = {
+      user_id: "test@test.com",
+      name: "Guest User",
+      email: "test@test.com",
+      profile_image: "",
+    };
+    coreState.dispatch({
+      type: "MERGE_STATE",
+      payload: {
+        authInfo: authInfo,
+      },
+    });
+    callback.onSuccess?.(authInfo);
+    callback.onComplete?.();
+  };
+
   return {
     loading,
     error,
@@ -226,5 +242,6 @@ export const useCoreApi = () => {
     GoogleSignIn,
     navigateTo,
     FacebookSignIn,
+    loginAsGuest,
   };
 };

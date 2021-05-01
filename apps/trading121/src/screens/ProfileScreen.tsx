@@ -17,8 +17,8 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
   }, []);
 
   return (
-    <DContainerSafe style={{ padding: 16 }}>
-      <DLayoutCol style={{ alignContent: "center" }}>
+    <ScrollView>
+      <DLayoutCol style={{ padding: 10 }}>
         <ScreenHeader title="Profile" style={{ padding: 16 }}></ScreenHeader>
         <LogoutCard></LogoutCard>
         <DButton style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
@@ -32,14 +32,17 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
         >
           Test
         </DButton>
+        <AppInfoCard />
       </DLayoutCol>
-    </DContainerSafe>
+    </ScrollView>
   );
 };
 
 // Use this cscreen for testing purpose
 import { WebView } from "react-native-webview";
 import { LogoutCard } from "../core/LogoutCard";
+import { AppInfoCard } from "../core/AppInfoCard";
+import { ScrollView } from "react-native";
 export const TestScreen = () => {
   return (
     <DContainerSafe style={{ flex: 1 }}>

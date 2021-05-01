@@ -1,5 +1,6 @@
 import { Route } from "@react-navigation/routers";
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { TObject } from "../models/model";
 export type TProps = {
   navigation?: any;
   children?: any;
@@ -17,4 +18,6 @@ export type TProps = {
   loading?: boolean;
   size?: number;
   color?: string;
+  items?: Array<TObject>;
+  object?: TObject;
 };

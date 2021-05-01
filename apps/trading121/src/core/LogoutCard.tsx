@@ -10,6 +10,7 @@ import { Image, Text, View, StyleSheet } from "react-native";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { colors } from "../styles/colors";
+import { Updates, Constants } from "expo";
 
 // Simple Logout card which should be embedit in the app
 export const LogoutCard = ({ navigation, route }: TProps) => {

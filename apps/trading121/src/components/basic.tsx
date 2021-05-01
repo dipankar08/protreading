@@ -175,7 +175,7 @@ export const DSpace = ({ children, style }: TProps) => {
   );
 };
 
-export const DLayoutRow = ({ children, row, equal, center, style }: any) => {
+export const DLayoutRow = ({ children, center, style }: TProps) => {
   return (
     <View
       style={[
@@ -191,7 +191,7 @@ export const DLayoutRow = ({ children, row, equal, center, style }: any) => {
   );
 };
 
-export const DLayoutCol = ({ children, row, equal, center, style }: TProps) => {
+export const DLayoutCol = ({ children, center, style }: TProps) => {
   return (
     <View
       style={[

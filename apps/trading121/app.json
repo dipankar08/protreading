@@ -1,9 +1,9 @@
 {
-  "name": "trading121",
-  "displayName": "trading121",
+  "name": "trad50",
+  "displayName": "trad50",
   "expo": {
-    "name": "trading121",
-    "slug": "trading121",
+    "name": "trad50",
+    "slug": "trad50",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,11 +15,17 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "updates": {
+      "checkAutomatically": "ON_LOAD",
+      "enabled": true,
+      "fallbackToCacheTimeout": 30000
+    },
     "facebookScheme" : "fb223411552837244",
     "facebookAppId":"223411552837244",
     "facebookDisplayName":"Trading 50",
     "android": {
       "package": "com.grodok.trading",
+      "versionCode": 4,
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "CAMERA",
@@ -30,7 +36,7 @@
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
       ],
-      "versionCode": 3
+
     },
     "androidStatusBar": {
       "backgroundColor": "#ff914d",

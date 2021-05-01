@@ -51,3 +51,31 @@ export const ButtonIcon = ({ onPress, icon, size, color, loading }: TProps) => {
     </TouchableOpacity>
   );
 };
+
+export const DButtonPrimary = ({ onPress, icon, size, color, loading, children }: TProps) => {
+  return (
+    <TouchableOpacity onPress={onPress} disabled={loading}>
+      <DLayoutRow
+        style={{
+          backgroundColor: color || colors.green600,
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          borderRadius: 6,
+          marginTop: DIMENS.GAP_2X,
+          justifyContent: "center",
+        }}
+      >
+        {loading && <ActivityIndicator size="small" color={"white"} />}
+        {!loading && <Text style={{ color: "white" }}>{children}</Text>}
+      </DLayoutRow>
+    </TouchableOpacity>
+  );
+};
+
+export const DButtonLink = ({ onPress, color, loading, children, style }: TProps) => {
+  return (
+    <TouchableOpacity onPress={onPress} disabled={loading}>
+      <Text style={[{ color: color || colors.blue700 }, style]}>{children}</Text>
+    </TouchableOpacity>
+  );
+};
