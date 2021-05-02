@@ -1,14 +1,14 @@
 export namespace dlog {
-  export function d(msg: string) {
-    console.log(`\n[DEBUG]${msg}`);
+  export function d(msg?: string) {
+    console.log(`\n[DEBUG]${msg || "null"}`);
   }
-  export function e(msg: string) {
-    console.log(`[ERROR]${msg}`);
+  export function e(msg?: string) {
+    console.log(`[ERROR]${msg || "null"}`);
   }
-  export function obj(obj: Object) {
-    console.log("=========================== DEBUG OBJECT  START ======================");
-    console.log(JSON.stringify(obj));
-    console.log("=========================== DEBUG OBJECT END ======================");
+  export function obj(obj?: Object, msg: string = "DEBUG OBJECT") {
+    console.log(`=========================== ${msg} START ======================`);
+    console.log(JSON.stringify(obj || {}, null, 1));
+    console.log(`=========================== ${msg} END ======================`);
   }
   export function map(map: Map<any, any>) {
     console.log("=========================== DEBUG OBJECT  START ======================");

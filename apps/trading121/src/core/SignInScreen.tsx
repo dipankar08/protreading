@@ -16,6 +16,7 @@ import { DButtonLink, DButtonWithIcon } from "../components/DButton";
 import { colors } from "../styles/colors";
 import { DIMENS } from "../res/dimens";
 import { showNotification } from "../libs/uihelper";
+import Constants from "expo-constants";
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
   const [email, setEmail] = useState("");
@@ -25,6 +26,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const [loadingGuest, setLoadingGuest] = useState(false);
   const coreApi = useCoreApi();
   let name = "SignIn";
+  dlog.obj(Constants, "Expo Constants");
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
     return () => {

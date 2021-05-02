@@ -43,11 +43,11 @@ export const DButtonWithIcon = ({ children, style, onPress, icon, loading }: TPr
   );
 };
 
-export const ButtonIcon = ({ onPress, icon, size, color, loading }: TProps) => {
+export const DButtonIcon = ({ onPress, icon, size, color, loading, style }: TProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
       {loading && <ActivityIndicator size="small" color={color || "black"} />}
-      {!loading && <MaterialCommunityIcons name={icon || "menu"} color={color || "black"} size={size || 24} />}
+      {!loading && <MaterialCommunityIcons name={icon || "menu"} color={color || "black"} size={size || 24} style={style} />}
     </TouchableOpacity>
   );
 };
@@ -76,6 +76,39 @@ export const DButtonLink = ({ onPress, color, loading, children, style }: TProps
   return (
     <TouchableOpacity onPress={onPress} disabled={loading}>
       <Text style={[{ color: color || colors.blue700 }, style]}>{children}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export const DButtonTag = ({ onPress, color, loading, text, style }: TProps) => {
+  return (
+    <TouchableOpacity onPress={onPress} disabled={loading}>
+      <DLayoutRow
+        style={[
+          {
+            color: "white",
+            backgroundColor: color || "#ff8303",
+            borderRadius: 10,
+            textTransform: "uppercase",
+          },
+          style,
+        ]}
+      >
+        <Text
+          style={[
+            {
+              textAlign: "center",
+              fontSize: 10,
+              color: "white",
+              paddingVertical: 5,
+              paddingHorizontal: 10,
+              textTransform: "uppercase",
+            },
+          ]}
+        >
+          {text || "hello"}
+        </Text>
+      </DLayoutRow>
     </TouchableOpacity>
   );
 };

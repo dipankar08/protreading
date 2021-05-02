@@ -20,7 +20,10 @@ export const useNetwork = () => {
 
   async function doAllNetworkCallOnBoot(callback: TCallback) {
     await reLoadAllData();
-    await fetchUserInfo(callback);
+    // app.dispatch may takes time
+    setTimeout(() => {
+      fetchUserInfo(callback);
+    }, 500);
   }
 
   // realod all market Data

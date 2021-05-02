@@ -8,7 +8,7 @@ import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
 import _ from "underscore";
-import { ButtonIcon } from "./DButton";
+import { DButtonIcon } from "./DButton";
 import { DLayoutCol, DLayoutRow } from "./basic";
 
 export const DKeyValueList = ({ object }: TProps) => {
