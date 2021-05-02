@@ -1,16 +1,5 @@
 import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal, useWindowDimensions } from "react-native";
-import {
-  DContainer,
-  DLayoutCol,
-  DLayoutRow,
-  DCard,
-  DText,
-  DButton,
-  FlatListItemSeparator,
-  ScreenHeader,
-  DContainerSafe,
-  QuickButton,
-} from "../components/basic";
+import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator, ScreenHeader, DContainerSafe } from "../components/basic";
 import { TProps } from "./types";
 import React, { useEffect, useState } from "react";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -23,14 +12,15 @@ import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
 import { globalStyle, STYLES } from "../components/styles";
 import { useNetwork } from "../hooks/useNetwork";
 import { colors } from "../styles/colors";
+import { DButtonTag } from "../components/DButton";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Break View" },
-    { key: "second", title: "Consolidated View" },
+    { key: "first", title: "Break View", navigation: navigation },
+    { key: "second", title: "Consolidated View", navigation: navigation },
   ]);
   const renderScene = SceneMap({
     first: PositionListView,
@@ -50,7 +40,7 @@ export const PositionScreen = ({ navigation }: TProps) => {
   );
 };
 
-export const PositionListView = ({ route }: TProps) => {
+export const PositionListView = ({ route, navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const network = useNetwork();
   const [listData, setListData] = React.useState<TOrder[]>([]);
@@ -100,35 +90,43 @@ export const PositionListView = ({ route }: TProps) => {
                     <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
                     <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
                       {item.isBreakOrder && item.is_open && (
-                        <QuickButton
-                          style={{ backgroundColor: colors.orange600 }}
+                        <DButtonTag
+                          style={{ backgroundColor: colors.orange600, marginEnd: 10 }}
                           onPress={() => {
                             setSelectedItem(item);
                             setDialogVisible(true);
                           }}
-                        >
-                          closeOrder
-                        </QuickButton>
+                          text="close"
+                        ></DButtonTag>
                       )}
                       {item.isBreakOrder && !item.is_open && (
-                        <QuickButton
-                          style={{ backgroundColor: colors.yellow400 }}
+                        <DButtonTag
+                          style={{ backgroundColor: colors.yellow400, marginEnd: 10 }}
                           onPress={() => {
                             network.reopenOrder(item._id);
                           }}
-                        >
-                          reopen Order
-                        </QuickButton>
+                          text="reopen"
+                        ></DButtonTag>
                       )}
-                      <QuickButton
-                        style={{ backgroundColor: colors.green600 }}
+                      <DButtonTag
+                        style={{ backgroundColor: colors.green600, marginEnd: 10 }}
                         onPress={() => {
                           setSelectedItem(item);
                           setViewDialogVisible(true);
                         }}
+                        text="order"
+                      ></DButtonTag>
+                      <DButtonTag
+                        style={{ backgroundColor: colors.green600, marginEnd: 10 }}
+                        onPress={() => {
+                          route.navigation.navigate("WebViewScreen", {
+                            url: `https://uk.tradingview.com/chart/?symbol=NSE:${item.symbol.replace(".NS", "")}&interval=5`,
+                          });
+                        }}
+                        text="chart"
                       >
-                        View Order
-                      </QuickButton>
+                        chart
+                      </DButtonTag>
                     </View>
                   </DLayoutCol>
                   <DLayoutCol style={{ alignItems: "flex-end" }}>

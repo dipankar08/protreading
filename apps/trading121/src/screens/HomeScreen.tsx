@@ -9,6 +9,7 @@ import { useNetwork } from "../hooks/useNetwork";
 import { useCoreApi } from "../core/useCoreApi";
 import { CoreStateContext } from "../core/CoreContext";
 import { showNotification } from "../libs/uihelper";
+import { DTextSection, DTextSectionWithButton } from "../components/DText";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
@@ -47,7 +48,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
         <ScreenHeader loading={loading} title={"Home"} style={{ padding: 0 }} icon="reload" onPress={refreshData} />
-        <Text style={styles.headText}>Summary</Text>
+        <DTextSection>Summary</DTextSection>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>
             <DLayoutCol style={{ flex: 1 }}>
@@ -112,7 +113,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
             </DLayoutCol>
           </DLayoutRow>
         </View>
-        <Text style={styles.headText}>Possible Buy</Text>
+        <DTextSectionWithButton icon={"plus"}>Focus Stocks</DTextSectionWithButton>
       </DLayoutCol>
     </DContainerSafe>
   );
@@ -121,12 +122,6 @@ export const HomeScreen = ({ navigation }: TProps) => {
 const styles = StyleSheet.create({
   right: {
     textAlign: "right",
-  },
-  headText: {
-    color: "#00000088",
-    fontSize: 14,
-    textTransform: "uppercase",
-    marginTop: 10,
   },
   card: {
     backgroundColor: "#1584dc",

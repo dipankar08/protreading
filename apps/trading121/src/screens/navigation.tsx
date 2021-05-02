@@ -16,6 +16,7 @@ import { DebugScreen } from "./DebugScreen";
 import { TestScreen } from "./ProfileScreen";
 import { CoreStateContext } from "../core/CoreContext";
 import { CoreStackScreen } from "../core/core_navigation";
+import { WebViewScreen } from "../core/WebViewScreen";
 
 // Home Stack
 const HomeStack = createStackNavigator();
@@ -71,6 +72,21 @@ const ProfileStackScreen = () => (
     <ProfileStack.Screen
       name="TestScreen"
       component={TestScreen}
+      options={{
+        title: "Test",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+    <ProfileStack.Screen
+      name="WebViewScreen"
+      component={WebViewScreen}
       options={{
         title: "Test",
         headerShown: false,

@@ -28,6 +28,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { dlog } from "../libs/dlog";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { useNetwork } from "../hooks/useNetwork";
+import { DButtonTag } from "../components/DButton";
+import { colors } from "../styles/colors";
 
 export const MarketScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
@@ -201,14 +203,35 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
                 >
                   {item.symbol}
                 </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    openBottomSheet(item);
-                  }}
-                >
-                  {item.recommended_to_buy != undefined && <Text style={styles.tag_green}>Recommend to buy</Text>}
-                  {item.recommended_to_sell && <Text style={styles.tag_red}>Recommend to sell</Text>}
-                </TouchableOpacity>
+                <DLayoutRow>
+                  <DButtonTag
+                    onPress={() => {
+                      navigation.navigate("WebViewScreen", {
+                        url: `https://uk.tradingview.com/chart/?symbol=NSE:${item.symbol.replace(".NS", "")}&interval=5`,
+                      });
+                    }}
+                    style={{ marginTop: 10, marginRight: 10, backgroundColor: colors.blue600 }}
+                    text={"chart"}
+                  />
+                  {item.recommended_to_buy != undefined && (
+                    <DButtonTag
+                      onPress={() => {
+                        openBottomSheet(item);
+                      }}
+                      style={{ backgroundColor: "#1e6f5c", marginTop: 10 }}
+                      text={"Recommend to buy"}
+                    ></DButtonTag>
+                  )}
+                  {item.recommended_to_sell && (
+                    <DButtonTag
+                      onPress={() => {
+                        openBottomSheet(item);
+                      }}
+                      style={{ marginTop: 10 }}
+                      text={"Recommend to sell"}
+                    ></DButtonTag>
+                  )}
+                </DLayoutRow>
               </View>
               <View
                 style={{
@@ -302,29 +325,4 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  tag_green: {
-    color: "white",
-    backgroundColor: "#1e6f5c",
-    width: 150,
-    textAlign: "center",
-    fontSize: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    textTransform: "uppercase",
-    marginTop: 10,
-  },
-  tag_red: {
-    color: "white",
-    backgroundColor: "#ff8303",
-    width: 150,
-    textAlign: "center",
-    fontSize: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    textTransform: "uppercase",
-    marginTop: 10,
-  },
-});
+const styles = StyleSheet.create({});

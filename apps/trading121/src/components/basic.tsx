@@ -8,7 +8,8 @@ import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
 import _ from "underscore";
-import { ButtonIcon } from "./DButton";
+import { DButtonIcon } from "./DButton";
+import { DScreenTitle } from "./DText";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -82,31 +83,6 @@ export const DButton = ({ children, style, primary, secondary, onPress, dark }: 
             marginVertical: 8,
             borderRadius: 6,
             textTransform: "uppercase",
-          },
-          style,
-        ]}
-      >
-        {children}
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
-export const QuickButton = ({ children, onPress, style }: TProps) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={{ width: "100%" }}>
-      <Text
-        style={[
-          {
-            backgroundColor: STYLES.APP_COLOR_PRIMARY,
-            color: "white",
-            textAlign: "center",
-            paddingVertical: 2,
-            paddingHorizontal: 10,
-            marginRight: 10,
-            borderRadius: 10,
-            fontSize: 14,
-            textTransform: "capitalize",
           },
           style,
         ]}
@@ -284,8 +260,8 @@ export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack
       ) : (
         <View></View>
       )}
-      <Text style={{ color: "#000000", fontWeight: "bold", fontSize: 22, flex: 1, textTransform: "capitalize" }}>{title}</Text>
-      {icon && <ButtonIcon icon={icon} size={24} color="black" loading={loading || false} onPress={onPress}></ButtonIcon>}
+      <DScreenTitle>{title}</DScreenTitle>
+      {icon && <DButtonIcon icon={icon} size={24} color="black" loading={loading || false} onPress={onPress}></DButtonIcon>}
     </View>
   );
 };
