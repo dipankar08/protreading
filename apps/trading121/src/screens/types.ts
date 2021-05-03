@@ -20,4 +20,5 @@ export type TProps = {
   color?: string;
   items?: Array<TObject>;
   object?: TObject;
+  numberOfLines?: number;
 };

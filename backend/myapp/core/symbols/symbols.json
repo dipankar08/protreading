@@ -1,6 +1,7 @@
 {
     "SUPPORTED_SYMBOL": [
         {
+            "domain": "IN",
             "isin": "INE791I01019",
             "key": "BRIGADE.NS",
             "name": "Brigade Enterprises Ltd.",
@@ -11,6 +12,7 @@
             "text": "Brigade Enterprises Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE271C01023",
             "key": "DLF.NS",
             "name": "DLF Ltd.",
@@ -21,6 +23,7 @@
             "text": "DLF Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE484J01027",
             "key": "GODREJPROP.NS",
             "name": "Godrej Properties Ltd.",
@@ -31,6 +34,7 @@
             "text": "Godrej Properties Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE0AJG01018",
             "key": "HEMIPROP.NS",
             "name": "Hemisphere Properties India Ltd.",
@@ -41,6 +45,7 @@
             "text": "Hemisphere Properties India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE069I01010",
             "key": "IBREALEST.NS",
             "name": "Indiabulls Real Estate Ltd.",
@@ -51,6 +56,7 @@
             "text": "Indiabulls Real Estate Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE093I01010",
             "key": "OBEROIRLTY.NS",
             "name": "Oberoi Realty Ltd.",
@@ -61,6 +67,7 @@
             "text": "Oberoi Realty Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE211B01039",
             "key": "PHOENIXLTD.NS",
             "name": "Phoenix Mills Ltd.",
@@ -71,6 +78,7 @@
             "text": "Phoenix Mills Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE811K01011",
             "key": "PRESTIGE.NS",
             "name": "Prestige Estates Projects Ltd.",
@@ -81,6 +89,7 @@
             "text": "Prestige Estates Projects Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE671H01015",
             "key": "SOBHA.NS",
             "name": "Sobha Ltd.",
@@ -91,6 +100,7 @@
             "text": "Sobha Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE805D01034",
             "key": "SUNTECK.NS",
             "name": "Sunteck Realty Ltd.",
@@ -101,6 +111,7 @@
             "text": "Sunteck Realty Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE885A01032",
             "key": "AMARAJABAT.NS",
             "name": "Amara Raja Batteries Ltd.",
@@ -111,6 +122,7 @@
             "text": "Amara Raja Batteries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE208A01029",
             "key": "ASHOKLEY.NS",
             "name": "Ashok Leyland Ltd.",
@@ -121,6 +133,7 @@
             "text": "Ashok Leyland Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE917I01010",
             "key": "BAJAJ-AUTO.NS",
             "name": "Bajaj Auto Ltd.",
@@ -131,6 +144,7 @@
             "text": "Bajaj Auto Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE787D01026",
             "key": "BALKRISIND.NS",
             "name": "Balkrishna Industries Ltd.",
@@ -141,6 +155,7 @@
             "text": "Balkrishna Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE465A01025",
             "key": "BHARATFORG.NS",
             "name": "Bharat Forge Ltd.",
@@ -151,6 +166,7 @@
             "text": "Bharat Forge Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE323A01026",
             "key": "BOSCHLTD.NS",
             "name": "Bosch Ltd.",
@@ -161,6 +177,7 @@
             "text": "Bosch Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE066A01021",
             "key": "EICHERMOT.NS",
             "name": "Eicher Motors Ltd.",
@@ -171,6 +188,7 @@
             "text": "Eicher Motors Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE302A01020",
             "key": "EXIDEIND.NS",
             "name": "Exide Industries Ltd.",
@@ -181,6 +199,7 @@
             "text": "Exide Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE158A01026",
             "key": "HEROMOTOCO.NS",
             "name": "Hero MotoCorp Ltd.",
@@ -191,6 +210,7 @@
             "text": "Hero MotoCorp Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE883A01011",
             "key": "MRF.NS",
             "name": "MRF Ltd.",
@@ -201,6 +221,7 @@
             "text": "MRF Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE101A01026",
             "key": "M&M.NS",
             "name": "Mahindra & Mahindra Ltd.",
@@ -211,6 +232,7 @@
             "text": "Mahindra & Mahindra Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE585B01010",
             "key": "MARUTI.NS",
             "name": "Maruti Suzuki India Ltd.",
@@ -221,6 +243,7 @@
             "text": "Maruti Suzuki India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE775A01035",
             "key": "MOTHERSUMI.NS",
             "name": "Motherson Sumi Systems Ltd.",
@@ -231,6 +254,7 @@
             "text": "Motherson Sumi Systems Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE494B01023",
             "key": "TVSMOTOR.NS",
             "name": "TVS Motor Company Ltd.",
@@ -241,6 +265,7 @@
             "text": "TVS Motor Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE155A01022",
             "key": "TATAMOTORS.NS",
             "name": "Tata Motors Ltd.",
@@ -251,6 +276,7 @@
             "text": "Tata Motors Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE702C01027",
             "key": "APLAPOLLO.NS",
             "name": "APL Apollo Tubes Ltd.",
@@ -261,6 +287,7 @@
             "text": "APL Apollo Tubes Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE423A01024",
             "key": "ADANIENT.NS",
             "name": "Adani Enterprises Ltd.",
@@ -271,6 +298,7 @@
             "text": "Adani Enterprises Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE522F01014",
             "key": "COALINDIA.NS",
             "name": "Coal India Ltd.",
@@ -281,6 +309,7 @@
             "text": "Coal India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE038A01020",
             "key": "HINDALCO.NS",
             "name": "Hindalco Industries Ltd.",
@@ -291,6 +320,7 @@
             "text": "Hindalco Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE267A01025",
             "key": "HINDZINC.NS",
             "name": "Hindustan Zinc Ltd.",
@@ -301,6 +331,7 @@
             "text": "Hindustan Zinc Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE019A01038",
             "key": "JSWSTEEL.NS",
             "name": "JSW Steel Ltd.",
@@ -311,6 +342,7 @@
             "text": "JSW Steel Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE749A01030",
             "key": "JINDALSTEL.NS",
             "name": "Jindal Steel & Power Ltd.",
@@ -321,6 +353,7 @@
             "text": "Jindal Steel & Power Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE490G01020",
             "key": "MOIL.NS",
             "name": "MOIL Ltd.",
@@ -331,6 +364,7 @@
             "text": "MOIL Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE584A01023",
             "key": "NMDC.NS",
             "name": "NMDC Ltd.",
@@ -341,6 +375,7 @@
             "text": "NMDC Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE139A01034",
             "key": "NATIONALUM.NS",
             "name": "National Aluminium Co. Ltd.",
@@ -351,6 +386,7 @@
             "text": "National Aluminium Co. Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE703B01027",
             "key": "RATNAMANI.NS",
             "name": "Ratnamani Metals & Tubes Ltd.",
@@ -361,6 +397,7 @@
             "text": "Ratnamani Metals & Tubes Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE114A01011",
             "key": "SAIL.NS",
             "name": "Steel Authority of India Ltd.",
@@ -371,6 +408,7 @@
             "text": "Steel Authority of India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE081A01012",
             "key": "TATASTEEL.NS",
             "name": "Tata Steel Ltd.",
@@ -381,6 +419,7 @@
             "text": "Tata Steel Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE205A01025",
             "key": "VEDL.NS",
             "name": "Vedanta Ltd.",
@@ -391,6 +430,7 @@
             "text": "Vedanta Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE191B01025",
             "key": "WELCORP.NS",
             "name": "Welspun Corp Ltd.",
@@ -401,6 +441,7 @@
             "text": "Welspun Corp Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE012A01025",
             "key": "ACC.NS",
             "name": "ACC Ltd.",
@@ -411,6 +452,7 @@
             "text": "ACC Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE358A01014",
             "key": "ABBOTINDIA.NS",
             "name": "Abbott India Ltd.",
@@ -421,6 +463,7 @@
             "text": "Abbott India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE364U01010",
             "key": "ADANIGREEN.NS",
             "name": "Adani Green Energy Ltd.",
@@ -431,6 +474,7 @@
             "text": "Adani Green Energy Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE742F01042",
             "key": "ADANIPORTS.NS",
             "name": "Adani Ports and Special Economic Zone Ltd.",
@@ -441,6 +485,7 @@
             "text": "Adani Ports and Special Economic Zone Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE931S01010",
             "key": "ADANITRANS.NS",
             "name": "Adani Transmission Ltd.",
@@ -451,6 +496,7 @@
             "text": "Adani Transmission Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE540L01014",
             "key": "ALKEM.NS",
             "name": "Alkem Laboratories Ltd.",
@@ -461,6 +507,7 @@
             "text": "Alkem Laboratories Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE079A01024",
             "key": "AMBUJACEM.NS",
             "name": "Ambuja Cements Ltd.",
@@ -471,6 +518,7 @@
             "text": "Ambuja Cements Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE437A01024",
             "key": "APOLLOHOSP.NS",
             "name": "Apollo Hospitals Enterprise Ltd.",
@@ -481,6 +529,7 @@
             "text": "Apollo Hospitals Enterprise Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE021A01026",
             "key": "ASIANPAINT.NS",
             "name": "Asian Paints Ltd.",
@@ -491,6 +540,7 @@
             "text": "Asian Paints Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE406A01037",
             "key": "AUROPHARMA.NS",
             "name": "Aurobindo Pharma Ltd.",
@@ -501,6 +551,7 @@
             "text": "Aurobindo Pharma Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE192R01011",
             "key": "DMART.NS",
             "name": "Avenue Supermarts Ltd.",
@@ -511,6 +562,7 @@
             "text": "Avenue Supermarts Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE238A01034",
             "key": "AXISBANK.NS",
             "name": "Axis Bank Ltd.",
@@ -521,6 +573,7 @@
             "text": "Axis Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE296A01024",
             "key": "BAJFINANCE.NS",
             "name": "Bajaj Finance Ltd.",
@@ -531,6 +584,7 @@
             "text": "Bajaj Finance Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE918I01018",
             "key": "BAJAJFINSV.NS",
             "name": "Bajaj Finserv Ltd.",
@@ -541,6 +595,7 @@
             "text": "Bajaj Finserv Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE118A01012",
             "key": "BAJAJHLDNG.NS",
             "name": "Bajaj Holdings & Investment Ltd.",
@@ -551,6 +606,7 @@
             "text": "Bajaj Holdings & Investment Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE545U01014",
             "key": "BANDHANBNK.NS",
             "name": "Bandhan Bank Ltd.",
@@ -561,6 +617,7 @@
             "text": "Bandhan Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE463A01038",
             "key": "BERGEPAINT.NS",
             "name": "Berger Paints India Ltd.",
@@ -571,6 +628,7 @@
             "text": "Berger Paints India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE029A01011",
             "key": "BPCL.NS",
             "name": "Bharat Petroleum Corporation Ltd.",
@@ -581,6 +639,7 @@
             "text": "Bharat Petroleum Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE397D01024",
             "key": "BHARTIARTL.NS",
             "name": "Bharti Airtel Ltd.",
@@ -591,6 +650,7 @@
             "text": "Bharti Airtel Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE376G01013",
             "key": "BIOCON.NS",
             "name": "Biocon Ltd.",
@@ -601,6 +661,7 @@
             "text": "Biocon Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE216A01030",
             "key": "BRITANNIA.NS",
             "name": "Britannia Industries Ltd.",
@@ -611,6 +672,7 @@
             "text": "Britannia Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE010B01027",
             "key": "CADILAHC.NS",
             "name": "Cadila Healthcare Ltd.",
@@ -621,6 +683,7 @@
             "text": "Cadila Healthcare Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE059A01026",
             "key": "CIPLA.NS",
             "name": "Cipla Ltd.",
@@ -631,6 +694,7 @@
             "text": "Cipla Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE259A01022",
             "key": "COLPAL.NS",
             "name": "Colgate Palmolive (India) Ltd.",
@@ -641,6 +705,7 @@
             "text": "Colgate Palmolive (India) Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE016A01026",
             "key": "DABUR.NS",
             "name": "Dabur India Ltd.",
@@ -651,6 +716,7 @@
             "text": "Dabur India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE361B01024",
             "key": "DIVISLAB.NS",
             "name": "Divi's Laboratories Ltd.",
@@ -661,6 +727,7 @@
             "text": "Divi's Laboratories Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE089A01023",
             "key": "DRREDDY.NS",
             "name": "Dr. Reddy's Laboratories Ltd.",
@@ -671,6 +738,7 @@
             "text": "Dr. Reddy's Laboratories Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE129A01019",
             "key": "GAIL.NS",
             "name": "GAIL (India) Ltd.",
@@ -681,6 +749,7 @@
             "text": "GAIL (India) Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE102D01028",
             "key": "GODREJCP.NS",
             "name": "Godrej Consumer Products Ltd.",
@@ -691,6 +760,7 @@
             "text": "Godrej Consumer Products Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE047A01021",
             "key": "GRASIM.NS",
             "name": "Grasim Industries Ltd.",
@@ -701,6 +771,7 @@
             "text": "Grasim Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE860A01027",
             "key": "HCLTECH.NS",
             "name": "HCL Technologies Ltd.",
@@ -711,6 +782,7 @@
             "text": "HCL Technologies Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE127D01025",
             "key": "HDFCAMC.NS",
             "name": "HDFC Asset Management Company Ltd.",
@@ -721,6 +793,7 @@
             "text": "HDFC Asset Management Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE040A01034",
             "key": "HDFCBANK.NS",
             "name": "HDFC Bank Ltd.",
@@ -731,6 +804,7 @@
             "text": "HDFC Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE795G01014",
             "key": "HDFCLIFE.NS",
             "name": "HDFC Life Insurance Company Ltd.",
@@ -741,6 +815,7 @@
             "text": "HDFC Life Insurance Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE176B01034",
             "key": "HAVELLS.NS",
             "name": "Havells India Ltd.",
@@ -751,6 +826,7 @@
             "text": "Havells India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE094A01015",
             "key": "HINDPETRO.NS",
             "name": "Hindustan Petroleum Corporation Ltd.",
@@ -761,6 +837,7 @@
             "text": "Hindustan Petroleum Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE030A01027",
             "key": "HINDUNILVR.NS",
             "name": "Hindustan Unilever Ltd.",
@@ -771,6 +848,7 @@
             "text": "Hindustan Unilever Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE001A01036",
             "key": "HDFC.NS",
             "name": "Housing Development Finance Corporation Ltd.",
@@ -781,6 +859,7 @@
             "text": "Housing Development Finance Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE090A01021",
             "key": "ICICIBANK.NS",
             "name": "ICICI Bank Ltd.",
@@ -791,6 +870,7 @@
             "text": "ICICI Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE765G01017",
             "key": "ICICIGI.NS",
             "name": "ICICI Lombard General Insurance Company Ltd.",
@@ -801,6 +881,7 @@
             "text": "ICICI Lombard General Insurance Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE726G01019",
             "key": "ICICIPRULI.NS",
             "name": "ICICI Prudential Life Insurance Company Ltd.",
@@ -811,6 +892,7 @@
             "text": "ICICI Prudential Life Insurance Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE154A01025",
             "key": "ITC.NS",
             "name": "ITC Ltd.",
@@ -821,6 +903,7 @@
             "text": "ITC Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE242A01010",
             "key": "IOC.NS",
             "name": "Indian Oil Corporation Ltd.",
@@ -831,6 +914,7 @@
             "text": "Indian Oil Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE203G01027",
             "key": "IGL.NS",
             "name": "Indraprastha Gas Ltd.",
@@ -841,6 +925,7 @@
             "text": "Indraprastha Gas Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE121J01017",
             "key": "INDUSTOWER.NS",
             "name": "Indus Towers Ltd.",
@@ -851,6 +936,7 @@
             "text": "Indus Towers Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE095A01012",
             "key": "INDUSINDBK.NS",
             "name": "IndusInd Bank Ltd.",
@@ -861,6 +947,7 @@
             "text": "IndusInd Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE663F01024",
             "key": "NAUKRI.NS",
             "name": "Info Edge (India) Ltd.",
@@ -871,6 +958,7 @@
             "text": "Info Edge (India) Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE009A01021",
             "key": "INFY.NS",
             "name": "Infosys Ltd.",
@@ -881,6 +969,7 @@
             "text": "Infosys Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE646L01027",
             "key": "INDIGO.NS",
             "name": "InterGlobe Aviation Ltd.",
@@ -891,6 +980,7 @@
             "text": "InterGlobe Aviation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE797F01012",
             "key": "JUBLFOOD.NS",
             "name": "Jubilant Foodworks Ltd.",
@@ -901,6 +991,7 @@
             "text": "Jubilant Foodworks Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE237A01028",
             "key": "KOTAKBANK.NS",
             "name": "Kotak Mahindra Bank Ltd.",
@@ -911,6 +1002,7 @@
             "text": "Kotak Mahindra Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE214T01019",
             "key": "LTI.NS",
             "name": "Larsen & Toubro Infotech Ltd.",
@@ -921,6 +1013,7 @@
             "text": "Larsen & Toubro Infotech Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE018A01030",
             "key": "LT.NS",
             "name": "Larsen & Toubro Ltd.",
@@ -931,6 +1024,7 @@
             "text": "Larsen & Toubro Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE326A01037",
             "key": "LUPIN.NS",
             "name": "Lupin Ltd.",
@@ -941,6 +1035,7 @@
             "text": "Lupin Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE196A01026",
             "key": "MARICO.NS",
             "name": "Marico Ltd.",
@@ -951,6 +1046,7 @@
             "text": "Marico Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE414G01012",
             "key": "MUTHOOTFIN.NS",
             "name": "Muthoot Finance Ltd.",
@@ -961,6 +1057,7 @@
             "text": "Muthoot Finance Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE733E01010",
             "key": "NTPC.NS",
             "name": "NTPC Ltd.",
@@ -971,6 +1068,7 @@
             "text": "NTPC Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE239A01016",
             "key": "NESTLEIND.NS",
             "name": "Nestle India Ltd.",
@@ -981,6 +1079,7 @@
             "text": "Nestle India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE213A01029",
             "key": "ONGC.NS",
             "name": "Oil & Natural Gas Corporation Ltd.",
@@ -991,6 +1090,7 @@
             "text": "Oil & Natural Gas Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE347G01014",
             "key": "PETRONET.NS",
             "name": "Petronet LNG Ltd.",
@@ -1001,6 +1101,7 @@
             "text": "Petronet LNG Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE318A01026",
             "key": "PIDILITIND.NS",
             "name": "Pidilite Industries Ltd.",
@@ -1011,6 +1112,7 @@
             "text": "Pidilite Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE140A01024",
             "key": "PEL.NS",
             "name": "Piramal Enterprises Ltd.",
@@ -1021,6 +1123,7 @@
             "text": "Piramal Enterprises Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE752E01010",
             "key": "POWERGRID.NS",
             "name": "Power Grid Corporation of India Ltd.",
@@ -1031,6 +1134,7 @@
             "text": "Power Grid Corporation of India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE179A01014",
             "key": "PGHH.NS",
             "name": "Procter & Gamble Hygiene & Health Care Ltd.",
@@ -1041,6 +1145,7 @@
             "text": "Procter & Gamble Hygiene & Health Care Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE160A01022",
             "key": "PNB.NS",
             "name": "Punjab National Bank",
@@ -1051,6 +1156,7 @@
             "text": "Punjab National Bank"
         },
         {
+            "domain": "IN",
             "isin": "INE002A01018",
             "key": "RELIANCE.NS",
             "name": "Reliance Industries Ltd.",
@@ -1061,6 +1167,7 @@
             "text": "Reliance Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE018E01016",
             "key": "SBICARD.NS",
             "name": "SBI Cards and Payment Services Ltd.",
@@ -1071,6 +1178,7 @@
             "text": "SBI Cards and Payment Services Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE123W01016",
             "key": "SBILIFE.NS",
             "name": "SBI Life Insurance Company Ltd.",
@@ -1081,6 +1189,7 @@
             "text": "SBI Life Insurance Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE070A01015",
             "key": "SHREECEM.NS",
             "name": "Shree Cement Ltd.",
@@ -1091,6 +1200,7 @@
             "text": "Shree Cement Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE003A01024",
             "key": "SIEMENS.NS",
             "name": "Siemens Ltd.",
@@ -1101,6 +1211,7 @@
             "text": "Siemens Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE062A01020",
             "key": "SBIN.NS",
             "name": "State Bank of India",
@@ -1111,6 +1222,7 @@
             "text": "State Bank of India"
         },
         {
+            "domain": "IN",
             "isin": "INE044A01036",
             "key": "SUNPHARMA.NS",
             "name": "Sun Pharmaceutical Industries Ltd.",
@@ -1121,6 +1233,7 @@
             "text": "Sun Pharmaceutical Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE467B01029",
             "key": "TCS.NS",
             "name": "Tata Consultancy Services Ltd.",
@@ -1131,6 +1244,7 @@
             "text": "Tata Consultancy Services Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE192A01025",
             "key": "TATACONSUM.NS",
             "name": "Tata Consumer Products Ltd.",
@@ -1141,6 +1255,7 @@
             "text": "Tata Consumer Products Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE669C01036",
             "key": "TECHM.NS",
             "name": "Tech Mahindra Ltd.",
@@ -1151,6 +1266,7 @@
             "text": "Tech Mahindra Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE280A01028",
             "key": "TITAN.NS",
             "name": "Titan Company Ltd.",
@@ -1161,6 +1277,7 @@
             "text": "Titan Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE685A01028",
             "key": "TORNTPHARM.NS",
             "name": "Torrent Pharmaceuticals Ltd.",
@@ -1171,6 +1288,7 @@
             "text": "Torrent Pharmaceuticals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE628A01036",
             "key": "UPL.NS",
             "name": "UPL Ltd.",
@@ -1181,6 +1299,7 @@
             "text": "UPL Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE481G01011",
             "key": "ULTRACEMCO.NS",
             "name": "UltraTech Cement Ltd.",
@@ -1191,6 +1310,7 @@
             "text": "UltraTech Cement Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE686F01025",
             "key": "UBL.NS",
             "name": "United Breweries Ltd.",
@@ -1201,6 +1321,7 @@
             "text": "United Breweries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE854D01024",
             "key": "MCDOWELL-N.NS",
             "name": "United Spirits Ltd.",
@@ -1211,6 +1332,7 @@
             "text": "United Spirits Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE075A01022",
             "key": "WIPRO.NS",
             "name": "Wipro Ltd.",
@@ -1221,6 +1343,7 @@
             "text": "Wipro Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE528G01035",
             "key": "YESBANK.NS",
             "name": "Yes Bank Ltd.",
@@ -1231,6 +1354,7 @@
             "text": "Yes Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE121A01024",
             "key": "CHOLAFIN.NS",
             "name": "Cholamandalam Investment and Finance Company Ltd.",
@@ -1241,6 +1365,7 @@
             "text": "Cholamandalam Investment and Finance Company Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE774D01024",
             "key": "M&MFIN.NS",
             "name": "Mahindra & Mahindra Financial Services Ltd.",
@@ -1251,6 +1376,7 @@
             "text": "Mahindra & Mahindra Financial Services Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE134E01011",
             "key": "PFC.NS",
             "name": "Power Finance Corporation Ltd.",
@@ -1261,6 +1387,7 @@
             "text": "Power Finance Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE020B01018",
             "key": "RECLTD.NS",
             "name": "REC Ltd.",
@@ -1271,6 +1398,7 @@
             "text": "REC Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE721A01013",
             "key": "SRTRANSFIN.NS",
             "name": "Shriram Transport Finance Co. Ltd.",
@@ -1281,6 +1409,7 @@
             "text": "Shriram Transport Finance Co. Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE600L01024",
             "key": "LALPATHLAB.NS",
             "name": "Dr. Lal Path Labs Ltd.",
@@ -1291,6 +1420,7 @@
             "text": "Dr. Lal Path Labs Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE061F01013",
             "key": "FORTIS.NS",
             "name": "Fortis Healthcare Ltd.",
@@ -1301,6 +1431,7 @@
             "text": "Fortis Healthcare Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE159A01016",
             "key": "GLAXO.NS",
             "name": "Glaxosmithkline Pharmaceuticals Ltd.",
@@ -1311,6 +1442,7 @@
             "text": "Glaxosmithkline Pharmaceuticals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE935A01035",
             "key": "GLENMARK.NS",
             "name": "Glenmark Pharmaceuticals Ltd.",
@@ -1321,6 +1453,7 @@
             "text": "Glenmark Pharmaceuticals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE571A01020",
             "key": "IPCALAB.NS",
             "name": "Ipca Laboratories Ltd.",
@@ -1331,6 +1464,7 @@
             "text": "Ipca Laboratories Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE987B01026",
             "key": "NATCOPHARM.NS",
             "name": "NATCO Pharma Ltd.",
@@ -1341,6 +1475,7 @@
             "text": "NATCO Pharma Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE182A01018",
             "key": "PFIZER.NS",
             "name": "Pfizer Ltd.",
@@ -1351,6 +1486,7 @@
             "text": "Pfizer Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE058A01010",
             "key": "SANOFI.NS",
             "name": "Sanofi India Ltd.",
@@ -1361,6 +1497,7 @@
             "text": "Sanofi India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE950I01011",
             "key": "DBCORP.NS",
             "name": "D.B.Corp Ltd.",
@@ -1371,6 +1508,7 @@
             "text": "D.B.Corp Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE836F01026",
             "key": "DISHTV.NS",
             "name": "Dish TV India Ltd.",
@@ -1381,6 +1519,7 @@
             "text": "Dish TV India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE312H01016",
             "key": "INOXLEISUR.NS",
             "name": "Inox Leisure Ltd.",
@@ -1391,6 +1530,7 @@
             "text": "Inox Leisure Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE199G01027",
             "key": "JAGRAN.NS",
             "name": "Jagran Prakashan Ltd.",
@@ -1401,6 +1541,7 @@
             "text": "Jagran Prakashan Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE870H01013",
             "key": "NETWORK18.NS",
             "name": "Network18 Media & Investments Ltd.",
@@ -1411,6 +1552,7 @@
             "text": "Network18 Media & Investments Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE191H01014",
             "key": "PVR.NS",
             "name": "PVR Ltd.",
@@ -1421,6 +1563,7 @@
             "text": "PVR Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE424H01027",
             "key": "SUNTV.NS",
             "name": "Sun TV Network Ltd.",
@@ -1431,6 +1574,7 @@
             "text": "Sun TV Network Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE038F01029",
             "key": "TVTODAY.NS",
             "name": "TV Today Network Ltd.",
@@ -1441,6 +1585,7 @@
             "text": "TV Today Network Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE886H01027",
             "key": "TV18BRDCST.NS",
             "name": "TV18 Broadcast Ltd.",
@@ -1451,6 +1596,7 @@
             "text": "TV18 Broadcast Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE256A01028",
             "key": "ZEEL.NS",
             "name": "Zee Entertainment Enterprises Ltd.",
@@ -1461,6 +1607,7 @@
             "text": "Zee Entertainment Enterprises Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE399L01023",
             "key": "ATGL.NS",
             "name": "Adani Total Gas Ltd.",
@@ -1471,6 +1618,7 @@
             "text": "Adani Total Gas Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE172A01027",
             "key": "CASTROLIND.NS",
             "name": "Castrol India Ltd.",
@@ -1481,6 +1629,7 @@
             "text": "Castrol India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE844O01030",
             "key": "GUJGASLTD.NS",
             "name": "Gujarat Gas Ltd.",
@@ -1491,6 +1640,7 @@
             "text": "Gujarat Gas Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE246F01010",
             "key": "GSPL.NS",
             "name": "Gujarat State Petronet Ltd.",
@@ -1501,6 +1651,7 @@
             "text": "Gujarat State Petronet Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE635Q01029",
             "key": "GULFOILLUB.NS",
             "name": "Gulf Oil Lubricants India Ltd.",
@@ -1511,6 +1662,7 @@
             "text": "Gulf Oil Lubricants India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE002S01010",
             "key": "MGL.NS",
             "name": "Mahanagar Gas Ltd.",
@@ -1521,6 +1673,7 @@
             "text": "Mahanagar Gas Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE274J01014",
             "key": "OIL.NS",
             "name": "Oil India Ltd.",
@@ -1531,6 +1684,7 @@
             "text": "Oil India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE171A01029",
             "key": "FEDERALBNK.NS",
             "name": "Federal Bank Ltd.",
@@ -1541,6 +1695,7 @@
             "text": "Federal Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE092T01019",
             "key": "IDFCFIRSTB.NS",
             "name": "IDFC First Bank Ltd.",
@@ -1551,6 +1706,7 @@
             "text": "IDFC First Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE976G01028",
             "key": "RBLBANK.NS",
             "name": "RBL Bank Ltd.",
@@ -1561,6 +1717,7 @@
             "text": "RBL Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE548C01032",
             "key": "EMAMILTD.NS",
             "name": "Emami Ltd.",
@@ -1571,6 +1728,7 @@
             "text": "Emami Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE200M01013",
             "key": "VBL.NS",
             "name": "Varun Beverages Ltd.",
@@ -1581,6 +1739,7 @@
             "text": "Varun Beverages Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE949L01017",
             "key": "AUBANK.NS",
             "name": "AU Small Finance Bank Ltd.",
@@ -1591,6 +1750,7 @@
             "text": "AU Small Finance Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE769A01020",
             "key": "AARTIIND.NS",
             "name": "Aarti Industries Ltd.",
@@ -1601,6 +1761,7 @@
             "text": "Aarti Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE674K01013",
             "key": "ABCAPITAL.NS",
             "name": "Aditya Birla Capital Ltd.",
@@ -1611,6 +1772,7 @@
             "text": "Aditya Birla Capital Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE647O01011",
             "key": "ABFRL.NS",
             "name": "Aditya Birla Fashion and Retail Ltd.",
@@ -1621,6 +1783,7 @@
             "text": "Aditya Birla Fashion and Retail Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE031B01049",
             "key": "AJANTPHARM.NS",
             "name": "Ajanta Pharmaceuticals Ltd.",
@@ -1631,6 +1794,7 @@
             "text": "Ajanta Pharmaceuticals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE901L01018",
             "key": "APLLTD.NS",
             "name": "Alembic Pharmaceuticals Ltd.",
@@ -1641,6 +1805,7 @@
             "text": "Alembic Pharmaceuticals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE438A01022",
             "key": "APOLLOTYRE.NS",
             "name": "Apollo Tyres Ltd.",
@@ -1651,6 +1816,7 @@
             "text": "Apollo Tyres Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE028A01039",
             "key": "BANKBARODA.NS",
             "name": "Bank of Baroda",
@@ -1661,6 +1827,7 @@
             "text": "Bank of Baroda"
         },
         {
+            "domain": "IN",
             "isin": "INE084A01016",
             "key": "BANKINDIA.NS",
             "name": "Bank of India",
@@ -1671,6 +1838,7 @@
             "text": "Bank of India"
         },
         {
+            "domain": "IN",
             "isin": "INE176A01028",
             "key": "BATAINDIA.NS",
             "name": "Bata India Ltd.",
@@ -1681,6 +1849,7 @@
             "text": "Bata India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE263A01024",
             "key": "BEL.NS",
             "name": "Bharat Electronics Ltd.",
@@ -1691,6 +1860,7 @@
             "text": "Bharat Electronics Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE257A01026",
             "key": "BHEL.NS",
             "name": "Bharat Heavy Electricals Ltd.",
@@ -1701,6 +1871,7 @@
             "text": "Bharat Heavy Electricals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE050A01025",
             "key": "BBTC.NS",
             "name": "Bombay Burmah Trading Corporation Ltd.",
@@ -1711,6 +1882,7 @@
             "text": "Bombay Burmah Trading Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE486A01013",
             "key": "CESC.NS",
             "name": "CESC Ltd.",
@@ -1721,6 +1893,7 @@
             "text": "CESC Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE476A01014",
             "key": "CANBK.NS",
             "name": "Canara Bank",
@@ -1731,6 +1904,7 @@
             "text": "Canara Bank"
         },
         {
+            "domain": "IN",
             "isin": "INE491A01021",
             "key": "CUB.NS",
             "name": "City Union Bank Ltd.",
@@ -1741,6 +1915,7 @@
             "text": "City Union Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE591G01017",
             "key": "COFORGE.NS",
             "name": "Coforge Ltd.",
@@ -1751,6 +1926,7 @@
             "text": "Coforge Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE111A01025",
             "key": "CONCOR.NS",
             "name": "Container Corporation of India Ltd.",
@@ -1761,6 +1937,7 @@
             "text": "Container Corporation of India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE169A01031",
             "key": "COROMANDEL.NS",
             "name": "Coromandel International Ltd.",
@@ -1771,6 +1948,7 @@
             "text": "Coromandel International Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE299U01018",
             "key": "CROMPTON.NS",
             "name": "Crompton Greaves Consumer Electricals Ltd.",
@@ -1781,6 +1959,7 @@
             "text": "Crompton Greaves Consumer Electricals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE298A01020",
             "key": "CUMMINSIND.NS",
             "name": "Cummins India Ltd.",
@@ -1791,6 +1970,7 @@
             "text": "Cummins India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE00R701025",
             "key": "DALBHARAT.NS",
             "name": "Dalmia Bharat Ltd.",
@@ -1801,6 +1981,7 @@
             "text": "Dalmia Bharat Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE288B01029",
             "key": "DEEPAKNTR.NS",
             "name": "Deepak Nitrite Ltd.",
@@ -1811,6 +1992,7 @@
             "text": "Deepak Nitrite Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE274G01010",
             "key": "DHANI.NS",
             "name": "Dhani Services Ltd.",
@@ -1821,6 +2003,7 @@
             "text": "Dhani Services Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE935N01020",
             "key": "DIXON.NS",
             "name": "Dixon Technologies (India) Ltd.",
@@ -1831,6 +2014,7 @@
             "text": "Dixon Technologies (India) Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE913H01037",
             "key": "ENDURANCE.NS",
             "name": "Endurance Technologies Ltd.",
@@ -1841,6 +2025,7 @@
             "text": "Endurance Technologies Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE042A01014",
             "key": "ESCORTS.NS",
             "name": "Escorts Ltd.",
@@ -1851,6 +2036,7 @@
             "text": "Escorts Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE776C01039",
             "key": "GMRINFRA.NS",
             "name": "GMR Infrastructure Ltd.",
@@ -1861,6 +2047,7 @@
             "text": "GMR Infrastructure Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE850D01014",
             "key": "GODREJAGRO.NS",
             "name": "Godrej Agrovet Ltd.",
@@ -1871,6 +2058,7 @@
             "text": "Godrej Agrovet Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE233A01035",
             "key": "GODREJIND.NS",
             "name": "Godrej Industries Ltd.",
@@ -1881,6 +2069,7 @@
             "text": "Godrej Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE066F01012",
             "key": "HAL.NS",
             "name": "Hindustan Aeronautics Ltd.",
@@ -1891,6 +2080,7 @@
             "text": "Hindustan Aeronautics Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE763G01038",
             "key": "ISEC.NS",
             "name": "ICICI Securities Ltd.",
@@ -1901,6 +2091,7 @@
             "text": "ICICI Securities Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE148I01020",
             "key": "IBULHSGFIN.NS",
             "name": "Indiabulls Housing Finance Ltd.",
@@ -1911,6 +2102,7 @@
             "text": "Indiabulls Housing Finance Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE933S01016",
             "key": "INDIAMART.NS",
             "name": "Indiamart Intermesh Ltd.",
@@ -1921,6 +2113,7 @@
             "text": "Indiamart Intermesh Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE053A01029",
             "key": "INDHOTEL.NS",
             "name": "Indian Hotels Co. Ltd.",
@@ -1931,6 +2124,7 @@
             "text": "Indian Hotels Co. Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE335Y01012",
             "key": "IRCTC.NS",
             "name": "Indian Railway Catering And Tourism Corporation Ltd.",
@@ -1941,6 +2135,7 @@
             "text": "Indian Railway Catering And Tourism Corporation Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE121E01018",
             "key": "JSWENERGY.NS",
             "name": "JSW Energy Ltd.",
@@ -1951,6 +2146,7 @@
             "text": "JSW Energy Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE498L01015",
             "key": "L&TFH.NS",
             "name": "L&T Finance Holdings Ltd.",
@@ -1961,6 +2157,7 @@
             "text": "L&T Finance Holdings Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE010V01017",
             "key": "LTTS.NS",
             "name": "L&T Technology Services Ltd.",
@@ -1971,6 +2168,7 @@
             "text": "L&T Technology Services Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE115A01026",
             "key": "LICHSGFIN.NS",
             "name": "LIC Housing Finance Ltd.",
@@ -1981,6 +2179,7 @@
             "text": "LIC Housing Finance Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE947Q01028",
             "key": "LAURUSLABS.NS",
             "name": "Laurus Labs Ltd.",
@@ -1991,6 +2190,7 @@
             "text": "Laurus Labs Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE522D01027",
             "key": "MANAPPURAM.NS",
             "name": "Manappuram Finance Ltd.",
@@ -2001,6 +2201,7 @@
             "text": "Manappuram Finance Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE180A01020",
             "key": "MFSL.NS",
             "name": "Max Financial Services Ltd.",
@@ -2011,6 +2212,7 @@
             "text": "Max Financial Services Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE018I01017",
             "key": "MINDTREE.NS",
             "name": "MindTree Ltd.",
@@ -2021,6 +2223,7 @@
             "text": "MindTree Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE356A01018",
             "key": "MPHASIS.NS",
             "name": "MphasiS Ltd.",
@@ -2031,6 +2234,7 @@
             "text": "MphasiS Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE048G01026",
             "key": "NAVINFLUOR.NS",
             "name": "Navin Fluorine International Ltd.",
@@ -2041,6 +2245,7 @@
             "text": "Navin Fluorine International Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE298J01013",
             "key": "NAM-INDIA.NS",
             "name": "Nippon Life India Asset Management Ltd.",
@@ -2051,6 +2256,7 @@
             "text": "Nippon Life India Asset Management Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE603J01030",
             "key": "PIIND.NS",
             "name": "PI Industries Ltd.",
@@ -2061,6 +2267,7 @@
             "text": "PI Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE761H01022",
             "key": "PAGEIND.NS",
             "name": "Page Industries Ltd.",
@@ -2071,6 +2278,7 @@
             "text": "Page Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE455K01017",
             "key": "POLYCAB.NS",
             "name": "Polycab India Ltd.",
@@ -2081,6 +2289,7 @@
             "text": "Polycab India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE647A01010",
             "key": "SRF.NS",
             "name": "SRF Ltd.",
@@ -2091,6 +2300,7 @@
             "text": "SRF Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE398R01022",
             "key": "SYNGENE.NS",
             "name": "Syngene International Ltd.",
@@ -2101,6 +2311,7 @@
             "text": "Syngene International Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE092A01019",
             "key": "TATACHEM.NS",
             "name": "Tata Chemicals Ltd.",
@@ -2111,6 +2322,7 @@
             "text": "Tata Chemicals Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE670A01012",
             "key": "TATAELXSI.NS",
             "name": "Tata Elxsi Ltd.",
@@ -2121,6 +2333,7 @@
             "text": "Tata Elxsi Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE245A01021",
             "key": "TATAPOWER.NS",
             "name": "Tata Power Co. Ltd.",
@@ -2131,6 +2344,7 @@
             "text": "Tata Power Co. Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE331A01037",
             "key": "RAMCOCEM.NS",
             "name": "The Ramco Cements Ltd.",
@@ -2141,6 +2355,7 @@
             "text": "The Ramco Cements Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE813H01021",
             "key": "TORNTPOWER.NS",
             "name": "Torrent Power Ltd.",
@@ -2151,6 +2366,7 @@
             "text": "Torrent Power Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE849A01020",
             "key": "TRENT.NS",
             "name": "Trent Ltd.",
@@ -2161,6 +2377,7 @@
             "text": "Trent Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE692A01016",
             "key": "UNIONBANK.NS",
             "name": "Union Bank of India",
@@ -2171,6 +2388,7 @@
             "text": "Union Bank of India"
         },
         {
+            "domain": "IN",
             "isin": "INE951I01027",
             "key": "VGUARD.NS",
             "name": "V-Guard Industries Ltd.",
@@ -2181,6 +2399,7 @@
             "text": "V-Guard Industries Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE669E01016",
             "key": "IDEA.NS",
             "name": "Vodafone Idea Ltd.",
@@ -2191,6 +2410,7 @@
             "text": "Vodafone Idea Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE226A01021",
             "key": "VOLTAS.NS",
             "name": "Voltas Ltd.",
@@ -2201,6 +2421,7 @@
             "text": "Voltas Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE716A01013",
             "key": "WHIRLPOOL.NS",
             "name": "Whirlpool of India Ltd.",
@@ -2211,6 +2432,7 @@
             "text": "Whirlpool of India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE457A01014",
             "key": "MAHABANK.NS",
             "name": "Bank of Maharashtra.",
@@ -2221,6 +2443,7 @@
             "text": "Bank of Maharashtra."
         },
         {
+            "domain": "IN",
             "isin": "INE483A01010",
             "key": "CENTRALBK.NS",
             "name": "Central Bank of India",
@@ -2231,6 +2454,7 @@
             "text": "Central Bank of India"
         },
         {
+            "domain": "IN",
             "isin": "INE562A01011",
             "key": "INDIANB.NS",
             "name": "Indian Bank",
@@ -2241,6 +2465,7 @@
             "text": "Indian Bank"
         },
         {
+            "domain": "IN",
             "isin": "INE565A01014",
             "key": "IOB.NS",
             "name": "Indian Overseas Bank",
@@ -2251,6 +2476,7 @@
             "text": "Indian Overseas Bank"
         },
         {
+            "domain": "IN",
             "isin": "INE168A01041",
             "key": "J&KBANK.NS",
             "name": "Jammu & Kashmir Bank Ltd.",
@@ -2261,6 +2487,7 @@
             "text": "Jammu & Kashmir Bank Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE608A01012",
             "key": "PSB.NS",
             "name": "Punjab & Sind Bank",
@@ -2271,6 +2498,7 @@
             "text": "Punjab & Sind Bank"
         },
         {
+            "domain": "IN",
             "isin": "INE691A01018",
             "key": "UCOBANK.NS",
             "name": "UCO Bank",
@@ -2281,6 +2509,7 @@
             "text": "UCO Bank"
         },
         {
+            "domain": "IN",
             "isin": "INE371P01015",
             "key": "AMBER.NS",
             "name": "Amber Enterprises India Ltd.",
@@ -2291,6 +2520,7 @@
             "text": "Amber Enterprises India Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE472A01039",
             "key": "BLUESTARCO.NS",
             "name": "Blue Star Ltd.",
@@ -2301,6 +2531,7 @@
             "text": "Blue Star Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE217B01036",
             "key": "KAJARIACER.NS",
             "name": "Kajaria Ceramics Ltd.",
@@ -2311,6 +2542,7 @@
             "text": "Kajaria Ceramics Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE142Z01019",
             "key": "ORIENTELEC.NS",
             "name": "Orient Electric Ltd.",
@@ -2321,6 +2553,7 @@
             "text": "Orient Electric Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE343B01030",
             "key": "RAJESHEXPO.NS",
             "name": "Rajesh Exports Ltd.",
@@ -2331,6 +2564,7 @@
             "text": "Rajesh Exports Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE131B01039",
             "key": "RELAXO.NS",
             "name": "Relaxo Footwears Ltd.",
@@ -2341,6 +2575,7 @@
             "text": "Relaxo Footwears Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE690A01010",
             "key": "TTKPRESTIG.NS",
             "name": "TTK Prestige Ltd.",
@@ -2351,6 +2586,7 @@
             "text": "TTK Prestige Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE881D01027",
             "key": "OFSS.NS",
             "name": "Oracle Financial Services Software Ltd.",
@@ -2361,6 +2597,7 @@
             "text": "Oracle Financial Services Software Ltd."
         },
         {
+            "domain": "IN",
             "isin": "INE000001",
             "key": "^NSEI.NS",
             "name": "NIFTY 50",
@@ -2371,6 +2608,7 @@
             "text": "NIFTY 50"
         },
         {
+            "domain": "IN",
             "isin": "INE000002",
             "key": "^NSEBANK.NS",
             "name": "NIFTY BANK",
@@ -2381,6 +2619,7 @@
             "text": "NIFTY BANK"
         },
         {
+            "domain": "IN",
             "isin": "INE000003",
             "key": "^CNXIT.NS",
             "name": "NIFTY IT",

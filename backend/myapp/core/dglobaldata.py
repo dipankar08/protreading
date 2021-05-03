@@ -1,5 +1,7 @@
 from logging import log
-from myapp.core.sync import SUPPORTED_SYMBOL
+from pickle import TRUE
+from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
+from myapp.core.sync import getSymbolList
 from pandas.core.frame import DataFrame
 
 import redis
@@ -73,7 +75,7 @@ def getLatestDataInJson(df: DataFrame):
         danalytics.reportException(e)
     # More some info.
     for x in final_result.keys():
-        final_result[x]['sector'] = SUPPORTED_SYMBOL[x]['sector']
+        final_result[x]['sector'] = getSymbolList()[x]['sector']
     return final_result
 
 
@@ -83,7 +85,7 @@ def download_process_data_internal(candle_type: TCandleType):
     "You must call this function from view controler uusing task"
     dlog.d("Staring snapshot_pipeline")
     dlog.d("1/3 Staring snapshot_pipeline")
-    ret_value, download_data = ddownload.download(candle_type)
+    ret_value, download_data = ddownload.download(candle_type=candle_type)
     if ret_value is False:
         return {"status": "error", "msg": "something goes wrong", "out": None}
     dlog.d("2/3 Processing data")
@@ -116,6 +118,38 @@ def checkLoadLatestData():
         if should_fetch_data(candle_type=candle_type):
             tasks.snapshot_pipeline.delay(candle_type.value)
     return changed
+
+
+# This call will get latest market data
+# First it will check if it is downloaded in 5 min returns it, if not schedule an task to download.
+def getLatestMarketData(domain):
+    last_update = dredis.get("market_ts_{}".format(domain), None)
+    if last_update is None or last_update == 'None':
+        dlog.d("No last update try downloading....")
+        downloadLatestMarketData(domain)
+    elif IfTimeIs5MinOld(last_update):
+        dlog.d("data is 5 min old... downloading....")
+        downloadLatestMarketData(domain)
+
+    dlog.d("getting data from cache")
+    return dredis.getPickle("market_data_{}".format(
+        domain), {})
+
+
+# Download and save latest data retrun bool as status
+# It cache the data and it's TS
+def downloadLatestMarketData(domain) -> bool:
+    dlog.d("Downloading as cache is old")
+    result = ddownload.download(doamin=domain, period=1)
+    if result[0] is True:
+        dlog.d("Saving marjet data")
+        resultJSON = getLatestDataInJson(result[1])
+        # Save this data
+        dredis.setPickle("market_data_{}".format(
+            domain), {"data": resultJSON})
+        dredis.set("market_ts_{}".format(domain), getCurTimeStr())
+        return True
+    return False
 
 
 load_data_on_boot()

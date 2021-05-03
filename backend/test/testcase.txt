@@ -1,4 +1,12 @@
 => context => server => http://127.0.0.1:5000
+
+# Testing market APIS
+=> GET => {{server}}/market? => success
+=> GET => {{server}}/market?domain=IN => success
+=> GET => {{server}}/market?domain=IN1 => success
+=> GET => {{server}}/market?domain=UK => success
+=> GET => {{server}}/market?domain=USA => success
+
 => GET => {{server}} =>  task submitted
 => GET => {{server}}/status =>  Status Ok
 #=> GET => {{server}}/snapshot?candle_type=1d=> success
@@ -13,3 +21,4 @@
 => GET => {{server}}/task?task=snapshot_all => task submitted
 => GET => {{server}}/latest => success
 => GET => {{server}}/latest?candle_type=5m => success
+

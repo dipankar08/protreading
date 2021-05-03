@@ -1,3 +1,4 @@
+from pandas.core.frame import DataFrame
 from myapp.core.dtypes import TCandleType
 
 
@@ -23,3 +24,7 @@ def test():
     print(covert_to_period_from_duration(TCandleType.MIN_30, 100))
     print(covert_to_period_from_duration(TCandleType.MIN_15, 100))
     print(covert_to_period_from_duration(TCandleType.MIN_5, 100))
+
+
+def getLastJsonFromDataFrame(df: DataFrame) -> dict:
+    return {}

@@ -13,7 +13,7 @@ from myapp.core import dindicator
 from myapp.core import dstorage, dhighlights
 from myapp.core import dglobaldata
 from myapp.core import dplot
-from myapp.core.sync import SUPPORTED_SYMBOL, SUPPORTED_CHART_DURATION
+from myapp.core.sync import getSymbolList, SUPPORTED_CHART_DURATION
 
 # Log might needs to be inited for worker
 danalytics.init()
@@ -75,7 +75,7 @@ def plot_chart_all() -> dict:
     "Build chart for all item"
     ping_celery()
     for duration in SUPPORTED_CHART_DURATION:
-        for symbol in SUPPORTED_SYMBOL.keys():
+        for symbol in getSymbolList().keys():
             dplot.get_endcoded_png_for_chart(
                 symbol=symbol, candle_type=TCandleType.DAY_1, duration=duration, reload="1")
     return buildTaskSuccess("Complated all snap shot", None)
