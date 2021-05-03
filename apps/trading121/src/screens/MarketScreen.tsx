@@ -39,13 +39,15 @@ export const MarketScreen = ({ navigation }: TProps) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Indicator View", navigation: navigation },
-    { key: "second", title: "Sector View", navigation: navigation },
+    { key: "first", title: "Indicator", navigation: navigation },
+    { key: "second", title: "Sector", navigation: navigation },
+    { key: "third", title: "Recommended", navigation: navigation },
   ]);
 
   const renderScene = SceneMap({
     first: MarketListView,
     second: MarketListView,
+    third: MarketListView,
   });
 
   return (
@@ -61,10 +63,16 @@ export const MarketListView = ({ route }: TProps) => {
   const [listData, setListData] = React.useState<TGroupMarketEntry[]>([]);
 
   useEffect(() => {
-    if (route.key == "first") {
-      setListData(Array.from(appState.state.summary.data.values()));
-    } else {
-      setListData(Array.from(appState.state.market?.sectorList.values()));
+    switch (route.key) {
+      case "first":
+        setListData(Array.from(appState.state.summary.data.values()));
+        break;
+      case "second":
+        setListData(Array.from(appState.state.market?.sectorList.values()));
+        break;
+      case "third":
+        setListData(Array.from(appState.state.market?.recommendedList.values()));
+        break;
     }
   }, [appState.state.summary, appState.state.market]);
 

@@ -1,6 +1,13 @@
 export type TObject = { [key: string]: any };
 export type TRecord = { [key: string]: string };
 
+export enum RecommendedType {
+  INTRADAY_BUY = "IntraDay Buy",
+  INTRADAY_SELL = "IntraDay Sell",
+  DELIVERY_BUY = "Delivery Buy",
+  DELIVERY_SELL = "Delivery Sell",
+}
+
 export type TKeyText = {
   key: string;
   text: string;
@@ -20,6 +27,8 @@ export type TMarketEntry = {
   change: number;
   recommended_to_buy?: string;
   recommended_to_sell?: string;
+  rsi: number;
+  sector?: string[];
 };
 
 export type TGroupMarketEntry = {
@@ -39,6 +48,7 @@ export type TMarket = {
   stocks: Array<TMarketEntry>;
   ltpMap: Map<string, number>;
   sectorList: Map<string, TGroupMarketEntry>;
+  recommendedList: Map<string, TGroupMarketEntry>;
 };
 
 export type TOrder = {

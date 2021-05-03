@@ -45,8 +45,16 @@ def status():
 @make_exception_safe
 def latest():
     "status of the app"
-    candle_type = get_param_or_default(request, "candle_type", "1d")
+    candle_type: str = get_param_or_default(request, "candle_type", "1d")
     return buildSuccess("Status Ok", dredis.getPickle("latest_{}".format(candle_type)))
+
+
+@core_api.route('/market')
+@make_exception_safe
+def market():
+    "status of the app"
+    domain: str = get_param_or_default(request, "domain", "IN")
+    return buildSuccess("Status Ok", dglobaldata.getLatestMarketData(domain))
 
 
 # SUMMARY

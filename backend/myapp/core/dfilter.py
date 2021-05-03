@@ -4,7 +4,7 @@ from myapp.core.RetHelper import fixDict, verifyOrThrow
 from myapp.core import dlog
 from myapp.core import dglobaldata
 from myapp.core import timetracker
-from myapp.core.sync import SUPPORTED_SYMBOL
+from myapp.core.sync import getSymbolList
 
 
 @trace_perf
@@ -18,14 +18,14 @@ def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
     columns = [resolveIndicatorExpression(c) for c in columns]
     condition = resolveCondition(condition)
     try:
-        for symbol in SUPPORTED_SYMBOL.keys():
+        for symbol in getSymbolList().keys():
             try:
                 if(eval(condition)):
                     sl += 1
                     selected_one = {}
                     selected_one['symbol'] = symbol
-                    selected_one['name'] = SUPPORTED_SYMBOL[symbol]['name']
-                    selected_one['sector'] = SUPPORTED_SYMBOL[symbol]['sector']
+                    selected_one['name'] = getSymbolList()[symbol]['name']
+                    selected_one['sector'] = getSymbolList()[symbol]['sector']
                     selected_one['close'] = str(np.round(
                         interval_df['1d'][symbol].iloc[-1]['close'], 2))
 
