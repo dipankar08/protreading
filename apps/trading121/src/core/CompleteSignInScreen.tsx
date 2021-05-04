@@ -18,7 +18,7 @@ export const CompleteSignInScreen = ({ navigation }: TProps) => {
   useEffect(() => {
     coreApi.doCompleteSignIn(() => {
       setTimeout(() => {
-        coreApi.navigateNext("SIGN_IN_COMPLETE", navigation);
+        coreApi.navigateNext(navigation);
       }, 1000);
     });
   }, []);

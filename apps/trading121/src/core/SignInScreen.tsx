@@ -6,7 +6,7 @@ import { dlog } from "../libs/dlog";
 import logo from "../../assets/images/icon_white.png";
 import { getData, saveData } from "../libs/stoarge";
 import { TProps } from "../screens/types";
-import { Image, Text, View, StyleSheet } from "react-native";
+import { Image, Text, View, StyleSheet, Alert } from "react-native";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { DStatusBar } from "../components/DStatusBar";
@@ -17,6 +17,8 @@ import { colors } from "../styles/colors";
 import { DIMENS } from "../res/dimens";
 import { showNotification } from "../libs/uihelper";
 import Constants from "expo-constants";
+import _ from "underscore";
+import { DPrompt } from "../components/DDialog";
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
   const [email, setEmail] = useState("");
@@ -24,9 +26,10 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFacebook, setLoadingFacebook] = useState(false);
   const [loadingGuest, setLoadingGuest] = useState(false);
+  const [visibleGuest, setVisibleGuest] = useState(false);
   const coreApi = useCoreApi();
   let name = "SignIn";
-  dlog.obj(Constants, "Expo Constants");
+  //dlog.obj(Constants, "Expo Constants");
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
     return () => {
@@ -105,19 +108,34 @@ export const SignInScreen = ({ navigation }: TProps) => {
           justifyContent: "center",
           alignSelf: "center",
         }}
-        onPress={() =>
-          coreApi.loginAsGuest({
-            onSuccess() {
-              coreApi.navigateTo(navigation, "CompleteSignInScreen");
-            },
-          })
-        }
+        onPress={() => {
+          setVisibleGuest(true);
+        }}
       >
         Login as Guest
       </DButtonLink>
       <DTextFooter style={{ color: "white", textAlign: "center" }}>
         (You can use your google and facebook account to get signin. You can login using anyone of this if they have same email address. )
       </DTextFooter>
+      <DPrompt
+        visible={visibleGuest}
+        placeholder="email"
+        title={"Login as Guest"}
+        body={"Please enter you email address"}
+        onOk={(text: string) => {
+          setVisibleGuest(false);
+          if (text.trim().length == 0) {
+            showNotification("Please enter username");
+            return;
+          }
+          coreApi.loginAsGuest(text, {
+            onSuccess: () => {
+              coreApi.navigateTo(navigation, "CompleteSignInScreen");
+            },
+          });
+        }}
+        onCancel={() => setVisibleGuest(false)}
+      ></DPrompt>
     </DContainer>
   );
 };

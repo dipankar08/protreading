@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Avatar } from "react-native-elements";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { DContainerSafe, DLayoutCol, ScreenHeader, DButton, DLayoutRow } from "../components/basic";
+import { DContainerSafe, DLayoutCol, ScreenHeader, DButton, DLayoutRow, DCard } from "../components/basic";
 import { useNetwork } from "../hooks/useNetwork";
 import { dlog } from "../libs/dlog";
 import { deleteData } from "../libs/stoarge";
@@ -11,13 +11,16 @@ import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { colors } from "../styles/colors";
 import { Updates, Constants } from "expo";
+import { BootScreen } from "./BootScreen";
 
 // Simple Logout card which should be embedit in the app
 export const LogoutCard = ({ navigation, route }: TProps) => {
   const coreState = useContext(CoreStateContext);
   const coreApi = useCoreApi();
   async function signOut() {
+    dlog.d("calling sign out");
     coreApi.doSignOut();
+    coreApi.navigateTo(navigation, "BootScreen");
   }
   let name = "Profile";
   useEffect(() => {
@@ -28,15 +31,13 @@ export const LogoutCard = ({ navigation, route }: TProps) => {
   }, []);
 
   return (
-    <DLayoutCol
-      style={{ alignContent: "center", alignItems: "center", width: "100%", backgroundColor: colors.red100, padding: 20, borderRadius: 10 }}
-    >
+    <DCard>
       <DLayoutRow style={{ alignItems: "center" }}>
         <Avatar
           rounded
           size="large"
           source={{
-            uri: coreState.state.authInfo?.profile_image,
+            uri: coreState.state.authInfo?.profile_image || "https://th.bing.com/th/id/OIP.dP2eSw-0tAwPBH4GM_9q9wEsDW?pid=ImgDet&w=150&h=107&c=7",
           }}
         />
         <DLayoutCol style={{ flex: 1, marginLeft: 50 }}>
@@ -48,6 +49,6 @@ export const LogoutCard = ({ navigation, route }: TProps) => {
           </DButton>
         </DLayoutCol>
       </DLayoutRow>
-    </DLayoutCol>
+    </DCard>
   );
 };

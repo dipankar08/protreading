@@ -18,15 +18,17 @@ export const BootScreen = ({ navigation }: any) => {
   const [update, setUpdate] = useState(false);
   const coreApi = useCoreApi();
   useEffect(() => {
-    console.log(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
-    Updates.checkForUpdateAsync().then((update) => {
-      if (update.isAvailable) {
-        setUpdate(true);
-      }
-    });
+    try {
+      console.log(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
+      Updates.checkForUpdateAsync().then((update) => {
+        if (update.isAvailable) {
+          setUpdate(true);
+        }
+      });
+    } catch (ee) {}
     coreApi.doAppBoot(() => {
       setTimeout(() => {
-        coreApi.navigateNext("BOOT", navigation);
+        coreApi.navigateNext(navigation);
       }, CoreConstant.BOOT_SCREEN_TIMEOUT);
     });
   }, []);
@@ -47,7 +49,6 @@ export const BootScreen = ({ navigation }: any) => {
         <DLoadingText color="white" style={{ justifyContent: "flex-end", marginTop: 80 }}>
           Staring the app...
         </DLoadingText>
-
         <DTextFooter style={{ color: "white" }}> you are running {update ? "old build" : "latest build"}</DTextFooter>
       </DLayoutCol>
     </DContainer>

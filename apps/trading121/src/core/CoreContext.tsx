@@ -4,19 +4,6 @@ import _ from "underscore";
 import { dlog } from "../libs/dlog";
 import { TCoreAction, TCoreState } from "./core_model";
 
-// reducer
-const CoreStateReducer = (state: TCoreState, action: TCoreAction): TCoreState => {
-  dlog.d(`[CoreStateReducer] updating app state for ${action.type}`);
-  switch (action.type) {
-    case "MERGE_STATE":
-      let state1 = _.extend({}, state, action.payload);
-      console.log(state1);
-      return state1;
-    default:
-      return state;
-  }
-};
-
 let initialCoreState: TCoreState = {
   current_screen: "BOOT",
   isBootComplete: false,
@@ -25,6 +12,25 @@ let initialCoreState: TCoreState = {
   isSilentSignInComplete: false,
   authInfo: null,
   showHomeScreen: false,
+};
+
+// dispatch function is async so the state is not modifed properluy. Use this flobal vetibale for soirec of touth
+export let globalCoreState = initialCoreState;
+
+// reducer
+const CoreStateReducer = (state: TCoreState, action: TCoreAction): TCoreState => {
+  dlog.d(`[CoreStateReducer] updating app state for ${action.type}`);
+  switch (action.type) {
+    case "MERGE_STATE":
+      console.log(`merge state called with ${JSON.stringify(action)}`);
+      globalCoreState = {
+        ...state,
+        ...action.payload,
+      };
+      return globalCoreState;
+    default:
+      return state;
+  }
 };
 
 type TBind = {

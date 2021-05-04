@@ -2,8 +2,8 @@ import { TProps } from "../screens/types";
 import React, { useState, useContext, useEffect } from "react";
 import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
 import { DIMENS } from "../res/dimens";
-import { DLayoutRow } from "./basic";
 import { DButtonIcon, DButtonWithIcon } from "./DButton";
+import { DLayoutRow } from "./DLayout";
 // For the the title of any
 export const DTextTitle = ({ children, style }: TProps) => {
   return <Text style={[{ fontWeight: "bold", fontSize: 20 }, style]}>{children}</Text>;
@@ -36,12 +36,7 @@ export const DScreenTitle = ({ children, style }: TProps) => {
 
 export const DTextSection = ({ children, style }: TProps) => {
   return (
-    <Text
-      style={[
-        { color: "#11111199", fontSize: 15.5, textTransform: "uppercase", marginTop: 10, marginTop: DIMENS.GAP_2X, marginBottom: DIMENS.GAP_4 },
-        style,
-      ]}
-    >
+    <Text style={[{ color: "#11111199", fontSize: 15.5, textTransform: "uppercase", marginTop: DIMENS.GAP_3X, marginBottom: DIMENS.GAP_1X }, style]}>
       {children}
     </Text>
   );

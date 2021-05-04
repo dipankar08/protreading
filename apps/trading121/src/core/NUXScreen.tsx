@@ -42,8 +42,7 @@ export const NuxScreen = ({ navigation }: TProps) => {
   function completeNux() {
     coreApi.doMarkNuxShown(() => {
       coreState.dispatch({ type: "MERGE_STATE", payload: { isNuxShown: true } });
-      console.log(coreState.state.isNuxShown);
-      coreApi.navigateNext("NUX", navigation);
+      coreApi.navigateNext(navigation);
     });
   }
   let name = "NUX";

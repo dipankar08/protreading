@@ -64,7 +64,7 @@ export const useNetwork = () => {
         CACHE_KEY_POSITION,
         false
       );
-      verifyOrCrash(appState.state.market != null);
+      verifyOrCrash(appState.state.market != null, "Market is null");
       appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
       setLoading(false);
       callback?.onSuccess?.({});
