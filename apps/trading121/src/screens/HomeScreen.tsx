@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Button, Text, StyleSheet, View } from "react-native";
+import { Button, Text, StyleSheet, View, ActivityIndicator } from "react-native";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { DCard, DContainer, DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
 import { TProps } from "./types";
@@ -115,6 +115,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
         </View>
         <DTextSectionWithButton icon={"plus"}>Focus Stocks</DTextSectionWithButton>
       </DLayoutCol>
+      {loading && <ActivityIndicator size="large" color="#00ff00" />}
     </DContainerSafe>
   );
 };

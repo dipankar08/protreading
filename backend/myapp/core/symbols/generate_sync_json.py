@@ -1,6 +1,7 @@
 # These files are downlaoder from NSE and If you add some more file.
 # Please run this script to generate the symbol.json which ic used by the coreapi
 # python generate_sync_json.py
+from myapp.core.symbols.SAP500 import SAP100_DATASET
 import os
 import glob
 import pdb
@@ -16,6 +17,7 @@ combined_csv.to_csv("combined_csv.csv", index=False, encoding='utf-8-sig')
 # pdb.set_trace()
 records = json.loads(combined_csv.to_json(orient='records'))
 map = {}
+# Symbole for India
 for x in records:
     # pdb.set_trace()
     if x["Symbol"] not in map:
@@ -32,6 +34,25 @@ for x in records:
         print('duplicate')
         if x["Industry"] not in map[x["Symbol"]]["sector"]:
             map[x["Symbol"]]["sector"].append(x["Industry"])
+
+
+# Symbol for UK
+
+for x in SAP100_DATASET:
+    map[x["symbol"]] = {
+        "key": x["symbol"] + '.NS',
+        'domain': 'USA',  # India Domain
+        "symbol": x["symbol"],
+        "isin": '',
+        "name": x["company"],
+        "text": x["company"],
+        "sector": [x["sector"]]
+    }
+
+
+
+# Symbol for USA
+
 result_as_list = [x for x in map.values()]
 
 data = json.dumps({"getSymbolList": result_as_list},

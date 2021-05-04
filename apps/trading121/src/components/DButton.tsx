@@ -3,9 +3,9 @@ import { TProps } from "../screens/types";
 import { STYLES } from "./styles";
 import { colors } from "../styles/colors";
 import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
-import { DLayoutRow } from "./basic";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { DIMENS } from "../res/dimens";
+import { DLayoutRow } from "./DLayout";
 
 export const DButtonWithIcon = ({ children, style, onPress, icon, loading }: TProps) => {
   return (
@@ -52,18 +52,21 @@ export const DButtonIcon = ({ onPress, icon, size, color, loading, style }: TPro
   );
 };
 
-export const DButtonPrimary = ({ onPress, icon, size, color, loading, children }: TProps) => {
+export const DButtonPrimary = ({ onPress, icon, size, color, loading, children, pstyle, style }: TProps) => {
   return (
-    <TouchableOpacity onPress={onPress} disabled={loading}>
+    <TouchableOpacity onPress={onPress} disabled={loading} style={pstyle}>
       <DLayoutRow
-        style={{
-          backgroundColor: color || colors.green600,
-          paddingHorizontal: 10,
-          paddingVertical: 10,
-          borderRadius: 6,
-          marginTop: DIMENS.GAP_2X,
-          justifyContent: "center",
-        }}
+        style={[
+          {
+            backgroundColor: color || colors.green600,
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            borderRadius: 6,
+            marginTop: DIMENS.GAP_2X,
+            justifyContent: "center",
+          },
+          style,
+        ]}
       >
         {loading && <ActivityIndicator size="small" color={"white"} />}
         {!loading && <Text style={{ color: "white" }}>{children}</Text>}

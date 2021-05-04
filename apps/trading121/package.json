@@ -38,6 +38,7 @@
     "react-native": "~0.63.4",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-code-push": "^7.0.1",
+    "react-native-dropdown-picker": "^5.0.0",
     "react-native-elements": "^3.3.2",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-pager-view": "^5.1.3",

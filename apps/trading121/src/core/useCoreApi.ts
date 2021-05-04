@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { dlog } from "../libs/dlog";
-import { getBool, getData, saveData, setBool } from "../libs/stoarge";
-import { CoreStateContext } from "./CoreContext";
+import { deleteData, getBool, getData, saveData, setBool } from "../libs/stoarge";
+import { CoreStateContext, globalCoreState } from "./CoreContext";
 import { CompleteSignInScreen } from "./CompleteSignInScreen";
 import { SignInScreen } from "../screens/ThemeTest";
 import { NuxScreen } from "./NUXScreen";
@@ -16,25 +16,27 @@ export const useCoreApi = () => {
   const [error, setError] = React.useState("");
 
   // find-out the right navigation
-  async function navigateNext(curScreen: TCoreScreenType, navigation: any) {
-    dlog.d("Navigation Netx called==>");
-    console.log(coreState.state);
-    if (!coreState.state.isNuxShown) {
-      console.log("Nix...");
-      navigation.push("NuxScreen");
+  async function navigateNext(navigation: any) {
+    dlog.d(`Navigation Next:${JSON.stringify(globalCoreState)}`);
+
+    // Is show NUX.
+    if (!globalCoreState.isNuxShown) {
+      navigateTo(navigation, "NuxScreen");
       return;
     }
 
-    // If no login information.
-    if (coreState.state.authInfo == null) {
-      navigation.push("SignInScreen");
+    // Do we have auth info
+    if (!globalCoreState.authInfo) {
+      navigateTo(navigation, "SignInScreen");
       return;
     }
-    if (!coreState.state.isSilentSignInComplete) {
-      navigation.push("CompleteSignInScreen");
+
+    // Do we complate the silent login
+    if (!globalCoreState.isSilentSignInComplete) {
+      navigateTo(navigation, "CompleteSignInScreen");
       return;
     }
-    // We have done everything.. DO not do anything now
+    // Now we can show the home, we dont have to do naything as we have the states
   }
 
   async function navigateTo(navigation: any, target: TCoreScreenName) {
@@ -73,17 +75,12 @@ export const useCoreApi = () => {
     onSuccess();
   }
 
-  async function doSignIn(authInfo: TAuthInfo, onSuccess: TVoidCalBack, onError?: TErrorCallback) {
+  async function saveAuthInfo(authInfo: TAuthInfo) {
     try {
-      if (authInfo.user_id.length > 0) {
-        onError?.("Please enter user_id");
-      }
       await coreState.dispatch({ type: "MERGE_STATE", payload: { authInfo: authInfo } });
       await saveData("AUTH_INFO", authInfo);
-      onSuccess();
     } catch (err) {
       dlog.ex(err);
-      setError("Not able to signin the app");
     }
   }
 
@@ -102,6 +99,10 @@ export const useCoreApi = () => {
   async function doSignOut() {
     try {
       //pass
+      // Delete saved data
+      await deleteData("AUTH_INFO");
+      await deleteData("NUX_SHOWN");
+
       coreState.dispatch({
         type: "MERGE_STATE",
         payload: {
@@ -151,13 +152,7 @@ export const useCoreApi = () => {
           profile_image: "",
           name: data.name,
         };
-        console.log(authInfo);
-        coreState.dispatch({
-          type: "MERGE_STATE",
-          payload: {
-            authInfo: authInfo,
-          },
-        });
+        saveAuthInfo(authInfo);
         callback.onSuccess?.({});
         callback.onComplete?.();
       } else {
@@ -192,12 +187,7 @@ export const useCoreApi = () => {
           email: result.user.email,
           profile_image: result.user.photoUrl,
         };
-        coreState.dispatch({
-          type: "MERGE_STATE",
-          payload: {
-            authInfo: authInfo,
-          },
-        });
+        saveAuthInfo(authInfo);
         callback.onSuccess?.(result);
         callback.onComplete?.();
       } else {
@@ -213,19 +203,14 @@ export const useCoreApi = () => {
     }
   };
 
-  const loginAsGuest = function (callback: TCallback) {
+  const loginAsGuest = function (user_id: string, callback: TCallback) {
     let authInfo: TAuthInfo = {
-      user_id: "test@test.com",
+      user_id: user_id,
       name: "Guest User",
       email: "test@test.com",
       profile_image: "",
     };
-    coreState.dispatch({
-      type: "MERGE_STATE",
-      payload: {
-        authInfo: authInfo,
-      },
-    });
+    saveAuthInfo(authInfo);
     callback.onSuccess?.(authInfo);
     callback.onComplete?.();
   };
@@ -237,7 +222,6 @@ export const useCoreApi = () => {
     isNuxShown,
     doMarkNuxShown,
     doCompleteSignIn,
-    doSignIn,
     doSignOut,
     doSignUp,
     navigateNext,
