@@ -145,7 +145,7 @@ def clearcache():
 def just_test():
     " This will delete cache for all the data "
     # ddownload.download(TCandleType.DAY_1)
-    dglobaldata.download_process_data_internal(TCandleType.MIN_5)
+    dglobaldata.download_process_data_internal("IN", TCandleType.MIN_5)
     # dhighlights.compute_summary()
     return buildError("Please verify test in code.")
 

@@ -12,11 +12,6 @@ console.log(JSON.stringify(data,null,1))
 """
 SAP100_DATASET = [
     {
-        "company": "",
-        "symbol": "",
-        "sector": ""
-    },
-    {
         "company": "Apple Inc.",
         "symbol": "AAPL",
         "sector": "Information Technology"
@@ -327,7 +322,7 @@ SAP100_DATASET = [
         "sector": "Consumer Discretionary"
     },
     {
-        "company": "Mondelēz International",
+        "company": "Mondelz International",
         "symbol": "MDLZ",
         "sector": "Consumer Staples"
     },

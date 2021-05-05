@@ -55,7 +55,7 @@ from ast import literal_eval
 
 
 # This function get the last row of the dataframe
-def getLatestDataInJson(df: DataFrame):
+def getLatestDataInJson(domain, df: DataFrame):
     final_result = {}
     try:
         df = df.tail(1)
@@ -75,12 +75,12 @@ def getLatestDataInJson(df: DataFrame):
         danalytics.reportException(e)
     # More some info.
     for x in final_result.keys():
-        final_result[x]['sector'] = getSymbolList()[x]['sector']
+        final_result[x]['sector'] = getSymbolList(domain=domain)[x]['sector']
     return final_result
 
 
 @trace_perf
-def download_process_data_internal(candle_type: TCandleType):
+def download_process_data_internal(domain, candle_type: TCandleType):
     mark_dataload_start(candle_type)
     "You must call this function from view controler uusing task"
     dlog.d("Staring snapshot_pipeline")
@@ -96,7 +96,7 @@ def download_process_data_internal(candle_type: TCandleType):
 
     dlog.d("4/4 Notify latest data to redis")
     dredis.setPickle("latest_{}".format(candle_type.value),
-                     {'data': getLatestDataInJson(processed_df),
+                     {'data': getLatestDataInJson(domain, processed_df),
                       'update_ts': str(time.time()),
                       'update_ts_human':
                       time.strftime("%d/%m/%Y, %H:%M:%S GMT", time.gmtime())})
@@ -143,7 +143,7 @@ def downloadLatestMarketData(domain) -> bool:
     result = ddownload.download(doamin=domain, period=1)
     if result[0] is True:
         dlog.d("Saving marjet data")
-        resultJSON = getLatestDataInJson(result[1])
+        resultJSON = getLatestDataInJson(domain, result[1])
         # Save this data
         dredis.setPickle("market_data_{}".format(
             domain), {"data": resultJSON})

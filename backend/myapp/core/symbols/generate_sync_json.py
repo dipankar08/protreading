@@ -1,7 +1,8 @@
 # These files are downlaoder from NSE and If you add some more file.
 # Please run this script to generate the symbol.json which ic used by the coreapi
 # python generate_sync_json.py
-from myapp.core.symbols.SAP500 import SAP100_DATASET
+from FTSE100 import FTSE100_DATASET
+from SAP500 import SAP100_DATASET
 import os
 import glob
 import pdb
@@ -37,10 +38,21 @@ for x in records:
 
 
 # Symbol for UK
-
-for x in SAP100_DATASET:
+for x in FTSE100_DATASET:
     map[x["symbol"]] = {
         "key": x["symbol"] + '.NS',
+        'domain': 'UK',  # India Domain
+        "symbol": x["symbol"],
+        "isin": '',
+        "name": x["company"],
+        "text": x["company"],
+        "sector": [x["sector"]]
+    }
+
+# Symbol for USA
+for x in SAP100_DATASET:
+    map[x["symbol"]] = {
+        "key": x["symbol"],  # yf.download("AAPL")
         'domain': 'USA',  # India Domain
         "symbol": x["symbol"],
         "isin": '',
@@ -50,12 +62,9 @@ for x in SAP100_DATASET:
     }
 
 
-
-# Symbol for USA
-
 result_as_list = [x for x in map.values()]
 
-data = json.dumps({"getSymbolList": result_as_list},
+data = json.dumps({"SUPPORTED_SYMBOL": result_as_list},
                   sort_keys=True, indent=4)
 with open("symbols.json", 'w') as f:
     f.write(data)

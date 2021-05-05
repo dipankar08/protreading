@@ -11,9 +11,10 @@ from myapp.core import dredis, dlog, danalytics
 
 ### Here is how to test down your own#
 """
-import yfinance as yf
+    import yfinance as yf
 yf.download("TCS.NS")
 """
+
 
 @trace_perf
 def download(doamin="IN", interval: TCandleType = TCandleType.DAY_1, period=100) -> [bool, DataFrame]:
