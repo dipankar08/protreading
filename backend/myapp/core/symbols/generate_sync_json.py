@@ -19,11 +19,12 @@ combined_csv.to_csv("combined_csv.csv", index=False, encoding='utf-8-sig')
 records = json.loads(combined_csv.to_json(orient='records'))
 map = {}
 # Symbole for India
+INDEX_LIST = ["^NSEBANK", "^CNXIT", "^NSEI"]
 for x in records:
     # pdb.set_trace()
     if x["Symbol"] not in map:
         map[x["Symbol"]] = {
-            "key": x["Symbol"] + '.NS',
+            "key": x["Symbol"] + '.NS' if x["Symbol"] not in INDEX_LIST else x["Symbol"],
             'domain': 'IN',  # India Domain
             "symbol": x["Symbol"],
             "isin": x["ISIN Code"],
@@ -40,8 +41,8 @@ for x in records:
 # Symbol for UK
 for x in FTSE100_DATASET:
     map[x["symbol"]] = {
-        "key": x["symbol"] + '.NS',
-        'domain': 'UK',  # India Domain
+        "key": x["symbol"].replace(".", "") + '.L',  # getting data from London
+        'domain': 'UK',
         "symbol": x["symbol"],
         "isin": '',
         "name": x["company"],
@@ -52,7 +53,8 @@ for x in FTSE100_DATASET:
 # Symbol for USA
 for x in SAP100_DATASET:
     map[x["symbol"]] = {
-        "key": x["symbol"],  # yf.download("AAPL")
+        # yf.download("AAL.L") Getting data from London Exchange
+        "key": x["symbol"],
         'domain': 'USA',  # India Domain
         "symbol": x["symbol"],
         "isin": '',
