@@ -95,7 +95,7 @@ def download_process_data_internal(domain, candle_type: TCandleType):
     dstorage.store_data_to_disk(processed_df, path_to_store)
 
     dlog.d("4/4 Notify latest data to redis")
-    dredis.setPickle("latest_{}".format(candle_type.value),
+    dredis.setPickle("latest_{}_{}".format(candle_type.value, domain),
                      {'data': getLatestDataInJson(domain, processed_df),
                       'update_ts': str(time.time()),
                       'update_ts_human':

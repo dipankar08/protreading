@@ -2599,7 +2599,7 @@
         {
             "domain": "IN",
             "isin": "INE000001",
-            "key": "^NSEI.NS",
+            "key": "^NSEI",
             "name": "NIFTY 50",
             "sector": [
                 "INDEX"
@@ -2610,7 +2610,7 @@
         {
             "domain": "IN",
             "isin": "INE000002",
-            "key": "^NSEBANK.NS",
+            "key": "^NSEBANK",
             "name": "NIFTY BANK",
             "sector": [
                 "INDEX"
@@ -2621,7 +2621,7 @@
         {
             "domain": "IN",
             "isin": "INE000003",
-            "key": "^CNXIT.NS",
+            "key": "^CNXIT",
             "name": "NIFTY IT",
             "sector": [
                 "INDEX"
@@ -2632,7 +2632,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "III.NS",
+            "key": "III.L",
             "name": "3i",
             "sector": [
                 "Financial Services"
@@ -2643,7 +2643,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ADM.NS",
+            "key": "ADM.L",
             "name": "Admiral Group",
             "sector": [
                 "Nonlife Insurance"
@@ -2654,7 +2654,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AAL.NS",
+            "key": "AAL.L",
             "name": "Anglo American plc",
             "sector": [
                 "Mining"
@@ -2665,7 +2665,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ANTO.NS",
+            "key": "ANTO.L",
             "name": "Antofagasta",
             "sector": [
                 "Mining"
@@ -2676,7 +2676,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AHT.NS",
+            "key": "AHT.L",
             "name": "Ashtead Group",
             "sector": [
                 "Support Services"
@@ -2687,7 +2687,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ABF.NS",
+            "key": "ABF.L",
             "name": "Associated British Foods",
             "sector": [
                 "Food Producers"
@@ -2698,7 +2698,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AZN.NS",
+            "key": "AZN.L",
             "name": "AstraZeneca",
             "sector": [
                 "Pharmaceuticals & Biotechnology"
@@ -2709,7 +2709,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AUTO.NS",
+            "key": "AUTO.L",
             "name": "Auto Trader Group",
             "sector": [
                 "Media"
@@ -2720,7 +2720,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AVST.NS",
+            "key": "AVST.L",
             "name": "Avast",
             "sector": [
                 "Software & Computer Services"
@@ -2731,7 +2731,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AVV.NS",
+            "key": "AVV.L",
             "name": "Aveva",
             "sector": [
                 "Software & Computer Services"
@@ -2742,7 +2742,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "AV..NS",
+            "key": "AV.L",
             "name": "Aviva",
             "sector": [
                 "Life Insurance"
@@ -2753,7 +2753,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BME.NS",
+            "key": "BME.L",
             "name": "B&M",
             "sector": [
                 "Retailers"
@@ -2764,7 +2764,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BA..NS",
+            "key": "BA.L",
             "name": "BAE Systems",
             "sector": [
                 "Aerospace & Defence"
@@ -2775,7 +2775,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BARC.NS",
+            "key": "BARC.L",
             "name": "Barclays",
             "sector": [
                 "Banks"
@@ -2786,7 +2786,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BDEV.NS",
+            "key": "BDEV.L",
             "name": "Barratt Developments",
             "sector": [
                 "Household Goods & Home Construction"
@@ -2797,7 +2797,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BKG.NS",
+            "key": "BKG.L",
             "name": "Berkeley Group Holdings",
             "sector": [
                 "Household Goods & Home Construction"
@@ -2808,7 +2808,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BHP.NS",
+            "key": "BHP.L",
             "name": "BHP",
             "sector": [
                 "Mining"
@@ -2819,7 +2819,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BP..NS",
+            "key": "BP.L",
             "name": "BP",
             "sector": [
                 "Oil & Gas Producers"
@@ -2830,7 +2830,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BATS.NS",
+            "key": "BATS.L",
             "name": "British American Tobacco",
             "sector": [
                 "Tobacco"
@@ -2841,7 +2841,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BLND.NS",
+            "key": "BLND.L",
             "name": "British Land",
             "sector": [
                 "Real Estate Investment Trusts"
@@ -2852,7 +2852,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BT.A.NS",
+            "key": "BTA.L",
             "name": "BT Group",
             "sector": [
                 "Fixed Line Telecommunications"
@@ -2863,7 +2863,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BNZL.NS",
+            "key": "BNZL.L",
             "name": "Bunzl",
             "sector": [
                 "Support Services"
@@ -2874,7 +2874,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "BRBY.NS",
+            "key": "BRBY.L",
             "name": "Burberry",
             "sector": [
                 "Personal Goods"
@@ -2885,7 +2885,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "CCH.NS",
+            "key": "CCH.L",
             "name": "Coca-Cola HBC",
             "sector": [
                 "Beverages"
@@ -2896,7 +2896,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "CPG.NS",
+            "key": "CPG.L",
             "name": "Compass Group",
             "sector": [
                 "Support Services"
@@ -2907,7 +2907,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "CRH.NS",
+            "key": "CRH.L",
             "name": "CRH plc",
             "sector": [
                 "Construction & Materials"
@@ -2918,7 +2918,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "CRDA.NS",
+            "key": "CRDA.L",
             "name": "Croda International",
             "sector": [
                 "Chemicals"
@@ -2929,7 +2929,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "DCC.NS",
+            "key": "DCC.L",
             "name": "DCC plc",
             "sector": [
                 "Support Services"
@@ -2940,7 +2940,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "DGE.NS",
+            "key": "DGE.L",
             "name": "Diageo",
             "sector": [
                 "Beverages"
@@ -2951,7 +2951,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ENT.NS",
+            "key": "ENT.L",
             "name": "Entain",
             "sector": [
                 "Travel & Leisure"
@@ -2962,7 +2962,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "EVR.NS",
+            "key": "EVR.L",
             "name": "Evraz",
             "sector": [
                 "Industrial Metals & Mining"
@@ -2973,7 +2973,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "EXPN.NS",
+            "key": "EXPN.L",
             "name": "Experian",
             "sector": [
                 "Support Services"
@@ -2984,7 +2984,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "FERG.NS",
+            "key": "FERG.L",
             "name": "Ferguson plc",
             "sector": [
                 "Support Services"
@@ -2995,7 +2995,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "FLTR.NS",
+            "key": "FLTR.L",
             "name": "Flutter Entertainment",
             "sector": [
                 "Travel & Leisure"
@@ -3006,7 +3006,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "FRES.NS",
+            "key": "FRES.L",
             "name": "Fresnillo",
             "sector": [
                 "Mining"
@@ -3017,7 +3017,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "GSK.NS",
+            "key": "GSK.L",
             "name": "GlaxoSmithKline",
             "sector": [
                 "Pharmaceuticals & Biotechnology"
@@ -3028,7 +3028,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "GLEN.NS",
+            "key": "GLEN.L",
             "name": "Glencore",
             "sector": [
                 "Mining"
@@ -3039,7 +3039,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "HLMA.NS",
+            "key": "HLMA.L",
             "name": "Halma",
             "sector": [
                 "Electronic & Electrical Equipment"
@@ -3050,7 +3050,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "HL..NS",
+            "key": "HL.L",
             "name": "Hargreaves Lansdown",
             "sector": [
                 "Financial Services"
@@ -3061,7 +3061,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "HIK.NS",
+            "key": "HIK.L",
             "name": "Hikma Pharmaceuticals",
             "sector": [
                 "Pharmaceuticals & Biotechnology"
@@ -3072,7 +3072,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "HSBA.NS",
+            "key": "HSBA.L",
             "name": "HSBC",
             "sector": [
                 "Banks"
@@ -3083,7 +3083,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "IHG.NS",
+            "key": "IHG.L",
             "name": "IHG Hotels & Resorts",
             "sector": [
                 "Travel & Leisure"
@@ -3094,7 +3094,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "IMB.NS",
+            "key": "IMB.L",
             "name": "Imperial Brands",
             "sector": [
                 "Tobacco"
@@ -3105,7 +3105,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "INF.NS",
+            "key": "INF.L",
             "name": "Informa",
             "sector": [
                 "Media"
@@ -3116,7 +3116,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ICP.NS",
+            "key": "ICP.L",
             "name": "Intermediate Capital Group",
             "sector": [
                 "Investment Services"
@@ -3127,7 +3127,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "IAG.NS",
+            "key": "IAG.L",
             "name": "International Airlines Group",
             "sector": [
                 "Travel & Leisure"
@@ -3138,7 +3138,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ITRK.NS",
+            "key": "ITRK.L",
             "name": "Intertek",
             "sector": [
                 "Support Services"
@@ -3149,7 +3149,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "JD..NS",
+            "key": "JD.L",
             "name": "JD Sports",
             "sector": [
                 "General Retailers"
@@ -3160,7 +3160,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "JMAT.NS",
+            "key": "JMAT.L",
             "name": "Johnson Matthey",
             "sector": [
                 "Chemicals"
@@ -3171,7 +3171,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "JET.NS",
+            "key": "JET.L",
             "name": "Just Eat Takeaway",
             "sector": [
                 "Software & Computer Services"
@@ -3182,7 +3182,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "KGF.NS",
+            "key": "KGF.L",
             "name": "Kingfisher",
             "sector": [
                 "Retailers"
@@ -3193,7 +3193,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "LAND.NS",
+            "key": "LAND.L",
             "name": "Land Securities",
             "sector": [
                 "Real Estate Investment Trusts"
@@ -3204,7 +3204,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "LGEN.NS",
+            "key": "LGEN.L",
             "name": "Legal & General",
             "sector": [
                 "Life Insurance"
@@ -3215,7 +3215,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "LLOY.NS",
+            "key": "LLOY.L",
             "name": "Lloyds Banking Group",
             "sector": [
                 "Banks"
@@ -3226,7 +3226,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "LSEG.NS",
+            "key": "LSEG.L",
             "name": "London Stock Exchange Group",
             "sector": [
                 "Financial Services"
@@ -3237,7 +3237,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "MNG.NS",
+            "key": "MNG.L",
             "name": "M&G",
             "sector": [
                 "Asset Managers"
@@ -3248,7 +3248,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "MRO.NS",
+            "key": "MRO.L",
             "name": "Melrose Industries",
             "sector": [
                 "Automobiles & Parts"
@@ -3259,7 +3259,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "MNDI.NS",
+            "key": "MNDI.L",
             "name": "Mondi",
             "sector": [
                 "Forestry & Paper"
@@ -3270,7 +3270,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "NG..NS",
+            "key": "NG.L",
             "name": "National Grid plc",
             "sector": [
                 "Gas, Water & Multi-utilities"
@@ -3281,7 +3281,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "NWG.NS",
+            "key": "NWG.L",
             "name": "NatWest Group",
             "sector": [
                 "Banks"
@@ -3292,7 +3292,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "NXT.NS",
+            "key": "NXT.L",
             "name": "Next plc",
             "sector": [
                 "General Retailers"
@@ -3303,7 +3303,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "OCDO.NS",
+            "key": "OCDO.L",
             "name": "Ocado Group",
             "sector": [
                 "Food & Drug Retailers"
@@ -3314,7 +3314,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "PSON.NS",
+            "key": "PSON.L",
             "name": "Pearson plc",
             "sector": [
                 "Media"
@@ -3325,7 +3325,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "PSH.NS",
+            "key": "PSH.L",
             "name": "Pershing Square Holdings",
             "sector": [
                 "Financial Services"
@@ -3336,7 +3336,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "PSN.NS",
+            "key": "PSN.L",
             "name": "Persimmon plc",
             "sector": [
                 "Household Goods & Home Construction"
@@ -3347,7 +3347,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "PHNX.NS",
+            "key": "PHNX.L",
             "name": "Phoenix Group",
             "sector": [
                 "Life Insurance"
@@ -3358,7 +3358,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "POLY.NS",
+            "key": "POLY.L",
             "name": "Polymetal International",
             "sector": [
                 "Precious Metals & Mining"
@@ -3369,7 +3369,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "PRU.NS",
+            "key": "PRU.L",
             "name": "Prudential plc",
             "sector": [
                 "Life Insurance"
@@ -3380,7 +3380,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RKT.NS",
+            "key": "RKT.L",
             "name": "Reckitt",
             "sector": [
                 "Household Goods & Home Construction"
@@ -3391,7 +3391,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "REL.NS",
+            "key": "REL.L",
             "name": "RELX",
             "sector": [
                 "Media"
@@ -3402,7 +3402,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RSW.NS",
+            "key": "RSW.L",
             "name": "Renishaw",
             "sector": [
                 "Industrial Goods and Services"
@@ -3413,7 +3413,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RTO.NS",
+            "key": "RTO.L",
             "name": "Rentokil Initial",
             "sector": [
                 "Support Services"
@@ -3424,7 +3424,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RMV.NS",
+            "key": "RMV.L",
             "name": "Rightmove",
             "sector": [
                 "Media"
@@ -3435,7 +3435,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RIO.NS",
+            "key": "RIO.L",
             "name": "Rio Tinto",
             "sector": [
                 "Mining"
@@ -3446,7 +3446,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RR..NS",
+            "key": "RR.L",
             "name": "Rolls-Royce Holdings",
             "sector": [
                 "Aerospace & Defence"
@@ -3457,7 +3457,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RDSA.NS",
+            "key": "RDSA.L",
             "name": "Royal Dutch Shell",
             "sector": [
                 "Oil & Gas Producers"
@@ -3468,7 +3468,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "RSA.NS",
+            "key": "RSA.L",
             "name": "RSA Insurance Group",
             "sector": [
                 "Nonlife Insurance"
@@ -3479,7 +3479,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SGE.NS",
+            "key": "SGE.L",
             "name": "Sage Group",
             "sector": [
                 "Software & Computer Services"
@@ -3490,7 +3490,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SBRY.NS",
+            "key": "SBRY.L",
             "name": "Sainsbury's",
             "sector": [
                 "Food & Drug Retailers"
@@ -3501,7 +3501,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SDR.NS",
+            "key": "SDR.L",
             "name": "Schroders",
             "sector": [
                 "Financial Services"
@@ -3512,7 +3512,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SMT.NS",
+            "key": "SMT.L",
             "name": "Scottish Mortgage Investment Trust",
             "sector": [
                 "Equity Investment Instruments"
@@ -3523,7 +3523,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SGRO.NS",
+            "key": "SGRO.L",
             "name": "Segro",
             "sector": [
                 "Real Estate Investment Trusts"
@@ -3534,7 +3534,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SVT.NS",
+            "key": "SVT.L",
             "name": "Severn Trent",
             "sector": [
                 "Gas, Water & Multi-utilities"
@@ -3545,7 +3545,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SMDS.NS",
+            "key": "SMDS.L",
             "name": "DS Smith",
             "sector": [
                 "General Industrials"
@@ -3556,7 +3556,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SMIN.NS",
+            "key": "SMIN.L",
             "name": "Smiths Group",
             "sector": [
                 "General Industrials"
@@ -3567,7 +3567,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SN..NS",
+            "key": "SN.L",
             "name": "Smith & Nephew",
             "sector": [
                 "Health Care Equipment & Services"
@@ -3578,7 +3578,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SKG.NS",
+            "key": "SKG.L",
             "name": "Smurfit Kappa",
             "sector": [
                 "General Industrials"
@@ -3589,7 +3589,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SPX.NS",
+            "key": "SPX.L",
             "name": "Spirax-Sarco Engineering",
             "sector": [
                 "Industrial Engineering"
@@ -3600,7 +3600,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SSE.NS",
+            "key": "SSE.L",
             "name": "SSE plc",
             "sector": [
                 "Electricity"
@@ -3611,7 +3611,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "STAN.NS",
+            "key": "STAN.L",
             "name": "Standard Chartered",
             "sector": [
                 "Banks"
@@ -3622,7 +3622,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "SLA.NS",
+            "key": "SLA.L",
             "name": "Standard Life Aberdeen",
             "sector": [
                 "Financial Services"
@@ -3633,7 +3633,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "STJ.NS",
+            "key": "STJ.L",
             "name": "St. James's Place plc",
             "sector": [
                 "Life Insurance"
@@ -3644,7 +3644,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "TW..NS",
+            "key": "TW.L",
             "name": "Taylor Wimpey",
             "sector": [
                 "Household Goods & Home Construction"
@@ -3655,7 +3655,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "TSCO.NS",
+            "key": "TSCO.L",
             "name": "Tesco",
             "sector": [
                 "Food & Drug Retailers"
@@ -3666,7 +3666,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "ULVR.NS",
+            "key": "ULVR.L",
             "name": "Unilever",
             "sector": [
                 "Personal Goods"
@@ -3677,7 +3677,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "UU..NS",
+            "key": "UU.L",
             "name": "United Utilities",
             "sector": [
                 "Gas, Water & Multi-utilities"
@@ -3688,7 +3688,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "VOD.NS",
+            "key": "VOD.L",
             "name": "Vodafone Group",
             "sector": [
                 "Mobile Telecommunications"
@@ -3699,7 +3699,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "WEIR.NS",
+            "key": "WEIR.L",
             "name": "Weir Group",
             "sector": [
                 "Industrial Goods and Services"
@@ -3710,7 +3710,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "WTB.NS",
+            "key": "WTB.L",
             "name": "Whitbread",
             "sector": [
                 "Retail hospitality"
@@ -3721,7 +3721,7 @@
         {
             "domain": "UK",
             "isin": "",
-            "key": "WPP.NS",
+            "key": "WPP.L",
             "name": "WPP plc",
             "sector": [
                 "Media"

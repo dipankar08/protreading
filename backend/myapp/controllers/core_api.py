@@ -46,7 +46,8 @@ def status():
 def latest():
     "status of the app"
     candle_type: str = get_param_or_default(request, "candle_type", "1d")
-    return buildSuccess("Status Ok", dredis.getPickle("latest_{}".format(candle_type)))
+    domain: str = get_param_or_default(request, "domain", "IN")
+    return buildSuccess("Status Ok", dredis.getPickle("latest_{}_{}".format(candle_type, domain)))
 
 
 @core_api.route('/market')
