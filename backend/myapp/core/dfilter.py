@@ -53,7 +53,11 @@ def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
                     # add used defined data
                     result.append(fixDict(selected_one))
             except Exception as e:
-                raise e
+                dlog.ex(e)
+                dlog.e(
+                    "We faced the issue when we are running filter for symbol:"
+                    + symbol)
+                pass
 
     except Exception as e:
         raise e
