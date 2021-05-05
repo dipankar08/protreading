@@ -1,30 +1,33 @@
 import { dlog } from "../libs/dlog";
-import { TAction, TAppState } from "./types";
+import { initialState, TAction, TAppState } from "./types";
+export let globalAppState: TAppState = initialState;
 const AppStateReducer = (state: TAppState, action: TAction): TAppState => {
   dlog.d(`[AppStateReducer] updating app state for ${action.type}`);
   switch (action.type) {
     case "UPDATE_MARKET":
-      return {
+      globalAppState = {
         ...state,
         market: action.payload,
         isLatestMarketDataLoaded: action.payload != null,
       };
-
+      break;
     case "UPDATE_SUMMARY":
-      return {
+      globalAppState = {
         ...state,
         summary: action.payload,
         isSummaryLoaded: action.payload != null,
       };
-
+      break;
     case "UPDATE_POSITION":
-      return {
+      globalAppState = {
         ...state,
         position: action.payload,
         isPositionLoaded: action.payload != null,
       };
+      break;
     default:
-      return state;
+      globalAppState = state;
   }
+  return globalAppState;
 };
 export default AppStateReducer;

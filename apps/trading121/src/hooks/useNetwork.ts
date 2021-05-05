@@ -11,6 +11,7 @@ import { processSummaryData, processMarketData, processPositionData } from "../m
 import { getCurrentDate } from "../libs/time";
 import { CoreStateContext } from "../core/CoreContext";
 import { TCallback } from "../core/core_model";
+import { globalAppState } from "../appstate/AppStateReducer";
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
@@ -19,35 +20,28 @@ export const useNetwork = () => {
   const [error, setError] = React.useState("");
 
   async function doAllNetworkCallOnBoot(callback: TCallback) {
+    callback.onBefore?.();
     await reLoadAllData();
-    // app.dispatch may takes time
-    setTimeout(() => {
-      fetchUserInfo(callback);
-    }, 500);
+    await fetchUserInfo(callback);
   }
 
   // realod all market Data
-  async function reLoadAllData(onSuccess?: Function, onError?: Function) {
+  async function reLoadAllData(callback?: TCallback) {
     dlog.d("[NETWORK] fetching from network ");
-    setLoading(true);
+    callback?.onBefore?.();
     try {
       let summary = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY, false);
       let market = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type_5m`, CACHE_KEY_MARKET, false);
       appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
       appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(market) });
-      setLoading(false);
       dlog.d("[NETWORK] fetching from network complete ");
-      if (onSuccess) {
-        onSuccess();
-      }
+      callback?.onSuccess?.({});
+      callback?.onComplete?.();
     } catch (e) {
-      //setError("Not able to get Data");
-      setLoading(false);
       dlog.d("[NETWORK] fetching from network failed ");
       dlog.ex(e);
-      if (onError) {
-        onError();
-      }
+      callback?.onError?.("Not able to ralod data");
+      callback?.onComplete?.();
     }
   }
 
@@ -64,8 +58,8 @@ export const useNetwork = () => {
         CACHE_KEY_POSITION,
         false
       );
-      verifyOrCrash(appState.state.market != null, "Market is null");
-      appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, appState.state.market) });
+      verifyOrCrash(globalAppState.market != null, "Market is null");
+      appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, globalAppState.market!) });
       setLoading(false);
       callback?.onSuccess?.({});
       callback?.onComplete?.();
