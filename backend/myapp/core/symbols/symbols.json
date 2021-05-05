@@ -2628,6 +2628,2217 @@
             ],
             "symbol": "^CNXIT",
             "text": "NIFTY IT"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "III.NS",
+            "name": "3i",
+            "sector": [
+                "Financial Services"
+            ],
+            "symbol": "III",
+            "text": "3i"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ADM.NS",
+            "name": "Admiral Group",
+            "sector": [
+                "Nonlife Insurance"
+            ],
+            "symbol": "ADM",
+            "text": "Admiral Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AAL.NS",
+            "name": "Anglo American plc",
+            "sector": [
+                "Mining"
+            ],
+            "symbol": "AAL",
+            "text": "Anglo American plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ANTO.NS",
+            "name": "Antofagasta",
+            "sector": [
+                "Mining"
+            ],
+            "symbol": "ANTO",
+            "text": "Antofagasta"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AHT.NS",
+            "name": "Ashtead Group",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "AHT",
+            "text": "Ashtead Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ABF.NS",
+            "name": "Associated British Foods",
+            "sector": [
+                "Food Producers"
+            ],
+            "symbol": "ABF",
+            "text": "Associated British Foods"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AZN.NS",
+            "name": "AstraZeneca",
+            "sector": [
+                "Pharmaceuticals & Biotechnology"
+            ],
+            "symbol": "AZN",
+            "text": "AstraZeneca"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AUTO.NS",
+            "name": "Auto Trader Group",
+            "sector": [
+                "Media"
+            ],
+            "symbol": "AUTO",
+            "text": "Auto Trader Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AVST.NS",
+            "name": "Avast",
+            "sector": [
+                "Software & Computer Services"
+            ],
+            "symbol": "AVST",
+            "text": "Avast"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AVV.NS",
+            "name": "Aveva",
+            "sector": [
+                "Software & Computer Services"
+            ],
+            "symbol": "AVV",
+            "text": "Aveva"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "AV..NS",
+            "name": "Aviva",
+            "sector": [
+                "Life Insurance"
+            ],
+            "symbol": "AV.",
+            "text": "Aviva"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BME.NS",
+            "name": "B&M",
+            "sector": [
+                "Retailers"
+            ],
+            "symbol": "BME",
+            "text": "B&M"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BA..NS",
+            "name": "BAE Systems",
+            "sector": [
+                "Aerospace & Defence"
+            ],
+            "symbol": "BA.",
+            "text": "BAE Systems"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BARC.NS",
+            "name": "Barclays",
+            "sector": [
+                "Banks"
+            ],
+            "symbol": "BARC",
+            "text": "Barclays"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BDEV.NS",
+            "name": "Barratt Developments",
+            "sector": [
+                "Household Goods & Home Construction"
+            ],
+            "symbol": "BDEV",
+            "text": "Barratt Developments"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BKG.NS",
+            "name": "Berkeley Group Holdings",
+            "sector": [
+                "Household Goods & Home Construction"
+            ],
+            "symbol": "BKG",
+            "text": "Berkeley Group Holdings"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BHP.NS",
+            "name": "BHP",
+            "sector": [
+                "Mining"
+            ],
+            "symbol": "BHP",
+            "text": "BHP"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BP..NS",
+            "name": "BP",
+            "sector": [
+                "Oil & Gas Producers"
+            ],
+            "symbol": "BP.",
+            "text": "BP"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BATS.NS",
+            "name": "British American Tobacco",
+            "sector": [
+                "Tobacco"
+            ],
+            "symbol": "BATS",
+            "text": "British American Tobacco"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BLND.NS",
+            "name": "British Land",
+            "sector": [
+                "Real Estate Investment Trusts"
+            ],
+            "symbol": "BLND",
+            "text": "British Land"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BT.A.NS",
+            "name": "BT Group",
+            "sector": [
+                "Fixed Line Telecommunications"
+            ],
+            "symbol": "BT.A",
+            "text": "BT Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BNZL.NS",
+            "name": "Bunzl",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "BNZL",
+            "text": "Bunzl"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "BRBY.NS",
+            "name": "Burberry",
+            "sector": [
+                "Personal Goods"
+            ],
+            "symbol": "BRBY",
+            "text": "Burberry"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "CCH.NS",
+            "name": "Coca-Cola HBC",
+            "sector": [
+                "Beverages"
+            ],
+            "symbol": "CCH",
+            "text": "Coca-Cola HBC"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "CPG.NS",
+            "name": "Compass Group",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "CPG",
+            "text": "Compass Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "CRH.NS",
+            "name": "CRH plc",
+            "sector": [
+                "Construction & Materials"
+            ],
+            "symbol": "CRH",
+            "text": "CRH plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "CRDA.NS",
+            "name": "Croda International",
+            "sector": [
+                "Chemicals"
+            ],
+            "symbol": "CRDA",
+            "text": "Croda International"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "DCC.NS",
+            "name": "DCC plc",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "DCC",
+            "text": "DCC plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "DGE.NS",
+            "name": "Diageo",
+            "sector": [
+                "Beverages"
+            ],
+            "symbol": "DGE",
+            "text": "Diageo"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ENT.NS",
+            "name": "Entain",
+            "sector": [
+                "Travel & Leisure"
+            ],
+            "symbol": "ENT",
+            "text": "Entain"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "EVR.NS",
+            "name": "Evraz",
+            "sector": [
+                "Industrial Metals & Mining"
+            ],
+            "symbol": "EVR",
+            "text": "Evraz"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "EXPN.NS",
+            "name": "Experian",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "EXPN",
+            "text": "Experian"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "FERG.NS",
+            "name": "Ferguson plc",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "FERG",
+            "text": "Ferguson plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "FLTR.NS",
+            "name": "Flutter Entertainment",
+            "sector": [
+                "Travel & Leisure"
+            ],
+            "symbol": "FLTR",
+            "text": "Flutter Entertainment"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "FRES.NS",
+            "name": "Fresnillo",
+            "sector": [
+                "Mining"
+            ],
+            "symbol": "FRES",
+            "text": "Fresnillo"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "GSK.NS",
+            "name": "GlaxoSmithKline",
+            "sector": [
+                "Pharmaceuticals & Biotechnology"
+            ],
+            "symbol": "GSK",
+            "text": "GlaxoSmithKline"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "GLEN.NS",
+            "name": "Glencore",
+            "sector": [
+                "Mining"
+            ],
+            "symbol": "GLEN",
+            "text": "Glencore"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "HLMA.NS",
+            "name": "Halma",
+            "sector": [
+                "Electronic & Electrical Equipment"
+            ],
+            "symbol": "HLMA",
+            "text": "Halma"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "HL..NS",
+            "name": "Hargreaves Lansdown",
+            "sector": [
+                "Financial Services"
+            ],
+            "symbol": "HL.",
+            "text": "Hargreaves Lansdown"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "HIK.NS",
+            "name": "Hikma Pharmaceuticals",
+            "sector": [
+                "Pharmaceuticals & Biotechnology"
+            ],
+            "symbol": "HIK",
+            "text": "Hikma Pharmaceuticals"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "HSBA.NS",
+            "name": "HSBC",
+            "sector": [
+                "Banks"
+            ],
+            "symbol": "HSBA",
+            "text": "HSBC"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "IHG.NS",
+            "name": "IHG Hotels & Resorts",
+            "sector": [
+                "Travel & Leisure"
+            ],
+            "symbol": "IHG",
+            "text": "IHG Hotels & Resorts"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "IMB.NS",
+            "name": "Imperial Brands",
+            "sector": [
+                "Tobacco"
+            ],
+            "symbol": "IMB",
+            "text": "Imperial Brands"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "INF.NS",
+            "name": "Informa",
+            "sector": [
+                "Media"
+            ],
+            "symbol": "INF",
+            "text": "Informa"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ICP.NS",
+            "name": "Intermediate Capital Group",
+            "sector": [
+                "Investment Services"
+            ],
+            "symbol": "ICP",
+            "text": "Intermediate Capital Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "IAG.NS",
+            "name": "International Airlines Group",
+            "sector": [
+                "Travel & Leisure"
+            ],
+            "symbol": "IAG",
+            "text": "International Airlines Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ITRK.NS",
+            "name": "Intertek",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "ITRK",
+            "text": "Intertek"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "JD..NS",
+            "name": "JD Sports",
+            "sector": [
+                "General Retailers"
+            ],
+            "symbol": "JD.",
+            "text": "JD Sports"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "JMAT.NS",
+            "name": "Johnson Matthey",
+            "sector": [
+                "Chemicals"
+            ],
+            "symbol": "JMAT",
+            "text": "Johnson Matthey"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "JET.NS",
+            "name": "Just Eat Takeaway",
+            "sector": [
+                "Software & Computer Services"
+            ],
+            "symbol": "JET",
+            "text": "Just Eat Takeaway"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "KGF.NS",
+            "name": "Kingfisher",
+            "sector": [
+                "Retailers"
+            ],
+            "symbol": "KGF",
+            "text": "Kingfisher"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "LAND.NS",
+            "name": "Land Securities",
+            "sector": [
+                "Real Estate Investment Trusts"
+            ],
+            "symbol": "LAND",
+            "text": "Land Securities"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "LGEN.NS",
+            "name": "Legal & General",
+            "sector": [
+                "Life Insurance"
+            ],
+            "symbol": "LGEN",
+            "text": "Legal & General"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "LLOY.NS",
+            "name": "Lloyds Banking Group",
+            "sector": [
+                "Banks"
+            ],
+            "symbol": "LLOY",
+            "text": "Lloyds Banking Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "LSEG.NS",
+            "name": "London Stock Exchange Group",
+            "sector": [
+                "Financial Services"
+            ],
+            "symbol": "LSEG",
+            "text": "London Stock Exchange Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "MNG.NS",
+            "name": "M&G",
+            "sector": [
+                "Asset Managers"
+            ],
+            "symbol": "MNG",
+            "text": "M&G"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "MRO.NS",
+            "name": "Melrose Industries",
+            "sector": [
+                "Automobiles & Parts"
+            ],
+            "symbol": "MRO",
+            "text": "Melrose Industries"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "MNDI.NS",
+            "name": "Mondi",
+            "sector": [
+                "Forestry & Paper"
+            ],
+            "symbol": "MNDI",
+            "text": "Mondi"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "NG..NS",
+            "name": "National Grid plc",
+            "sector": [
+                "Gas, Water & Multi-utilities"
+            ],
+            "symbol": "NG.",
+            "text": "National Grid plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "NWG.NS",
+            "name": "NatWest Group",
+            "sector": [
+                "Banks"
+            ],
+            "symbol": "NWG",
+            "text": "NatWest Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "NXT.NS",
+            "name": "Next plc",
+            "sector": [
+                "General Retailers"
+            ],
+            "symbol": "NXT",
+            "text": "Next plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "OCDO.NS",
+            "name": "Ocado Group",
+            "sector": [
+                "Food & Drug Retailers"
+            ],
+            "symbol": "OCDO",
+            "text": "Ocado Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "PSON.NS",
+            "name": "Pearson plc",
+            "sector": [
+                "Media"
+            ],
+            "symbol": "PSON",
+            "text": "Pearson plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "PSH.NS",
+            "name": "Pershing Square Holdings",
+            "sector": [
+                "Financial Services"
+            ],
+            "symbol": "PSH",
+            "text": "Pershing Square Holdings"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "PSN.NS",
+            "name": "Persimmon plc",
+            "sector": [
+                "Household Goods & Home Construction"
+            ],
+            "symbol": "PSN",
+            "text": "Persimmon plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "PHNX.NS",
+            "name": "Phoenix Group",
+            "sector": [
+                "Life Insurance"
+            ],
+            "symbol": "PHNX",
+            "text": "Phoenix Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "POLY.NS",
+            "name": "Polymetal International",
+            "sector": [
+                "Precious Metals & Mining"
+            ],
+            "symbol": "POLY",
+            "text": "Polymetal International"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "PRU.NS",
+            "name": "Prudential plc",
+            "sector": [
+                "Life Insurance"
+            ],
+            "symbol": "PRU",
+            "text": "Prudential plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RKT.NS",
+            "name": "Reckitt",
+            "sector": [
+                "Household Goods & Home Construction"
+            ],
+            "symbol": "RKT",
+            "text": "Reckitt"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "REL.NS",
+            "name": "RELX",
+            "sector": [
+                "Media"
+            ],
+            "symbol": "REL",
+            "text": "RELX"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RSW.NS",
+            "name": "Renishaw",
+            "sector": [
+                "Industrial Goods and Services"
+            ],
+            "symbol": "RSW",
+            "text": "Renishaw"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RTO.NS",
+            "name": "Rentokil Initial",
+            "sector": [
+                "Support Services"
+            ],
+            "symbol": "RTO",
+            "text": "Rentokil Initial"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RMV.NS",
+            "name": "Rightmove",
+            "sector": [
+                "Media"
+            ],
+            "symbol": "RMV",
+            "text": "Rightmove"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RIO.NS",
+            "name": "Rio Tinto",
+            "sector": [
+                "Mining"
+            ],
+            "symbol": "RIO",
+            "text": "Rio Tinto"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RR..NS",
+            "name": "Rolls-Royce Holdings",
+            "sector": [
+                "Aerospace & Defence"
+            ],
+            "symbol": "RR.",
+            "text": "Rolls-Royce Holdings"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RDSA.NS",
+            "name": "Royal Dutch Shell",
+            "sector": [
+                "Oil & Gas Producers"
+            ],
+            "symbol": "RDSA",
+            "text": "Royal Dutch Shell"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "RSA.NS",
+            "name": "RSA Insurance Group",
+            "sector": [
+                "Nonlife Insurance"
+            ],
+            "symbol": "RSA",
+            "text": "RSA Insurance Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SGE.NS",
+            "name": "Sage Group",
+            "sector": [
+                "Software & Computer Services"
+            ],
+            "symbol": "SGE",
+            "text": "Sage Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SBRY.NS",
+            "name": "Sainsbury's",
+            "sector": [
+                "Food & Drug Retailers"
+            ],
+            "symbol": "SBRY",
+            "text": "Sainsbury's"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SDR.NS",
+            "name": "Schroders",
+            "sector": [
+                "Financial Services"
+            ],
+            "symbol": "SDR",
+            "text": "Schroders"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SMT.NS",
+            "name": "Scottish Mortgage Investment Trust",
+            "sector": [
+                "Equity Investment Instruments"
+            ],
+            "symbol": "SMT",
+            "text": "Scottish Mortgage Investment Trust"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SGRO.NS",
+            "name": "Segro",
+            "sector": [
+                "Real Estate Investment Trusts"
+            ],
+            "symbol": "SGRO",
+            "text": "Segro"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SVT.NS",
+            "name": "Severn Trent",
+            "sector": [
+                "Gas, Water & Multi-utilities"
+            ],
+            "symbol": "SVT",
+            "text": "Severn Trent"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SMDS.NS",
+            "name": "DS Smith",
+            "sector": [
+                "General Industrials"
+            ],
+            "symbol": "SMDS",
+            "text": "DS Smith"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SMIN.NS",
+            "name": "Smiths Group",
+            "sector": [
+                "General Industrials"
+            ],
+            "symbol": "SMIN",
+            "text": "Smiths Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SN..NS",
+            "name": "Smith & Nephew",
+            "sector": [
+                "Health Care Equipment & Services"
+            ],
+            "symbol": "SN.",
+            "text": "Smith & Nephew"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SKG.NS",
+            "name": "Smurfit Kappa",
+            "sector": [
+                "General Industrials"
+            ],
+            "symbol": "SKG",
+            "text": "Smurfit Kappa"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SPX.NS",
+            "name": "Spirax-Sarco Engineering",
+            "sector": [
+                "Industrial Engineering"
+            ],
+            "symbol": "SPX",
+            "text": "Spirax-Sarco Engineering"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SSE.NS",
+            "name": "SSE plc",
+            "sector": [
+                "Electricity"
+            ],
+            "symbol": "SSE",
+            "text": "SSE plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "STAN.NS",
+            "name": "Standard Chartered",
+            "sector": [
+                "Banks"
+            ],
+            "symbol": "STAN",
+            "text": "Standard Chartered"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "SLA.NS",
+            "name": "Standard Life Aberdeen",
+            "sector": [
+                "Financial Services"
+            ],
+            "symbol": "SLA",
+            "text": "Standard Life Aberdeen"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "STJ.NS",
+            "name": "St. James's Place plc",
+            "sector": [
+                "Life Insurance"
+            ],
+            "symbol": "STJ",
+            "text": "St. James's Place plc"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "TW..NS",
+            "name": "Taylor Wimpey",
+            "sector": [
+                "Household Goods & Home Construction"
+            ],
+            "symbol": "TW.",
+            "text": "Taylor Wimpey"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "TSCO.NS",
+            "name": "Tesco",
+            "sector": [
+                "Food & Drug Retailers"
+            ],
+            "symbol": "TSCO",
+            "text": "Tesco"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "ULVR.NS",
+            "name": "Unilever",
+            "sector": [
+                "Personal Goods"
+            ],
+            "symbol": "ULVR",
+            "text": "Unilever"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "UU..NS",
+            "name": "United Utilities",
+            "sector": [
+                "Gas, Water & Multi-utilities"
+            ],
+            "symbol": "UU.",
+            "text": "United Utilities"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "VOD.NS",
+            "name": "Vodafone Group",
+            "sector": [
+                "Mobile Telecommunications"
+            ],
+            "symbol": "VOD",
+            "text": "Vodafone Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "WEIR.NS",
+            "name": "Weir Group",
+            "sector": [
+                "Industrial Goods and Services"
+            ],
+            "symbol": "WEIR",
+            "text": "Weir Group"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "WTB.NS",
+            "name": "Whitbread",
+            "sector": [
+                "Retail hospitality"
+            ],
+            "symbol": "WTB",
+            "text": "Whitbread"
+        },
+        {
+            "domain": "UK",
+            "isin": "",
+            "key": "WPP.NS",
+            "name": "WPP plc",
+            "sector": [
+                "Media"
+            ],
+            "symbol": "WPP",
+            "text": "WPP plc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AAPL",
+            "name": "Apple Inc.",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "AAPL",
+            "text": "Apple Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "ABBV",
+            "name": "AbbVie Inc.",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "ABBV",
+            "text": "AbbVie Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "ABT",
+            "name": "Abbott Laboratories",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "ABT",
+            "text": "Abbott Laboratories"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "ACN",
+            "name": "Accenture",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "ACN",
+            "text": "Accenture"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "ADBE",
+            "name": "Adobe Inc.",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "ADBE",
+            "text": "Adobe Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AIG",
+            "name": "American International Group",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "AIG",
+            "text": "American International Group"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AMGN",
+            "name": "Amgen Inc.",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "AMGN",
+            "text": "Amgen Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AMT",
+            "name": "American Tower",
+            "sector": [
+                "Real Estate"
+            ],
+            "symbol": "AMT",
+            "text": "American Tower"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AMZN",
+            "name": "Amazon.com",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "AMZN",
+            "text": "Amazon.com"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AVGO",
+            "name": "Broadcom Inc.",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "AVGO",
+            "text": "Broadcom Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "AXP",
+            "name": "American Express",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "AXP",
+            "text": "American Express"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BA",
+            "name": "Boeing Co.",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "BA",
+            "text": "Boeing Co."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BAC",
+            "name": "Bank of America Corp",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "BAC",
+            "text": "Bank of America Corp"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BIIB",
+            "name": "Biogen",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "BIIB",
+            "text": "Biogen"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BK",
+            "name": "The Bank of New York Mellon",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "BK",
+            "text": "The Bank of New York Mellon"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BKNG",
+            "name": "Booking Holdings",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "BKNG",
+            "text": "Booking Holdings"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BLK",
+            "name": "BlackRock Inc",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "BLK",
+            "text": "BlackRock Inc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BMY",
+            "name": "Bristol-Myers Squibb",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "BMY",
+            "text": "Bristol-Myers Squibb"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "BRK.B",
+            "name": "Berkshire Hathaway",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "BRK.B",
+            "text": "Berkshire Hathaway"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "C",
+            "name": "Citigroup Inc",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "C",
+            "text": "Citigroup Inc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CAT",
+            "name": "Caterpillar Inc.",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "CAT",
+            "text": "Caterpillar Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CHTR",
+            "name": "Charter Communications",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "CHTR",
+            "text": "Charter Communications"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CL",
+            "name": "Colgate-Palmolive",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "CL",
+            "text": "Colgate-Palmolive"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CMCSA",
+            "name": "Comcast Corp.",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "CMCSA",
+            "text": "Comcast Corp."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "COF",
+            "name": "Capital One Financial Corp.",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "COF",
+            "text": "Capital One Financial Corp."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "COP",
+            "name": "ConocoPhillips",
+            "sector": [
+                "Energy"
+            ],
+            "symbol": "COP",
+            "text": "ConocoPhillips"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "COST",
+            "name": "Costco Wholesale Corp.",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "COST",
+            "text": "Costco Wholesale Corp."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CRM",
+            "name": "Salesforce",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "CRM",
+            "text": "Salesforce"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CSCO",
+            "name": "Cisco Systems",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "CSCO",
+            "text": "Cisco Systems"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CVS",
+            "name": "CVS Health",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "CVS",
+            "text": "CVS Health"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "CVX",
+            "name": "Chevron Corporation",
+            "sector": [
+                "Energy"
+            ],
+            "symbol": "CVX",
+            "text": "Chevron Corporation"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "DD",
+            "name": "DuPont de Nemours Inc",
+            "sector": [
+                "Materials"
+            ],
+            "symbol": "DD",
+            "text": "DuPont de Nemours Inc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "DHR",
+            "name": "Danaher Corporation",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "DHR",
+            "text": "Danaher Corporation"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "DIS",
+            "name": "The Walt Disney Company",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "DIS",
+            "text": "The Walt Disney Company"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "DOW",
+            "name": "Dow Inc.",
+            "sector": [
+                "Materials"
+            ],
+            "symbol": "DOW",
+            "text": "Dow Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "DUK",
+            "name": "Duke Energy",
+            "sector": [
+                "Utilities"
+            ],
+            "symbol": "DUK",
+            "text": "Duke Energy"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "EMR",
+            "name": "Emerson Electric Co.",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "EMR",
+            "text": "Emerson Electric Co."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "EXC",
+            "name": "Exelon",
+            "sector": [
+                "Utilities"
+            ],
+            "symbol": "EXC",
+            "text": "Exelon"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "F",
+            "name": "Ford Motor Company",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "F",
+            "text": "Ford Motor Company"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "FB",
+            "name": "Facebook, Inc.",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "FB",
+            "text": "Facebook, Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "FDX",
+            "name": "FedEx",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "FDX",
+            "text": "FedEx"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GD",
+            "name": "General Dynamics",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "GD",
+            "text": "General Dynamics"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GE",
+            "name": "General Electric",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "GE",
+            "text": "General Electric"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GILD",
+            "name": "Gilead Sciences",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "GILD",
+            "text": "Gilead Sciences"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GM",
+            "name": "General Motors",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "GM",
+            "text": "General Motors"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GOOG",
+            "name": "Alphabet Inc. (Class C)",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "GOOG",
+            "text": "Alphabet Inc. (Class C)"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GOOGL",
+            "name": "Alphabet Inc. (Class A)",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "GOOGL",
+            "text": "Alphabet Inc. (Class A)"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "GS",
+            "name": "Goldman Sachs",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "GS",
+            "text": "Goldman Sachs"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "HD",
+            "name": "The Home Depot",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "HD",
+            "text": "The Home Depot"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "HON",
+            "name": "Honeywell",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "HON",
+            "text": "Honeywell"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "IBM",
+            "name": "International Business Machines",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "IBM",
+            "text": "International Business Machines"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "INTC",
+            "name": "Intel Corp.",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "INTC",
+            "text": "Intel Corp."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "JNJ",
+            "name": "Johnson & Johnson",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "JNJ",
+            "text": "Johnson & Johnson"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "JPM",
+            "name": "JPMorgan Chase & Co.",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "JPM",
+            "text": "JPMorgan Chase & Co."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "KHC",
+            "name": "Kraft Heinz",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "KHC",
+            "text": "Kraft Heinz"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "KO",
+            "name": "The Coca-Cola Company",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "KO",
+            "text": "The Coca-Cola Company"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "LIN",
+            "name": "Linde plc",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "LIN",
+            "text": "Linde plc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "LLY",
+            "name": "Eli Lilly and Company",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "LLY",
+            "text": "Eli Lilly and Company"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "LMT",
+            "name": "Lockheed Martin",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "LMT",
+            "text": "Lockheed Martin"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "LOW",
+            "name": "Lowe's",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "LOW",
+            "text": "Lowe's"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MA",
+            "name": "Mastercard",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "MA",
+            "text": "Mastercard"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MCD",
+            "name": "McDonald's Corp",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "MCD",
+            "text": "McDonald's Corp"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MDLZ",
+            "name": "Mondelz International",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "MDLZ",
+            "text": "Mondelz International"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MDT",
+            "name": "Medtronic plc",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "MDT",
+            "text": "Medtronic plc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MET",
+            "name": "MetLife Inc.",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "MET",
+            "text": "MetLife Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MMM",
+            "name": "3M Company",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "MMM",
+            "text": "3M Company"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MO",
+            "name": "Altria Group",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "MO",
+            "text": "Altria Group"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MRK",
+            "name": "Merck & Co.",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "MRK",
+            "text": "Merck & Co."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MS",
+            "name": "Morgan Stanley",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "MS",
+            "text": "Morgan Stanley"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "MSFT",
+            "name": "Microsoft",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "MSFT",
+            "text": "Microsoft"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "NEE",
+            "name": "NextEra Energy",
+            "sector": [
+                "Utilities"
+            ],
+            "symbol": "NEE",
+            "text": "NextEra Energy"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "NFLX",
+            "name": "Netflix",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "NFLX",
+            "text": "Netflix"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "NKE",
+            "name": "Nike, Inc.",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "NKE",
+            "text": "Nike, Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "NVDA",
+            "name": "Nvidia Corporation",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "NVDA",
+            "text": "Nvidia Corporation"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "ORCL",
+            "name": "Oracle Corporation",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "ORCL",
+            "text": "Oracle Corporation"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "PEP",
+            "name": "PepsiCo",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "PEP",
+            "text": "PepsiCo"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "PFE",
+            "name": "Pfizer Inc",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "PFE",
+            "text": "Pfizer Inc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "PG",
+            "name": "Procter & Gamble",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "PG",
+            "text": "Procter & Gamble"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "PM",
+            "name": "Philip Morris International",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "PM",
+            "text": "Philip Morris International"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "PYPL",
+            "name": "PayPal",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "PYPL",
+            "text": "PayPal"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "QCOM",
+            "name": "Qualcomm",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "QCOM",
+            "text": "Qualcomm"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "RTX",
+            "name": "Raytheon Technologies",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "RTX",
+            "text": "Raytheon Technologies"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "SBUX",
+            "name": "Starbucks Corp.",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "SBUX",
+            "text": "Starbucks Corp."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "SO",
+            "name": "Southern Company",
+            "sector": [
+                "Utilities"
+            ],
+            "symbol": "SO",
+            "text": "Southern Company"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "SPG",
+            "name": "Simon Property Group",
+            "sector": [
+                "Real Estate"
+            ],
+            "symbol": "SPG",
+            "text": "Simon Property Group"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "T",
+            "name": "AT&T Inc",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "T",
+            "text": "AT&T Inc"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "TGT",
+            "name": "Target Corporation",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "TGT",
+            "text": "Target Corporation"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "TMO",
+            "name": "Thermo Fisher Scientific",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "TMO",
+            "text": "Thermo Fisher Scientific"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "TMUS",
+            "name": "T-Mobile US",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "TMUS",
+            "text": "T-Mobile US"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "TSLA",
+            "name": "Tesla, Inc.",
+            "sector": [
+                "Consumer Discretionary"
+            ],
+            "symbol": "TSLA",
+            "text": "Tesla, Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "TXN",
+            "name": "Texas Instruments",
+            "sector": [
+                "Information Technology"
+            ],
+            "symbol": "TXN",
+            "text": "Texas Instruments"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "UNH",
+            "name": "UnitedHealth Group",
+            "sector": [
+                "Health Care"
+            ],
+            "symbol": "UNH",
+            "text": "UnitedHealth Group"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "UNP",
+            "name": "Union Pacific Corporation",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "UNP",
+            "text": "Union Pacific Corporation"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "UPS",
+            "name": "United Parcel Service",
+            "sector": [
+                "Industrials"
+            ],
+            "symbol": "UPS",
+            "text": "United Parcel Service"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "USB",
+            "name": "U.S. Bancorp",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "USB",
+            "text": "U.S. Bancorp"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "V",
+            "name": "Visa Inc.",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "V",
+            "text": "Visa Inc."
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "VZ",
+            "name": "Verizon Communications",
+            "sector": [
+                "Communication Services"
+            ],
+            "symbol": "VZ",
+            "text": "Verizon Communications"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "WBA",
+            "name": "Walgreens Boots Alliance",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "WBA",
+            "text": "Walgreens Boots Alliance"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "WFC",
+            "name": "Wells Fargo",
+            "sector": [
+                "Financials"
+            ],
+            "symbol": "WFC",
+            "text": "Wells Fargo"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "WMT",
+            "name": "Walmart",
+            "sector": [
+                "Consumer Staples"
+            ],
+            "symbol": "WMT",
+            "text": "Walmart"
+        },
+        {
+            "domain": "USA",
+            "isin": "",
+            "key": "XOM",
+            "name": "Exxon Mobil Corp.",
+            "sector": [
+                "Energy"
+            ],
+            "symbol": "XOM",
+            "text": "Exxon Mobil Corp."
         }
     ]
 }
