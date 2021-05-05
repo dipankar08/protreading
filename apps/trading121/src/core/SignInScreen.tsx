@@ -38,18 +38,18 @@ export const SignInScreen = ({ navigation }: TProps) => {
   }, []);
 
   return (
-    <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20 }}>
+    <DContainer style={{ backgroundColor: STYLES.APP_COLOR_PRIMARY, justifyContent: "center", paddingHorizontal: 20, alignItems: "center" }}>
       <Image
         style={{
-          width: 80,
-          height: 80,
+          width: 100,
+          height: 100,
           backgroundColor: "transparent",
           alignSelf: "center",
-          marginBottom: 0,
+          marginBottom: 40,
         }}
         source={logo}
       />
-      <DTextTitle style={{ color: "white", textAlign: "center" }}>{STRINGS.APP_NAME}</DTextTitle>
+      <DTextTitle style={{ color: "white", textAlign: "center", fontSize: 40 }}>{STRINGS.APP_NAME}</DTextTitle>
 
       <DTextSubTitle style={{ color: "white", textAlign: "center", marginTop: 40 }}>Please login using your social account</DTextSubTitle>
 
@@ -117,25 +117,27 @@ export const SignInScreen = ({ navigation }: TProps) => {
       <DTextFooter style={{ color: "white", textAlign: "center" }}>
         (You can use your google and facebook account to get signin. You can login using anyone of this if they have same email address. )
       </DTextFooter>
-      <DPrompt
-        visible={visibleGuest}
-        placeholder="email"
-        title={"Login as Guest"}
-        body={"Please enter you email address"}
-        onOk={(text: string) => {
-          setVisibleGuest(false);
-          if (text.trim().length == 0) {
-            showNotification("Please enter username");
-            return;
-          }
-          coreApi.loginAsGuest(text, {
-            onSuccess: () => {
-              coreApi.navigateTo(navigation, "CompleteSignInScreen");
-            },
-          });
-        }}
-        onCancel={() => setVisibleGuest(false)}
-      ></DPrompt>
+      {visibleGuest && (
+        <DPrompt
+          visible={visibleGuest}
+          placeholder="email"
+          title={"Login as Guest"}
+          body={"Please enter you email address"}
+          onOk={(text: string) => {
+            setVisibleGuest(false);
+            if (text.trim().length == 0) {
+              showNotification("Please enter username");
+              return;
+            }
+            coreApi.loginAsGuest(text, {
+              onSuccess: () => {
+                coreApi.navigateTo(navigation, "CompleteSignInScreen");
+              },
+            });
+          }}
+          onCancel={() => setVisibleGuest(false)}
+        ></DPrompt>
+      )}
     </DContainer>
   );
 };

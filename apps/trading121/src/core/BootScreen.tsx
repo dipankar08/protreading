@@ -45,8 +45,8 @@ export const BootScreen = ({ navigation }: any) => {
       }}
     >
       <DLayoutCol>
-        <DAppLogo logo={logo} size={80}></DAppLogo>
-        <DLoadingText color="white" style={{ justifyContent: "flex-end", marginTop: 80 }}>
+        <DAppLogo logo={logo}></DAppLogo>
+        <DLoadingText color="white" style={{ justifyContent: "flex-end", marginTop: 100 }}>
           Staring the app...
         </DLoadingText>
         <DTextFooter style={{ color: "white" }}> you are running {update ? "old build" : "latest build"}</DTextFooter>
