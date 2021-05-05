@@ -51,7 +51,7 @@ export async function postRequest(url: string, data: TObject) {
     dlog.d("post success...");
     return jsondata.out;
   } else {
-    dlog.d(`post failed....${JSON.stringify(response.data)}`);
+    //dlog.d(`post failed....${JSON.stringify(response.data)}`);
     throw new Error("Server sends error");
   }
 }

@@ -158,7 +158,7 @@ export function processSummaryData(obj: any): TSummary {
         group: value,
         avg_change: 0,
       });
-      dlog.d("added...");
+      // dlog.d("added...");
     }
     dlog.d("Compltee summary calculation");
   } catch (e) {

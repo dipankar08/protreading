@@ -18,8 +18,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
   const [loading, setLoading] = useState(false);
 
   async function refreshData() {
-    await network.reLoadAllData();
-    await network.fetchUserInfo({
+    await network.doAllNetworkCallOnBoot({
       onBefore() {
         setLoading(true);
       },

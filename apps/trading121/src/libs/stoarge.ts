@@ -24,7 +24,7 @@ export async function getBool(key: string) {
 export async function saveData(key: string, value: TObject) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
-    dlog.d(`[STORAGE] saved ${key} to ${JSON.stringify(value)}`);
+    dlog.d(`[STORAGE] saved ${key} to ${JSON.stringify(value).substring(0, 100)}...`);
   } catch (e) {
     dlog.d("[STORAGE] Not able to store latest data in the cache");
   }
