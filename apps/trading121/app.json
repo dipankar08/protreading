@@ -1,10 +1,10 @@
 {
-  "name": "trad50",
-  "displayName": "trad50",
+  "name": "Trading 50",
+  "displayName": "Trading 50",
   "expo": {
-    "name": "trad50",
-    "slug": "trad50",
-    "version": "1.0.0",
+    "name": "Trading 50",
+    "slug": "Trading 50",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {

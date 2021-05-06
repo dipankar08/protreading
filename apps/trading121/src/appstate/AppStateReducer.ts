@@ -4,25 +4,10 @@ export let globalAppState: TAppState = initialState;
 const AppStateReducer = (state: TAppState, action: TAction): TAppState => {
   dlog.d(`[AppStateReducer] updating app state for ${action.type}`);
   switch (action.type) {
-    case "UPDATE_MARKET":
+    case "MERGE":
       globalAppState = {
         ...state,
-        market: action.payload,
-        isLatestMarketDataLoaded: action.payload != null,
-      };
-      break;
-    case "UPDATE_SUMMARY":
-      globalAppState = {
-        ...state,
-        summary: action.payload,
-        isSummaryLoaded: action.payload != null,
-      };
-      break;
-    case "UPDATE_POSITION":
-      globalAppState = {
-        ...state,
-        position: action.payload,
-        isPositionLoaded: action.payload != null,
+        ...action.payload,
       };
       break;
     default:

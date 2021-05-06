@@ -65,16 +65,16 @@ export const MarketListView = ({ route }: TProps) => {
   useEffect(() => {
     switch (route.key) {
       case "first":
-        setListData(Array.from(appState.state.summary.data.values()));
+        setListData(Array.from(appState.state.summary.values()));
         break;
       case "second":
-        setListData(Array.from(appState.state.market?.sectorList.values()));
+        setListData(Array.from(appState.state.sectorList.values()));
         break;
       case "third":
-        setListData(Array.from(appState.state.market?.recommendedList.values()));
+        setListData(Array.from(appState.state.recommendedList.values()));
         break;
     }
-  }, [appState.state.summary, appState.state.market]);
+  }, [appState.state.summary, appState.state.sectorList, appState.state.recommendedList]);
 
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
@@ -143,6 +143,7 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
   const { item } = route.params;
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
   const [inverted, setInverted] = useState(false);
+  const [p2rLoading, setP2rLoading] = useState(false);
   const network = useNetwork();
   let isSubscribed = false;
   const refRBSheet = useRef();
@@ -176,8 +177,13 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
       ></ScreenHeader>
       <FlatList
         ref={flatListRef}
-        onRefresh={() => network.reLoadAllData()}
-        refreshing={network.loading}
+        onRefresh={() =>
+          network.fetchLatestClose({
+            onBefore: () => setP2rLoading(true),
+            onComplete: () => setP2rLoading(false),
+          })
+        }
+        refreshing={p2rLoading}
         data={listData}
         inverted={inverted}
         keyExtractor={(item, index) => item.name}
