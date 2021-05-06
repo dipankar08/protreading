@@ -4,6 +4,8 @@ export type TAction = {
   payload?: TAppStateOptional;
 };
 
+export type TDomain = "IN" | "USA" | "UK";
+
 export type TAppState = {
   //summary
   summary: Map<string, TGroupMarketEntry>;
@@ -11,6 +13,7 @@ export type TAppState = {
   sectorList: Map<string, TGroupMarketEntry>;
   recommendedList: Map<string, TGroupMarketEntry>;
   position?: TPosition;
+  domain: TDomain;
 };
 
 export type TAppStateOptional = {
@@ -26,4 +29,5 @@ export const initialState: TAppState = {
   ltpMap: new Map(),
   sectorList: new Map(),
   recommendedList: new Map(),
+  domain: "IN",
 };

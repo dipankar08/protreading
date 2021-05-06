@@ -12,10 +12,15 @@ import { getCurrentDate } from "../libs/time";
 import { CoreStateContext } from "../core/CoreContext";
 import { TCallback } from "../core/core_model";
 import { globalAppState } from "../appstate/AppStateReducer";
+import { initialState, TDomain } from "../appstate/types";
 
-const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary`;
+const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary?`;
 const LATEST_URL = `${PRO_TRADING_SERVER}/latest?candle_type=5m`;
-const MARKET_URL = `${PRO_TRADING_SERVER}/market`;
+const MARKET_URL = `${PRO_TRADING_SERVER}/market?`;
+
+function getDomainUrl(url: string) {
+  return `${url}&domain=${globalAppState.domain}`;
+}
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
@@ -46,9 +51,9 @@ export const useNetwork = () => {
     dlog.d("[NETWORK] fetching from network ");
     callback?.onBefore?.();
     try {
-      let summary = await getRequest(SUMMARY_URL, CACHE_KEY_SUMMARY, false);
-      let latest = await getRequest(LATEST_URL, CACHE_KEY_MARKET, false);
-      let market = await getRequest(MARKET_URL, CACHE_KEY_MARKET, false);
+      let summary = await getRequest(getDomainUrl(SUMMARY_URL), CACHE_KEY_SUMMARY, false);
+      let latest = await getRequest(getDomainUrl(LATEST_URL), CACHE_KEY_MARKET, false);
+      let market = await getRequest(getDomainUrl(MARKET_URL), CACHE_KEY_MARKET, false);
 
       // process alll data
       processor.setSummary(summary);
@@ -171,6 +176,12 @@ export const useNetwork = () => {
     }
   }
 
+  async function changeDomain(domain: TDomain) {
+    appState.dispatch({ type: "MERGE", payload: initialState });
+    globalAppState.domain = domain;
+    reLoadAllData();
+  }
+
   async function reopenOrder(id: string) {
     async function reopen(id: string) {
       let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/update`, {
@@ -208,5 +219,6 @@ export const useNetwork = () => {
     forceUpdateData,
     reopenOrder,
     doAllNetworkCallOnBoot,
+    changeDomain,
   };
 };
