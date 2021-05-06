@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView } from "react-native";
+import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView, Picker } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -39,6 +39,17 @@ export const DTextInput = ({ children, style, placeholder, onChangeText }: TProp
 };
 
 // items = [{ label: "Item 1", value: "item1" },..]
-export const DDropDown = ({ items, onChangeItem }: TProps) => {
-  return <View></View>;
+export const DDropDown = ({ items, setSelectedValue, selectedValue }: TProps) => {
+  let serviceItems = items.map((i) => {
+    return <Picker.Item key={i.key} value={i.key} label={i.text} />;
+  });
+  return (
+    <Picker
+      selectedValue={selectedValue}
+      style={{ height: 50, width: 100, backgroundColor: "#000" }}
+      onValueChange={(itemValue, itemIndex) => setSelectedValue?.(itemValue)}
+    >
+      {serviceItems}
+    </Picker>
+  );
 };

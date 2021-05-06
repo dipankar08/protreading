@@ -8,9 +8,9 @@ import { useNetwork } from "../hooks/useNetwork";
 // Profile and Signout logic
 export const ProfileScreen = ({ navigation, route }: TProps) => {
   let domainList = [
-    { label: "UK", value: "UK" },
-    { label: "INDIA", value: "IN" },
-    { label: "USA", value: "USA" },
+    { key: "UK", text: "UK" },
+    { key: "INDIA", text: "IN" },
+    { key: "USA", text: "USA" },
   ];
   const network = useNetwork();
   let name = "Profile";
@@ -28,7 +28,13 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
         <DTextSection style={{ marginTop: 10 }}>Your Information</DTextSection>
         <LogoutCard></LogoutCard>
         <DTextSection>User Preferences</DTextSection>
-        <DDropDown items={domainList}></DDropDown>
+        <DDropDown
+          items={domainList}
+          selectedValue={"IN"}
+          setSelectedValue={(key) => {
+            network.changeDomain(key);
+          }}
+        ></DDropDown>
 
         <DTextSection>System Preferences</DTextSection>
 
