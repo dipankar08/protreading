@@ -37,7 +37,7 @@ export async function getRequest(url: string, cacheKey?: string | null, cache_fi
     }
     return jsondata.out;
   } else {
-    dlog.d(`get failed....${JSON.stringify(response.data)}`);
+    dlog.d(`get failed. URL: ${url}..${JSON.stringify(response.data)}`);
     throw new Error("Server sends error");
   }
 }
@@ -51,7 +51,7 @@ export async function postRequest(url: string, data: TObject) {
     dlog.d("post success...");
     return jsondata.out;
   } else {
-    //dlog.d(`post failed....${JSON.stringify(response.data)}`);
+    dlog.d(`post failed for URL:${url}`);
     throw new Error("Server sends error");
   }
 }

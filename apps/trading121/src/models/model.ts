@@ -40,10 +40,6 @@ export type TGroupMarketEntry = {
   group: Array<TMarketEntry>;
 };
 
-export type TSummary = {
-  data: Map<string, TGroupMarketEntry>;
-};
-
 export type TMarket = {
   stocks: Array<TMarketEntry>;
   ltpMap: Map<string, number>;
@@ -89,6 +85,20 @@ export type TPositionSummary = {
   open_order_count: number;
   net_profit: number;
   total_tax: number;
+};
+
+export const emptyPositionSummary: TPositionSummary = {
+  invested_amount: 0,
+  current_amount: 0,
+  total_change: 0,
+  total_pl: 0,
+  total_tax: 0,
+  committed_change: 0,
+  committed_pl: 0,
+  net_profit: 0,
+  open_order_count: 0,
+  uncommitted_change: 0,
+  uncommitted_pl: 0,
 };
 
 export type TPosition = {

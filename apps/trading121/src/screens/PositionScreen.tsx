@@ -47,6 +47,7 @@ export const PositionListView = ({ route, navigation }: TProps) => {
   const [selectedItem, setSelectedItem] = useState<TOrder>();
   const [dialogVisible, setDialogVisible] = useState(false);
   const [viewDialogVisible, setViewDialogVisible] = useState(false);
+  const [p2rLoading, setP2rLoading] = useState(false);
 
   useEffect(() => {
     if (!appState.state.position) {
@@ -65,6 +66,13 @@ export const PositionListView = ({ route, navigation }: TProps) => {
       }}
     >
       <FlatList
+        onRefresh={() =>
+          network.fetchLatestClose({
+            onBefore: () => setP2rLoading(true),
+            onComplete: () => setP2rLoading(false),
+          })
+        }
+        refreshing={p2rLoading}
         data={listData}
         keyExtractor={(item) => item._id}
         ItemSeparatorComponent={FlatListItemSeparator}

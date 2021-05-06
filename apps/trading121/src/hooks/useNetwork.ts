@@ -7,11 +7,15 @@ import { assertNotEmptyOrNotify, verifyOrCrash } from "../libs/assert";
 import { dlog } from "../libs/dlog";
 import { getRequest, postRequest } from "../libs/network";
 import { showNotification } from "../libs/uihelper";
-import { processSummaryData, processMarketData, processPositionData } from "../models/processor";
+import { processor } from "../models/processor";
 import { getCurrentDate } from "../libs/time";
 import { CoreStateContext } from "../core/CoreContext";
 import { TCallback } from "../core/core_model";
 import { globalAppState } from "../appstate/AppStateReducer";
+
+const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary`;
+const LATEST_URL = `${PRO_TRADING_SERVER}/latest?candle_type=5m`;
+const MARKET_URL = `${PRO_TRADING_SERVER}/market`;
 
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
@@ -25,20 +29,45 @@ export const useNetwork = () => {
     await fetchUserInfo(callback);
   }
 
+  async function fetchLatestClose(callback: TCallback) {
+    callback.onBefore?.();
+    try {
+      let market = await getRequest(MARKET_URL, CACHE_KEY_MARKET, false);
+      processor.setMarket(market);
+      callback?.onComplete?.();
+    } catch (err) {
+      callback?.onError?.("Not able to fetch latest");
+      callback?.onComplete?.();
+    }
+  }
+
   // realod all market Data
   async function reLoadAllData(callback?: TCallback) {
     dlog.d("[NETWORK] fetching from network ");
     callback?.onBefore?.();
     try {
-      let summary = await getRequest(`${PRO_TRADING_SERVER}/summary`, CACHE_KEY_SUMMARY, false);
-      let market = await getRequest(`${PRO_TRADING_SERVER}/latest?candle_type_5m`, CACHE_KEY_MARKET, false);
-      appState.dispatch({ type: "UPDATE_SUMMARY", payload: processSummaryData(summary) });
-      appState.dispatch({ type: "UPDATE_MARKET", payload: processMarketData(market) });
+      let summary = await getRequest(SUMMARY_URL, CACHE_KEY_SUMMARY, false);
+      let latest = await getRequest(LATEST_URL, CACHE_KEY_MARKET, false);
+      let market = await getRequest(MARKET_URL, CACHE_KEY_MARKET, false);
+
+      // process alll data
+      processor.setSummary(summary);
+      processor.setMarket(market);
+      processor.setLatestIndicator(latest);
+
+      appState.dispatch({
+        type: "MERGE",
+        payload: {
+          summary: processor.summary,
+          sectorList: processor.sectorList,
+          recommendedList: processor.recommendedList,
+        },
+      });
       dlog.d("[NETWORK] fetching from network complete ");
       callback?.onSuccess?.({});
       callback?.onComplete?.();
     } catch (e) {
-      dlog.d("[NETWORK] fetching from network failed ");
+      dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${LATEST_URL}`);
       dlog.ex(e);
       callback?.onError?.("Not able to ralod data");
       callback?.onComplete?.();
@@ -53,13 +82,14 @@ export const useNetwork = () => {
     }
     callback?.onBefore?.();
     try {
-      let position = await getRequest(
+      let network_resp = await getRequest(
         `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100`,
         CACHE_KEY_POSITION,
         false
       );
-      verifyOrCrash(globalAppState.market != null, "Market is null");
-      appState.dispatch({ type: "UPDATE_POSITION", payload: processPositionData(position, globalAppState.market!) });
+      verifyOrCrash(globalAppState.ltpMap != null, "Market is null");
+      processor.setPositionData(network_resp);
+      appState.dispatch({ type: "MERGE", payload: { position: processor.position } });
       setLoading(false);
       callback?.onSuccess?.({});
       callback?.onComplete?.();
@@ -167,5 +197,16 @@ export const useNetwork = () => {
     ]);
   }
 
-  return { loading, error, reLoadAllData, fetchUserInfo, createOrder, closeOrder, forceUpdateData, reopenOrder, doAllNetworkCallOnBoot };
+  return {
+    loading,
+    error,
+    fetchLatestClose,
+    reLoadAllData,
+    fetchUserInfo,
+    createOrder,
+    closeOrder,
+    forceUpdateData,
+    reopenOrder,
+    doAllNetworkCallOnBoot,
+  };
 };

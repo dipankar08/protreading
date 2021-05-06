@@ -1,43 +1,29 @@
-import { TMarket, TPosition, TSummary } from "../models/model";
+import { TGroupMarketEntry, TMarket, TPosition } from "../models/model";
 export type TAction = {
-  type:
-    | "MARK_LOGIN_SUCCESS"
-    | "SET_COUNTER"
-    | "MARK_BOOT_COMPLETE"
-    | "UPDATE_USER_INFO"
-    | "MARK_USER_SIGNED_OUT"
-    | "UPDATE_MARKET"
-    | "UPDATE_SUMMARY"
-    | "UPDATE_POSITION";
-  payload?: any;
-};
-
-// Some info
-export type TUserInfo = {
-  name: string;
-  email: string;
-  user_id: string;
+  type: "MERGE";
+  payload?: TAppStateOptional;
 };
 
 export type TAppState = {
-  //test
-
-  //user info
-
   //summary
-  isSummaryLoaded: boolean;
-  summary?: TSummary;
-  //market
-  isLatestMarketDataLoaded: boolean;
-  market?: TMarket;
+  summary: Map<string, TGroupMarketEntry>;
+  ltpMap: Map<string, number>;
+  sectorList: Map<string, TGroupMarketEntry>;
+  recommendedList: Map<string, TGroupMarketEntry>;
+  position?: TPosition;
+};
 
-  //position
-  isPositionLoaded: boolean;
+export type TAppStateOptional = {
+  summary?: Map<string, TGroupMarketEntry>;
+  ltpMap?: Map<string, number>;
+  sectorList?: Map<string, TGroupMarketEntry>;
+  recommendedList?: Map<string, TGroupMarketEntry>;
   position?: TPosition;
 };
 
 export const initialState: TAppState = {
-  isSummaryLoaded: false,
-  isPositionLoaded: false,
-  isLatestMarketDataLoaded: false,
+  summary: new Map(),
+  ltpMap: new Map(),
+  sectorList: new Map(),
+  recommendedList: new Map(),
 };
