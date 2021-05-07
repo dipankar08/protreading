@@ -36,30 +36,37 @@ def simple_task(argument: str) -> str:
     return hello
 
 
+# This will download - process - and save the file as pkl
+# (1) Download
+# (2) Build indicators
+# (3) SAVE
+# (4) Update the in cache.
 @celery.task(name="tasks.code_api.snapshot")
 @log_func(remote_logging=True)
 @task_common_action
-def snapshot_pipeline(candle_type: str):
-    "This will download - process - and save the file as pkl"
-    print(candle_type)
-    ping_celery()
-    _candle_type = TCandleType(candle_type)
-    dglobaldata.download_process_data_internal(_candle_type)
-    # Compute Summary
-    if _candle_type == TCandleType.DAY_1:
-        dhighlights.compute_summary()
+def task_build_indicator(domain: str, candle_type: str):
+    try:
+        ping_celery()
+        _candle_type = TCandleType(candle_type)
+        dglobaldata.downloadAndBuildIndicator(domain, _candle_type)
+        # Compute Summary
+        if _candle_type == TCandleType.DAY_1:
+            dhighlights.compute_summary()
+    except Exception as e:
+        dlog.d("Got exception in task_build_indicator")
+        dlog.ex(e)
 
 
 @celery.task(name="tasks.code_api.snapshot_all")
 @log_func(remote_logging=True)
 @task_common_action
-def snapshot_pipeline_all():
+def task_build_indicator_all():
     "This will download - process - and save the file as pkl"
     ping_celery()
-    danalytics.reportAction("snapshot_pipeline_all_started")
+    danalytics.reportAction("task_build_indicator_all_started")
     for x in SUPPORTED_CANDLE:
-        dglobaldata.download_process_data_internal(x)
-    danalytics.reportAction("snapshot_pipeline_all_ended")
+        dglobaldata.downloadAndBuildIndicator("IN", x)
+    danalytics.reportAction("task_build_indicator_all_ended")
     buildTaskSuccess("Complated all snap shot", None)
     # Compute Summary
     dhighlights.compute_summary()
@@ -68,6 +75,7 @@ def snapshot_pipeline_all():
     dglobaldata.checkLoadLatestData()
 
 
+"""
 @celery.task(name="tasks.code_api.plot_chart_all")
 @log_func(remote_logging=True)
 @task_common_action
@@ -79,6 +87,7 @@ def plot_chart_all() -> dict:
             dplot.get_endcoded_png_for_chart(
                 symbol=symbol, candle_type=TCandleType.DAY_1, duration=duration, reload="1")
     return buildTaskSuccess("Complated all snap shot", None)
+"""
 
 
 @celery.task(name="tasks.code_api.compute_summary")

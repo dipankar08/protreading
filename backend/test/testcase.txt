@@ -1,11 +1,19 @@
 => context => server => http://127.0.0.1:5000
 
-# Testing market APIS
+############## Testing market APIS ( provide latest market data) #####################
 => GET => {{server}}/market? => success
 => GET => {{server}}/market?domain=IN => success
 => GET => {{server}}/market?domain=IN1 => success
 => GET => {{server}}/market?domain=UK => success
 => GET => {{server}}/market?domain=USA => success
+
+
+############## Testing Indicator API ( Provided indicator values for the latest data ) #####################
+=> GET => {{server}}/indicator => success
+=> GET => {{server}}/indicator?candle_type=5m => success
+=> GET => {{server}}/indicator?candle_type=5m&domain=IN => success
+
+
 
 => GET => {{server}} =>  task submitted
 => GET => {{server}}/status =>  Status Ok
@@ -16,9 +24,8 @@
 => GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100 => success
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open =>success
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open&candle_type=5m&duration=30 =>success
-=> GET => {{server}}/chart?symbol=WIPRO.NS => success
+#=> GET => {{server}}/chart?symbol=WIPRO.NS => success
 => GET => {{server}}/summary => success
 => GET => {{server}}/task?task=snapshot_all => task submitted
-=> GET => {{server}}/latest => success
-=> GET => {{server}}/latest?candle_type=5m => success
+
 

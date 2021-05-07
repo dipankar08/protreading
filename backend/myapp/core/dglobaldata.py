@@ -79,33 +79,46 @@ def getLatestDataInJson(domain, df: DataFrame):
     return final_result
 
 
+# It will download and build the indicators
 @trace_perf
-def download_process_data_internal(domain, candle_type: TCandleType):
-    mark_dataload_start(candle_type)
-    "You must call this function from view controler uusing task"
-    dlog.d("Staring snapshot_pipeline")
-    dlog.d("1/3 Staring snapshot_pipeline")
-    ret_value, download_data = ddownload.download(candle_type=candle_type)
-    if ret_value is False:
-        return {"status": "error", "msg": "something goes wrong", "out": None}
-    dlog.d("2/3 Processing data")
-    processed_df = dindicator.process_inplace(download_data)
-    dlog.d("3/3 Saving data")
-    path_to_store = dstorage.get_default_path_for_candle(candle_type)
-    dstorage.store_data_to_disk(processed_df, path_to_store)
+def downloadAndBuildIndicator(domain, candle_type: TCandleType):
+    key = "downloadAndBuildIndicator_{}_{}".format(domain, candle_type.value)
+    if dredis.get(key) == "1":
+        dlog.d("downloadAndBuildIndicator locked return")
+        raise Exception("downloadAndBuildIndicator is progress")
+    dredis.set(key, "1")
+    try:
+        dlog.d("downloadAndBuildIndicator start")
 
-    dlog.d("4/4 Notify latest data to redis")
-    dredis.setPickle("latest_{}_{}".format(candle_type.value, domain),
-                     {'data': getLatestDataInJson(domain, processed_df),
-                      'update_ts': str(time.time()),
-                      'update_ts_human':
-                      time.strftime("%d/%m/%Y, %H:%M:%S GMT", time.gmtime())})
-    dlog.d("Completed snapshot_pipeline")
-    # Mark as done
-    mark_dataload_end(candle_type)
-    # update the data
-    checkLoadLatestData()
-    return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
+        dlog.d("downloadAndBuildIndicator download start")
+        ret_value, download_data = ddownload.download(
+            domain, interval=candle_type)
+        if ret_value is False:
+            return {"status": "error", "msg": "something goes wrong", "out": None}
+
+        dlog.d("downloadAndBuildIndicator building start")
+        processed_df = dindicator.process_inplace(download_data)
+
+        dlog.d("downloadAndBuildIndicator: saving to storage start")
+        path_to_store = dstorage.get_default_path_for_candle(candle_type)
+        dstorage.store_data_to_disk(processed_df, path_to_store)
+
+        dlog.d("downloadAndBuildIndicator: saving to redis start")
+        dredis.setPickle("indicator_{}_{}".format(candle_type.value, domain),
+                         {'data': getLatestDataInJson(domain, processed_df),
+                         'timestamp': getCurTimeStr()})
+
+        dlog.d("downloadAndBuildIndicator ends")
+        return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
+    except Exception as e:
+        dlog.d("downloadAndBuildIndicator Exception happened")
+        danalytics.reportException(
+            e, "Exception in downloadAndBuildIndicator")
+        dlog.ex(e)
+        raise e
+    finally:
+        dredis.set(key, "0")
+        pass
 
 
 # Call this function in all core api
@@ -116,7 +129,8 @@ def checkLoadLatestData():
             loadDataForCandle(candle_type=candle_type)
             changed.append(candle_type)
         if should_fetch_data(candle_type=candle_type):
-            tasks.snapshot_pipeline.delay(candle_type.value)
+            # Default load india
+            tasks.task_build_indicator.delay("IN", candle_type.value)
     return changed
 
 
