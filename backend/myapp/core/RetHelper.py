@@ -14,10 +14,6 @@ from flask import jsonify
 
 
 def addExtraInfo(dict):
-    ts = {}
-    for (k, v) in timetracker._last_update_ts.items():
-        ts[k] = time.strftime("%d/%m/%Y, %H:%M:%S GMT", time.gmtime(v))
-    dict['data_timestamp'] = ts
     return dict
 
 

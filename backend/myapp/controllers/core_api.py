@@ -1,4 +1,5 @@
 
+from myapp.core.timex import IfTimeIs5MinOld
 from myapp.core.dnetwork import ping_backend
 from myapp.core.helper import get_param_or_default, get_param_or_throw, str_to_list
 from myapp.core.dtypes import TCandleType
@@ -7,7 +8,7 @@ from myapp.core import timetracker
 from flask import Blueprint, json, request
 from myapp import tasks
 from myapp.extensions import cache
-from myapp.core.RetHelper import buildError, buildSuccess, buildException
+from myapp.core.RetHelper import buildError, buildNotImplemented, buildSuccess, buildException
 core_api = Blueprint('core_api_views', __name__)
 import random
 from flask_cors import CORS, cross_origin
@@ -20,7 +21,7 @@ from myapp.core import dfilter
 from myapp.core import dplot
 from myapp.core.ddecorators import make_exception_safe
 from myapp.core.rootConfig import SUPPORTED_CANDLE
-from myapp.core import dhighlights, ddownload
+from myapp.core import dhighlights, ddownload, danalytics
 
 
 @core_api.before_request
@@ -41,17 +42,29 @@ def status():
     return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
 
 
-@core_api.route('/latest')
+# This api will provide indicators...
+@core_api.route('/indicator')
 @make_exception_safe
-def latest():
+def indicator():
     "status of the app"
     candle_type: str = get_param_or_default(request, "candle_type", "1d")
     domain: str = get_param_or_default(request, "domain", "IN")
-    return buildSuccess("Status Ok", dredis.getPickle("latest_{}_{}".format(candle_type, domain)))
+    result = dredis.getPickle("indicator_{}_{}".format(candle_type, domain))
+    if result is None:
+        # submit task
+        task_id = tasks.task_build_indicator.delay(domain, candle_type)
+        return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
+    # @3 hve result
+    if IfTimeIs5MinOld(result['timestamp']):
+        # Submit task as the data is 5 min old.
+        task_id = tasks.task_build_indicator.delay(domain, candle_type)
+        danalytics.reportAction(
+            "indicator_recomputation_submitted", {"domain": domain, "candle_type": candle_type})
+    return buildSuccess("Got indicator", result)
 
 
-@core_api.route('/market')
-@make_exception_safe
+@ core_api.route('/market')
+@ make_exception_safe
 def market():
     "status of the app"
     domain: str = get_param_or_default(request, "domain", "IN")
@@ -84,7 +97,8 @@ def Screen():
     return buildSuccess(msg='Here is the list of Stocks', out=result)
 
 
-# CHARTS
+# Chart are depeicated
+"""
 @ cross_origin()
 @ core_api.route('/chart')
 @ make_exception_safe
@@ -94,9 +108,11 @@ def chart():
     candle_type = get_param_or_default(request, "candle_type", "1d")
     duration = get_param_or_default(request, "duration", "30")
     reload = get_param_or_default(request, "reload", "0")
-    encoded_png = dplot.get_endcoded_png_for_chart(
-        symbol, TCandleType(candle_type), duration, reload)
-    return buildSuccess("Image Return", "data:image/png;base64,{}".format(encoded_png))
+    return buildNotImplemented()
+    # encoded_png = dplot.get_endcoded_png_for_chart(
+    #    symbol, TCandleType(candle_type), duration, reload)
+    # return buildSuccess("Image Return", "data:image/png;base64,{}".format(encoded_png))
+"""
 
 
 # OTHER INTERNAL APIS
@@ -106,11 +122,8 @@ def task():
     "Run the worker task from the web"
     task = get_param_or_throw(request, "task")
     if task == "snapshot_all":
-        task_id = tasks.snapshot_pipeline_all.delay()
+        task_id = tasks.task_build_indicator_all.delay()
         return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
-    elif task == "chart_all":
-        task_id = tasks.plot_chart_all.delay()
-        return buildSuccess("task plot_chart_all submitted", {"status_url": "/result/{}".format(task_id)})
     elif task == "print":
         task_id = tasks.print_hello.delay()
         return buildSuccess("task print_hello submitted", {"status_url": "/result/{}".format(task_id)})
@@ -122,7 +135,7 @@ def task():
 @ core_api.route('/snapshot')
 @ make_exception_safe
 def snapshot_intra():
-    task_id = tasks.snapshot_pipeline.delay(
+    task_id = tasks.task_build_indicator.delay(
         get_param_or_throw(request, 'candle_type'))
     return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
 
@@ -146,7 +159,8 @@ def clearcache():
 def just_test():
     " This will delete cache for all the data "
     # ddownload.download(TCandleType.DAY_1)
-    dglobaldata.download_process_data_internal("IN", TCandleType.MIN_5)
+    # dglobaldata.downloadAndBuildIndicator("IN", TCandleType.MIN_5)
+    tasks.task_build_indicator("IN", "5m")
     # dhighlights.compute_summary()
     return buildError("Please verify test in code.")
 
