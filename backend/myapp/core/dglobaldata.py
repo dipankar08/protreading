@@ -8,7 +8,7 @@ from myapp import tasks
 from myapp.core.timetracker import mark_dataload_end, mark_dataload_start, should_fetch_data, should_load_data_from_disk
 from myapp.core.ddecorators import trace_perf
 from myapp.core.dtypes import TCandleType
-from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.rootConfig import SUPPORTED_CANDLE, SUPPORTED_DOMAIN
 from myapp.core.DLogger import DLogger
 from typing import Dict, List
 from myapp.core import dredis, danalytics, dstorage, dlog
@@ -74,6 +74,14 @@ def getLatestDataInJson(domain, df: DataFrame):
     for x in final_result.keys():
         final_result[x]['sector'] = getSymbolList(domain=domain)[x]['sector']
     return final_result
+
+
+# Rest all locks here - This is needed for restart the server
+for candle_type in SUPPORTED_CANDLE:
+    for domain in SUPPORTED_DOMAIN:
+        dredis.set("downloadAndBuildindicator_{}_{}".format(
+            domain, candle_type.value), "0")
+dlog.d("Reset downloadAndBuildIndicator locks")
 
 
 # It will download and build the indicators
