@@ -36,7 +36,8 @@ def download(doamin="IN", interval: TCandleType = TCandleType.DAY_1, period=100)
             auto_adjust=False,
             prepost=False,
             threads=True,
-            proxy=None
+            proxy=None,
+            rounding=True
         )
     except Exception as e:
         dlog.ex(e)

@@ -84,7 +84,7 @@ def getLatestDataInJson(domain, df: DataFrame):
 def downloadAndBuildIndicator(domain, candle_type: TCandleType):
     key = "downloadAndBuildIndicator_{}_{}".format(domain, candle_type.value)
     if dredis.get(key) == "1":
-        dlog.d("downloadAndBuildIndicator locked return")
+        dlog.d("downloadAndBuildIndicator locked for key {}".format(key))
         raise Exception("downloadAndBuildIndicator is progress")
     dredis.set(key, "1")
     try:
