@@ -1,4 +1,5 @@
 ## pyright: strict
+from myapp.core.rootConfig import SUPPORTED_CANDLE
 import typing
 from myapp.core.DLogger import DLogger
 from myapp.core.ddecorators import trace_perf
@@ -15,6 +16,11 @@ from myapp.core import dredis, dlog, danalytics
     import yfinance as yf
 yf.download("TCS.NS")
 """
+
+# Rest all locks here
+for candle_type in SUPPORTED_CANDLE:
+    dredis.set("download_progress_{}".format(candle_type.value), "0")
+dlog.d("Reset download locks")
 
 
 @trace_perf
