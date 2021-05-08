@@ -3,7 +3,6 @@ from pickle import TRUE
 from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
 from myapp.core.sync import getSymbolList
 from pandas.core.frame import DataFrame
-
 import redis
 from myapp import tasks
 from myapp.core.timetracker import mark_dataload_end, mark_dataload_start, should_fetch_data, should_load_data_from_disk
@@ -18,6 +17,8 @@ from myapp.core import ddownload
 from myapp.core import dindicator
 from myapp.core import timetracker
 import time
+import json
+from ast import literal_eval
 _candleTypeToDataFrameMap: Dict[str, pd.DataFrame] = {}
 
 
@@ -50,10 +51,6 @@ def get_all_data():
     return _candleTypeToDataFrameMap
 
 
-import json
-from ast import literal_eval
-
-
 # This function get the last row of the dataframe
 def getLatestDataInJson(domain, df: DataFrame):
     final_result = {}
@@ -82,7 +79,7 @@ def getLatestDataInJson(domain, df: DataFrame):
 # It will download and build the indicators
 @trace_perf
 def downloadAndBuildIndicator(domain, candle_type: TCandleType):
-    key = "downloadAndBuildIndicator_{}_{}".format(domain, candle_type.value)
+    key = "downloadAndBuildindicator_{}_{}".format(domain, candle_type.value)
     if dredis.get(key) == "1":
         dlog.d("downloadAndBuildIndicator locked for key {}".format(key))
         raise Exception("downloadAndBuildIndicator is progress")
@@ -104,7 +101,7 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         dstorage.store_data_to_disk(processed_df, path_to_store)
 
         dlog.d("downloadAndBuildIndicator: saving to redis start")
-        dredis.setPickle("indicator_{}_{}".format(candle_type.value, domain),
+        dredis.setPickle("indicator_data_{}_{}".format(domain, candle_type.value),
                          {'data': getLatestDataInJson(domain, processed_df),
                          'timestamp': getCurTimeStr()})
 
@@ -136,34 +133,39 @@ def checkLoadLatestData():
 
 # This call will get latest market data
 # First it will check if it is downloaded in 5 min returns it, if not schedule an task to download.
-def getLatestMarketData(domain):
-    last_update = dredis.get("market_ts_{}".format(domain), None)
-    if last_update is None or last_update == 'None':
-        dlog.d("No last update try downloading....")
-        downloadLatestMarketData(domain)
-    elif IfTimeIs5MinOld(last_update):
-        dlog.d("data is 5 min old... downloading....")
-        downloadLatestMarketData(domain)
+def getLatestMarketData(domain: str):
+    # Build indicator if not exist
+    mayGetLatestStockData(domain)
+    mayBuildStockIndicatorInBackground(domain, TCandleType.DAY_1)
 
     dlog.d("getting data from cache")
-    return dredis.getPickle("market_data_{}".format(
-        domain), {})
+    return {
+        'latest': dredis.getPickle("market_data_{}".format(domain)),
+        'indicator': dredis.getPickle("indicator_data_{}_{}".format(domain, '1d'))
+    }
 
 
-# Download and save latest data retrun bool as status
-# It cache the data and it's TS
-def downloadLatestMarketData(domain) -> bool:
-    dlog.d("Downloading as cache is old")
-    result = ddownload.download(doamin=domain, period=1)
-    if result[0] is True:
-        dlog.d("Saving marjet data")
-        resultJSON = getLatestDataInJson(domain, result[1])
-        # Save this data
-        dredis.setPickle("market_data_{}".format(
-            domain), {"data": resultJSON})
-        dredis.set("market_ts_{}".format(domain), getCurTimeStr())
-        return True
-    return False
+# This will build the indicator in background.
+def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType):
+    if dredis.getPickle("indicator_data_{}_{}".format(domain, '1d')) is None:
+        # task submitted
+        tasks.task_build_indicator.delay(domain, candle_type.value)
+        dlog.d("task submitted")
+    else:
+        dlog.d("Data is already there")
+
+
+# This will build the indicator in background.
+def mayGetLatestStockData(domain: str):
+    last_update = dredis.get("market_ts_{}".format(domain), None)
+    if last_update is None or last_update == 'None':
+        dlog.d("No last update - submitting task")
+        tasks.taskDownloadLatestMarketData.delay(domain)
+    elif IfTimeIs5MinOld(last_update):
+        dlog.d("data is 5 min old... submitting task")
+        # tasks.taskDownloadLatestMarketData.delay(domain)
+    else:
+        dlog.d("Data is already there")
 
 
 load_data_on_boot()

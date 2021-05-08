@@ -49,7 +49,8 @@ def indicator():
     "status of the app"
     candle_type: str = get_param_or_default(request, "candle_type", "1d")
     domain: str = get_param_or_default(request, "domain", "IN")
-    result = dredis.getPickle("indicator_{}_{}".format(candle_type, domain))
+    result = dredis.getPickle(
+        "indicator_data_{}_{}".format(domain, candle_type))
     if result is None:
         # submit task
         task_id = tasks.task_build_indicator.delay(domain, candle_type)
