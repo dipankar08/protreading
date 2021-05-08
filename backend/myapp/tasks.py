@@ -53,7 +53,8 @@ def task_build_indicator(domain: str, candle_type: str):
         dglobaldata.downloadAndBuildIndicator(domain, _candle_type)
         # Compute Summary
         if _candle_type == TCandleType.DAY_1:
-            dhighlights.compute_summary()
+            pass
+            # dhighlights.compute_summary()
         buildTaskSuccess("task_build_indicator Done", None)
     except Exception as e:
         dlog.d("Got exception in task_build_indicator")
@@ -71,7 +72,7 @@ def task_build_indicator_all():
         dglobaldata.downloadAndBuildIndicator("IN", x)
     danalytics.reportAction("task_build_indicator_all_ended")
     # Compute Summary
-    dhighlights.compute_summary()
+    # dhighlights.compute_summary()
     # update
     dglobaldata.checkLoadLatestData()
     buildTaskSuccess("Complated all snap shot", None)
