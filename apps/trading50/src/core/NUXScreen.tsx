@@ -14,22 +14,24 @@ import { colors } from "../styles/colors";
 const slides = [
   {
     key: 1,
-    title: "Smart Market Research",
-    text: "With Trading50, We provided useful insights of the market",
+    title: "Never miss any trading opportunity!",
+    text: "There are trading opportunities everyday. Our AI system will provide daily recommendations for any buy and sell opportunity.",
     image: require("../../assets/images/1.png"),
     backgroundColor: colors.cyan400,
   },
   {
     key: 2,
-    title: "Smart Portfolios",
-    text: "Other cool stuff",
+    title: "Get rid of emotional bias with Smart Portfolio.",
+    text:
+      "Smart portfolios allow you to track all orders you made in a break-up view or consoluteview. It provides exact take to home profit after tax, brokerage. This helps you to have a right balance between the investigation amount and cash in hand. ",
     image: require("../../assets/images/2.png"),
     backgroundColor: colors.blue400,
   },
   {
     key: 3,
-    title: "Alerts and Screens",
-    text: "Always keep notfied with useful alerts",
+    title: "Advance Screen and Alerts",
+    text:
+      "Screen the stock list from India, USA and UK by varieties for technical indicators. Get real time alert when a  technical indicator meets some conditions!",
     image: require("../../assets/images/3.png"),
     backgroundColor: colors.green400,
   },
@@ -104,6 +106,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     marginBottom: 30,
+    marginLeft: 30,
+    marginRight: 30,
+    textAlign: "center",
   },
   img: {
     resizeMode: "contain",
@@ -111,11 +116,12 @@ const styles = StyleSheet.create({
     height: 250,
   },
   text: {
-    marginTop: 100,
+    marginTop: 30,
     color: "white",
     fontSize: 15,
     paddingHorizontal: 30,
     textAlign: "center",
+    marginBottom: 40,
   },
   buttonCircle: {
     width: 40,

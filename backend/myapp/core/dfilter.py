@@ -55,8 +55,7 @@ def filterstock(condition, columns=[], sort_by: str = None, limit: int = None):
             except Exception as e:
                 dlog.ex(e)
                 dlog.e(
-                    "We faced the issue when we are running filter for symbol:"
-                    + symbol)
+                    "We faced the issue when we are running filter for symbol:{}".format(symbol))
                 pass
 
     except Exception as e:
