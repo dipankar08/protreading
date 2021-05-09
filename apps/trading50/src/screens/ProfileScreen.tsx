@@ -9,9 +9,10 @@ import { useNetwork } from "../hooks/useNetwork";
 export const ProfileScreen = ({ navigation, route }: TProps) => {
   let domainList = [
     { key: "UK", text: "UK" },
-    { key: "INDIA", text: "IN" },
+    { key: "IN", text: "INDIA" },
     { key: "USA", text: "USA" },
   ];
+  const appState = useContext(AppStateContext);
   const network = useNetwork();
   let name = "Profile";
   useEffect(() => {
@@ -30,8 +31,9 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
         <DTextSection>User Preferences</DTextSection>
         <DDropDown
           items={domainList}
-          selectedValue={"IN"}
+          selectedValue={appState.state.domain}
           setSelectedValue={(key) => {
+            console.log(key);
             network.changeDomain(key);
           }}
         ></DDropDown>
@@ -64,6 +66,7 @@ import { ScrollView } from "react-native";
 import { DTextSection } from "../components/DText";
 import { DDropDown } from "../components/DInput";
 import { DButtonPrimary } from "../components/DButton";
+import { AppStateContext } from "../appstate/AppStateStore";
 export const TestScreen = () => {
   return (
     <DContainerSafe style={{ flex: 1 }}>

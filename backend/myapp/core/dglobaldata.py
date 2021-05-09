@@ -102,7 +102,7 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
             return {"status": "error", "msg": "something goes wrong", "out": None}
 
         dlog.d("downloadAndBuildIndicator building start")
-        processed_df = dindicator.process_inplace(download_data)
+        processed_df = dindicator.process_inplace(download_data, domain)
 
         dlog.d("downloadAndBuildIndicator: saving to storage start")
         path_to_store = dstorage.get_default_path_for_candle(candle_type)
@@ -141,10 +141,10 @@ def checkLoadLatestData():
 
 # This call will get latest market data
 # First it will check if it is downloaded in 5 min returns it, if not schedule an task to download.
-def getLatestMarketData(domain: str):
+def getLatestMarketData(domain: str, reload: str = "0", sync: str = "0"):
     # Build indicator if not exist
-    mayGetLatestStockData(domain)
-    mayBuildStockIndicatorInBackground(domain, TCandleType.DAY_1)
+    mayGetLatestStockData(domain, reload, sync)
+    mayBuildStockIndicatorInBackground(domain, TCandleType.DAY_1, reload, sync)
 
     dlog.d("getting data from cache")
     return {
@@ -154,7 +154,16 @@ def getLatestMarketData(domain: str):
 
 
 # This will build the indicator in background.
-def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType):
+def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType, reload: str, sync: str):
+    # reload
+    if reload == "1":
+        if sync == "1":
+            tasks.task_build_indicator(domain, candle_type=candle_type.value)
+        else:
+            tasks.task_build_indicator.delay(domain, candle_type.value)
+        dlog.d("task_build_indicator: task submitted")
+        return
+
     if dredis.getPickle("indicator_data_{}_{}".format(domain, '1d')) is None:
         # task submitted
         tasks.task_build_indicator.delay(domain, candle_type.value)
@@ -164,7 +173,14 @@ def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType):
 
 
 # This will build the indicator in background.
-def mayGetLatestStockData(domain: str):
+def mayGetLatestStockData(domain: str, reload, sync: str):
+    if(reload == "1"):
+        dlog.d("taskDownloadLatestMarketData: submitting task")
+        if sync == "1":
+            tasks.taskDownloadLatestMarketData(domain)
+        else:
+            tasks.taskDownloadLatestMarketData.delay(domain)
+        return
     last_update = dredis.get("market_ts_{}".format(domain), None)
     if last_update is None or last_update == 'None':
         dlog.d("No last update - submitting task")
