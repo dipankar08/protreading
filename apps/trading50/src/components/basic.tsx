@@ -68,31 +68,6 @@ export const DText = ({ children, style, center, bold, primary, secondary, dark,
   );
 };
 
-export const DButton = ({ children, style, primary, secondary, onPress, dark }: TProps) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={{ width: "100%" }}>
-      <Text
-        style={[
-          {
-            backgroundColor: primary ? (dark ? "white" : STYLES.APP_COLOR_PRIMARY) : "#00000000",
-            color: dark ? (primary ? STYLES.APP_COLOR_PRIMARY : "white") : primary ? "white" : STYLES.APP_COLOR_PRIMARY,
-            borderColor: dark ? "white" : STYLES.APP_COLOR_PRIMARY,
-            borderWidth: 1,
-            textAlign: "center",
-            paddingVertical: 10,
-            marginVertical: 8,
-            borderRadius: 6,
-            textTransform: "uppercase",
-          },
-          style,
-        ]}
-      >
-        {children}
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
 export const DTextInput = ({ children, style, dark, placeholder, onChangeText }: TProps) => {
   return (
     <TextInput

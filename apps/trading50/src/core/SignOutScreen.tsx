@@ -7,6 +7,7 @@ import { dlog } from "../libs/dlog";
 import { deleteData } from "../libs/stoarge";
 import { TProps } from "../screens/types";
 import { Image, Text, View, StyleSheet } from "react-native";
+import { DButtonPrimary } from "../components/DButton";
 
 // Profile and Signout logic
 export const SignOutScreen = ({ navigation, route }: TProps) => {
@@ -40,14 +41,14 @@ export const SignOutScreen = ({ navigation, route }: TProps) => {
         <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Email - {appState.state.userInfo.email}</Text>
         <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Id -{appState.state.userInfo.email}</Text>
         <Text style={{ fontSize: 20, marginTop: 10, paddingTop: 10, borderTopWidth: 1 }}>Update Data</Text>
-        <DButton style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
+        <DButtonPrimary style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
           Refresh Data in backend
-        </DButton>
+        </DButtonPrimary>
 
         <Text style={{ flex: 1 }}>Hello</Text>
-        <DButton onPress={signOut} secondary>
+        <DButtonPrimary onPress={signOut} secondary>
           Sign out
-        </DButton>
+        </DButtonPrimary>
         <DButton
           onPress={() => {
             navigation.push("TestScreen");

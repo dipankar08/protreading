@@ -1,5 +1,5 @@
 import React from "react";
-import { DButton, DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput, DContainerSafe, ScreenHeader, DLayoutRow } from "../components/basic";
+import { DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput, DContainerSafe, ScreenHeader, DLayoutRow } from "../components/basic";
 import { TProps } from "./types";
 import { useContext, useEffect, useState } from "react";
 import { dlog } from "../libs/dlog";
@@ -38,17 +38,17 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
 
         <DTextSection>System Preferences</DTextSection>
 
-        <DButton style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
+        <DButtonPrimary style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
           Refresh Data in backend
-        </DButton>
-        <DButton
+        </DButtonPrimary>
+        <DButtonPrimary
           onPress={() => {
             navigation.push("TestScreen");
           }}
           secondary
         >
           Test
-        </DButton>
+        </DButtonPrimary>
         <DTextSection>App Information</DTextSection>
         <AppInfoCard />
       </DLayoutCol>
@@ -63,6 +63,7 @@ import { AppInfoCard } from "../core/AppInfoCard";
 import { ScrollView } from "react-native";
 import { DTextSection } from "../components/DText";
 import { DDropDown } from "../components/DInput";
+import { DButtonPrimary } from "../components/DButton";
 export const TestScreen = () => {
   return (
     <DContainerSafe style={{ flex: 1 }}>
