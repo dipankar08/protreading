@@ -26,7 +26,7 @@ import { TGroupMarketEntry, TKeyText, TMarketEntry } from "../models/model";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { dlog } from "../libs/dlog";
-import { SceneMap, TabView } from "react-native-tab-view";
+import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { useNetwork } from "../hooks/useNetwork";
 import { DButtonTag } from "../components/DButton";
 import { colors } from "../styles/colors";
@@ -34,6 +34,7 @@ import { DDialog } from "../components/DDialog";
 import { DKeyValueList } from "../components/DList";
 import { globalAppState } from "../appstate/AppStateReducer";
 
+const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 export const MarketScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const network = useNetwork();
@@ -44,7 +45,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
   const [routes] = React.useState([
     { key: "first", title: "Indicator", navigation: navigation },
     { key: "second", title: "Sector", navigation: navigation },
-    { key: "third", title: "Recommended", navigation: navigation },
+    { key: "third", title: "Recommend", navigation: navigation },
   ]);
 
   const renderScene = SceneMap({
@@ -56,7 +57,13 @@ export const MarketScreen = ({ navigation }: TProps) => {
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="reload" onPress={network.reLoadAllData}></ScreenHeader>
-      <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
+      />
     </DContainerSafe>
   );
 };
