@@ -74,6 +74,8 @@ class DataProcessor {
         let x = mergeObject.get(entry) as TObject;
         x["close"] = obj.latest.data[entry].Close;
       }
+      // clear old data as data may change
+      this.stockMap.clear();
       for (let key of mergeObject.keys()) {
         let value = mergeObject.get(key) as TObject;
         this.stockMap.set(key, {

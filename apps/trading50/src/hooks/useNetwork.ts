@@ -65,7 +65,7 @@ export const useNetwork = () => {
           stockMap: processor.stockMap,
         },
       });
-      dlog.d("[NETWORK] fetching from network complete ");
+      dlog.d(`[NETWORK] fetching from network complete for domain ${globalAppState.domain} `);
       callback?.onSuccess?.({});
       callback?.onComplete?.();
     } catch (e) {
