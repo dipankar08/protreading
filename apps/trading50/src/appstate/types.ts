@@ -24,6 +24,7 @@ export type TAppStateOptional = {
   recommendedList?: Map<string, TGroupMarketEntry>;
   position?: TPosition;
   stockMap?: Map<string, TMarketEntry>;
+  domain?: TDomain;
 };
 
 export const initialState: TAppState = {

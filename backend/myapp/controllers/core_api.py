@@ -49,6 +49,7 @@ def indicator():
     "status of the app"
     candle_type: str = get_param_or_default(request, "candle_type", "1d")
     domain: str = get_param_or_default(request, "domain", "IN")
+    sync: str = get_param_or_default(request, "sync", "0")
     result = dredis.getPickle(
         "indicator_data_{}_{}".format(domain, candle_type))
     if result is None:
@@ -69,7 +70,9 @@ def indicator():
 def market():
     "status of the app"
     domain: str = get_param_or_default(request, "domain", "IN")
-    return buildSuccess("Status Ok", dglobaldata.getLatestMarketData(domain))
+    reload: str = get_param_or_default(request, "reload", "0")
+    sync: str = get_param_or_default(request, "sync", "0")
+    return buildSuccess("Status Ok", dglobaldata.getLatestMarketData(domain, reload, sync))
 
 
 # SUMMARY

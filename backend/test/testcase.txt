@@ -1,11 +1,17 @@
 => context => server => http://127.0.0.1:5000
 
 ############## Testing market APIS ( provide latest market data) #####################
+# ARGS: domain > USA, IN, UK
+# reload =1 or 0 will resubmit the task.
+# sync = 1 or 0 will perform on backgroud task or not
+#######################################################################################
 => GET => {{server}}/market? => success
 => GET => {{server}}/market?domain=IN => success
 => GET => {{server}}/market?domain=IN1 => success
 => GET => {{server}}/market?domain=UK => success
 => GET => {{server}}/market?domain=USA => success
+=> GET => {{server}}/market?domain=USA&reload=1&sync=0 => success
+# => GET => {{server}}/market?domain=USA&reload=1&sync=1 => success # Just used for debugging
 
 
 ############## Testing Indicator API ( Provided indicator values for the latest data ) #####################

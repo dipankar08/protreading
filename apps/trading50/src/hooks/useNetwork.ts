@@ -175,7 +175,7 @@ export const useNetwork = () => {
 
   async function changeDomain(domain: TDomain) {
     appState.dispatch({ type: "MERGE", payload: initialState });
-    globalAppState.domain = domain;
+    appState.dispatch({ type: "MERGE", payload: { domain: domain } });
     reLoadAllData();
   }
 
