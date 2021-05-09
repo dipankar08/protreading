@@ -16,12 +16,12 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const [price, setPrice] = React.useState("");
   const [quantities, setQuantities] = React.useState("");
 
-  let xStockList =
-    appState.state.market && appState.state.market.stocks
-      ? appState.state.market.stocks.map((item) => {
-          return <Picker.Item key={item.symbol} value={item.symbol} label={item.symbol + " - " + item.name} />;
-        })
-      : [<Picker.Item key="" value="" label="Wait..." />];
+  console.log("OrderCreateDialog called");
+  let xStockList = [<Picker.Item key="" value="" label="Select an item" />];
+  for (let value of appState.state.stockMap.values()) {
+    xStockList.push(<Picker.Item key={value._id} value={value._id} label={`${value.symbol}-${value.name}`} />);
+  }
+
   return (
     <Modal
       animationType="slide"

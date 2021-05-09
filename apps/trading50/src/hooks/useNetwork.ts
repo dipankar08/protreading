@@ -62,6 +62,7 @@ export const useNetwork = () => {
           summary: processor.summary,
           sectorList: processor.sectorList,
           recommendedList: processor.recommendedList,
+          stockMap: processor.stockMap,
         },
       });
       dlog.d("[NETWORK] fetching from network complete ");

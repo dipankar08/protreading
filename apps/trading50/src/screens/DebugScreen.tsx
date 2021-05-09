@@ -42,10 +42,6 @@ export class DebugScreen extends Component {
         <DLayoutCol style={{ padding: 16 }}>
           <ScreenHeader title={"Debug Settings"} style={{ padding: 0 }} icon="sort-reverse-variant" />
           <DText>Debug Menu</DText>
-          <DButton onPress={this.sendEvent}>Send Event</DButton>
-          <DButton onPress={this.createNativeCrash}>Test Crash(Native)</DButton>
-          <DButton onPress={this.createJSCrash}>Test Crash(JS)</DButton>
-          <DButton onPress={this.syncWithCodePush}>CodePush</DButton>
         </DLayoutCol>
       </DContainerSafe>
     );

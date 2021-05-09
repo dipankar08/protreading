@@ -12,6 +12,7 @@ import { useCoreApi } from "./useCoreApi";
 import { colors } from "../styles/colors";
 import { Updates, Constants } from "expo";
 import { BootScreen } from "./BootScreen";
+import { DButtonPrimary } from "../components/DButton";
 
 // Simple Logout card which should be embedit in the app
 export const LogoutCard = ({ navigation, route }: TProps) => {
@@ -44,9 +45,9 @@ export const LogoutCard = ({ navigation, route }: TProps) => {
           <Text style={{ color: "#000000ee", fontSize: 20, fontWeight: "bold" }}>{coreState.state.authInfo?.name}</Text>
           <Text style={{ color: "#000000ee", fontSize: 14, marginTop: 10, fontWeight: "normal" }}>Email:{coreState.state.authInfo?.email}</Text>
           <Text style={{ color: "#000000ee", fontSize: 14, marginTop: 10, fontWeight: "normal" }}>Id:{coreState.state.authInfo?.user_id}</Text>
-          <DButton onPress={signOut} primary style={{ marginTop: 20 }}>
+          <DButtonPrimary onPress={signOut} primary style={{ marginTop: 20 }}>
             Sign out
-          </DButton>
+          </DButtonPrimary>
         </DLayoutCol>
       </DLayoutRow>
     </DCard>

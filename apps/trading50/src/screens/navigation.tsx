@@ -84,21 +84,6 @@ const ProfileStackScreen = () => (
         },
       }}
     />
-    <ProfileStack.Screen
-      name="WebViewScreen"
-      component={WebViewScreen}
-      options={{
-        title: "Test",
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: "#f4511e",
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "normal",
-        },
-      }}
-    />
   </ProfileStack.Navigator>
 );
 
@@ -126,6 +111,21 @@ const MarketStackScreen = () => (
       component={MarketGroupListScreen}
       options={{
         title: "Market",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+    <ProfileStack.Screen
+      name="WebViewScreen"
+      component={WebViewScreen}
+      options={{
+        title: "Test",
         headerShown: false,
         headerStyle: {
           backgroundColor: "#f4511e",

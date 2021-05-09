@@ -12,7 +12,7 @@ import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
 import { globalStyle, STYLES } from "../components/styles";
 import { useNetwork } from "../hooks/useNetwork";
 import { colors } from "../styles/colors";
-import { DButtonTag } from "../components/DButton";
+import { DButtonPrimary, DButtonTag } from "../components/DButton";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config
@@ -32,9 +32,9 @@ export const PositionScreen = ({ navigation }: TProps) => {
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader title={"Smart Portfolio"} style={{ padding: 16 }} icon="sort-reverse-variant"></ScreenHeader>
       <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
-      <DButton onPress={() => setModalVisible(true)} style={{ marginHorizontal: 16 }}>
+      <DButtonPrimary onPress={() => setModalVisible(true)} style={{ marginHorizontal: 8, marginTop: 0, marginBottom: 10 }}>
         Add new Buy
-      </DButton>
+      </DButtonPrimary>
       <OrderCreateDialog visible={modalVisible} onClose={() => setModalVisible(false)} />
     </DContainerSafe>
   );
