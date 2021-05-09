@@ -85,7 +85,7 @@ def task_build_indicator_all():
 @task_common_action
 def taskDownloadLatestMarketData(domain) -> bool:
     dlog.d("Downloading as cache is old")
-    result = download.download(doamin=domain, period=1)
+    result = download(doamin=domain, period=1)
     if result[0] is True:
         dlog.d("Saving marjet data")
         resultJSON = dglobaldata.getLatestDataInJson(domain, result[1])

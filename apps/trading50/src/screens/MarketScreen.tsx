@@ -28,7 +28,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { dlog } from "../libs/dlog";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { useNetwork } from "../hooks/useNetwork";
-import { DButtonTag } from "../components/DButton";
+import { DButtonPrimary, DButtonTag } from "../components/DButton";
 import { colors } from "../styles/colors";
 import { DDialog } from "../components/DDialog";
 import { DKeyValueList } from "../components/DList";
@@ -353,7 +353,7 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
           {recommendationItem?.recommended_to_sell && <Text style={{ fontSize: 13, color: "black" }}>{recommendationItem.recommended_to_sell}</Text>}
 
           <Text style={{ marginTop: 30, fontWeight: "bold" }}>Love this Recommendation?</Text>
-          <DButton> Get a Free invitation for Intra day!</DButton>
+          <DButtonPrimary> Get a Free invitation for Intra day!</DButtonPrimary>
         </DLayoutCol>
       </RBSheet>
       <DDialog
