@@ -204,29 +204,6 @@ export const DListEmptyComponent = () => {
   );
 };
 
-function toString(data: any) {
-  if (data == undefined || data == null) {
-    return "-";
-  }
-  if (_.isObject(data)) {
-    return JSON.stringify(data);
-  }
-  return data + "";
-}
-
-export const DKeyValueList = ({ items }: any) => {
-  return (
-    <ScrollView style={{ height: "80%" }}>
-      {Object.keys(items).map((key) => (
-        <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 5 }} key={key}>
-          <Text>{key}:</Text>
-          <Text style={{ paddingRight: 10 }}>{toString(items[key])}</Text>
-        </DLayoutRow>
-      ))}
-    </ScrollView>
-  );
-};
-
 export const TextWithIcon = ({ style, onPress, text, icon }: TProps) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>

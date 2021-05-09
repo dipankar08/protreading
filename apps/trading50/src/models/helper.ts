@@ -9,7 +9,7 @@ export function updateTGroupMarketEntry(map: Map<string, TGroupMarketEntry>) {
     value.count = value.group.length;
   });
   map.forEach(function (value, key) {
-    value.avg_change = value.group.reduce((a, b) => a + b.change, 0) / value.group.length;
+    value.avg_change = value.group.length > 0 ? value.group.reduce((a, b) => a + b.change, 0) / value.group.length : 0;
     value.group = value.group.sort(function (a, b) {
       return b.change - a.change;
     });

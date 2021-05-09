@@ -30,6 +30,9 @@ import { SceneMap, TabView } from "react-native-tab-view";
 import { useNetwork } from "../hooks/useNetwork";
 import { DButtonTag } from "../components/DButton";
 import { colors } from "../styles/colors";
+import { DDialog } from "../components/DDialog";
+import { DKeyValueList } from "../components/DList";
+import { globalAppState } from "../appstate/AppStateReducer";
 
 export const MarketScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
@@ -61,7 +64,6 @@ export const MarketScreen = ({ navigation }: TProps) => {
 export const MarketListView = ({ route }: TProps) => {
   const appState = useContext(AppStateContext);
   const [listData, setListData] = React.useState<TGroupMarketEntry[]>([]);
-
   useEffect(() => {
     switch (route.key) {
       case "first":
@@ -144,6 +146,9 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
   const [inverted, setInverted] = useState(false);
   const [p2rLoading, setP2rLoading] = useState(false);
+  const [visibleIndicator, setVisibleIndicator] = React.useState(false);
+  const [selectedEntry, setSelectedEntry] = React.useState<TMarketEntry>();
+
   const network = useNetwork();
   let isSubscribed = false;
   const refRBSheet = useRef();
@@ -226,6 +231,15 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
                     }}
                     style={{ marginTop: 10, marginRight: 10, backgroundColor: colors.blue600 }}
                     text={"chart"}
+                  />
+                  <DButtonTag
+                    onPress={() => {
+                      console.log(item);
+                      setSelectedEntry(item);
+                      setVisibleIndicator(true);
+                    }}
+                    style={{ marginTop: 10, marginRight: 10, backgroundColor: colors.blue600 }}
+                    text={"indicator"}
                   />
                   {item.recommended_to_buy != undefined && (
                     <DButtonTag
@@ -335,6 +349,15 @@ export const MarketGroupListScreen = ({ navigation, route }: TProps) => {
           <DButton> Get a Free invitation for Intra day!</DButton>
         </DLayoutCol>
       </RBSheet>
+      <DDialog
+        title={"Indicator List"}
+        visible={visibleIndicator}
+        onCancel={() => {
+          setVisibleIndicator(false);
+        }}
+      >
+        <DKeyValueList object={selectedEntry?.indicator}></DKeyValueList>
+      </DDialog>
     </DContainerSafe>
   );
 };

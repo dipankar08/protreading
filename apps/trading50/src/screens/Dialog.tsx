@@ -5,7 +5,8 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { useNetwork } from "../hooks/useNetwork";
 import { Picker } from "@react-native-community/picker";
 import { Item } from "react-native-paper/lib/typescript/components/Drawer/Drawer";
-import { DKeyValueList } from "../components/basic";
+import { DKeyValueList } from "../components/DList";
+import { DDialog } from "../components/DDialog";
 
 export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const network = useNetwork();
@@ -58,20 +59,9 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
 
 export const OrderViewDialog = ({ items, visible, onClose }: any) => {
   return (
-    <Modal
-      animationType="fade"
-      visible={visible}
-      transparent={true}
-      onRequestClose={() => {
-        onClose();
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <DKeyValueList items={items}></DKeyValueList>
-        </View>
-      </View>
-    </Modal>
+    <DDialog visible={visible} onCancel={onClose} title="Order Details">
+      <DKeyValueList object={items}></DKeyValueList>
+    </DDialog>
   );
 };
 

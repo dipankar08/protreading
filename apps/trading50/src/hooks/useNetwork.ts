@@ -15,7 +15,6 @@ import { globalAppState } from "../appstate/AppStateReducer";
 import { initialState, TDomain } from "../appstate/types";
 
 const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary?`;
-const LATEST_URL = `${PRO_TRADING_SERVER}/latest?candle_type=5m`;
 const MARKET_URL = `${PRO_TRADING_SERVER}/market?`;
 
 function getDomainUrl(url: string) {
@@ -52,14 +51,11 @@ export const useNetwork = () => {
     callback?.onBefore?.();
     try {
       let summary = await getRequest(getDomainUrl(SUMMARY_URL), CACHE_KEY_SUMMARY, false);
-      let latest = await getRequest(getDomainUrl(LATEST_URL), CACHE_KEY_MARKET, false);
       let market = await getRequest(getDomainUrl(MARKET_URL), CACHE_KEY_MARKET, false);
 
       // process alll data
       processor.setSummary(summary);
       processor.setMarket(market);
-      processor.setLatestIndicator(latest);
-
       appState.dispatch({
         type: "MERGE",
         payload: {
@@ -72,7 +68,7 @@ export const useNetwork = () => {
       callback?.onSuccess?.({});
       callback?.onComplete?.();
     } catch (e) {
-      dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${LATEST_URL}`);
+      dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${MARKET_URL}`);
       dlog.ex(e);
       callback?.onError?.("Not able to ralod data");
       callback?.onComplete?.();
