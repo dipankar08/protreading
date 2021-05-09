@@ -1,15 +1,20 @@
 import React from "react";
 import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { STYLES } from "./styles";
-import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
 import _ from "underscore";
-import { DButtonIcon } from "./DButton";
 import { DLayoutCol, DLayoutRow } from "./basic";
+import { colors } from "../styles/colors";
+import { DTextSubTitle } from "./DText";
+
+function toString(data: any) {
+  if (data == undefined || data == null) {
+    return "-";
+  }
+  if (_.isObject(data)) {
+    return JSON.stringify(data);
+  }
+  return data + "";
+}
 
 export const DKeyValueList = ({ object }: TProps) => {
   console.log(object);
@@ -17,9 +22,9 @@ export const DKeyValueList = ({ object }: TProps) => {
     <DLayoutCol style={{ width: "100%" }}>
       {object &&
         Object.keys(object).map((key) => (
-          <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 5 }} key={key}>
-            <Text>{key}:</Text>
-            <Text style={{ paddingRight: 10 }}>{object[key]}</Text>
+          <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 10, borderColor: colors.grey100, borderBottomWidth: 1 }} key={key}>
+            <DTextSubTitle style={{ paddingLeft: 10 }}>{key}:</DTextSubTitle>
+            <DTextSubTitle style={{ paddingRight: 10 }}>{toString(object[key])}</DTextSubTitle>
           </DLayoutRow>
         ))}
     </DLayoutCol>

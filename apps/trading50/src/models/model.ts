@@ -29,6 +29,7 @@ export type TMarketEntry = {
   recommended_to_sell?: string;
   rsi: number;
   sector?: string[];
+  indicator?: TObject;
 };
 
 export type TGroupMarketEntry = {

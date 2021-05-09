@@ -14,6 +14,7 @@ import { DLayoutCol, DLayoutRow } from "./basic";
 import { DTextInput } from "./DInput";
 import { DSpace } from "./DLayout";
 import { DIMENS } from "../res/dimens";
+import { colors } from "../styles/colors";
 
 export const DPrompt = ({ visible, title, body, onOk, onCancel }: TProps) => {
   const [text, setText] = useState("");
@@ -41,6 +42,43 @@ export const DPrompt = ({ visible, title, body, onOk, onCancel }: TProps) => {
                 Cancel
               </DButtonPrimary>
             </DLayoutRow>
+          </DLayoutCol>
+        </View>
+      </Modal>
+    </View>
+  );
+};
+
+export const DDialog = ({ visible, title, children, onOk, onCancel }: TProps) => {
+  const [text, setText] = useState("");
+  return (
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={visible}
+        onRequestClose={() => {
+          onCancel?.();
+        }}
+      >
+        <View style={styles.centeredView}>
+          <DLayoutCol style={[styles.modalView, { padding: 0, height: "90%" }]}>
+            {title && (
+              <DTextTitle style={{ textAlign: "center", borderBottomColor: colors.grey100, borderBottomWidth: 1, marginBottom: 10, padding: 10 }}>
+                {title}
+              </DTextTitle>
+            )}
+            <ScrollView>{children}</ScrollView>
+            {onOk && (
+              <DButtonPrimary style={{ marginTop: 10 }} onPress={() => onOk?.(text)}>
+                OK
+              </DButtonPrimary>
+            )}
+            {onCancel && (
+              <DButtonPrimary style={{ marginTop: 10, borderRadius: 0 }} onPress={() => onCancel?.()}>
+                Close
+              </DButtonPrimary>
+            )}
           </DLayoutCol>
         </View>
       </Modal>

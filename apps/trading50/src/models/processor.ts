@@ -62,13 +62,30 @@ class DataProcessor {
   }
 
   // Trying to process market info
+  // this will build stock map and ltp
   setMarket(obj: TObject) {
     dlog.d("Processing Market data.....");
     try {
-      let objList: TObject = obj.data as Object;
-      for (let c of Object.keys(objList)) {
-        this.mayUpdateStockData(c, objList[c]);
-        objList[c].symbol = c;
+      let mergeObject: Map<string, TObject> = new Map();
+      for (let entry of Object.keys(obj.indicator.data)) {
+        mergeObject.set(entry, obj.indicator.data[entry]);
+      }
+      for (let entry of Object.keys(obj.latest.data)) {
+        let x = mergeObject.get(entry) as TObject;
+        x["close"] = obj.latest.data[entry].Close;
+      }
+      for (let key of mergeObject.keys()) {
+        let value = mergeObject.get(key) as TObject;
+        this.stockMap.set(key, {
+          name: value["name"],
+          symbol: value["symbol"],
+          close: value["close"],
+          rsi: value["rsi_14"],
+          sector: value["sector"],
+          change: value["close_change_percentage"] || 0,
+          _id: key,
+          indicator: value,
+        });
       }
       dlog.d("set market success");
       this.recomputeGroup();
@@ -100,7 +117,7 @@ class DataProcessor {
 
   recomputeGroup() {
     // Process Entry.
-    dlog.d("calling recompute");
+    dlog.d("start recompute");
     this.stockMap.forEach((value, key) => {
       // 1. Find Recomendation
       this.ltpMap.set(key, value.close);
@@ -116,6 +133,7 @@ class DataProcessor {
     });
     this.sectorList = getSectorMap(Array.from(this.stockMap.values()));
     this.recommendedList = getRecommendedMap(Array.from(this.stockMap.values()));
+    dlog.d("end recompute");
     // If position exist, we might need to update that two.
   }
 
