@@ -24,7 +24,7 @@ dlog.d("Reset download locks")
 
 
 @trace_perf
-def download(doamin="IN", interval: TCandleType = TCandleType.DAY_1, period=100) -> typing.Tuple[bool, DataFrame]:
+def download(doamin="IN", interval: TCandleType = TCandleType.DAY_1, period=50) -> typing.Tuple[bool, DataFrame]:
     key = "download_progress_" + interval.value
     if(dredis.get(key) == "1"):
         danalytics.reportAction(

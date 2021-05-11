@@ -76,6 +76,35 @@ def getLatestDataInJson(domain, df: DataFrame):
     return final_result
 
 
+# This function get the last row of the dataframe
+def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
+    final_result = {}
+    try:
+        df = df.tail(limit)
+        result = df.to_json(orient="records")
+        parsed = json.loads(result)
+        for offset in range(15):
+            row = parsed[offset]
+            for x in row.keys():
+                pair = literal_eval(x)
+                symbol = pair[0]
+                indicator = pair[1]
+                value = row[x]
+                if symbol not in final_result:
+                    final_result[symbol] = {}
+                if offset not in final_result[symbol]:
+                    final_result[symbol][offset] = {}
+                final_result[symbol][offset][indicator] = value
+        # print(json.dumps(final_result, indent=4))
+    except Exception as e:
+        dlog.ex(e)
+        danalytics.reportException(e)
+    # More some info.
+    # for x in final_result.keys():
+    #    final_result[x]['sector'] = getSymbolList(domain=domain)[x]['sector']
+    return final_result
+
+
 # Rest all locks here - This is needed for restart the server
 for candle_type in SUPPORTED_CANDLE:
     for domain in SUPPORTED_DOMAIN:
@@ -107,6 +136,18 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         dlog.d("downloadAndBuildIndicator: saving to storage start")
         path_to_store = dstorage.get_default_path_for_candle(candle_type)
         dstorage.store_data_to_disk(processed_df, path_to_store)
+
+        dlog.d("downloadAndBuildIndicator: building indicator history map")
+        # Building Indicator map for O(1) looks up.
+        # This will be a 4d map
+        # map[REL][1d][-1][close]...
+        last15SlotIndicator = getLastNIndicatorInJson(domain, processed_df)
+        indictaor_history_key = "indicator_history_{}".format(domain)
+        olddata = dredis.getPickle(indictaor_history_key)
+        if not olddata:
+            olddata = {}
+        for x in last15SlotIndicator.keys():
+            pass
 
         dlog.d("downloadAndBuildIndicator: saving to redis start")
         dredis.setPickle("indicator_data_{}_{}".format(domain, candle_type.value),
