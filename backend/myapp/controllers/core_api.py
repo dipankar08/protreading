@@ -82,11 +82,8 @@ def indicator():
         return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
 
     # Reload on time
-    if IfTimeIs5MinOld(result['timestamp']):
-        # Submit task as the data is 5 min old.
-        task_id = tasks.taskBuildIndicator.delay(domain, candle_type)
-        danalytics.reportAction(
-            "indicator_recomputation_submitted", {"domain": domain, "candle_type": candle_type})
+    # mayUpdateStateData(domain, candle_type)
+
     return buildSuccess("Got indicator", result)
 
 
