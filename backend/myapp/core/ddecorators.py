@@ -18,7 +18,7 @@ def make_exception_safe(func):
     return wrapper
 
 
-def task_common_action(func):
+def decrTaskCommonAction(func):
     def wrapper(*args, **kwargs):
         func_name = func.__name__
         try:
@@ -49,7 +49,7 @@ def trace_perf(func):
     return wrapper
 
 
-def log_func(remote_logging=False):
+def decrTLogFunction(remote_logging=False):
     def actual_decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):

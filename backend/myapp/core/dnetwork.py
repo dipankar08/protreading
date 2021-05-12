@@ -31,18 +31,18 @@ def ping(name, endpoint):
 
 
 # Infra for report the ping
-ping_celery_ts = datetime.datetime(2012, 3, 5, 23, 8, 15)
+pingCelery_ts = datetime.datetime(2012, 3, 5, 23, 8, 15)
 ping_backend_ts = datetime.datetime(2012, 3, 5, 23, 8, 15)
 
 
-def ping_celery():
+def pingCelery():
     if isDebug():
         # Donot track the ping from debug
         return
-    global ping_celery_ts
-    if (datetime.datetime.now() - ping_celery_ts).total_seconds() < 60 * 60:
+    global pingCelery_ts
+    if (datetime.datetime.now() - pingCelery_ts).total_seconds() < 60 * 60:
         return
-    ping_celery_ts = datetime.datetime.now()
+    pingCelery_ts = datetime.datetime.now()
     ping(name="PROTREADING-WORKER", endpoint="null")
 
 
