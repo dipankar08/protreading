@@ -1,4 +1,5 @@
 from logging import log
+from myapp.core.optimization import shouldBuildIndicator
 from pickle import TRUE
 from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
 from myapp.core.sync import getSymbolList
@@ -85,6 +86,7 @@ def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
         parsed = json.loads(result)
         for offset in range(15):
             row = parsed[offset]
+            offset_key = offset  # Key => 0, -1,-2....
             for x in row.keys():
                 pair = literal_eval(x)
                 symbol = pair[0]
@@ -92,9 +94,9 @@ def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
                 value = row[x]
                 if symbol not in final_result:
                     final_result[symbol] = {}
-                if offset not in final_result[symbol]:
-                    final_result[symbol][offset] = {}
-                final_result[symbol][offset][indicator] = value
+                if offset_key not in final_result[symbol]:
+                    final_result[symbol][offset_key] = {}
+                final_result[symbol][offset_key][indicator] = value
         # print(json.dumps(final_result, indent=4))
     except Exception as e:
         dlog.ex(e)
@@ -116,11 +118,18 @@ dlog.d("Reset downloadAndBuildIndicator locks")
 # It will download and build the indicators
 @trace_perf
 def downloadAndBuildIndicator(domain, candle_type: TCandleType):
+    # Optimization
+    if not shouldBuildIndicator(domain, candle_type):
+        dlog.d("Ignore rebuilding shouldBuildIndicator")
+        return
+
+    # Locking
     key = "downloadAndBuildindicator_{}_{}".format(domain, candle_type.value)
     if dredis.get(key) == "1":
         dlog.d("downloadAndBuildIndicator locked for key {}".format(key))
         raise Exception("downloadAndBuildIndicator is progress")
     dredis.set(key, "1")
+
     try:
         dlog.d("downloadAndBuildIndicator start")
 
@@ -128,10 +137,12 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         ret_value, download_data = ddownload.download(
             domain, interval=candle_type)
         if ret_value is False:
+            dlog.d("Download fails")
             return {"status": "error", "msg": "something goes wrong", "out": None}
 
         dlog.d("downloadAndBuildIndicator building start")
-        processed_df = dindicator.process_inplace(download_data, domain)
+        processed_df = dindicator.buildTechnicalIndicators(
+            download_data, domain)
 
         dlog.d("downloadAndBuildIndicator: saving to storage start")
         path_to_store = dstorage.get_default_path_for_candle(candle_type)
@@ -142,12 +153,17 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         # This will be a 4d map
         # map[REL][1d][-1][close]...
         last15SlotIndicator = getLastNIndicatorInJson(domain, processed_df)
-        indictaor_history_key = "indicator_history_{}".format(domain)
-        olddata = dredis.getPickle(indictaor_history_key)
+        indicator_history_key = "indicator_history_{}".format(domain)
+        olddata = dredis.getPickle(indicator_history_key)
         if not olddata:
             olddata = {}
-        for x in last15SlotIndicator.keys():
-            pass
+        for key in last15SlotIndicator.keys():
+            if key not in olddata:
+                olddata[key] = {}
+            olddata[key][candle_type.value] = last15SlotIndicator.get(key)
+        dredis.setPickle(indicator_history_key, olddata)
+        dlog.d("downloadAndBuildIndicator: saved indicator history to {}".format(
+            indicator_history_key))
 
         dlog.d("downloadAndBuildIndicator: saving to redis start")
         dredis.setPickle("indicator_data_{}_{}".format(domain, candle_type.value),
@@ -176,7 +192,7 @@ def checkLoadLatestData():
             changed.append(candle_type)
         if should_fetch_data(candle_type=candle_type):
             # Default load india
-            tasks.task_build_indicator.delay("IN", candle_type.value)
+            tasks.taskBuildIndicator.delay("IN", candle_type.value)
     return changed
 
 
@@ -199,15 +215,15 @@ def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType, re
     # reload
     if reload == "1":
         if sync == "1":
-            tasks.task_build_indicator(domain, candle_type=candle_type.value)
+            tasks.taskBuildIndicator(domain, candle_type=candle_type.value)
         else:
-            tasks.task_build_indicator.delay(domain, candle_type.value)
-        dlog.d("task_build_indicator: task submitted")
+            tasks.taskBuildIndicator.delay(domain, candle_type.value)
+        dlog.d("taskBuildIndicator: task submitted")
         return
 
     if dredis.getPickle("indicator_data_{}_{}".format(domain, '1d')) is None:
         # task submitted
-        tasks.task_build_indicator.delay(domain, candle_type.value)
+        tasks.taskBuildIndicator.delay(domain, candle_type.value)
         dlog.d("task submitted")
     else:
         dlog.d("Data is already there")

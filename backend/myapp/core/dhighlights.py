@@ -185,7 +185,7 @@ ENABLED_LIST = [
 
 
 @ensure_single_entry(cache_key="summary_result")
-def compute_summary():
+def taskComputeSummary():
     "ignore_cache will override the decorator to ignore cache"
     # Ensure we update the flobal data
     checkLoadLatestData()
@@ -197,7 +197,7 @@ def compute_summary():
             continue
         if x.get('name') not in ENABLED_LIST:
             continue
-        ret = dfilter.filterstock(
+        ret = dfilter.performScreen(
             condition=x.get('condition'),
             columns=x.get("columns"),
             sort_by=x.get('sort_by'),

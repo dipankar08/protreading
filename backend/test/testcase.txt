@@ -14,10 +14,28 @@
 # => GET => {{server}}/market?domain=USA&reload=1&sync=1 => success # Just used for debugging
 
 
-############## Testing Indicator API ( Provided indicator values for the latest data ) #####################
+############## build full tech indicator hodtory and return #####################
 => GET => {{server}}/indicator => success
 => GET => {{server}}/indicator?candle_type=5m => success
 => GET => {{server}}/indicator?candle_type=5m&domain=IN => success
+
+
+#############################  filter api ##############################
+=> GET => {{server}}/screen?filter=1 =>success
+=> GET => {{server}}/screen?filter=1&domain=USA =>success
+=> GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100&columns=indicator:5m:0:rsi_14 => success
+=> GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100 => success
+=> GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100&columns=indicator:5m:0:rsi_14 => success
+=> GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100 => success
+
+
+########################## INTERNAL TEST API ########################################
+#Redis API
+=> GET => {{server}}/redis?key=invalid => success
+=> GET => {{server}}/redis?key=indicator_data_IN_5m => success
+=> GET => {{server}}/redis?key=indicator_data_IN_1d => success
+=> GET => {{server}}/redis?key=indicator_data_UK_5m => success
+=> GET => {{server}}/redis?key=indicator_data_UK_1d => success
 
 
 

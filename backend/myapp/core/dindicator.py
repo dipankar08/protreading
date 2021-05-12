@@ -11,7 +11,7 @@ all_range = [5, 8, 13, 50, 100, 200]
 
 
 @trace_perf
-def process_inplace(df: DataFrame, domain: str):
+def buildTechnicalIndicators(df: DataFrame, domain: str):
     # If somevalue is nan and all calculation just dont work
     df.fillna(method='ffill', inplace=True)
     for ticker in getSymbolList(domain).keys():
