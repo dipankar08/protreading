@@ -71,7 +71,7 @@ def indicator():
             tasks.taskBuildIndicator(domain, candle_type)
             result = dredis.getPickle(
                 "indicator_history_{}".format(domain))
-            return buildSuccess("Got indicator", show_result == "1" ? result: 'result is hidden')
+            return buildSuccess("Got indicator", result if show_result == "1" else 'result is hidden')
         else:
             task_id = tasks.taskBuildIndicator.delay(domain, candle_type)
             return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
@@ -85,7 +85,7 @@ def indicator():
     # Reload on time
     # mayUpdateStateData(domain, candle_type)
 
-    return buildSuccess("Got indicator", show_result == "1" ? result: 'result is hidden')
+    return buildSuccess("Got indicator", result if show_result == "1" else 'result is hidden')
 
 
 # Build the latest market data
