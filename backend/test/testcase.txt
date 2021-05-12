@@ -23,6 +23,7 @@
 => GET => {{server}}/indicator?candle_type=1d&domain=IN&reload=1&sync=1 => success
 => GET => {{server}}/indicator?candle_type=5m&domain=USA&reload=1&sync=1 => success
 => GET => {{server}}/indicator?candle_type=1d&domain=USA&reload=1&sync=1 => success
+=> GET => {{server}}/indicator?candle_type=1d&domain=USA&reload=1&sync=1&result=1 => success # This will bring the indicator
 
 
 
@@ -35,6 +36,7 @@
 => GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100 => success
 => GET => http://localhost:5000/screen?filter=indicatorX:5m:0:close%20%3C%20100&domain=USA => error
 => GET => http://localhost:5000/screen?filter=indicator:5m:0:close%20%3C%20100&domain=USA => success
+=> GET => http://localhost:5000/screen?filter=indicator:5m:0:close_change_percentage%20%3E%201&domain=IN&columns=indicator:1d:0:close_change_percentage =>success
 
 
 ########################## INTERNAL TEST API ########################################

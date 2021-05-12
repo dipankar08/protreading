@@ -39,9 +39,16 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
                     selected_one['sector'] = getSymbolList(domain)[
                         symbol]['sector']
                     selected_one['close'] = str(
-                        np.round(indicator_map['5m'][0]['close'], 2))
+                        np.round(indicator_map['1d'][0]['close'], 2))
+                    selected_one['change'] = str(
+                        np.round(indicator_map['1d'][0]['close_change_percentage'], 2))
+                    # extra col
+                    for col in columns:
+                        selected_one[col[0]] = str(
+                            np.round(eval(col[1]), 2))
                     # add used defined data
                     result.append(fixDict(selected_one))
+
             except Exception as e:
                 dlog.ex(e)
                 dlog.e(
