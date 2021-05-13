@@ -17,6 +17,8 @@ import { TestScreen } from "./ProfileScreen";
 import { CoreStateContext } from "../core/CoreContext";
 import { CoreStackScreen } from "../core/core_navigation";
 import { WebViewScreen } from "../core/WebViewScreen";
+import { ScreenListScreen, ScreenScreen } from "./ScreenScreen";
+import { NewScreenScreen } from "./NewScreenScreen";
 
 // Home Stack
 const HomeStack = createStackNavigator();
@@ -161,6 +163,43 @@ const PositionStackScreen = () => (
   </PositionStack.Navigator>
 );
 
+// Screen Stack
+const ScreenStack = createStackNavigator();
+const ScreenStackScreen = () => (
+  <PositionStack.Navigator>
+    <PositionStack.Screen
+      name="ScreenListScreen"
+      component={ScreenListScreen}
+      options={{
+        title: "Position",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+    <PositionStack.Screen
+      name="NewScreenScreen"
+      component={NewScreenScreen}
+      options={{
+        title: "Position",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+  </PositionStack.Navigator>
+);
+
 // Button Tabs
 const Tabs = createBottomTabNavigator();
 const TabsScreen = () => (
@@ -215,6 +254,7 @@ const DrawerScreen = () => (
     <Drawer.Screen name="Home" component={TabsScreen} />
     <Drawer.Screen name="Profile" component={ProfileStackScreen} />
     <Drawer.Screen name="Debug" component={DebugScreen} />
+    <Drawer.Screen name="Screen" component={ScreenStackScreen} />
   </Drawer.Navigator>
 );
 

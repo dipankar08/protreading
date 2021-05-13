@@ -3,6 +3,7 @@ export type TCoreScreenType = "BOOT" | "NUX" | "SIGN_IN" | "SIGN_UP" | "SIGN_OUT
 export type TCoreScreenName = "SignInScreen" | "SignOutScreen" | "NuxScreen" | "SignUPScreen" | "CompleteSignInScreen";
 
 export type TVoidCalBack = () => void;
+export type TStringCallback = (str: string) => void;
 export type TErrorCallback = (str: string) => void;
 export type TSuccessCallback = (obj: Object) => void;
 
@@ -36,4 +37,10 @@ export type TCallback = {
   onSuccess?: TSuccessCallback;
   onError?: TErrorCallback;
   onComplete?: TVoidCalBack;
+};
+
+export type TSimpleStoreResp = {
+  status: "success" | "error";
+  msg: string;
+  out: Object;
 };
