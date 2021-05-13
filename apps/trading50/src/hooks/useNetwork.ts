@@ -10,9 +10,10 @@ import { showNotification } from "../libs/uihelper";
 import { processor } from "../models/processor";
 import { getCurrentDate } from "../libs/time";
 import { CoreStateContext } from "../core/CoreContext";
-import { TCallback } from "../core/core_model";
+import { TCallback, TSimpleStoreResp } from "../core/core_model";
 import { globalAppState } from "../appstate/AppStateReducer";
 import { initialState, TDomain } from "../appstate/types";
+import { TMarketEntry } from "../models/model";
 
 const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary?`;
 const MARKET_URL = `${PRO_TRADING_SERVER}/market?`;
@@ -173,6 +174,19 @@ export const useNetwork = () => {
     }
   }
 
+  async function performScreen(filter: string, callback: TCallback) {
+    dlog.d("[NETWORK] performScreen");
+    callback.onBefore?.();
+    try {
+      let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/screen?filter=${filter}`));
+      let resultJSON = result as Array<TMarketEntry>;
+      callback.onSuccess?.(resultJSON);
+    } catch (e) {
+      callback.onError?.("Not able to performScreen");
+      dlog.ex(e);
+    }
+  }
+
   async function changeDomain(domain: TDomain) {
     appState.dispatch({ type: "MERGE", payload: initialState });
     appState.dispatch({ type: "MERGE", payload: { domain: domain } });
@@ -217,5 +231,6 @@ export const useNetwork = () => {
     reopenOrder,
     doAllNetworkCallOnBoot,
     changeDomain,
+    performScreen,
   };
 };

@@ -15,6 +15,7 @@ export type TAppState = {
   stockMap: Map<string, TMarketEntry>;
   position?: TPosition;
   domain: TDomain;
+  screenResultList: Array<TMarketEntry>;
 };
 
 export type TAppStateOptional = {
@@ -25,6 +26,7 @@ export type TAppStateOptional = {
   position?: TPosition;
   stockMap?: Map<string, TMarketEntry>;
   domain?: TDomain;
+  screenResultList?: Array<TMarketEntry>;
 };
 
 export const initialState: TAppState = {
@@ -34,4 +36,5 @@ export const initialState: TAppState = {
   recommendedList: new Map(),
   domain: "IN",
   stockMap: new Map(),
+  screenResultList: [],
 };

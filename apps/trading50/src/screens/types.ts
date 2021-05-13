@@ -1,5 +1,6 @@
 import { Route } from "@react-navigation/routers";
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { TStringCallback, TVoidCalBack } from "../core/core_model";
 import { TObject } from "../models/model";
 export type TKeyText = {
   key: string;
@@ -24,7 +25,10 @@ export type TProps = {
   size?: number;
   color?: string;
   items?: Array<TObject | TKeyText>;
+  objArray?: Array<TObject>;
   object?: TObject;
   numberOfLines?: number;
   visible?: boolean;
+  onSearch?: TStringCallback;
+  onChangeText?: TStringCallback;
 };
