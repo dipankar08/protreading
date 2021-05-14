@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { STYLES } from "./styles";
@@ -76,15 +76,15 @@ export const DLayoutCol = ({ children, center, style }: TProps) => {
   );
 };
 
-export const DCard = ({ style }: TProps) => {
+export const DCard = ({ style, children }: TProps) => {
   return (
     <View
       style={[
         {
           display: "flex",
           flexDirection: "column",
-          alignContent: "center",
-          alignItems: "center",
+          //alignContent: "center",
+          //alignItems: "center",
           width: "100%",
           backgroundColor: "#00000010",
           padding: 20,
@@ -92,6 +92,8 @@ export const DCard = ({ style }: TProps) => {
         },
         style,
       ]}
-    ></View>
+    >
+      {children}
+    </View>
   );
 };

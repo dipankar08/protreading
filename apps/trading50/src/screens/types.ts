@@ -7,6 +7,7 @@ export type TKeyText = {
 };
 export type TProps = {
   navigation?: any;
+  route?: any;
   children?: any;
   userToken?: string | null;
   overrideStyle?: ViewStyle;

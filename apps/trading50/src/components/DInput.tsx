@@ -1,18 +1,9 @@
 import React from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView, Picker } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Picker, TextInput } from "react-native";
 import { TProps } from "../screens/types";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { STYLES } from "./styles";
-import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
-import _ from "underscore";
-import { DButtonIcon } from "./DButton";
-import { DScreenTitle } from "./DText";
 import { colors } from "../styles/colors";
-import { DLayoutRow } from "./DLayout";
 import { DIcon } from "./DIcon";
+import { DLayoutRow } from "./DLayout";
 
 export const DTextInput = ({ children, style, placeholder, onChangeText, multiline }: TProps) => {
   return (

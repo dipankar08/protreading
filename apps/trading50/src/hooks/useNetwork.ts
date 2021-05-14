@@ -1,19 +1,18 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Alert } from "react-native";
+import { globalAppState } from "../appstate/AppStateReducer";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { PRO_TRADING_SERVER, CACHE_KEY_SUMMARY, CACHE_KEY_MARKET, CACHE_KEY_POSITION, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
+import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, CACHE_KEY_SUMMARY, PRO_TRADING_SERVER, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
+import { initialState, TDomain } from "../appstate/types";
+import { CoreStateContext } from "../core/CoreContext";
+import { TCallback } from "../core/core_model";
 import { assertNotEmptyOrNotify, verifyOrCrash } from "../libs/assert";
 import { dlog } from "../libs/dlog";
 import { getRequest, postRequest } from "../libs/network";
-import { showNotification } from "../libs/uihelper";
-import { processor } from "../models/processor";
 import { getCurrentDate } from "../libs/time";
-import { CoreStateContext } from "../core/CoreContext";
-import { TCallback, TSimpleStoreResp } from "../core/core_model";
-import { globalAppState } from "../appstate/AppStateReducer";
-import { initialState, TDomain } from "../appstate/types";
-import { TMarketEntry } from "../models/model";
+import { showNotification } from "../libs/uihelper";
+import { TMarketEntry, TObject } from "../models/model";
+import { processor } from "../models/processor";
 
 const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary?`;
 const MARKET_URL = `${PRO_TRADING_SERVER}/market?`;
@@ -178,7 +177,7 @@ export const useNetwork = () => {
     dlog.d("[NETWORK] performScreen");
     callback.onBefore?.();
     try {
-      let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/screen?filter=${filter}`));
+      let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/screen?filter=${filter.toLowerCase()}`));
       let resultJSON = result as Array<TMarketEntry>;
       callback.onSuccess?.(resultJSON);
     } catch (e) {
@@ -219,6 +218,35 @@ export const useNetwork = () => {
     ]);
   }
 
+  function isEmpty(s: string) {
+    return s == undefined || s == null || s.trim().length == 0;
+  }
+
+  // screen
+  async function saveNewScreen(data: TObject, callback: TCallback) {
+    callback.onBefore?.();
+    try {
+      verifyOrCrash(!isEmpty(data.filter), "please enter filter");
+      verifyOrCrash(!isEmpty(data.title), "please enter title");
+      verifyOrCrash(!isEmpty(data.desc), "please enter desc");
+      let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/trading50_filter/insert`, data);
+      callback.onSuccess?.(response);
+    } catch (e) {
+      callback.onError?.(e.message || "Not able to save");
+    }
+  }
+  async function getScreen(callback: TCallback) {
+    callback.onBefore?.();
+    try {
+      let response = await getRequest(`${SIMPLESTORE_ENDPOINT}/api/trading50_filter`);
+      callback.onSuccess?.(response);
+      callback.onComplete?.();
+    } catch (e) {
+      callback.onError?.(e.message || "No item found");
+      callback.onComplete?.();
+    }
+  }
+
   return {
     loading,
     error,
@@ -232,5 +260,7 @@ export const useNetwork = () => {
     doAllNetworkCallOnBoot,
     changeDomain,
     performScreen,
+    saveNewScreen,
+    getScreen,
   };
 };

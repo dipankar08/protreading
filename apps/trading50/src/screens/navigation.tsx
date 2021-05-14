@@ -14,8 +14,8 @@ import { MarketGroupListScreen, MarketScreen } from "./MarketScreen";
 import { NewScreenScreen } from "./NewScreenScreen";
 import { PositionScreen } from "./PositionScreen";
 import { ProfileScreen, TestScreen } from "./ProfileScreen";
+import { ScreenListScreen } from "./ScreenListScreen";
 import { SearchScreen, SearchScreen2 } from "./Screens";
-import { ScreenListScreen } from "./ScreenScreen";
 import { TProps } from "./types";
 
 // Home Stack
