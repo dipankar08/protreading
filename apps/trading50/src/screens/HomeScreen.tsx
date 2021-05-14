@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import { Button, Text, StyleSheet, View, ActivityIndicator } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { DCard, DContainer, DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
-import { TProps } from "./types";
-import { dlog } from "../libs/dlog";
-import { useNetwork } from "../hooks/useNetwork";
-import { useCoreApi } from "../core/useCoreApi";
-import { CoreStateContext } from "../core/CoreContext";
-import { showNotification } from "../libs/uihelper";
+import { DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
 import { DTextSection, DTextSectionWithButton } from "../components/DText";
+import { CoreStateContext } from "../core/CoreContext";
+import { useNetwork } from "../hooks/useNetwork";
+import { dlog } from "../libs/dlog";
+import { showNotification } from "../libs/uihelper";
+import { TProps } from "./types";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);

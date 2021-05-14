@@ -1,18 +1,15 @@
-import { Button, FlatList, Text, View, StyleSheet, TextInput, Modal, useWindowDimensions } from "react-native";
-import { DContainer, DLayoutCol, DLayoutRow, DCard, DText, DButton, FlatListItemSeparator, ScreenHeader, DContainerSafe } from "../components/basic";
-import { TProps } from "./types";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { FlatList, Text, useWindowDimensions, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-
-import { useContext } from "react";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { TOrder } from "../models/model";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
-import { globalStyle, STYLES } from "../components/styles";
-import { useNetwork } from "../hooks/useNetwork";
-import { colors } from "../styles/colors";
+import { AppStateContext } from "../appstate/AppStateStore";
+import { DContainerSafe, DLayoutCol, DLayoutRow, DText, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
+import { useNetwork } from "../hooks/useNetwork";
+import { TOrder } from "../models/model";
+import { colors } from "../styles/colors";
+import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
+import { TProps } from "./types";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config

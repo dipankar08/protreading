@@ -1,27 +1,16 @@
 import React, { useRef, useState } from "react";
-import { FlatList, View, Text, Button } from "react-native";
+import { Button, FlatList, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import {
-  DContainerSafe,
-  DLayoutCol,
-  DLayoutRow,
-  DListEmptyComponent,
-  DSpace,
-  FlatListItemSeparator,
-  ScreenHeader,
-  TextWithIcon,
-} from "../components/basic";
+import { DLayoutCol, DLayoutRow, DListEmptyComponent, DSpace, FlatListItemSeparator, TextWithIcon } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
+import { DTextSearch } from "../components/DInput";
 import { DKeyValueList } from "../components/DList";
 import { useNetwork } from "../hooks/useNetwork";
-import { dlog } from "../libs/dlog";
-import { TMarketEntry, TObject } from "../models/model";
-import navigation from "./navigation";
-import { TProps } from "./types";
-import { colors } from "../styles/colors";
-import { DTextSearch } from "../components/DInput";
+import { TMarketEntry } from "../models/model";
 import { DIMENS } from "../res/dimens";
+import { colors } from "../styles/colors";
+import { TProps } from "./types";
 
 export const TickerListView = ({ navigation, objArray }: TProps) => {
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);

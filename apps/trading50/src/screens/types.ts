@@ -1,6 +1,5 @@
-import { Route } from "@react-navigation/routers";
-import { StyleSheet, TextStyle, ViewStyle } from "react-native";
-import { TStringCallback, TVoidCalBack } from "../core/core_model";
+import { TextStyle, ViewStyle } from "react-native";
+import { TStringCallback } from "../core/core_model";
 import { TObject } from "../models/model";
 export type TKeyText = {
   key: string;

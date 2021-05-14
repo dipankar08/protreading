@@ -1,18 +1,16 @@
-import React, { useContext, useEffect } from "react";
-import { Component } from "react";
+import React, { useContext } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
-import { useNetwork } from "../hooks/useNetwork";
-import { MarketListView } from "./MarketScreen";
-import navigation from "./navigation";
-import { DTextInput } from "../components/DInput";
-import { TProps } from "./types";
-import { DIMENS } from "../res/dimens";
-import { TickerListView } from "./TickerListView";
-import { TMarketEntry } from "../models/model";
-import { showNotification } from "../libs/uihelper";
 import { AppStateContext } from "../appstate/AppStateStore";
+import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
+import { DTextInput } from "../components/DInput";
+import { useNetwork } from "../hooks/useNetwork";
+import { showNotification } from "../libs/uihelper";
+import { TMarketEntry } from "../models/model";
+import { DIMENS } from "../res/dimens";
+import navigation from "./navigation";
+import { TickerListView } from "./TickerListView";
+import { TProps } from "./types";
 const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 
 export let NewScreenScreen = () => {

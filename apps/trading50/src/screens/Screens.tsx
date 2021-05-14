@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, StyleSheet, View, Text } from "react-native";
-import { TProps } from "./types";
-import { globalStyle } from "../components/styles";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { DCard } from "../components/basic";
-import { userBoot } from "../libs/boot_helper";
+import { globalStyle } from "../components/styles";
+import { TProps } from "./types";
 
 const styles = StyleSheet.create({
   container: {

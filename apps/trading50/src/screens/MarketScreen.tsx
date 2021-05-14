@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Button, FlatList, Text, TouchableOpacity, useWindowDimensions, View, StyleSheet } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { DContainerSafe, DLayoutCol, DLayoutRow, DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../components/basic";
-import { TProps } from "./types";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { TGroupMarketEntry } from "../models/model";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { dlog } from "../libs/dlog";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { AppStateContext } from "../appstate/AppStateStore";
+import { DContainerSafe, DLayoutCol, DLayoutRow, DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { useNetwork } from "../hooks/useNetwork";
+import { dlog } from "../libs/dlog";
+import { TGroupMarketEntry } from "../models/model";
 import { TickerListView } from "./TickerListView";
-import { DTextSearch } from "../components/DInput";
-import { DIMENS } from "../res/dimens";
+import { TProps } from "./types";
 
 const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 export const MarketScreen = ({ navigation }: TProps) => {

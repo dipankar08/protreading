@@ -1,24 +1,22 @@
 // We use the patterns defined in https://github.com/ReactNativeSchool/getting-started-react-navigation-v5/blob/master/App/index.js
-import React, { useContext } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { SearchScreen, SearchScreen2 } from "./Screens";
-import { PositionScreen } from "./PositionScreen";
-import { MarketScreen, MarketGroupListScreen } from "./MarketScreen";
+import React, { useContext } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TProps } from "./types";
-
-import { ProfileScreen } from "./ProfileScreen";
-import { HomeScreen } from "./HomeScreen";
-import { DebugScreen } from "./DebugScreen";
-import { TestScreen } from "./ProfileScreen";
 import { CoreStateContext } from "../core/CoreContext";
 import { CoreStackScreen } from "../core/core_navigation";
 import { WebViewScreen } from "../core/WebViewScreen";
-import { ScreenListScreen, ScreenScreen } from "./ScreenScreen";
+import { DebugScreen } from "./DebugScreen";
+import { HomeScreen } from "./HomeScreen";
+import { MarketGroupListScreen, MarketScreen } from "./MarketScreen";
 import { NewScreenScreen } from "./NewScreenScreen";
+import { PositionScreen } from "./PositionScreen";
+import { ProfileScreen, TestScreen } from "./ProfileScreen";
+import { SearchScreen, SearchScreen2 } from "./Screens";
+import { ScreenListScreen } from "./ScreenScreen";
+import { TProps } from "./types";
 
 // Home Stack
 const HomeStack = createStackNavigator();

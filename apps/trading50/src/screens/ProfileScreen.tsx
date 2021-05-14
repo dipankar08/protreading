@@ -1,9 +1,17 @@
-import React from "react";
-import { DCard, DSpace, DText, DContainer, DLayoutCol, DTextInput, DContainerSafe, ScreenHeader, DLayoutRow } from "../components/basic";
-import { TProps } from "./types";
-import { useContext, useEffect, useState } from "react";
-import { dlog } from "../libs/dlog";
+import React, { useContext, useEffect } from "react";
+import { ScrollView } from "react-native";
+// Use this cscreen for testing purpose
+import { WebView } from "react-native-webview";
+import { AppStateContext } from "../appstate/AppStateStore";
+import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
+import { DButtonPrimary } from "../components/DButton";
+import { DDropDown } from "../components/DInput";
+import { DTextSection } from "../components/DText";
+import { AppInfoCard } from "../core/AppInfoCard";
+import { LogoutCard } from "../core/LogoutCard";
 import { useNetwork } from "../hooks/useNetwork";
+import { dlog } from "../libs/dlog";
+import { TProps } from "./types";
 
 // Profile and Signout logic
 export const ProfileScreen = ({ navigation, route }: TProps) => {
@@ -58,15 +66,6 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
   );
 };
 
-// Use this cscreen for testing purpose
-import { WebView } from "react-native-webview";
-import { LogoutCard } from "../core/LogoutCard";
-import { AppInfoCard } from "../core/AppInfoCard";
-import { ScrollView } from "react-native";
-import { DTextSection } from "../components/DText";
-import { DDropDown } from "../components/DInput";
-import { DButtonPrimary } from "../components/DButton";
-import { AppStateContext } from "../appstate/AppStateStore";
 export const TestScreen = () => {
   return (
     <DContainerSafe style={{ flex: 1 }}>

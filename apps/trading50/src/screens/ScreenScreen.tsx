@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { Component } from "react";
-import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
+import React from "react";
+import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
 import { TProps } from "./types";
 export let ScreenListScreen = ({ navigation }: TProps) => {
   return (

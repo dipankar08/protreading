@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
-import { Component } from "react";
-import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
-import CodePush from "react-native-code-push";
+import React, { Component } from "react";
+import { DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
 export class DebugScreen extends Component {
   componentDidMount() {
     //CodePush.sync({ installMode: CodePush.InstallMode.ON_NEXT_RESUME }, this.syncWithCodePush);

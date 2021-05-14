@@ -1,12 +1,11 @@
+import { Picker } from "@react-native-community/picker";
 import React, { useContext } from "react";
-import { Modal, View, Button, Text, StyleSheet } from "react-native";
+import { Button, Modal, StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { useNetwork } from "../hooks/useNetwork";
-import { Picker } from "@react-native-community/picker";
-import { Item } from "react-native-paper/lib/typescript/components/Drawer/Drawer";
-import { DKeyValueList } from "../components/DList";
 import { DDialog } from "../components/DDialog";
+import { DKeyValueList } from "../components/DList";
+import { useNetwork } from "../hooks/useNetwork";
 
 export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const network = useNetwork();
