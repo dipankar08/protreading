@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component, default as React, default as React } from "react";
 import { DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
 export class DebugScreen extends Component {
   componentDidMount() {
