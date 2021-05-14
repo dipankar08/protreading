@@ -1,4 +1,4 @@
-import { default as React, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";

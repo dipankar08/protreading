@@ -1,4 +1,4 @@
-import { default as React, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView } from "react-native";
 // Use this cscreen for testing purpose
 import { WebView } from "react-native-webview";

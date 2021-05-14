@@ -1,5 +1,5 @@
 import { Picker } from "@react-native-community/picker";
-import { default as React, useContext } from "react";
+import React, { useContext } from "react";
 import { Button, Modal, StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { AppStateContext } from "../appstate/AppStateStore";

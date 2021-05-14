@@ -2,38 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { DText, DTextInput, ScreenHeader } from "../components/basic";
+import { DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
 import { DButtonPrimary } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
-import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
+import { DTextInput } from "../components/DInput";
+import { DLayoutRow } from "../components/DLayout";
 import { useNetwork } from "../hooks/useNetwork";
 import { showNotification } from "../libs/uihelper";
 import { TMarketEntry } from "../models/model";
 import { DIMENS } from "../res/dimens";
-import navigation from "./navigation";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
-
 const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 
-export let NewScreenScreen = () => {
-  const network = useNetwork();
-  const appState = useContext(AppStateContext);
+export let NewScreenScreen = ({ navigation, route }: TProps) => {
   // tab config
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
-  const [queryStr, setInsetQueryStr] = React.useState(0);
   const [routes] = React.useState([
     {
       key: "first",
       title: "Filter",
       navigation: navigation,
       query: route.params.filter || "",
-      onChangeText: (q: str) => {
-        // console.log(q);
-        setInsetQueryStr(q);
-      },
     },
     {
       key: "second",
@@ -50,41 +41,6 @@ export let NewScreenScreen = () => {
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader title="Execute Screen" style={{ padding: 16 }}></ScreenHeader>
-      <ScreenHeader
-        title="Execute Screen"
-        style={{ padding: 16 }}
-        icon="play"
-        loading={loading}
-        onPress={() => {
-          network.performScreen(queryStr, {
-            onBefore: () => {
-              setLoading(true);
-            },
-            onSuccess: (result) => {
-              let data: Array<TMarketEntry> = [];
-              for (let x of result) {
-                data.push({
-                  symbol: x.symbol,
-                  close: x.close,
-                  change: x.change,
-                  name: x.name,
-                  _id: x.symbol,
-                  rsi: x.rsi_14,
-                });
-              }
-              //console.log(data);
-              appState.dispatch({ type: "MERGE", payload: { screenResultList: data } });
-              setLoading(false);
-              showNotification("Got the result!");
-            },
-            onError: (result) => {
-              appState.dispatch({ type: "MERGE", payload: { screenResultList: [] } });
-              setLoading(false);
-              showNotification(result || "Error happened while screening");
-            },
-          });
-        }}
-      ></ScreenHeader>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

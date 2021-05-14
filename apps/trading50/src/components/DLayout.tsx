@@ -83,10 +83,8 @@ export const DCard = ({ style, children }: TProps) => {
         {
           display: "flex",
           flexDirection: "column",
-
           //alignContent: "center",
           //alignItems: "center",
-
           width: "100%",
           backgroundColor: "#00000010",
           padding: 20,
