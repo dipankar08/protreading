@@ -27,5 +27,5 @@ SUPPORTED_CHART_DURATION = [
 ]
 
 
-def getSymbolList(domain="IN") -> Dict[Str, Dict]:
+def getSymbolList(domain="IN") -> Dict[str, dict]:
     return SUPPORTED_SYMBOL.get(domain)

@@ -11,8 +11,10 @@ import _ from "underscore";
 import { DButtonIcon } from "./DButton";
 import { DScreenTitle } from "./DText";
 import { colors } from "../styles/colors";
+import { DLayoutRow } from "./DLayout";
+import { DIcon } from "./DIcon";
 
-export const DTextInput = ({ children, style, placeholder, onChangeText }: TProps) => {
+export const DTextInput = ({ children, style, placeholder, onChangeText, multiline }: TProps) => {
   return (
     <TextInput
       onChangeText={onChangeText}
@@ -32,9 +34,51 @@ export const DTextInput = ({ children, style, placeholder, onChangeText }: TProp
         },
         style,
       ]}
+      multiline={multiline || false}
     >
-      {children}
+      {children || ""}
     </TextInput>
+  );
+};
+
+export const DTextSearch = ({ children, style, onSearch, placeholder }: TProps) => {
+  return (
+    <DLayoutRow
+      style={[
+        {
+          backgroundColor: "#00000010",
+          color: colors.black,
+          borderWidth: 0,
+          alignItems: "center",
+          fontSize: 15,
+          borderRadius: 10,
+          paddingHorizontal: 16,
+        },
+        style,
+      ]}
+    >
+      <DIcon icon="find-replace" style={{ color: colors.grey500, fontSize: 20 }}></DIcon>
+      <TextInput
+        onChangeText={onSearch}
+        placeholder={placeholder || "type to search"}
+        placeholderTextColor={colors.grey500}
+        style={[
+          {
+            backgroundColor: "#00000000",
+            color: colors.black,
+            height: 38,
+            fontSize: 15,
+            padding: 8,
+            paddingVertical: 8,
+            paddingHorizontal: 8,
+            flex: 1,
+          },
+        ]}
+      >
+        {children}
+      </TextInput>
+      <DIcon icon="sort" style={{ color: colors.grey500, fontSize: 20 }}></DIcon>
+    </DLayoutRow>
   );
 };
 

@@ -10,12 +10,12 @@ import { showNotification } from "../libs/uihelper";
 import { processor } from "../models/processor";
 import { getCurrentDate } from "../libs/time";
 import { CoreStateContext } from "../core/CoreContext";
-import { TCallback } from "../core/core_model";
+import { TCallback, TSimpleStoreResp } from "../core/core_model";
 import { globalAppState } from "../appstate/AppStateReducer";
 import { initialState, TDomain } from "../appstate/types";
+import { TMarketEntry } from "../models/model";
 
 const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary?`;
-const LATEST_URL = `${PRO_TRADING_SERVER}/latest?candle_type=5m`;
 const MARKET_URL = `${PRO_TRADING_SERVER}/market?`;
 
 function getDomainUrl(url: string) {
@@ -52,27 +52,25 @@ export const useNetwork = () => {
     callback?.onBefore?.();
     try {
       let summary = await getRequest(getDomainUrl(SUMMARY_URL), CACHE_KEY_SUMMARY, false);
-      let latest = await getRequest(getDomainUrl(LATEST_URL), CACHE_KEY_MARKET, false);
       let market = await getRequest(getDomainUrl(MARKET_URL), CACHE_KEY_MARKET, false);
 
       // process alll data
       processor.setSummary(summary);
       processor.setMarket(market);
-      processor.setLatestIndicator(latest);
-
       appState.dispatch({
         type: "MERGE",
         payload: {
           summary: processor.summary,
           sectorList: processor.sectorList,
           recommendedList: processor.recommendedList,
+          stockMap: processor.stockMap,
         },
       });
-      dlog.d("[NETWORK] fetching from network complete ");
+      dlog.d(`[NETWORK] fetching from network complete for domain ${globalAppState.domain} `);
       callback?.onSuccess?.({});
       callback?.onComplete?.();
     } catch (e) {
-      dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${LATEST_URL}`);
+      dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${MARKET_URL}`);
       dlog.ex(e);
       callback?.onError?.("Not able to ralod data");
       callback?.onComplete?.();
@@ -176,9 +174,22 @@ export const useNetwork = () => {
     }
   }
 
+  async function performScreen(filter: string, callback: TCallback) {
+    dlog.d("[NETWORK] performScreen");
+    callback.onBefore?.();
+    try {
+      let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/screen?filter=${filter}`));
+      let resultJSON = result as Array<TMarketEntry>;
+      callback.onSuccess?.(resultJSON);
+    } catch (e) {
+      callback.onError?.("Not able to performScreen");
+      dlog.ex(e);
+    }
+  }
+
   async function changeDomain(domain: TDomain) {
     appState.dispatch({ type: "MERGE", payload: initialState });
-    globalAppState.domain = domain;
+    appState.dispatch({ type: "MERGE", payload: { domain: domain } });
     reLoadAllData();
   }
 
@@ -220,5 +231,6 @@ export const useNetwork = () => {
     reopenOrder,
     doAllNetworkCallOnBoot,
     changeDomain,
+    performScreen,
   };
 };

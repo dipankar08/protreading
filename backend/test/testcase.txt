@@ -1,31 +1,58 @@
 => context => server => http://127.0.0.1:5000
+=>  GET => http://localhost:5000/clearcache => success
 
 ############## Testing market APIS ( provide latest market data) #####################
+# ARGS: domain > USA, IN, UK
+# reload =1 or 0 will resubmit the task.
+# sync = 1 or 0 will perform on backgroud task or not
+#######################################################################################
 => GET => {{server}}/market? => success
 => GET => {{server}}/market?domain=IN => success
 => GET => {{server}}/market?domain=IN1 => success
 => GET => {{server}}/market?domain=UK => success
 => GET => {{server}}/market?domain=USA => success
+=> GET => {{server}}/market?domain=USA&reload=1&sync=0 => success
+# => GET => {{server}}/market?domain=USA&reload=1&sync=1 => success # Just used for debugging
 
 
-############## Testing Indicator API ( Provided indicator values for the latest data ) #####################
-=> GET => {{server}}/indicator => success
-=> GET => {{server}}/indicator?candle_type=5m => success
-=> GET => {{server}}/indicator?candle_type=5m&domain=IN => success
+############## build full tech indicator hodtory and return #####################
+=> GET => {{server}}/indicator => Indicator is not yet ready"
+=> GET => {{server}}/indicator?candle_type=5m => Indicator is not yet ready
+=> GET => {{server}}/indicator?candle_type=5m&domain=IN => Indicator is not yet ready
+=> GET => {{server}}/indicator?candle_type=5m&domain=IN&reload=1&sync=1 => success
+=> GET => {{server}}/indicator?candle_type=1d&domain=IN&reload=1&sync=1 => success
+=> GET => {{server}}/indicator?candle_type=5m&domain=USA&reload=1&sync=1 => success
+=> GET => {{server}}/indicator?candle_type=1d&domain=USA&reload=1&sync=1 => success
+=> GET => {{server}}/indicator?candle_type=1d&domain=USA&reload=1&sync=1&result=1 => success # This will bring the indicator
 
 
 
-=> GET => {{server}} =>  task submitted
-=> GET => {{server}}/status =>  Status Ok
-#=> GET => {{server}}/snapshot?candle_type=1d=> success
-=> GET => {{server}}/snapshot?candle_type=5m => success
-=> GET => {{server}}/snapshot?candle_type=15m=> success
-=> GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100&columns=indicator:1d:0:rsi_14 => success
+#############################  filter api ##############################
+=> GET => {{server}}/screen?filter=1 =>success
+=> GET => {{server}}/screen?filter=1&domain=USA =>success
+=> GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100&columns=indicator:5m:0:rsi_14 => success
+=> GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100 => success
+=> GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100&columns=indicator:5m:0:rsi_14 => success
 => GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100 => success
+=> GET => http://localhost:5000/screen?filter=indicatorX:5m:0:close%20%3C%20100&domain=USA => error
+=> GET => http://localhost:5000/screen?filter=indicator:5m:0:close%20%3C%20100&domain=USA => success
+=> GET => http://localhost:5000/screen?filter=indicator:5m:0:close_change_percentage%20%3E%201&domain=IN&columns=indicator:1d:0:close_change_percentage =>success
+
+
+########################## INTERNAL TEST API ########################################
+#Redis API
+=> GET => {{server}}/redis?key=invalid => success
+=> GET => {{server}}/redis?key=indicator_data_IN_5m => success
+=> GET => {{server}}/redis?key=indicator_data_IN_1d => success
+=> GET => {{server}}/redis?key=indicator_data_UK_5m => success
+=> GET => {{server}}/redis?key=indicator_data_UK_1d => success
+
+
+
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open =>success
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open&candle_type=5m&duration=30 =>success
 #=> GET => {{server}}/chart?symbol=WIPRO.NS => success
-=> GET => {{server}}/summary => success
-=> GET => {{server}}/task?task=snapshot_all => task submitted
+#=> GET => {{server}}/summary => success
+#=> GET => {{server}}/task?task=snapshot_all => task submitted
 
 

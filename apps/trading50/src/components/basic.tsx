@@ -68,31 +68,6 @@ export const DText = ({ children, style, center, bold, primary, secondary, dark,
   );
 };
 
-export const DButton = ({ children, style, primary, secondary, onPress, dark }: TProps) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={{ width: "100%" }}>
-      <Text
-        style={[
-          {
-            backgroundColor: primary ? (dark ? "white" : STYLES.APP_COLOR_PRIMARY) : "#00000000",
-            color: dark ? (primary ? STYLES.APP_COLOR_PRIMARY : "white") : primary ? "white" : STYLES.APP_COLOR_PRIMARY,
-            borderColor: dark ? "white" : STYLES.APP_COLOR_PRIMARY,
-            borderWidth: 1,
-            textAlign: "center",
-            paddingVertical: 10,
-            marginVertical: 8,
-            borderRadius: 6,
-            textTransform: "uppercase",
-          },
-          style,
-        ]}
-      >
-        {children}
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
 export const DTextInput = ({ children, style, dark, placeholder, onChangeText }: TProps) => {
   return (
     <TextInput
@@ -201,29 +176,6 @@ export const DListEmptyComponent = () => {
       <MaterialCommunityIcons name={"emoticon-sad-outline"} color="black" size={40} />
       <Text style={{ color: "red", textAlign: "center", marginTop: 16 }}>No item found</Text>
     </View>
-  );
-};
-
-function toString(data: any) {
-  if (data == undefined || data == null) {
-    return "-";
-  }
-  if (_.isObject(data)) {
-    return JSON.stringify(data);
-  }
-  return data + "";
-}
-
-export const DKeyValueList = ({ items }: any) => {
-  return (
-    <ScrollView style={{ height: "80%" }}>
-      {Object.keys(items).map((key) => (
-        <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 5 }} key={key}>
-          <Text>{key}:</Text>
-          <Text style={{ paddingRight: 10 }}>{toString(items[key])}</Text>
-        </DLayoutRow>
-      ))}
-    </ScrollView>
   );
 };
 

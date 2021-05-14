@@ -29,49 +29,80 @@ def before_request_func():
     g.timings = {}
 
 
-# Core APIS
-
-
-# STATUS
-@core_api.route('/status')
-@cache.cached(timeout=CACHE_TIMEOUT_5MIN, query_string=True)
+# Lookup redis key
+@core_api.route('/redis')
 @make_exception_safe
-def status():
-    "status of the app"
-    dglobaldata.checkLoadLatestData()
-    return buildSuccess("Status Ok", {"random": random.randint(10, 100)})
+def redis():
+    key: str = get_param_or_default(request, "key", "")
+    result = dredis.getPickle(key, {})
+    return buildSuccess("Saved redis data", result)
 
 
-# This api will provide indicators...
+# Clear redis key
+@ core_api.route('/clearcache')
+@ make_exception_safe
+def clearcache():
+    " This will delete cache for all the data "
+    # cache.delete_memoized(status)  >>> NOT WORKS
+    # cache.delete_many("flask_cache_view//status") >> NOT WORKS
+    if(request.args.get('key')):
+        dredis.clear(get_param_or_throw(request, "key"))
+    else:
+        dredis.clearAll()
+    return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
+
+
+# Build and look up indicator history
 @core_api.route('/indicator')
 @make_exception_safe
 def indicator():
     "status of the app"
     candle_type: str = get_param_or_default(request, "candle_type", "1d")
     domain: str = get_param_or_default(request, "domain", "IN")
-    result = dredis.getPickle("indicator_{}_{}".format(candle_type, domain))
+    sync: str = get_param_or_default(request, "sync", "0")
+    reload: str = get_param_or_default(request, "reload", "0")
+    show_result: str = get_param_or_default(request, "result", "0")
+    result = dredis.getPickle(
+        "indicator_history_{}".format(domain))
+
+    # reload
+    if reload == "1":
+        if sync == "1":
+            tasks.taskBuildIndicator(domain, candle_type)
+            result = dredis.getPickle(
+                "indicator_history_{}".format(domain))
+            return buildSuccess("Got indicator", result if show_result == "1" else 'result is hidden')
+        else:
+            task_id = tasks.taskBuildIndicator.delay(domain, candle_type)
+            return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
+
+    # No data
     if result is None:
         # submit task
-        task_id = tasks.task_build_indicator.delay(domain, candle_type)
+        task_id = tasks.taskBuildIndicator.delay(domain, candle_type)
         return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
-    # @3 hve result
-    if IfTimeIs5MinOld(result['timestamp']):
-        # Submit task as the data is 5 min old.
-        task_id = tasks.task_build_indicator.delay(domain, candle_type)
-        danalytics.reportAction(
-            "indicator_recomputation_submitted", {"domain": domain, "candle_type": candle_type})
-    return buildSuccess("Got indicator", result)
+
+    # Reload on time
+    # mayUpdateStateData(domain, candle_type)
+
+    return buildSuccess("Got indicator", result if show_result == "1" else 'result is hidden')
 
 
+# Build the latest market data
 @ core_api.route('/market')
 @ make_exception_safe
 def market():
     "status of the app"
+    # Get the data for which doamin ?
     domain: str = get_param_or_default(request, "domain", "IN")
-    return buildSuccess("Status Ok", dglobaldata.getLatestMarketData(domain))
+    # Do you want to return data and submit job to reload ?
+    reload: str = get_param_or_default(request, "reload", "0")
+    # Do you want to reload data on celeery in in this process for debugging?
+    sync: str = get_param_or_default(request, "sync", "0")
+    return buildSuccess("Status Ok", dglobaldata.getLatestMarketData(domain, reload, sync))
 
 
-# SUMMARY
+# Build the summary
 @ cross_origin()
 @ core_api.route('/summary')
 @ make_exception_safe
@@ -81,17 +112,18 @@ def summary():
     if summary:
         return buildSuccess("calculated", summary)
     else:
-        tasks.compute_summary.delay()
+        tasks.taskComputeSummary.delay()
         return buildError("Summary is not yet available")
 
 
-# SCREEN
+# Perform screen
 @ cross_origin()
 @ core_api.route('/screen', methods=['POST', 'GET'])
 @ make_exception_safe
 def Screen():
     dglobaldata.checkLoadLatestData()
-    result = dfilter.filterstock(
+    result = dfilter.performScreen(
+        get_param_or_default(request, 'domain', "IN"),
         get_param_or_throw(request, 'filter'),
         str_to_list(get_param_or_default(request, 'columns', '')))
     return buildSuccess(msg='Here is the list of Stocks', out=result)
@@ -115,58 +147,20 @@ def chart():
 """
 
 
-# OTHER INTERNAL APIS
-@ core_api.route('/task')
-@ make_exception_safe
-def task():
-    "Run the worker task from the web"
-    task = get_param_or_throw(request, "task")
-    if task == "snapshot_all":
-        task_id = tasks.task_build_indicator_all.delay()
-        return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
-    elif task == "print":
-        task_id = tasks.print_hello.delay()
-        return buildSuccess("task print_hello submitted", {"status_url": "/result/{}".format(task_id)})
-    else:
-        return buildError("Task not found")
-
-
-@ cross_origin()
-@ core_api.route('/snapshot')
-@ make_exception_safe
-def snapshot_intra():
-    task_id = tasks.task_build_indicator.delay(
-        get_param_or_throw(request, 'candle_type'))
-    return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
-
-
-@ core_api.route('/clearcache')
-@ make_exception_safe
-def clearcache():
-    " This will delete cache for all the data "
-    # cache.delete_memoized(status)  >>> NOT WORKS
-    # cache.delete_many("flask_cache_view//status") >> NOT WORKS
-    if(request.args.get('key')):
-        dredis.clear(get_param_or_throw(request, "key"))
-    else:
-        dredis.clearAll()
-    return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
-
-
-# arbitary test
+# For testing code.
 @ core_api.route('/test')
 @ make_exception_safe
 def just_test():
     " This will delete cache for all the data "
     # ddownload.download(TCandleType.DAY_1)
     # dglobaldata.downloadAndBuildIndicator("IN", TCandleType.MIN_5)
-    tasks.task_build_indicator("IN", "5m")
-    # dhighlights.compute_summary()
+    tasks.taskBuildIndicator("IN", "5m")
+    # dhighlights.taskComputeSummary()
     return buildError("Please verify test in code.")
 
 
 def mayRebuildData() -> bool:
     changed_candle = dglobaldata.checkLoadLatestData()
     if TCandleType.DAY_1 in changed_candle:
-        tasks.compute_summary.delay()
+        tasks.taskComputeSummary.delay()
     return len(changed_candle) == 0

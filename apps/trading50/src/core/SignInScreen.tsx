@@ -4,7 +4,6 @@ import { DContainer, DText, DTextInput, DButton } from "../components/basic";
 import { STYLES } from "../components/styles";
 import { dlog } from "../libs/dlog";
 import logo from "../../assets/images/icon_white.png";
-import { getData, saveData } from "../libs/stoarge";
 import { TProps } from "../screens/types";
 import { Image, Text, View, StyleSheet, Alert } from "react-native";
 import { CoreStateContext } from "./CoreContext";
@@ -16,16 +15,12 @@ import { DButtonLink, DButtonWithIcon } from "../components/DButton";
 import { colors } from "../styles/colors";
 import { DIMENS } from "../res/dimens";
 import { showNotification } from "../libs/uihelper";
-import Constants from "expo-constants";
 import _ from "underscore";
 import { DPrompt } from "../components/DDialog";
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
-  const [email, setEmail] = useState("");
-  const coreState = useContext(CoreStateContext);
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFacebook, setLoadingFacebook] = useState(false);
-  const [loadingGuest, setLoadingGuest] = useState(false);
   const [visibleGuest, setVisibleGuest] = useState(false);
   const coreApi = useCoreApi();
   let name = "SignIn";

@@ -35,7 +35,7 @@ def buildError(msg: str, help='No help is given'):
 def buildException(ex: Exception):
     print("\n\n\n" + "*" * 100 + "\nException found\n" + "*" * 100 + "\n" +
           traceback.format_exc() + "*" * 50 + "\n\n\n")
-    return returnAsJson({'status': 'error', 'msg': "Some critical error happend in the server:" + str(ex.args), 'out': [], 'help': traceback.format_exc()})
+    return returnAsJson({'status': 'error', 'msg': "Error Happend: {}".format(ex.args), 'out': [], 'help': traceback.format_exc()})
 
 
 def buildNotImplemented():

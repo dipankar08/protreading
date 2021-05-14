@@ -25,5 +25,6 @@ def e(msg: str):
     __logger.error(msg)
 
 
-def ex(e: Exception, msg: str = "Dipankar has not provided any msg"):
-    __logger.exception(msg, e)
+def ex(e: Exception, msg: str = "Exception:"):
+    __logger.error("{} - {}".format(msg, e.args))
+    __logger.exception("{} - {}".format(msg, e.args), e)

@@ -1,15 +1,15 @@
 from logging import log
+from myapp.core.optimization import shouldBuildIndicator
 from pickle import TRUE
 from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
 from myapp.core.sync import getSymbolList
 from pandas.core.frame import DataFrame
-
 import redis
 from myapp import tasks
 from myapp.core.timetracker import mark_dataload_end, mark_dataload_start, should_fetch_data, should_load_data_from_disk
 from myapp.core.ddecorators import trace_perf
 from myapp.core.dtypes import TCandleType
-from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.rootConfig import SUPPORTED_CANDLE, SUPPORTED_DOMAIN
 from myapp.core.DLogger import DLogger
 from typing import Dict, List
 from myapp.core import dredis, danalytics, dstorage, dlog
@@ -18,6 +18,8 @@ from myapp.core import ddownload
 from myapp.core import dindicator
 from myapp.core import timetracker
 import time
+import json
+from ast import literal_eval
 _candleTypeToDataFrameMap: Dict[str, pd.DataFrame] = {}
 
 
@@ -50,10 +52,6 @@ def get_all_data():
     return _candleTypeToDataFrameMap
 
 
-import json
-from ast import literal_eval
-
-
 # This function get the last row of the dataframe
 def getLatestDataInJson(domain, df: DataFrame):
     final_result = {}
@@ -79,14 +77,59 @@ def getLatestDataInJson(domain, df: DataFrame):
     return final_result
 
 
+# This function get the last row of the dataframe
+def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
+    final_result = {}
+    try:
+        df = df.tail(limit)
+        result = df.to_json(orient="records")
+        parsed = json.loads(result)
+        for offset in range(15):
+            row = parsed[offset]
+            offset_key = offset  # Key => 0, -1,-2....
+            for x in row.keys():
+                pair = literal_eval(x)
+                symbol = pair[0]
+                indicator = pair[1]
+                value = row[x]
+                if symbol not in final_result:
+                    final_result[symbol] = {}
+                if offset_key not in final_result[symbol]:
+                    final_result[symbol][offset_key] = {}
+                final_result[symbol][offset_key][indicator] = value
+        # print(json.dumps(final_result, indent=4))
+    except Exception as e:
+        dlog.ex(e)
+        danalytics.reportException(e)
+    # More some info.
+    # for x in final_result.keys():
+    #    final_result[x]['sector'] = getSymbolList(domain=domain)[x]['sector']
+    return final_result
+
+
+# Rest all locks here - This is needed for restart the server
+for candle_type in SUPPORTED_CANDLE:
+    for domain in SUPPORTED_DOMAIN:
+        dredis.set("downloadAndBuildindicator_{}_{}".format(
+            domain, candle_type.value), "0")
+dlog.d("Reset downloadAndBuildIndicator locks")
+
+
 # It will download and build the indicators
 @trace_perf
 def downloadAndBuildIndicator(domain, candle_type: TCandleType):
-    key = "downloadAndBuildIndicator_{}_{}".format(domain, candle_type.value)
+    # Optimization
+    if not shouldBuildIndicator(domain, candle_type):
+        dlog.d("Ignore rebuilding shouldBuildIndicator")
+        return
+
+    # Locking
+    key = "downloadAndBuildindicator_{}_{}".format(domain, candle_type.value)
     if dredis.get(key) == "1":
         dlog.d("downloadAndBuildIndicator locked for key {}".format(key))
         raise Exception("downloadAndBuildIndicator is progress")
     dredis.set(key, "1")
+
     try:
         dlog.d("downloadAndBuildIndicator start")
 
@@ -94,17 +137,36 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         ret_value, download_data = ddownload.download(
             domain, interval=candle_type)
         if ret_value is False:
+            dlog.d("Download fails")
             return {"status": "error", "msg": "something goes wrong", "out": None}
 
         dlog.d("downloadAndBuildIndicator building start")
-        processed_df = dindicator.process_inplace(download_data)
+        processed_df = dindicator.buildTechnicalIndicators(
+            download_data, domain)
 
         dlog.d("downloadAndBuildIndicator: saving to storage start")
         path_to_store = dstorage.get_default_path_for_candle(candle_type)
         dstorage.store_data_to_disk(processed_df, path_to_store)
 
+        dlog.d("downloadAndBuildIndicator: building indicator history map")
+        # Building Indicator map for O(1) looks up.
+        # This will be a 4d map
+        # map[REL][1d][-1][close]...
+        last15SlotIndicator = getLastNIndicatorInJson(domain, processed_df)
+        indicator_history_key = "indicator_history_{}".format(domain)
+        olddata = dredis.getPickle(indicator_history_key)
+        if not olddata:
+            olddata = {}
+        for key in last15SlotIndicator.keys():
+            if key not in olddata:
+                olddata[key] = {}
+            olddata[key][candle_type.value] = last15SlotIndicator.get(key)
+        dredis.setPickle(indicator_history_key, olddata)
+        dlog.d("downloadAndBuildIndicator: saved indicator history to {}".format(
+            indicator_history_key))
+
         dlog.d("downloadAndBuildIndicator: saving to redis start")
-        dredis.setPickle("indicator_{}_{}".format(candle_type.value, domain),
+        dredis.setPickle("indicator_data_{}_{}".format(domain, candle_type.value),
                          {'data': getLatestDataInJson(domain, processed_df),
                          'timestamp': getCurTimeStr()})
 
@@ -130,40 +192,61 @@ def checkLoadLatestData():
             changed.append(candle_type)
         if should_fetch_data(candle_type=candle_type):
             # Default load india
-            tasks.task_build_indicator.delay("IN", candle_type.value)
+            tasks.taskBuildIndicator.delay("IN", candle_type.value)
     return changed
 
 
 # This call will get latest market data
 # First it will check if it is downloaded in 5 min returns it, if not schedule an task to download.
-def getLatestMarketData(domain):
-    last_update = dredis.get("market_ts_{}".format(domain), None)
-    if last_update is None or last_update == 'None':
-        dlog.d("No last update try downloading....")
-        downloadLatestMarketData(domain)
-    elif IfTimeIs5MinOld(last_update):
-        dlog.d("data is 5 min old... downloading....")
-        downloadLatestMarketData(domain)
+def getLatestMarketData(domain: str, reload: str = "0", sync: str = "0"):
+    # Build indicator if not exist
+    mayGetLatestStockData(domain, reload, sync)
+    mayBuildStockIndicatorInBackground(domain, TCandleType.DAY_1, reload, sync)
 
     dlog.d("getting data from cache")
-    return dredis.getPickle("market_data_{}".format(
-        domain), {})
+    return {
+        'latest': dredis.getPickle("market_data_{}".format(domain)),
+        'indicator': dredis.getPickle("indicator_data_{}_{}".format(domain, '1d'))
+    }
 
 
-# Download and save latest data retrun bool as status
-# It cache the data and it's TS
-def downloadLatestMarketData(domain) -> bool:
-    dlog.d("Downloading as cache is old")
-    result = ddownload.download(doamin=domain, period=1)
-    if result[0] is True:
-        dlog.d("Saving marjet data")
-        resultJSON = getLatestDataInJson(domain, result[1])
-        # Save this data
-        dredis.setPickle("market_data_{}".format(
-            domain), {"data": resultJSON})
-        dredis.set("market_ts_{}".format(domain), getCurTimeStr())
-        return True
-    return False
+# This will build the indicator in background.
+def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType, reload: str, sync: str):
+    # reload
+    if reload == "1":
+        if sync == "1":
+            tasks.taskBuildIndicator(domain, candle_type=candle_type.value)
+        else:
+            tasks.taskBuildIndicator.delay(domain, candle_type.value)
+        dlog.d("taskBuildIndicator: task submitted")
+        return
+
+    if dredis.getPickle("indicator_data_{}_{}".format(domain, '1d')) is None:
+        # task submitted
+        tasks.taskBuildIndicator.delay(domain, candle_type.value)
+        dlog.d("task submitted")
+    else:
+        dlog.d("Data is already there")
+
+
+# This will build the indicator in background.
+def mayGetLatestStockData(domain: str, reload, sync: str):
+    if(reload == "1"):
+        dlog.d("taskDownloadLatestMarketData: submitting task")
+        if sync == "1":
+            tasks.taskDownloadLatestMarketData(domain)
+        else:
+            tasks.taskDownloadLatestMarketData.delay(domain)
+        return
+    last_update = dredis.get("market_ts_{}".format(domain), None)
+    if last_update is None or last_update == 'None':
+        dlog.d("No last update - submitting task")
+        tasks.taskDownloadLatestMarketData.delay(domain)
+    elif IfTimeIs5MinOld(last_update):
+        dlog.d("data is 5 min old... submitting task")
+        # tasks.taskDownloadLatestMarketData.delay(domain)
+    else:
+        dlog.d("Data is already there")
 
 
 load_data_on_boot()

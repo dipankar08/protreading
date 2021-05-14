@@ -17,6 +17,8 @@ import { TestScreen } from "./ProfileScreen";
 import { CoreStateContext } from "../core/CoreContext";
 import { CoreStackScreen } from "../core/core_navigation";
 import { WebViewScreen } from "../core/WebViewScreen";
+import { ScreenListScreen, ScreenScreen } from "./ScreenScreen";
+import { NewScreenScreen } from "./NewScreenScreen";
 
 // Home Stack
 const HomeStack = createStackNavigator();
@@ -84,21 +86,6 @@ const ProfileStackScreen = () => (
         },
       }}
     />
-    <ProfileStack.Screen
-      name="WebViewScreen"
-      component={WebViewScreen}
-      options={{
-        title: "Test",
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: "#f4511e",
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "normal",
-        },
-      }}
-    />
   </ProfileStack.Navigator>
 );
 
@@ -136,6 +123,21 @@ const MarketStackScreen = () => (
         },
       }}
     />
+    <ProfileStack.Screen
+      name="WebViewScreen"
+      component={WebViewScreen}
+      options={{
+        title: "Test",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
   </MarketStack.Navigator>
 );
 
@@ -146,6 +148,43 @@ const PositionStackScreen = () => (
     <PositionStack.Screen
       name="Position"
       component={PositionScreen}
+      options={{
+        title: "Position",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+  </PositionStack.Navigator>
+);
+
+// Screen Stack
+const ScreenStack = createStackNavigator();
+const ScreenStackScreen = () => (
+  <PositionStack.Navigator>
+    <PositionStack.Screen
+      name="ScreenListScreen"
+      component={ScreenListScreen}
+      options={{
+        title: "Position",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+      }}
+    />
+    <PositionStack.Screen
+      name="NewScreenScreen"
+      component={NewScreenScreen}
       options={{
         title: "Position",
         headerShown: false,
@@ -215,6 +254,7 @@ const DrawerScreen = () => (
     <Drawer.Screen name="Home" component={TabsScreen} />
     <Drawer.Screen name="Profile" component={ProfileStackScreen} />
     <Drawer.Screen name="Debug" component={DebugScreen} />
+    <Drawer.Screen name="Screen" component={ScreenStackScreen} />
   </Drawer.Navigator>
 );
 
