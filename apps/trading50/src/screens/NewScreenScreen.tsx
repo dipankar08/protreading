@@ -1,29 +1,19 @@
-import React, { useState } from "react";
-import { TabBar } from "react-native-tab-view";
-import { DButtonPrimary } from "../components/DButton";
-import { DDialog } from "../components/DDialog";
-import { DLayoutRow } from "../components/DLayout";
-const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
-
-export let NewScreenScreen = ({ navigation, route }: TProps) => {
-  // tab config
-  const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(0);
-import React, { useContext, useEffect } from "react";
-import { Component } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
-import { useNetwork } from "../hooks/useNetwork";
-import { MarketListView } from "./MarketScreen";
-import navigation from "./navigation";
-import { DTextInput } from "../components/DInput";
-import { TProps } from "./types";
-import { DIMENS } from "../res/dimens";
-import { TickerListView } from "./TickerListView";
-import { TMarketEntry } from "../models/model";
-import { showNotification } from "../libs/uihelper";
 import { AppStateContext } from "../appstate/AppStateStore";
+import { DText, DTextInput, ScreenHeader } from "../components/basic";
+import { DButtonPrimary } from "../components/DButton";
+import { DDialog } from "../components/DDialog";
+import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
+import { useNetwork } from "../hooks/useNetwork";
+import { showNotification } from "../libs/uihelper";
+import { TMarketEntry } from "../models/model";
+import { DIMENS } from "../res/dimens";
+import navigation from "./navigation";
+import { TickerListView } from "./TickerListView";
+import { TProps } from "./types";
+
 const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 
 export let NewScreenScreen = () => {
@@ -185,9 +175,6 @@ const FilterView = ({ route }: TProps) => {
           </DButtonPrimary>
         </DLayoutCol>
       </DDialog>
-  return (
-    <DLayoutCol style={{ marginHorizontal: DIMENS.GAP_BETWEEN_ELEMENT }}>
-      <DTextInput onChangeText={route.onChangeText} multiline={true} style={{ maxHeight: 500 }}></DTextInput>
     </DLayoutCol>
   );
 };

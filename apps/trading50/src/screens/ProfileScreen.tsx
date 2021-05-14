@@ -1,4 +1,4 @@
-import { default as React, default as React, useContext, useEffect } from "react";
+import { default as React, useContext, useEffect } from "react";
 import { ScrollView } from "react-native";
 // Use this cscreen for testing purpose
 import { WebView } from "react-native-webview";
@@ -12,8 +12,6 @@ import { LogoutCard } from "../core/LogoutCard";
 import { useNetwork } from "../hooks/useNetwork";
 import { dlog } from "../libs/dlog";
 import { TProps } from "./types";
-
-
 
 // Profile and Signout logic
 export const ProfileScreen = ({ navigation, route }: TProps) => {
@@ -68,18 +66,6 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
   );
 };
 
-<<<<<<< HEAD
-=======
-// Use this cscreen for testing purpose
-import { WebView } from "react-native-webview";
-import { LogoutCard } from "../core/LogoutCard";
-import { AppInfoCard } from "../core/AppInfoCard";
-import { ScrollView } from "react-native";
-import { DTextSection } from "../components/DText";
-import { DDropDown } from "../components/DInput";
-import { DButtonPrimary } from "../components/DButton";
-import { AppStateContext } from "../appstate/AppStateStore";
->>>>>>> 3d894acbf16b14c999db417f0ef34739a68e7c1f
 export const TestScreen = () => {
   return (
     <DContainerSafe style={{ flex: 1 }}>

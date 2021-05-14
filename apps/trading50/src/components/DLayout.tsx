@@ -4,9 +4,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
 import { STYLES } from "./styles";
 
-
-
-
 export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
   return (
     <SafeAreaView
@@ -79,9 +76,7 @@ export const DLayoutCol = ({ children, center, style }: TProps) => {
   );
 };
 
-
 export const DCard = ({ style, children }: TProps) => {
-
   return (
     <View
       style={[
@@ -99,12 +94,8 @@ export const DCard = ({ style, children }: TProps) => {
         },
         style,
       ]}
-<<<<<<< HEAD
     >
       {children}
     </View>
-=======
-    ></View>
->>>>>>> 3d894acbf16b14c999db417f0ef34739a68e7c1f
   );
 };
