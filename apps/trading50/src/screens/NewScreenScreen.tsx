@@ -24,7 +24,7 @@ export let NewScreenScreen = ({ navigation, route }: TProps) => {
       key: "first",
       title: "Filter",
       navigation: navigation,
-      query: route.params.filter || "",
+      query: route?.params?.filter || "",
     },
     {
       key: "second",
@@ -40,7 +40,7 @@ export let NewScreenScreen = ({ navigation, route }: TProps) => {
 
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader title="Execute Screen" style={{ padding: 16 }}></ScreenHeader>
+      <ScreenHeader title="Execute Screen" style={{ padding: 16 }} navigation={navigation}></ScreenHeader>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

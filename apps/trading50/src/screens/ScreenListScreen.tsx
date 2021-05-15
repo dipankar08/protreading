@@ -28,6 +28,7 @@ export let ScreenListScreen = ({ navigation }: TProps) => {
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
         <ScreenHeader
+          navigation={navigation}
           title={"Screen"}
           style={{ padding: 0 }}
           icon="plus"

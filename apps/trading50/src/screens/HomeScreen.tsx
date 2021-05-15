@@ -44,7 +44,17 @@ export const HomeScreen = ({ navigation }: TProps) => {
   return (
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
-        <ScreenHeader loading={loading} title={"Home"} style={{ padding: 0 }} icon="reload" onPress={refreshData} />
+        <ScreenHeader
+          leftIcon={"menu"}
+          onPressLeftIcon={() => {
+            navigation.toggleDrawer();
+          }}
+          loading={loading}
+          title={"Home"}
+          style={{ padding: 0 }}
+          icon="reload"
+          onPress={refreshData}
+        />
         <DTextSection>Summary</DTextSection>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>

@@ -61,7 +61,7 @@ export const MarketListView = ({ route }: TProps) => {
   }, [appState.state.summary, appState.state.sectorList, appState.state.recommendedList]);
 
   return (
-    <DContainerSafe style={{ paddingHorizontal: 0 }}>
+    <DContainerSafe style={{ paddingHorizontal: 0, margin: 0, marginVertical: 0, flex: 1, height: "100%" }}>
       <FlatList
         ItemSeparatorComponent={FlatListItemSeparator}
         showsHorizontalScrollIndicator={false}

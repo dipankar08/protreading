@@ -1,15 +1,13 @@
 import React from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { TProps } from "../screens/types";
+import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { STYLES } from "./styles";
-import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
+import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
-import _ from "underscore";
+import { DIMENS } from "../res/dimens";
+import { TProps } from "../screens/types";
 import { DButtonIcon } from "./DButton";
 import { DScreenTitle } from "./DText";
+import { STYLES } from "./styles";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {
   return (
@@ -192,7 +190,16 @@ export const TextWithIcon = ({ style, onPress, text, icon }: TProps) => {
   );
 };
 
-export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack, loading }: any) => {
+export const ScreenHeader = ({
+  navigation, // pass navigation if yu want to suport back.
+  title, // title
+  icon, // icon right
+  onPress, // onpress on icon right
+  style,
+  loading,
+  leftIcon,
+  onPressLeftIcon,
+}: any) => {
   return (
     <View
       style={[
@@ -205,6 +212,16 @@ export const ScreenHeader = ({ navigation, title, icon, onPress, style, showBack
         style,
       ]}
     >
+      {leftIcon && (
+        <DButtonIcon
+          icon={leftIcon}
+          size={24}
+          color="black"
+          loading={false}
+          onPress={onPressLeftIcon}
+          style={{ marginRight: DIMENS.GAP_2X }}
+        ></DButtonIcon>
+      )}
       {navigation ? (
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: 20 }}>
           <MaterialCommunityIcons name={"arrow-left"} color="black" size={24} />
