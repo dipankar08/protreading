@@ -1,17 +1,15 @@
 // Splash screen or boot screen is important for loading the boot data.
-import React from "react";
-import { useContext, useEffect, useState } from "react";
+import * as Updates from "expo-updates";
+import React, { useContext, useEffect, useState } from "react";
+import logo from "../../assets/images/icon_white.png";
+import { DContainer, DLayoutCol } from "../components/basic";
+import { DAppLogo } from "../components/DImage";
+import { DLoadingText, DTextFooter } from "../components/DText";
 import { STYLES } from "../components/styles";
+import { CoreConstant } from "./constant";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
-import { DButton, DContainer, DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { DLoadingText, DTextFooter } from "../components/DText";
-import { DAppLogo } from "../components/DImage";
-import logo from "../../assets/images/icon_white.png";
-import { CoreConstant } from "./constant";
-import * as Updates from "expo-updates";
-
+import { isDev } from "./utils/utils";
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
 export const BootScreen = ({ navigation }: any) => {
   const coreState = useContext(CoreStateContext);
@@ -19,12 +17,14 @@ export const BootScreen = ({ navigation }: any) => {
   const coreApi = useCoreApi();
   useEffect(() => {
     try {
-      console.log(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
-      Updates.checkForUpdateAsync().then((update) => {
-        if (update.isAvailable) {
-          setUpdate(true);
-        }
-      });
+      if (!isDev()) {
+        console.log(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
+        Updates.checkForUpdateAsync().then((update) => {
+          if (update.isAvailable) {
+            setUpdate(true);
+          }
+        });
+      }
     } catch (ee) {}
     coreApi.doAppBoot(() => {
       setTimeout(() => {

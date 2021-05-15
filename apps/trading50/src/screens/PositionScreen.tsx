@@ -71,7 +71,7 @@ export const PositionListView = ({ route, navigation }: TProps) => {
         }
         refreshing={p2rLoading}
         data={listData}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item._id.toString()}
         ItemSeparatorComponent={FlatListItemSeparator}
         renderItem={({ item }) => {
           let color = item.change_per > 0 ? "green" : "red";

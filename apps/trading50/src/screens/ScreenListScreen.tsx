@@ -38,7 +38,7 @@ export let ScreenListScreen = ({ navigation }: TProps) => {
         <FlatList
           showsHorizontalScrollIndicator={false}
           data={listData}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item._id.toString()}
           ListEmptyComponent={DListEmptyComponent}
           onRefresh={() => {
             load();

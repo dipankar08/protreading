@@ -66,7 +66,7 @@ export const MarketListView = ({ route }: TProps) => {
         ItemSeparatorComponent={FlatListItemSeparator}
         showsHorizontalScrollIndicator={false}
         data={listData}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item._id.toString()}
         ListEmptyComponent={DListEmptyComponent}
         renderItem={({ item }) => {
           return (

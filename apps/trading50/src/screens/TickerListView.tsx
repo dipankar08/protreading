@@ -69,7 +69,7 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
         refreshing={p2rLoading}
         data={filterListData}
         inverted={inverted}
-        keyExtractor={(item, index) => item.name}
+        keyExtractor={(item, index) => item.name.toString()}
         scrollsToTop={true}
         ListEmptyComponent={DListEmptyComponent}
         ItemSeparatorComponent={FlatListItemSeparator}
