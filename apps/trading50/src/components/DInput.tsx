@@ -2,6 +2,7 @@ import React from "react";
 import { Picker, TextInput } from "react-native";
 import { TProps } from "../screens/types";
 import { colors } from "../styles/colors";
+import { DButtonIcon } from "./DButton";
 import { DIcon } from "./DIcon";
 import { DLayoutRow } from "./DLayout";
 
@@ -32,7 +33,7 @@ export const DTextInput = ({ children, style, placeholder, onChangeText, multili
   );
 };
 
-export const DTextSearch = ({ children, style, onSearch, placeholder }: TProps) => {
+export const DTextSearch = ({ children, style, onSearch, placeholder, onPressRightIcon }: TProps) => {
   return (
     <DLayoutRow
       style={[
@@ -68,7 +69,7 @@ export const DTextSearch = ({ children, style, onSearch, placeholder }: TProps) 
       >
         {children}
       </TextInput>
-      <DIcon icon="sort" style={{ color: colors.grey500, fontSize: 20 }}></DIcon>
+      <DButtonIcon icon="sort" style={{ color: colors.grey500, fontSize: 20 }} onPress={onPressRightIcon}></DButtonIcon>
     </DLayoutRow>
   );
 };

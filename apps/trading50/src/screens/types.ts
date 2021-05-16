@@ -1,5 +1,5 @@
 import { TextStyle, ViewStyle } from "react-native";
-import { TStringCallback } from "../core/core_model";
+import { TAnyCallback, TStringCallback, TVoidCalBack } from "../core/core_model";
 import { TObject } from "../models/model";
 export type TKeyText = {
   key: string;
@@ -31,4 +31,13 @@ export type TProps = {
   visible?: boolean;
   onSearch?: TStringCallback;
   onChangeText?: TStringCallback;
+  title?: string;
+  subtitle?: string;
+  placeholder?: string;
+  onPressRightIcon?: TVoidCalBack;
+  onPressLeftIcon?: TVoidCalBack;
+  value?: any;
+  onOk?: TVoidCalBack;
+  onCancel?: TVoidCalBack;
+  onChange?: TAnyCallback;
 };

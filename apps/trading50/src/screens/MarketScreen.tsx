@@ -31,7 +31,13 @@ export const MarketScreen = ({ navigation }: TProps) => {
 
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader title="Market Summary" style={{ padding: 16 }} icon="reload" onPress={network.reLoadAllData}></ScreenHeader>
+      <ScreenHeader
+        title="Market Summary"
+        style={{ padding: 16 }}
+        icon="reload"
+        onPress={network.reLoadAllData}
+        navigation={navigation}
+      ></ScreenHeader>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

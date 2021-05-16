@@ -4,10 +4,9 @@ import { ScrollView } from "react-native";
 import { WebView } from "react-native-webview";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
-import { DButtonPrimary } from "../components/DButton";
-import { DDropDown } from "../components/DInput";
+import { DOptionDialog } from "../components/DDialog";
+import { DActionItemRow } from "../components/DList";
 import { DTextSection } from "../components/DText";
-import { AppInfoCard } from "../core/AppInfoCard";
 import { LogoutCard } from "../core/LogoutCard";
 import { useNetwork } from "../hooks/useNetwork";
 import { dlog } from "../libs/dlog";
@@ -21,6 +20,7 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
     { key: "USA", text: "USA" },
   ];
   const appState = useContext(AppStateContext);
+  const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
   const network = useNetwork();
   let name = "Profile";
   useEffect(() => {
@@ -31,38 +31,30 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
   }, []);
 
   return (
-    <ScrollView>
-      <DLayoutCol style={{ padding: 10 }}>
-        <ScreenHeader title="Profile"></ScreenHeader>
-        <DTextSection style={{ marginTop: 10 }}>Your Information</DTextSection>
-        <LogoutCard></LogoutCard>
-        <DTextSection>User Preferences</DTextSection>
-        <DDropDown
+    <DContainerSafe>
+      <ScrollView>
+        <DLayoutCol style={{ padding: 10 }}>
+          <ScreenHeader title="Profile" navigation={navigation}></ScreenHeader>
+          <DTextSection style={{ marginTop: 10 }}>Your Information</DTextSection>
+          <LogoutCard></LogoutCard>
+          <DTextSection>User Preferences</DTextSection>
+
+          <DTextSection>System Preferences</DTextSection>
+          <DActionItemRow title={"Domain"} value={appState.state.domain} onPress={() => setDomainDialogVisible(true)} icon="home" />
+        </DLayoutCol>
+        <DOptionDialog
+          title={"Choose the domain"}
+          subtitle={"Once you chhhose the domain, the ticker will be shown from that domain only."}
           items={domainList}
-          selectedValue={appState.state.domain}
-          setSelectedValue={(key) => {
-            console.log(key);
-            network.changeDomain(key);
+          visible={domainDialogVisible}
+          onCancel={() => setDomainDialogVisible(false)}
+          onChange={(value) => {
+            network.changeDomain(value);
+            setDomainDialogVisible(false);
           }}
-        ></DDropDown>
-
-        <DTextSection>System Preferences</DTextSection>
-
-        <DButtonPrimary style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
-          Refresh Data in backend
-        </DButtonPrimary>
-        <DButtonPrimary
-          onPress={() => {
-            navigation.push("TestScreen");
-          }}
-          secondary
-        >
-          Test
-        </DButtonPrimary>
-        <DTextSection>App Information</DTextSection>
-        <AppInfoCard />
-      </DLayoutCol>
-    </ScrollView>
+        ></DOptionDialog>
+      </ScrollView>
+    </DContainerSafe>
   );
 };
 

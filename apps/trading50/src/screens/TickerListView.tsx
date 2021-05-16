@@ -3,14 +3,14 @@ import { Button, FlatList, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { DLayoutCol, DLayoutRow, DListEmptyComponent, DSpace, FlatListItemSeparator, TextWithIcon } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
-import { DDialog } from "../components/DDialog";
+import { DDialog, DOptionDialog } from "../components/DDialog";
 import { DTextSearch } from "../components/DInput";
 import { DKeyValueList } from "../components/DList";
 import { useNetwork } from "../hooks/useNetwork";
 import { TMarketEntry } from "../models/model";
 import { DIMENS } from "../res/dimens";
 import { colors } from "../styles/colors";
-import { TProps } from "./types";
+import { TKeyText, TProps } from "./types";
 
 export const TickerListView = ({ navigation, objArray }: TProps) => {
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
@@ -19,6 +19,18 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
   const [p2rLoading, setP2rLoading] = useState(false);
   const [visibleIndicator, setVisibleIndicator] = React.useState(false);
   const [selectedEntry, setSelectedEntry] = React.useState<TMarketEntry>();
+  const [filterDialogVisible, setFilterDialogVisible] = React.useState(false);
+  const [curFilter, setCurFilter] = React.useState("CHANGE");
+  const [curQuery, setCurQuery] = React.useState("");
+  const filterList: Array<TKeyText> = [
+    { text: "Alphabetical A->Z", key: "ALPHA" },
+    { text: "Alphabetical Z->A", key: "-ALPHA" },
+    { text: "Top +ve Change", key: "+CHANGE" },
+    { text: "Top -ve Change", key: "-CHANGE" },
+    { text: "Top + RSI (String)", key: "+RSI" },
+    { text: "Top - RSI (week)", key: "-RSI" },
+  ];
+
   const network = useNetwork();
   let isSubscribed = false;
   const refRBSheet = useRef();
@@ -41,6 +53,38 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
     refRecommendationSheet.current?.open();
   }
 
+  function updateData() {
+    let tempData = listData;
+    if (curQuery.length > 0) {
+      tempData = listData.filter((x) => x.name.toLowerCase().indexOf(curQuery.toLowerCase()) != -1);
+    }
+    switch (curFilter) {
+      case "ALPHA":
+        tempData = tempData.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
+        break;
+      case "-ALPHA":
+        tempData = tempData.sort((a, b) => (b.symbol > a.symbol ? 1 : -1));
+        break;
+      case "CHANGE":
+        tempData = tempData.sort((a, b) => (a.change > b.change ? 1 : -1));
+        break;
+      case "-CHANGE":
+        tempData = tempData.sort((a, b) => (b.change > a.change ? 1 : -1));
+        break;
+      case "RSI":
+        tempData = tempData.sort((a, b) => (a.rsi > b.rsi ? 1 : -1));
+        break;
+      case "-RSI":
+        tempData = tempData.sort((a, b) => (b.rsi > a.rsi ? 1 : -1));
+        break;
+      default:
+      //done
+    }
+    tempData.sort();
+    setFilterListData(tempData);
+    flatListRef.current?.scrollToIndex({ animated: true, index: 0 });
+  }
+
   return (
     <View style={{ paddingHorizontal: 0 }}>
       <DLayoutRow style={{ marginHorizontal: DIMENS.GAP_FROM_EDGE, marginTop: DIMENS.GAP_1X }}>
@@ -49,11 +93,12 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
             placeholder={`search in ${listData.length} items`}
             style={{ flex: 1 }}
             onSearch={(query) => {
-              if (query.length == 0) {
-                setFilterListData(listData);
-              } else {
-                setFilterListData(listData.filter((x) => x.name.toLowerCase().indexOf(query.toLowerCase()) != -1));
-              }
+              setCurQuery(query);
+              updateData();
+            }}
+            onPressRightIcon={() => {
+              setFilterDialogVisible(true);
+              console.log("hello");
             }}
           ></DTextSearch>
         )}
@@ -236,6 +281,18 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
       >
         <DKeyValueList object={selectedEntry?.indicator}></DKeyValueList>
       </DDialog>
+      <DOptionDialog
+        title={"Order your stocks"}
+        subtitle={"Choose how you want to order the ticker list"}
+        items={filterList}
+        visible={filterDialogVisible}
+        onCancel={() => setFilterDialogVisible(false)}
+        onChange={(value) => {
+          setCurFilter(value);
+          setFilterDialogVisible(false);
+          updateData();
+        }}
+      ></DOptionDialog>
     </View>
   );
 };

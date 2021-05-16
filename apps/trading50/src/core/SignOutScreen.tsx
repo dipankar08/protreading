@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from "react";
+import { Text } from "react-native";
 import { Avatar } from "react-native-elements";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { DContainerSafe, DLayoutCol, ScreenHeader, DButton } from "../components/basic";
+import { DButton, DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
+import { DButtonPrimary } from "../components/DButton";
 import { useNetwork } from "../hooks/useNetwork";
 import { dlog } from "../libs/dlog";
 import { deleteData } from "../libs/stoarge";
 import { TProps } from "../screens/types";
-import { Image, Text, View, StyleSheet } from "react-native";
-import { DButtonPrimary } from "../components/DButton";
 
 // Profile and Signout logic
 export const SignOutScreen = ({ navigation, route }: TProps) => {
@@ -28,13 +28,12 @@ export const SignOutScreen = ({ navigation, route }: TProps) => {
   return (
     <DContainerSafe style={{ padding: 16 }}>
       <DLayoutCol style={{ alignContent: "center" }}>
-        <ScreenHeader title="Market Summary" style={{ padding: 16 }}></ScreenHeader>
+        <ScreenHeader navigation={navigation} title="Market Summary" style={{ padding: 16 }}></ScreenHeader>
         <Avatar
           rounded
           size="large"
           source={{
-            uri:
-              "https://media-exp1.licdn.com/dms/image/C4D03AQG7ULIkCmRFTA/profile-displayphoto-shrink_200_200/0/1516571220413?e=1623283200&v=beta&t=zv1tVZEVQ51HgQeIejWGPSqFK5yHw8caNdlMtmXPzJM",
+            uri: "https://media-exp1.licdn.com/dms/image/C4D03AQG7ULIkCmRFTA/profile-displayphoto-shrink_200_200/0/1516571220413?e=1623283200&v=beta&t=zv1tVZEVQ51HgQeIejWGPSqFK5yHw8caNdlMtmXPzJM",
           }}
         />
         <Text style={{ color: "#000000ee", fontSize: 20, marginTop: 20, fontWeight: "bold" }}>{appState.state.userInfo.name}</Text>

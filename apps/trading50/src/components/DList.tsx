@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView } from "react-native";
-import { TProps } from "../screens/types";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import _ from "underscore";
-import { DLayoutCol, DLayoutRow } from "./basic";
+import { TProps } from "../screens/types";
 import { colors } from "../styles/colors";
+import { DLayoutCol, DLayoutRow, DSpace } from "./basic";
 import { DTextSubTitle } from "./DText";
 
 function toString(data: any) {
@@ -28,5 +29,19 @@ export const DKeyValueList = ({ object }: TProps) => {
           </DLayoutRow>
         ))}
     </DLayoutCol>
+  );
+};
+
+export const DActionItemRow = ({ style, title, value, icon, onPress }: TProps) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <DLayoutRow style={{ marginVertical: 10, alignItems: "center" }}>
+        {icon && <MaterialCommunityIcons name={icon} color="black" size={18} style={{ marginRight: 10 }} />}
+        <DTextSubTitle>{title + ":  "}</DTextSubTitle>
+        <DTextSubTitle>{value}</DTextSubTitle>
+        <DSpace />
+        <MaterialCommunityIcons name={"arrow-right"} color="black" size={18} style={{ marginLeft: 10 }} />
+      </DLayoutRow>
+    </TouchableOpacity>
   );
 };

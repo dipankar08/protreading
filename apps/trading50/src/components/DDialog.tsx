@@ -1,20 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableWithoutFeedback, ScrollView, Modal, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Modal, ScrollView, StyleSheet, View } from "react-native";
+import { RadioButton } from "react-native-paper";
 import { TProps } from "../screens/types";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { STYLES } from "./styles";
-import { Inter_200ExtraLight } from "@expo-google-fonts/inter";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { blue200 } from "react-native-paper/lib/typescript/styles/colors";
-import _ from "underscore";
-import { DButtonIcon, DButtonPrimary } from "./DButton";
-import { DScreenTitle, DTextSubTitle, DTextTitle } from "./DText";
+import { colors } from "../styles/colors";
 import { DLayoutCol, DLayoutRow } from "./basic";
+import { DButtonPrimary } from "./DButton";
 import { DTextInput } from "./DInput";
 import { DSpace } from "./DLayout";
-import { DIMENS } from "../res/dimens";
-import { colors } from "../styles/colors";
+import { DTextSubTitle, DTextTitle } from "./DText";
 
 export const DPrompt = ({ visible, title, body, onOk, onCancel }: TProps) => {
   const [text, setText] = useState("");
@@ -42,6 +35,50 @@ export const DPrompt = ({ visible, title, body, onOk, onCancel }: TProps) => {
                 Cancel
               </DButtonPrimary>
             </DLayoutRow>
+          </DLayoutCol>
+        </View>
+      </Modal>
+    </View>
+  );
+};
+
+export const DOptionDialog = ({ visible, title, subtitle, items, onChange, onCancel }: TProps) => {
+  console.log(items);
+  const [value, setValue] = useState(items?.[0].key);
+  return (
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={visible}
+        onRequestClose={() => {
+          onclose?.();
+        }}
+      >
+        <View style={styles.centeredView}>
+          <DLayoutCol style={styles.modalView}>
+            <DTextTitle style={{ textAlign: "center" }}>{title}</DTextTitle>
+            <DTextSubTitle style={{ textAlign: "center", marginBottom: 40 }}>{subtitle || ""}</DTextSubTitle>
+            <RadioButton.Group
+              onValueChange={(newValue) => {
+                setValue(newValue);
+                onChange?.(newValue);
+              }}
+              value={value}
+            >
+              {items?.map((x) => {
+                return (
+                  <DLayoutRow key={x.key}>
+                    <DTextSubTitle>{x.text}</DTextSubTitle>
+                    <View style={{ flex: 1 }}>
+                      <RadioButton value={x.key} key={x.key}>
+                        <DTextSubTitle>Hello</DTextSubTitle>
+                      </RadioButton>
+                    </View>
+                  </DLayoutRow>
+                );
+              })}
+            </RadioButton.Group>
           </DLayoutCol>
         </View>
       </Modal>

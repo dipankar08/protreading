@@ -1,18 +1,12 @@
 import React, { useContext, useEffect } from "react";
+import { Text } from "react-native";
 import { Avatar } from "react-native-elements";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { DContainerSafe, DLayoutCol, ScreenHeader, DButton, DLayoutRow, DCard } from "../components/basic";
-import { useNetwork } from "../hooks/useNetwork";
+import { DCard, DLayoutCol, DLayoutRow } from "../components/basic";
+import { DButtonPrimary } from "../components/DButton";
 import { dlog } from "../libs/dlog";
-import { deleteData } from "../libs/stoarge";
 import { TProps } from "../screens/types";
-import { Image, Text, View, StyleSheet } from "react-native";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
-import { colors } from "../styles/colors";
-import { Updates, Constants } from "expo";
-import { BootScreen } from "./BootScreen";
-import { DButtonPrimary } from "../components/DButton";
 
 // Simple Logout card which should be embedit in the app
 export const LogoutCard = ({ navigation, route }: TProps) => {

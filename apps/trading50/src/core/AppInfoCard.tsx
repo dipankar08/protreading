@@ -1,21 +1,15 @@
+import * as Application from "expo-application";
+import * as Updates from "expo-updates";
 import React, { useContext, useEffect, useState } from "react";
-import { Avatar } from "react-native-elements";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { DContainerSafe, DLayoutCol, ScreenHeader, DButton, DLayoutRow } from "../components/basic";
-import { useNetwork } from "../hooks/useNetwork";
+import { DLayoutCol } from "../components/basic";
+import { DButtonPrimary } from "../components/DButton";
+import { DKeyValueList } from "../components/DList";
 import { dlog } from "../libs/dlog";
-import { deleteData } from "../libs/stoarge";
+import { showNotification } from "../libs/uihelper";
 import { TProps } from "../screens/types";
-import { Image, Text, View, StyleSheet } from "react-native";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
-import { colors } from "../styles/colors";
-import { DTextSubTitle } from "../components/DText";
-import * as Application from "expo-application";
-import { DKeyValueList } from "../components/DList";
-import * as Updates from "expo-updates";
-import { DButtonPrimary } from "../components/DButton";
-import { showNotification } from "../libs/uihelper";
+import { isDev } from "./utils/utils";
 
 // Simple Logout card which should be embedit in the app
 export const AppInfoCard = ({ navigation, route }: TProps) => {
@@ -24,13 +18,13 @@ export const AppInfoCard = ({ navigation, route }: TProps) => {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    /*
-    Updates.checkForUpdateAsync().then((update) => {
-      if (update.isAvailable) {
-        // setUpdate(true);
-      }
-    });
-    */
+    if (!isDev()) {
+      Updates.checkForUpdateAsync().then((update) => {
+        if (update.isAvailable) {
+          setUpdate(true);
+        }
+      });
+    }
   }, []);
   async function doUpdate() {
     setLoading(true);
@@ -43,10 +37,9 @@ export const AppInfoCard = ({ navigation, route }: TProps) => {
     }
     setLoading(false);
   }
-  //console.log(Updates);
   return (
     <DLayoutCol>
-      <DLayoutCol style={{ alignContent: "center", alignItems: "center", width: "100%", backgroundColor: "#00000010", padding: 20, borderRadius: 4 }}>
+      <DLayoutCol>
         <DKeyValueList
           object={{
             Name: Application.applicationName,

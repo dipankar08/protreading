@@ -1,47 +1,37 @@
-import React, { Component } from "react";
-import { DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
-export class DebugScreen extends Component {
-  componentDidMount() {
-    //CodePush.sync({ installMode: CodePush.InstallMode.ON_NEXT_RESUME }, this.syncWithCodePush);
-    this.checkEnable();
-  }
-
-  checkEnable = async () => {
-    //const enabled = await Analytics.isEnabled();
-    // console.log("analytics : " + enabled);
-  };
-  syncWithCodePush = (status: any) => {
-    console.log("sync with code push : " + status);
-  };
-  createNativeCrash = () => {
-    // const test: any = {};
-    // console.log(test.should.crash);
-    // Analytics.trackEvent("ClickEvent");
-    // throw new Error('My Test crash!');
-    //Crashes.generateTestCrash();
-    // throw new Error('This is a test javascript crash!');
-  };
-  createJSCrash = () => {
-    // const test: any = {};
-    // console.log(test.should.crash);
-    // Analytics.trackEvent("ClickEvent");
-    // throw new Error('My Test crash!');
-    //Crashes.generateTestCrash();
-    // throw new Error('This is a test javascript crash!');
-  };
-
-  sendEvent = () => {
-    Analytics.trackEvent("ClickEvent");
-  };
-
-  render() {
-    return (
-      <DContainerSafe>
+import React, { useContext } from "react";
+import { ScrollView } from "react-native-gesture-handler";
+import { AppStateContext } from "../appstate/AppStateStore";
+import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
+import { DButtonPrimary } from "../components/DButton";
+import { DKeyValueList } from "../components/DList";
+import { DTextSection } from "../components/DText";
+import { AppInfoCard } from "../core/AppInfoCard";
+import { useNetwork } from "../hooks/useNetwork";
+import { TProps } from "./types";
+export const DebugScreen = ({ navigation }: TProps) => {
+  const appState = useContext(AppStateContext);
+  const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
+  const network = useNetwork();
+  return (
+    <DContainerSafe>
+      <ScrollView>
         <DLayoutCol style={{ padding: 16 }}>
-          <ScreenHeader title={"Debug Settings"} style={{ padding: 0 }} icon="sort-reverse-variant" />
-          <DText>Debug Menu</DText>
+          <ScreenHeader navigation={navigation} title={"Debug Settings"} style={{ padding: 0 }} icon="sort-reverse-variant" />
+          <DTextSection style={{ marginTop: 20 }}>App Information</DTextSection>
+          <AppInfoCard />
+          <DTextSection style={{ marginTop: 40 }}>Data Information</DTextSection>
+          <DKeyValueList
+            object={{
+              "1D Data": "NA",
+              "5M Data": "NA",
+              "1H Data": "NA",
+            }}
+          ></DKeyValueList>
+          <DButtonPrimary style={{ marginTop: 10 }} onPress={network.forceUpdateData}>
+            Refresh Data in backend
+          </DButtonPrimary>
         </DLayoutCol>
-      </DContainerSafe>
-    );
-  }
-}
+      </ScrollView>
+    </DContainerSafe>
+  );
+};

@@ -45,6 +45,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
         <ScreenHeader
+          navigation={navigation}
           leftIcon={"menu"}
           onPressLeftIcon={() => {
             navigation.toggleDrawer();

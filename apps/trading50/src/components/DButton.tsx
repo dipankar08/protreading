@@ -1,11 +1,11 @@
 import React from "react";
-import { TProps } from "../screens/types";
-import { STYLES } from "./styles";
-import { colors } from "../styles/colors";
-import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { DIMENS } from "../res/dimens";
+import { TProps } from "../screens/types";
+import { colors } from "../styles/colors";
 import { DLayoutRow } from "./DLayout";
+import { STYLES } from "./styles";
 
 export const DButtonWithIcon = ({ children, style, onPress, icon, loading }: TProps) => {
   return (
@@ -45,7 +45,7 @@ export const DButtonWithIcon = ({ children, style, onPress, icon, loading }: TPr
 
 export const DButtonIcon = ({ onPress, icon, size, color, loading, style }: TProps) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={{ padding: 10 }}>
       {loading && <ActivityIndicator size="small" color={color || "black"} />}
       {!loading && <MaterialCommunityIcons name={icon || "menu"} color={color || "black"} size={size || 24} style={style} />}
     </TouchableOpacity>

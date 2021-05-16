@@ -1,8 +1,8 @@
-import { TProps } from "../screens/types";
-import React, { useState, useContext, useEffect } from "react";
-import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
+import React from "react";
+import { ActivityIndicator, Text } from "react-native";
 import { DIMENS } from "../res/dimens";
-import { DButtonIcon, DButtonWithIcon } from "./DButton";
+import { TProps } from "../screens/types";
+import { DButtonIcon } from "./DButton";
 import { DLayoutRow } from "./DLayout";
 // For the the title of any
 export const DTextTitle = ({ children, style }: TProps) => {
@@ -36,7 +36,7 @@ export const DScreenTitle = ({ children, style }: TProps) => {
 
 export const DTextSection = ({ children, style }: TProps) => {
   return (
-    <Text style={[{ color: "#11111199", fontSize: 15.5, textTransform: "uppercase", marginTop: DIMENS.GAP_3X, marginBottom: DIMENS.GAP_1X }, style]}>
+    <Text style={[{ color: "#11111199", fontSize: 16.5, textTransform: "uppercase", marginTop: DIMENS.GAP_4X, marginBottom: DIMENS.GAP_1X }, style]}>
       {children}
     </Text>
   );
