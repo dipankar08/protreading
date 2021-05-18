@@ -7,10 +7,12 @@ import { DKeyValueList } from "../components/DList";
 import { DTextSection } from "../components/DText";
 import { AppInfoCard } from "../core/AppInfoCard";
 import { useNetwork } from "../hooks/useNetwork";
+import { showNotification } from "../libs/uihelper";
 import { TProps } from "./types";
 export const DebugScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const network = useNetwork();
   return (
     <DContainerSafe>
@@ -27,7 +29,18 @@ export const DebugScreen = ({ navigation }: TProps) => {
               "1H Data": "NA",
             }}
           ></DKeyValueList>
-          <DButtonPrimary style={{ marginTop: 10 }} onPress={network.forceUpdateData}>
+          <DButtonPrimary
+            style={{ marginTop: 10 }}
+            onPress={() =>
+              network.recomputeIndicator({
+                onBefore: () => setLoading(true),
+                onComplete: () => setLoading(false),
+                onSuccess: () => showNotification("Task Submitted"),
+                onError: (e) => showNotification(e),
+              })
+            }
+            loading={loading}
+          >
             Refresh Data in backend
           </DButtonPrimary>
         </DLayoutCol>

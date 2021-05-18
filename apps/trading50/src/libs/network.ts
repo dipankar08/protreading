@@ -35,7 +35,7 @@ export async function getRequest(url: string, cacheKey?: string | null, cache_fi
     if (cacheKey) {
       await saveData(cacheKey, jsondata.out);
     }
-    return jsondata.out;
+    return jsondata;
   } else {
     dlog.d(`get failed. URL: ${url}..${JSON.stringify(response.data)}`);
     throw new Error("Server sends error");
@@ -49,7 +49,7 @@ export async function postRequest(url: string, data: TObject) {
   const jsondata: any = response.data;
   if (jsondata.status == "success") {
     dlog.d("post success...");
-    return jsondata.out;
+    return jsondata;
   } else {
     dlog.d(`post failed for URL:${url}`);
     throw new Error("Server sends error");

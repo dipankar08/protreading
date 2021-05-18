@@ -37,7 +37,7 @@ export const useNetwork = () => {
     callback.onBefore?.();
     try {
       let market = await getRequest(MARKET_URL, CACHE_KEY_MARKET, false);
-      processor.setMarket(market);
+      processor.setMarket(market.out);
       callback?.onComplete?.();
     } catch (err) {
       callback?.onError?.("Not able to fetch latest");
@@ -54,8 +54,8 @@ export const useNetwork = () => {
       let market = await getRequest(getDomainUrl(MARKET_URL), CACHE_KEY_MARKET, false);
 
       // process alll data
-      processor.setSummary(summary);
-      processor.setMarket(market);
+      processor.setSummary(summary.out);
+      processor.setMarket(market.out);
       appState.dispatch({
         type: "MERGE",
         payload: {
@@ -90,7 +90,7 @@ export const useNetwork = () => {
         false
       );
       verifyOrCrash(globalAppState.ltpMap != null, "Market is null");
-      processor.setPositionData(network_resp);
+      processor.setPositionData(network_resp.out);
       appState.dispatch({ type: "MERGE", payload: { position: processor.position } });
       setLoading(false);
       callback?.onSuccess?.({});
@@ -178,7 +178,7 @@ export const useNetwork = () => {
     callback.onBefore?.();
     try {
       let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/screen?filter=${filter.toLowerCase()}`));
-      let resultJSON = result as Array<TMarketEntry>;
+      let resultJSON = result.out as Array<TMarketEntry>;
       callback.onSuccess?.(resultJSON);
     } catch (e) {
       callback.onError?.("Not able to performScreen");
@@ -230,7 +230,7 @@ export const useNetwork = () => {
       verifyOrCrash(!isEmpty(data.title), "please enter title");
       verifyOrCrash(!isEmpty(data.desc), "please enter desc");
       let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/trading50_filter/insert`, data);
-      callback.onSuccess?.(response);
+      callback.onSuccess?.(response.out);
     } catch (e) {
       callback.onError?.(e.message || "Not able to save");
     }
@@ -239,11 +239,26 @@ export const useNetwork = () => {
     callback.onBefore?.();
     try {
       let response = await getRequest(`${SIMPLESTORE_ENDPOINT}/api/trading50_filter`);
-      callback.onSuccess?.(response);
+      callback.onSuccess?.(response.out);
       callback.onComplete?.();
     } catch (e) {
       callback.onError?.(e.message || "No item found");
       callback.onComplete?.();
+    }
+  }
+
+  async function recomputeIndicator(callback: TCallback) {
+    dlog.d("[NETWORK] buildLatest");
+    callback.onBefore?.();
+    try {
+      let result1 = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/indicator?candle_type=5m&reload=1`));
+      let result2 = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/indicator?candle_type=1d&reload=1`));
+      callback.onSuccess?.("Task Submitted");
+      callback.onComplete?.();
+    } catch (e) {
+      callback.onError?.(e.message);
+      callback.onComplete?.();
+      dlog.ex(e);
     }
   }
 
@@ -262,5 +277,6 @@ export const useNetwork = () => {
     performScreen,
     saveNewScreen,
     getScreen,
+    recomputeIndicator,
   };
 };

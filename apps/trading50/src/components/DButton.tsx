@@ -52,7 +52,7 @@ export const DButtonIcon = ({ onPress, icon, size, color, loading, style }: TPro
   );
 };
 
-export const DButtonPrimary = ({ onPress, icon, size, color, loading, children, pstyle, style }: TProps) => {
+export const DBaseButton = ({ onPress, icon, size, color, loading, children, pstyle, style }: TProps) => {
   return (
     <TouchableOpacity onPress={onPress} disabled={loading} style={pstyle}>
       <DLayoutRow
@@ -68,11 +68,16 @@ export const DButtonPrimary = ({ onPress, icon, size, color, loading, children, 
           style,
         ]}
       >
-        {loading && <ActivityIndicator size="small" color={"white"} />}
-        {!loading && <Text style={{ color: "white" }}>{children}</Text>}
+        {loading && <ActivityIndicator size="small" color={color || "white"} />}
+        {!loading && icon && <MaterialCommunityIcons name={icon || "menu"} color={color || "white"} size={size || 24} style={style} />}
+        {!loading && <Text style={{ color: color || "white" }}>{children}</Text>}
       </DLayoutRow>
     </TouchableOpacity>
   );
+};
+
+export const DButtonPrimary = ({ onPress, icon, size, color, loading, children, pstyle, style }: TProps) => {
+  return <DBaseButton onPress={onPress} icon={icon} size={size} loading={loading} style={style} pstyle={pstyle} children={children} />;
 };
 
 export const DButtonLink = ({ onPress, color, loading, children, style }: TProps) => {

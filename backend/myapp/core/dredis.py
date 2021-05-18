@@ -1,8 +1,10 @@
-from myapp.core.dtypes import TCandleType
-from types import FunctionType
-from redis import Redis
-import time
 import pickle
+import time
+from types import FunctionType
+
+from myapp.core.dtypes import TCandleType
+from redis import Redis
+
 _redis = Redis()
 
 
@@ -24,6 +26,10 @@ def getraw(key):
 
 def clear(key):
     _redis.delete(key)
+
+
+def hasKey(key):
+    return _redis.get(key) is not None
 
 
 def setPickle(key: str, value: dict):

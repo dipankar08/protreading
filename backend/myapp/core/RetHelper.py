@@ -1,14 +1,15 @@
+import json as JSON
 import time
-from myapp.core.dnetwork import ping_backend
 import traceback
 from typing import Dict
 
-from flask.globals import g
-from flask import app, json, jsonify
 import numpy as np
-import json as JSON
+from flask import app, json, jsonify
+from flask.globals import g
 #from myapp.core.dglobaldata import _last_update_ts
 from myapp.core import timetracker
+from myapp.core.dnetwork import ping_backend
+
 CANDLE_TYPE_COUNT = []
 from flask import jsonify
 
@@ -27,9 +28,9 @@ def buildSuccess(msg: str = "`Successfully executed", out=None):
     return returnAsJson({'status': 'success', 'msg': msg, 'out': out, "time": 'Deleted'})
 
 
-def buildError(msg: str, help='No help is given'):
+def buildError(msg: str, help='No help is given', out=[]):
     ping_backend()
-    return returnAsJson({'status': 'error', 'msg': msg, 'out': [], 'help': help})
+    return returnAsJson({'status': 'error', 'msg': msg, 'out': out, 'help': help})
 
 
 def buildException(ex: Exception):

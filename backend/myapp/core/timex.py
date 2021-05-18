@@ -1,8 +1,8 @@
 import time
-from functools import wraps
-from flask.globals import g
-
 from datetime import date, datetime, timedelta
+from functools import wraps
+
+from flask.globals import g
 
 
 def time_this(func):
@@ -21,13 +21,13 @@ def time_this(func):
 # Get current time in String in ISO format
 def getCurTimeStr() -> str:
     dateObj = datetime.now()
-    dateStr = dateObj.strftime('%Y-%m-%d %H:%M:%S.%f')
+    dateStr = dateObj.strftime("%Y-%m-%dT%H:%M:%SZ")
     return dateStr
 
 
 # convert a string date into Obj
 def getTimeObj(dateStr) -> date:
-    return datetime.strptime(dateStr, '%Y-%m-%d %H:%M:%S.%f')
+    return datetime.strptime(dateStr, "%Y-%m-%dT%H:%M:%SZ")
 
 
 # Check if a given time is 5 min older

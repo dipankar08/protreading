@@ -1,25 +1,27 @@
+import json
+import time
+from ast import literal_eval
 from logging import log
-from myapp.core.optimization import shouldBuildIndicator
 from pickle import TRUE
-from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
-from myapp.core.sync import getSymbolList
-from pandas.core.frame import DataFrame
+from typing import Dict, List
+
+import pandas as pd
 import redis
 from myapp import tasks
-from myapp.core.timetracker import mark_dataload_end, mark_dataload_start, should_fetch_data, should_load_data_from_disk
+from myapp.core import (danalytics, ddownload, dindicator, dlog, dredis,
+                        dstorage, timetracker)
 from myapp.core.ddecorators import trace_perf
-from myapp.core.dtypes import TCandleType
-from myapp.core.rootConfig import SUPPORTED_CANDLE, SUPPORTED_DOMAIN
 from myapp.core.DLogger import DLogger
-from typing import Dict, List
-from myapp.core import dredis, danalytics, dstorage, dlog
-import pandas as pd
-from myapp.core import ddownload
-from myapp.core import dindicator
-from myapp.core import timetracker
-import time
-import json
-from ast import literal_eval
+from myapp.core.dtypes import TCandleType
+from myapp.core.optimization import shouldBuildIndicator
+from myapp.core.rootConfig import SUPPORTED_CANDLE, SUPPORTED_DOMAIN
+from myapp.core.sync import getSymbolList
+from myapp.core.timetracker import (mark_dataload_end, mark_dataload_start,
+                                    should_fetch_data,
+                                    should_load_data_from_disk)
+from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
+from pandas.core.frame import DataFrame
+
 _candleTypeToDataFrameMap: Dict[str, pd.DataFrame] = {}
 
 
@@ -115,8 +117,16 @@ for candle_type in SUPPORTED_CANDLE:
 dlog.d("Reset downloadAndBuildIndicator locks")
 
 
+def getLastUpdatedTimeStamp(domain: str):
+    result = {}
+    for candle_type in SUPPORTED_CANDLE:
+        result['{}-{}'.format(domain, candle_type.value)] = dredis.get("indicator_timestamp_{}_{}".format(
+            domain, candle_type.value), "Data not found")
+    return result
+
+
 # It will download and build the indicators
-@trace_perf
+@ trace_perf
 def downloadAndBuildIndicator(domain, candle_type: TCandleType):
     # Optimization
     if not shouldBuildIndicator(domain, candle_type):
@@ -171,6 +181,10 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
                          'timestamp': getCurTimeStr()})
 
         dlog.d("downloadAndBuildIndicator ends")
+        # Set TimeStamp key
+        dredis.set("indicator_timestamp_{}_{}".format(
+            domain, candle_type.value), getCurTimeStr())
+
         return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
     except Exception as e:
         dlog.d("downloadAndBuildIndicator Exception happened")

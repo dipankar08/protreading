@@ -1,10 +1,9 @@
 import React from "react";
+import { RootSiblingParent } from "react-native-root-siblings";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import RootNavigation from "./src/screens/navigation";
-import { registerRootComponent } from "expo";
 import AppStateStoreProvider from "./src/appstate/AppStateStore";
 import CoreStateStoreProvider from "./src/core/CoreContext";
-import { DStatusBar } from "./src/components/DStatusBar";
+import RootNavigation from "./src/screens/navigation";
 
 // You must given a name app
 export default function App() {
@@ -12,7 +11,9 @@ export default function App() {
     <SafeAreaProvider>
       <CoreStateStoreProvider>
         <AppStateStoreProvider>
-          <RootNavigation />
+          <RootSiblingParent>
+            <RootNavigation />
+          </RootSiblingParent>
         </AppStateStoreProvider>
       </CoreStateStoreProvider>
     </SafeAreaProvider>

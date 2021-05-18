@@ -48,7 +48,12 @@
 => GET => {{server}}/redis?key=indicator_data_UK_1d => success
 
 
+#==== Get latest timestamp ======
+=> GET => http://localhost:5000/timestamp => success
+=> GET => http://localhost:5000/timestamp?domain=USA => success
 
+
+#### OLD APIS
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open =>success
 #=> GET => {{server}}/relate?symbol_list=TCS.NS,WIPRO.NS&indicator_list=close,open&candle_type=5m&duration=30 =>success
 #=> GET => {{server}}/chart?symbol=WIPRO.NS => success

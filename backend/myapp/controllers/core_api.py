@@ -1,27 +1,27 @@
 
-from myapp.core.timex import IfTimeIs5MinOld
-from myapp.core.dnetwork import ping_backend
-from myapp.core.helper import get_param_or_default, get_param_or_throw, str_to_list
-from myapp.core.dtypes import TCandleType
-# from myapp.core.FastStorage import FastStorage
-from myapp.core import timetracker
 from flask import Blueprint, json, request
 from myapp import tasks
+# from myapp.core.FastStorage import FastStorage
+from myapp.core import timetracker
+from myapp.core.dnetwork import ping_backend
+from myapp.core.dtypes import TCandleType
+from myapp.core.helper import (get_param_or_default, get_param_or_throw,
+                               str_to_list)
+from myapp.core.RetHelper import (buildError, buildException,
+                                  buildNotImplemented, buildSuccess)
+from myapp.core.timex import IfTimeIs5MinOld
 from myapp.extensions import cache
-from myapp.core.RetHelper import buildError, buildNotImplemented, buildSuccess, buildException
+
 core_api = Blueprint('core_api_views', __name__)
 import random
-from flask_cors import CORS, cross_origin
+
 from flask.globals import g
-from myapp.core import dredis
+from flask_cors import CORS, cross_origin
+from myapp.core import (danalytics, ddownload, dfilter, dglobaldata,
+                        dhighlights, dlog, dplot, dredis)
 from myapp.core.constant import CACHE_TIMEOUT_5MIN
-from myapp.core import dglobaldata
-from myapp.core import dlog
-from myapp.core import dfilter
-from myapp.core import dplot
 from myapp.core.ddecorators import make_exception_safe
 from myapp.core.rootConfig import SUPPORTED_CANDLE
-from myapp.core import dhighlights, ddownload, danalytics
 
 
 @core_api.before_request
@@ -52,6 +52,15 @@ def clearcache():
     return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
 
 
+# timestamp
+@ core_api.route('/timestamp')
+@ make_exception_safe
+def timestamp():
+    " Just return the timestamp "
+    domain: str = get_param_or_default(request, "domain", "IN")
+    return buildSuccess("Tiemstamp of server data retunrned", {"timestamp": dglobaldata.getLastUpdatedTimeStamp(domain)})
+
+
 # Build and look up indicator history
 @core_api.route('/indicator')
 @make_exception_safe
@@ -62,19 +71,22 @@ def indicator():
     sync: str = get_param_or_default(request, "sync", "0")
     reload: str = get_param_or_default(request, "reload", "0")
     show_result: str = get_param_or_default(request, "result", "0")
-    result = dredis.getPickle(
-        "indicator_history_{}".format(domain))
+    rkey = "indicator_history_{}".format(domain)
+    result = dredis.getPickle(rkey)
+    has_data = dredis.hasKey(rkey)
 
     # reload
     if reload == "1":
         if sync == "1":
             tasks.taskBuildIndicator(domain, candle_type)
-            result = dredis.getPickle(
-                "indicator_history_{}".format(domain))
+            result = dredis.getPickle(rkey)
             return buildSuccess("Got indicator", result if show_result == "1" else 'result is hidden')
         else:
             task_id = tasks.taskBuildIndicator.delay(domain, candle_type)
-            return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
+            if has_data:
+                return buildSuccess("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id), )
+            else:
+                return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id), )
 
     # No data
     if result is None:
@@ -122,11 +134,12 @@ def summary():
 @ make_exception_safe
 def Screen():
     dglobaldata.checkLoadLatestData()
+    domain = get_param_or_default(request, 'domain', "IN")
     result = dfilter.performScreen(
-        get_param_or_default(request, 'domain', "IN"),
+        domain,
         get_param_or_throw(request, 'filter'),
         str_to_list(get_param_or_default(request, 'columns', '')))
-    return buildSuccess(msg='Here is the list of Stocks', out=result)
+    return buildSuccess(msg='Here is the list of Stocks', out={"result": result, "timestamp": dglobaldata.getLastUpdatedTimeStamp(domain)})
 
 
 # Chart are depeicated
