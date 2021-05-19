@@ -123,6 +123,17 @@ def getLastUpdatedTimeStamp(domain: str):
             domain, candle_type.value), "Data not found")
     return result
 
+# It will create a cache for laest data frame
+
+
+def saveMarketDataFormDayDF(domain: str, df: DataFrame):
+    dlog.d("Saving market data...")
+    resultJSON = getLatestDataInJson(domain, df)
+    # Save this data
+    dredis.setPickle("market_data_{}".format(
+        domain), {"data": resultJSON})
+    dredis.set("market_ts_{}".format(domain), getCurTimeStr())
+
 
 # It will download and build the indicators
 @ trace_perf
@@ -180,11 +191,18 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
                          {'data': getLatestDataInJson(domain, processed_df),
                          'timestamp': getCurTimeStr()})
 
-        dlog.d("downloadAndBuildIndicator ends")
+        # update market data
+        if candle_type == TCandleType.DAY_1:
+            saveMarketDataFormDayDF(domain, download_data)
+
         # Set TimeStamp key
         dredis.set("indicator_timestamp_{}_{}".format(
             domain, candle_type.value), getCurTimeStr())
+
+        # unlock
         dredis.set(lockkey, "0")
+
+        dlog.d("downloadAndBuildIndicator ends")
         return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
     except Exception as e:
         dredis.set(lockkey, "0")

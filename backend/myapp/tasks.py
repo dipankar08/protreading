@@ -1,21 +1,19 @@
+import random
+import time
 from datetime import timedelta
-from myapp.core.timex import getCurTimeStr
+from typing import Any, Dict
+
+from myapp.core import (danalytics, dglobaldata, dhighlights, dindicator, dlog,
+                        dplot, dredis, dstorage)
+from myapp.core.ddecorators import (decrTaskCommonAction, decrTLogFunction,
+                                    make_exception_safe)
 from myapp.core.ddownload import download
 from myapp.core.dnetwork import pingCelery
-from myapp.core.ddecorators import decrTLogFunction, make_exception_safe, decrTaskCommonAction
-from myapp.core.rootConfig import SUPPORTED_CANDLE
-import time
-import random
-from typing import Any, Dict
-from myapp.extensions import celery
-from myapp.core import dlog
-from myapp.core import danalytics
 from myapp.core.dtypes import TCandleType
-from myapp.core import dindicator
-from myapp.core import dstorage, dhighlights
-from myapp.core import dglobaldata, dredis
-from myapp.core import dplot
-from myapp.core.sync import getSymbolList, SUPPORTED_CHART_DURATION
+from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.sync import SUPPORTED_CHART_DURATION, getSymbolList
+from myapp.core.timex import getCurTimeStr
+from myapp.extensions import celery
 
 # Log might needs to be inited for worker
 danalytics.init()
@@ -85,14 +83,9 @@ def taskBuildIndicatorAll():
 @decrTaskCommonAction
 def taskDownloadLatestMarketData(domain) -> bool:
     dlog.d("Downloading as cache is old")
-    result = download(doamin=domain, period=1)
-    if result[0] is True:
-        dlog.d("Saving marjet data")
-        resultJSON = dglobaldata.getLatestDataInJson(domain, result[1])
-        # Save this data
-        dredis.setPickle("market_data_{}".format(
-            domain), {"data": resultJSON})
-        dredis.set("market_ts_{}".format(domain), getCurTimeStr())
+    result, data = download(doamin=domain, period=1)
+    if result is True:
+        dglobaldata.saveMarketDataFormDayDF(domain, data)
         return True
     return False
 

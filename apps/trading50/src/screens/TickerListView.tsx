@@ -37,13 +37,13 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
 
   function getChartURL(symbol: string) {
     if (appState.state.domain == "IN") {
-      return `https://uk.tradingview.com/chart/?symbol=NSE:${symbol.replace(".NS", "")}&interval=5`;
+      return `https://uk.tradingview.com/chart/?symbol=NSE:${symbol.replace(".NS", "")}`;
     } else if (appState.state.domain == "USA") {
       console.log(symbol);
-      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}&interval=5`;
+      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}`;
     } else if (appState.state.domain == "UK") {
       console.log(symbol);
-      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}&interval=5`;
+      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}`;
     }
   }
 
