@@ -1,18 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button, FlatList, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { AppStateContext } from "../appstate/AppStateStore";
 import { DLayoutCol, DLayoutRow, DListEmptyComponent, DSpace, FlatListItemSeparator, TextWithIcon } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
 import { DDialog, DOptionDialog } from "../components/DDialog";
 import { DTextSearch } from "../components/DInput";
 import { DKeyValueList } from "../components/DList";
 import { useNetwork } from "../hooks/useNetwork";
+import { dlog } from "../libs/dlog";
 import { TMarketEntry } from "../models/model";
 import { DIMENS } from "../res/dimens";
 import { colors } from "../styles/colors";
 import { TKeyText, TProps } from "./types";
 
 export const TickerListView = ({ navigation, objArray }: TProps) => {
+  const appState = useContext(AppStateContext);
   const [listData, setListData] = React.useState<TMarketEntry[]>([]);
   const [filterListData, setFilterListData] = React.useState<TMarketEntry[]>([]);
   const [inverted, setInverted] = useState(false);
@@ -20,7 +23,8 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
   const [visibleIndicator, setVisibleIndicator] = React.useState(false);
   const [selectedEntry, setSelectedEntry] = React.useState<TMarketEntry>();
   const [filterDialogVisible, setFilterDialogVisible] = React.useState(false);
-  const [curFilter, setCurFilter] = React.useState("CHANGE");
+  //const [curFilter, setCurFilter] = React.useState("CHANGE");
+  let curFilter: string = "CHANGE";
   const [curQuery, setCurQuery] = React.useState("");
   const filterList: Array<TKeyText> = [
     { text: "Alphabetical A->Z", key: "ALPHA" },
@@ -31,13 +35,25 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
     { text: "Top - RSI (week)", key: "-RSI" },
   ];
 
+  function getChartURL(symbol: string) {
+    if (appState.state.domain == "IN") {
+      return `https://uk.tradingview.com/chart/?symbol=NSE:${symbol.replace(".NS", "")}&interval=5`;
+    } else if (appState.state.domain == "USA") {
+      console.log(symbol);
+      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}&interval=5`;
+    } else if (appState.state.domain == "UK") {
+      console.log(symbol);
+      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}&interval=5`;
+    }
+  }
+
   const network = useNetwork();
   let isSubscribed = false;
   const refRBSheet = useRef();
   const flatListRef = useRef<FlatList<TMarketEntry>>();
 
   React.useEffect((): any => {
-    console.log(`data updated ......${objArray?.length}`);
+    dlog.d(`data updated ......${objArray?.length}`);
     setListData(objArray);
     setFilterListData(objArray);
     isSubscribed = true;
@@ -58,30 +74,31 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
     if (curQuery.length > 0) {
       tempData = listData.filter((x) => x.name.toLowerCase().indexOf(curQuery.toLowerCase()) != -1);
     }
+    console.log(">>>" + curFilter);
     switch (curFilter) {
       case "ALPHA":
-        tempData = tempData.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
+        tempData.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
         break;
       case "-ALPHA":
-        tempData = tempData.sort((a, b) => (b.symbol > a.symbol ? 1 : -1));
+        tempData.sort((a, b) => (a.symbol > b.symbol ? -1 : 1));
         break;
       case "CHANGE":
-        tempData = tempData.sort((a, b) => (a.change > b.change ? 1 : -1));
+        tempData.sort((a, b) => (a.change > b.change ? -1 : 1));
         break;
       case "-CHANGE":
-        tempData = tempData.sort((a, b) => (b.change > a.change ? 1 : -1));
+        tempData.sort((a, b) => (a.change > b.change ? 1 : -1));
         break;
       case "RSI":
-        tempData = tempData.sort((a, b) => (a.rsi > b.rsi ? 1 : -1));
+        tempData.sort((a, b) => (a.rsi > b.rsi ? 1 : 0));
         break;
       case "-RSI":
-        tempData = tempData.sort((a, b) => (b.rsi > a.rsi ? 1 : -1));
+        tempData.sort((a, b) => (a.rsi > b.rsi ? 0 : -1));
         break;
       default:
       //done
     }
-    tempData.sort();
     setFilterListData(tempData);
+    console.log(tempData[0].change);
     flatListRef.current?.scrollToIndex({ animated: true, index: 0 });
   }
 
@@ -98,7 +115,6 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
             }}
             onPressRightIcon={() => {
               setFilterDialogVisible(true);
-              console.log("hello");
             }}
           ></DTextSearch>
         )}
@@ -134,22 +150,22 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
                     color: "#00000090",
                   }}
                 >
-                  {item.name}
+                  {`${item.name}`}
                 </Text>
                 <Text
                   style={{
-                    fontSize: 12,
+                    fontSize: 10,
                     color: "#00000050",
-                    paddingTop: 5,
+                    paddingTop: 10,
                   }}
                 >
-                  {item.symbol}
+                  {`${item.symbol} . ${appState.state.domain} . ${item.sector || ""} . RSI: ${item.rsi}`}
                 </Text>
                 <DLayoutRow>
                   <DButtonTag
                     onPress={() => {
                       navigation.navigate("WebViewScreen", {
-                        url: `https://uk.tradingview.com/chart/?symbol=NSE:${item.symbol.replace(".NS", "")}&interval=5`,
+                        url: getChartURL(item.symbol),
                       });
                     }}
                     style={{ marginTop: 10, marginRight: 10, backgroundColor: colors.blue600 }}
@@ -157,7 +173,6 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
                   />
                   <DButtonTag
                     onPress={() => {
-                      console.log(item);
                       setSelectedEntry(item);
                       setVisibleIndicator(true);
                     }}
@@ -288,7 +303,8 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
         visible={filterDialogVisible}
         onCancel={() => setFilterDialogVisible(false)}
         onChange={(value) => {
-          setCurFilter(value);
+          console.log(value);
+          curFilter = value;
           setFilterDialogVisible(false);
           updateData();
         }}

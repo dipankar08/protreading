@@ -1,10 +1,10 @@
-import { TGroupMarketEntry, TMarket, TMarketEntry, TPosition } from "../models/model";
+import { TGroupMarketEntry, TMarketEntry, TPosition } from "../models/model";
 export type TAction = {
   type: "MERGE";
   payload?: TAppStateOptional;
 };
 
-export type TDomain = "IN" | "USA" | "UK";
+export type TDomain = "IN" | "USA" | "UK" | null;
 
 export type TAppState = {
   //summary
@@ -34,7 +34,7 @@ export const initialState: TAppState = {
   ltpMap: new Map(),
   sectorList: new Map(),
   recommendedList: new Map(),
-  domain: "IN",
+  domain: null,
   stockMap: new Map(),
   screenResultList: [],
 };

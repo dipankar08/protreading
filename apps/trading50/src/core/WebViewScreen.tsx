@@ -1,14 +1,13 @@
 // Use this cscreen for testing purpose
-import { WebView } from "react-native-webview";
 import React from "react";
+import { WebView } from "react-native-webview";
 import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/basic";
-import { TProps } from "../screens/types";
-import { DTextSubTitle } from "../components/DText";
-import { colors } from "../styles/colors";
 import { DButtonIcon } from "../components/DButton";
+import { DTextSubTitle } from "../components/DText";
+import { TProps } from "../screens/types";
+import { colors } from "../styles/colors";
 
 export const WebViewScreen = ({ route, navigation }: TProps) => {
-  console.log(route);
   return (
     <DContainerSafe style={{ flex: 1 }}>
       <DLayoutCol style={{ flex: 1 }}>

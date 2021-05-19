@@ -7,6 +7,7 @@ import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, DLayoutRow, DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { useNetwork } from "../hooks/useNetwork";
 import { dlog } from "../libs/dlog";
+import { showNotification } from "../libs/uihelper";
 import { TGroupMarketEntry } from "../models/model";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
@@ -17,6 +18,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
   // tab config
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
+  const [loadingRefresh, setLoadingRefresh] = React.useState(false);
   const [routes] = React.useState([
     { key: "first", title: "Indicator", navigation: navigation },
     { key: "second", title: "Sector", navigation: navigation },
@@ -33,9 +35,17 @@ export const MarketScreen = ({ navigation }: TProps) => {
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader
         title="Market Summary"
+        loading={loadingRefresh}
         style={{ padding: 16 }}
         icon="reload"
-        onPress={network.reLoadAllData}
+        onPress={() =>
+          network.reLoadAllData({
+            onBefore: () => setLoadingRefresh(true),
+            onComplete: () => setLoadingRefresh(false),
+            onSuccess: (data) => showNotification(data.msg),
+            onError: (msg) => showNotification(msg),
+          })
+        }
         navigation={navigation}
       ></ScreenHeader>
       <TabView

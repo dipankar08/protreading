@@ -9,7 +9,7 @@ import { DTextInput } from "../components/DInput";
 import { DLayoutRow } from "../components/DLayout";
 import { useNetwork } from "../hooks/useNetwork";
 import { showNotification } from "../libs/uihelper";
-import { TMarketEntry } from "../models/model";
+import { TMarketEntry, TObject } from "../models/model";
 import { DIMENS } from "../res/dimens";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
@@ -52,7 +52,7 @@ export let NewScreenScreen = ({ navigation, route }: TProps) => {
   );
 };
 
-const FilterView = ({ route }: TProps) => {
+const FilterView = ({ route, jumpTo }: TProps) => {
   const [query, setQuery] = useState("");
   const [querytitle, setQueryTitle] = useState("");
   const [queryDesc, setQueryDesc] = useState("");
@@ -73,12 +73,13 @@ const FilterView = ({ route }: TProps) => {
       </DTextInput>
       <DLayoutRow style={{ justifyContent: "space-around" }}>
         <DButtonPrimary
+          loading={loadingRun}
           onPress={() =>
             network.performScreen(query, {
               onBefore: () => setLoadingRun(true),
-              onSuccess: (result) => {
+              onSuccess: (obj: TObject) => {
                 let data: Array<TMarketEntry> = [];
-                for (let x of result) {
+                for (let x of obj.result) {
                   data.push({
                     symbol: x.symbol,
                     close: x.close,
@@ -90,7 +91,8 @@ const FilterView = ({ route }: TProps) => {
                 }
                 appState.dispatch({ type: "MERGE", payload: { screenResultList: data } });
                 setLoadingRun(false);
-                showNotification("Got the result!");
+                showNotification(`${obj.result.length} results found!`);
+                jumpTo("second");
               },
               onError: (result) => {
                 appState.dispatch({ type: "MERGE", payload: { screenResultList: [] } });

@@ -1,8 +1,9 @@
+import moment from "moment";
 import React, { useContext } from "react";
 import { Alert } from "react-native";
 import { globalAppState } from "../appstate/AppStateReducer";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, CACHE_KEY_SUMMARY, PRO_TRADING_SERVER, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
+import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, PRO_TRADING_SERVER, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
 import { initialState, TDomain } from "../appstate/types";
 import { CoreStateContext } from "../core/CoreContext";
 import { TCallback } from "../core/core_model";
@@ -50,28 +51,27 @@ export const useNetwork = () => {
     dlog.d("[NETWORK] fetching from network ");
     callback?.onBefore?.();
     try {
-      let summary = await getRequest(getDomainUrl(SUMMARY_URL), CACHE_KEY_SUMMARY, false);
+      // let summary = await getRequest(getDomainUrl(SUMMARY_URL), CACHE_KEY_SUMMARY, false);
       let market = await getRequest(getDomainUrl(MARKET_URL), CACHE_KEY_MARKET, false);
-
       // process alll data
-      processor.setSummary(summary.out);
+      // processor.setSummary(summary.out);
       processor.setMarket(market.out);
       appState.dispatch({
         type: "MERGE",
         payload: {
-          summary: processor.summary,
+          // summary: processor.summary,
           sectorList: processor.sectorList,
           recommendedList: processor.recommendedList,
           stockMap: processor.stockMap,
         },
       });
       dlog.d(`[NETWORK] fetching from network complete for domain ${globalAppState.domain} `);
-      callback?.onSuccess?.({});
+      callback?.onSuccess?.({ msg: "updated data to latest" });
       callback?.onComplete?.();
     } catch (e) {
       dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${MARKET_URL}`);
       dlog.ex(e);
-      callback?.onError?.("Not able to ralod data");
+      callback?.onError?.("Error" + e.message);
       callback?.onComplete?.();
     }
   }
@@ -99,7 +99,7 @@ export const useNetwork = () => {
       dlog.ex(e);
       setLoading(false);
       setError("Not able to get Data");
-      callback?.onError?.("Not able to get data");
+      callback?.onError?.("Error" + e.message);
       callback?.onComplete?.();
     }
   }
@@ -123,7 +123,7 @@ export const useNetwork = () => {
     } catch (err) {
       dlog.ex(err);
       showNotification("Not able to create a order");
-      onError?.();
+      onError?.("Error" + err.message);
     }
   }
 
@@ -145,7 +145,7 @@ export const useNetwork = () => {
     } catch (err) {
       dlog.d(err);
       showNotification("Not able to close this order");
-      onError?.();
+      onError?.("Error" + err.message);
     }
   }
 
@@ -167,9 +167,7 @@ export const useNetwork = () => {
       showNotification("Not able to submit task");
       dlog.d("[NETWORK] forceUpdateData failed ");
       dlog.ex(e);
-      if (onError) {
-        onError();
-      }
+      onError?.("Error" + e.message);
     }
   }
 
@@ -179,9 +177,10 @@ export const useNetwork = () => {
     try {
       let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/screen?filter=${filter.toLowerCase()}`));
       let resultJSON = result.out as Array<TMarketEntry>;
+
       callback.onSuccess?.(resultJSON);
     } catch (e) {
-      callback.onError?.("Not able to performScreen");
+      callback.onError?.("Not able to performScreen" + e.message);
       dlog.ex(e);
     }
   }
@@ -190,6 +189,10 @@ export const useNetwork = () => {
     appState.dispatch({ type: "MERGE", payload: initialState });
     appState.dispatch({ type: "MERGE", payload: { domain: domain } });
     reLoadAllData();
+  }
+
+  async function clearAllData() {
+    appState.dispatch({ type: "MERGE", payload: initialState });
   }
 
   async function reopenOrder(id: string) {
@@ -262,6 +265,25 @@ export const useNetwork = () => {
     }
   }
 
+  async function getTimeStamp(callback: TCallback) {
+    dlog.d("[NETWORK] getTimeStamp");
+    callback.onBefore?.();
+    try {
+      let result = await getRequest(getDomainUrl(`${PRO_TRADING_SERVER}/timestamp?`));
+      for (const property in result.out.timestamp) {
+        try {
+          result.out.timestamp[property] = moment(result.out.timestamp[property]).fromNow();
+        } catch {}
+      }
+      callback.onSuccess?.(result);
+      callback.onComplete?.();
+    } catch (e) {
+      callback.onError?.(e.message);
+      callback.onComplete?.();
+      dlog.ex(e);
+    }
+  }
+
   return {
     loading,
     error,
@@ -278,5 +300,7 @@ export const useNetwork = () => {
     saveNewScreen,
     getScreen,
     recomputeIndicator,
+    getTimeStamp,
+    clearAllData,
   };
 };

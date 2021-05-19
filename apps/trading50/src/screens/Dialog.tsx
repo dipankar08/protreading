@@ -15,7 +15,6 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const [price, setPrice] = React.useState("");
   const [quantities, setQuantities] = React.useState("");
 
-  console.log("OrderCreateDialog called");
   let xStockList = [<Picker.Item key="" value="" label="Select an item" />];
   for (let value of appState.state.stockMap.values()) {
     xStockList.push(<Picker.Item key={value._id} value={value._id} label={`${value.symbol}-${value.name}`} />);

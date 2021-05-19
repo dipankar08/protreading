@@ -1,6 +1,4 @@
-import React from "react";
-import { createContext, useReducer } from "react";
-import _ from "underscore";
+import React, { createContext, useReducer } from "react";
 import { dlog } from "../libs/dlog";
 import { TCoreAction, TCoreState } from "./core_model";
 
@@ -22,7 +20,7 @@ const CoreStateReducer = (state: TCoreState, action: TCoreAction): TCoreState =>
   dlog.d(`[CoreStateReducer] updating app state for ${action.type}`);
   switch (action.type) {
     case "MERGE_STATE":
-      console.log(`merge state called with ${JSON.stringify(action)}`);
+      dlog.d(`merge state called with ${JSON.stringify(action)}`);
       globalCoreState = {
         ...state,
         ...action.payload,

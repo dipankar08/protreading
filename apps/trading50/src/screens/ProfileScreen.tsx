@@ -4,7 +4,6 @@ import { ScrollView } from "react-native";
 import { WebView } from "react-native-webview";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
-import { DOptionDialog } from "../components/DDialog";
 import { DActionItemRow } from "../components/DList";
 import { DTextSection } from "../components/DText";
 import { LogoutCard } from "../core/LogoutCard";
@@ -14,13 +13,7 @@ import { TProps } from "./types";
 
 // Profile and Signout logic
 export const ProfileScreen = ({ navigation, route }: TProps) => {
-  let domainList = [
-    { key: "UK", text: "UK" },
-    { key: "IN", text: "INDIA" },
-    { key: "USA", text: "USA" },
-  ];
   const appState = useContext(AppStateContext);
-  const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
   const network = useNetwork();
   let name = "Profile";
   useEffect(() => {
@@ -36,23 +29,16 @@ export const ProfileScreen = ({ navigation, route }: TProps) => {
         <DLayoutCol style={{ padding: 10 }}>
           <ScreenHeader title="Profile" navigation={navigation}></ScreenHeader>
           <DTextSection style={{ marginTop: 10 }}>Your Information</DTextSection>
-          <LogoutCard></LogoutCard>
+          <LogoutCard
+            onSignOut={() => {
+              network.clearAllData();
+            }}
+          ></LogoutCard>
           <DTextSection>User Preferences</DTextSection>
 
           <DTextSection>System Preferences</DTextSection>
           <DActionItemRow title={"Domain"} value={appState.state.domain} onPress={() => setDomainDialogVisible(true)} icon="home" />
         </DLayoutCol>
-        <DOptionDialog
-          title={"Choose the domain"}
-          subtitle={"Once you chhhose the domain, the ticker will be shown from that domain only."}
-          items={domainList}
-          visible={domainDialogVisible}
-          onCancel={() => setDomainDialogVisible(false)}
-          onChange={(value) => {
-            network.changeDomain(value);
-            setDomainDialogVisible(false);
-          }}
-        ></DOptionDialog>
       </ScrollView>
     </DContainerSafe>
   );

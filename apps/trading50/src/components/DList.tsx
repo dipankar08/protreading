@@ -18,7 +18,6 @@ function toString(data: any) {
 }
 
 export const DKeyValueList = ({ object }: TProps) => {
-  console.log(object);
   return (
     <DLayoutCol style={{ width: "100%" }}>
       {object &&

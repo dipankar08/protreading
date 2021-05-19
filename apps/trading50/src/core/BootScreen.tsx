@@ -6,6 +6,7 @@ import { DContainer, DLayoutCol } from "../components/basic";
 import { DAppLogo } from "../components/DImage";
 import { DLoadingText, DTextFooter } from "../components/DText";
 import { STYLES } from "../components/styles";
+import { dlog } from "../libs/dlog";
 import { CoreConstant } from "./constant";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
@@ -18,7 +19,7 @@ export const BootScreen = ({ navigation }: any) => {
   useEffect(() => {
     try {
       if (!isDev()) {
-        console.log(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
+        dlog.d(`Your Release channel is :${Updates.releaseChannel}, Update Id: ${Updates.updateId}`);
         Updates.checkForUpdateAsync().then((update) => {
           if (update.isAvailable) {
             setUpdate(true);

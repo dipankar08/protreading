@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
+import { DOptionDialog } from "../components/DDialog";
 import { DTextSection, DTextSectionWithButton } from "../components/DText";
 import { CoreStateContext } from "../core/CoreContext";
 import { useNetwork } from "../hooks/useNetwork";
@@ -14,6 +15,12 @@ export const HomeScreen = ({ navigation }: TProps) => {
   const coreState = useContext(CoreStateContext);
   const network = useNetwork();
   const [loading, setLoading] = useState(false);
+  const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
+  let domainList = [
+    { key: "UK", text: "UK" },
+    { key: "IN", text: "INDIA" },
+    { key: "USA", text: "USA" },
+  ];
 
   async function refreshData() {
     await network.doAllNetworkCallOnBoot({
@@ -35,7 +42,12 @@ export const HomeScreen = ({ navigation }: TProps) => {
   let name = "Home";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    refreshData();
+    if (appState.state.domain == null) {
+      setDomainDialogVisible(true);
+    } else {
+      refreshData();
+    }
+
     return () => {
       dlog.d(`Unmounted ${name}`);
     };
@@ -124,6 +136,18 @@ export const HomeScreen = ({ navigation }: TProps) => {
         <DTextSectionWithButton icon={"plus"}>Focus Stocks</DTextSectionWithButton>
       </DLayoutCol>
       {loading && <ActivityIndicator size="large" color="#00ff00" />}
+      <DOptionDialog
+        title={"Choose the domain"}
+        subtitle={"Once you chhhose the domain, the ticker will be shown from that domain only."}
+        items={domainList}
+        visible={domainDialogVisible}
+        onCancel={() => setDomainDialogVisible(false)}
+        onChange={(value) => {
+          network.changeDomain(value);
+          setDomainDialogVisible(false);
+          refreshData();
+        }}
+      ></DOptionDialog>
     </DContainerSafe>
   );
 };

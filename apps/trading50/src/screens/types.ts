@@ -40,4 +40,5 @@ export type TProps = {
   onOk?: TVoidCalBack;
   onCancel?: TVoidCalBack;
   onChange?: TAnyCallback;
+  onSignOut?: TVoidCalBack;
 };

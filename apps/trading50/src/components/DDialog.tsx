@@ -4,7 +4,7 @@ import { RadioButton } from "react-native-paper";
 import { TProps } from "../screens/types";
 import { colors } from "../styles/colors";
 import { DLayoutCol, DLayoutRow } from "./basic";
-import { DButtonPrimary } from "./DButton";
+import { DButtonIcon, DButtonPrimary } from "./DButton";
 import { DTextInput } from "./DInput";
 import { DSpace } from "./DLayout";
 import { DTextSubTitle, DTextTitle } from "./DText";
@@ -43,7 +43,6 @@ export const DPrompt = ({ visible, title, body, onOk, onCancel }: TProps) => {
 };
 
 export const DOptionDialog = ({ visible, title, subtitle, items, onChange, onCancel }: TProps) => {
-  console.log(items);
   const [value, setValue] = useState(items?.[0].key);
   return (
     <View style={styles.centeredView}>
@@ -99,21 +98,21 @@ export const DDialog = ({ visible, title, children, onOk, onCancel }: TProps) =>
         }}
       >
         <View style={styles.centeredView}>
-          <DLayoutCol style={[styles.modalView, { padding: 0, height: "90%" }]}>
-            {title && (
-              <DTextTitle style={{ textAlign: "center", borderBottomColor: colors.grey100, borderBottomWidth: 1, marginBottom: 10, padding: 10 }}>
-                {title}
-              </DTextTitle>
-            )}
+          <DLayoutCol style={[styles.modalView, { padding: 20 }]}>
+            <DLayoutRow>
+              {title && (
+                <DTextTitle style={{ textAlign: "center", borderBottomColor: colors.grey100, borderBottomWidth: 1, marginBottom: 10, padding: 10 }}>
+                  {title}
+                </DTextTitle>
+              )}
+              <DSpace />
+              <DButtonIcon icon="close" onPress={onCancel}></DButtonIcon>
+            </DLayoutRow>
+
             <ScrollView>{children}</ScrollView>
             {onOk && (
               <DButtonPrimary style={{ marginTop: 10 }} onPress={() => onOk?.(text)}>
                 OK
-              </DButtonPrimary>
-            )}
-            {onCancel && (
-              <DButtonPrimary style={{ marginTop: 10, borderRadius: 0 }} onPress={() => onCancel?.()}>
-                Close
               </DButtonPrimary>
             )}
           </DLayoutCol>
@@ -124,10 +123,11 @@ export const DDialog = ({ visible, title, children, onOk, onCancel }: TProps) =>
 };
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
+    flex: 1,
+    backgroundColor: "#00000066",
   },
   modalView: {
     margin: 20,
