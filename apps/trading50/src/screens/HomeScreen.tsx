@@ -57,6 +57,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
     <DContainerSafe>
       <DLayoutCol style={{ padding: 16 }}>
         <ScreenHeader
+          hideBack={true}
           navigation={navigation}
           leftIcon={"menu"}
           onPressLeftIcon={() => {

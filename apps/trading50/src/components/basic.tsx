@@ -199,6 +199,7 @@ export const ScreenHeader = ({
   loading,
   leftIcon,
   onPressLeftIcon,
+  hideBack,
 }: any) => {
   return (
     <View
@@ -222,7 +223,7 @@ export const ScreenHeader = ({
           style={{ marginRight: DIMENS.GAP_2X }}
         ></DButtonIcon>
       )}
-      {navigation ? (
+      {navigation && !hideBack ? (
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: 20 }}>
           <MaterialCommunityIcons name={"arrow-left"} color="black" size={24} />
         </TouchableOpacity>

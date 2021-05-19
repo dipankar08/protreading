@@ -11,7 +11,6 @@ from myapp import tasks
 from myapp.core import (danalytics, ddownload, dindicator, dlog, dredis,
                         dstorage, timetracker)
 from myapp.core.ddecorators import trace_perf
-from myapp.core.DLogger import DLogger
 from myapp.core.dtypes import TCandleType
 from myapp.core.optimization import shouldBuildIndicator
 from myapp.core.rootConfig import SUPPORTED_CANDLE, SUPPORTED_DOMAIN
@@ -134,11 +133,12 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         return
 
     # Locking
-    key = "downloadAndBuildindicator_{}_{}".format(domain, candle_type.value)
-    if dredis.get(key) == "1":
-        dlog.d("downloadAndBuildIndicator locked for key {}".format(key))
+    lockkey = "downloadAndBuildindicator_{}_{}".format(
+        domain, candle_type.value)
+    if dredis.get(lockkey) == "1":
+        dlog.d("downloadAndBuildIndicator locked for key {}".format(lockkey))
         raise Exception("downloadAndBuildIndicator is progress")
-    dredis.set(key, "1")
+    dredis.set(lockkey, "1")
 
     try:
         dlog.d("downloadAndBuildIndicator start")
@@ -184,16 +184,17 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         # Set TimeStamp key
         dredis.set("indicator_timestamp_{}_{}".format(
             domain, candle_type.value), getCurTimeStr())
-
+        dredis.set(lockkey, "0")
         return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
     except Exception as e:
+        dredis.set(lockkey, "0")
         dlog.d("downloadAndBuildIndicator Exception happened")
         danalytics.reportException(
             e, "Exception in downloadAndBuildIndicator")
         dlog.ex(e)
         raise e
     finally:
-        dredis.set(key, "0")
+        dredis.set(lockkey, "0")
         pass
 
 

@@ -1,6 +1,7 @@
 # pyright: strict
 import logging
 import traceback
+
 # setup logger
 __logger = logging.getLogger(__name__)
 __logger.setLevel("DEBUG")
@@ -25,6 +26,10 @@ def e(msg: str):
     __logger.error(msg)
 
 
-def ex(e: Exception, msg: str = "Exception:"):
-    __logger.error("{} - {}".format(msg, e.args))
-    __logger.exception("{} - {}".format(msg, e.args), e)
+def ex(e: Exception, msg: str = "Exception:", showStack: bool = True):
+    __logger.error(
+        "[EXCEPTION START] == == == == == == == == == == == == == {} - {}  == == == == == == == == == == == == ==".format(msg, e.args))
+    if showStack:
+        __logger.exception("{} - {}".format(msg, e.args), e)
+    __logger.error(
+        "[EXCEPTION END] == == == == == == == == == == == == == == == == == == == == == == == == == == ")

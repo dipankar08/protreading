@@ -20,9 +20,9 @@ export const MarketScreen = ({ navigation }: TProps) => {
   const [index, setIndex] = React.useState(0);
   const [loadingRefresh, setLoadingRefresh] = React.useState(false);
   const [routes] = React.useState([
-    { key: "first", title: "Indicator", navigation: navigation },
     { key: "second", title: "Sector", navigation: navigation },
     { key: "third", title: "Recommend", navigation: navigation },
+    { key: "first", title: "Indicator", navigation: navigation },
   ]);
 
   const renderScene = SceneMap({
@@ -34,6 +34,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
       <ScreenHeader
+        hideBack={true}
         title="Market Summary"
         loading={loadingRefresh}
         style={{ padding: 16 }}

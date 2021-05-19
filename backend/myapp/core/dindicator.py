@@ -1,12 +1,12 @@
-from myapp.core.DLogger import DLogger
 import numpy as np
 import pandas as pd
 import talib
-from pandas import DataFrame
-from myapp.core.sync import getSymbolList
-from myapp.core.RetHelper import fixDict, fixRound, verifyOrThrow
+from myapp.core import danalytics, dlog
 from myapp.core.ddecorators import trace_perf
-from myapp.core import dlog, danalytics
+from myapp.core.RetHelper import fixDict, fixRound, verifyOrThrow
+from myapp.core.sync import getSymbolList
+from pandas import DataFrame
+
 all_range = [5, 8, 13, 50, 100, 200]
 
 
@@ -57,7 +57,7 @@ def computeIndicator(df: DataFrame, ticker, domain: str):
             df[ticker, "wma_{}".format(range)] = talib.WMA(
                 df[ticker, "close"], timeperiod=range)
         except Exception as e:
-            dlog.ex(e)
+            dlog.ex(e, "not able compute wma", showStack=False)
             df[ticker, "wma_{}".format(range)] = 0
         # validated
         # macd and RSI
@@ -89,7 +89,8 @@ def computeIndicator(df: DataFrame, ticker, domain: str):
         df[ticker, 'tr_14'] = talib.TRANGE(
             df[ticker, 'high'], df[ticker, 'low'], df[ticker, 'close'])
     except Exception as e:
-        dlog.ex(e)
+        dlog.ex(e, "Not able to calculate RSI for Ticker".format(
+            ticker), showStack=False)
         danalytics.reportAction("talib_exception_for_{}".format(ticker))
         df[ticker, 'rsi_14'] = -1
         df[ticker, 'rsi_18'] = -1

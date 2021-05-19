@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { AppStateContext } from "../appstate/AppStateStore";
-import { DContainerSafe, DLayoutCol, DText, ScreenHeader } from "../components/basic";
+import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
 import { DButtonPrimary } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
 import { DTextInput } from "../components/DInput";
 import { DLayoutRow } from "../components/DLayout";
+import { DTextFooter } from "../components/DText";
 import { useNetwork } from "../hooks/useNetwork";
 import { showNotification } from "../libs/uihelper";
 import { TMarketEntry, TObject } from "../models/model";
@@ -61,15 +62,12 @@ const FilterView = ({ route, jumpTo }: TProps) => {
   const [loadingSave, setLoadingSave] = useState(false);
   const network = useNetwork();
   const appState = useContext(AppStateContext);
-  useEffect(() => {
-    setQuery(route.query);
-  }, []);
 
   const [saveDialogVisible, setSaveDialogVisible] = useState(false);
   return (
     <DLayoutCol style={{ marginHorizontal: DIMENS.GAP_BETWEEN_ELEMENT }}>
       <DTextInput onChangeText={(x) => setQuery(x)} multiline={true} style={{ maxHeight: 500 }}>
-        {query}
+        {route.query || ""}
       </DTextInput>
       <DLayoutRow style={{ justifyContent: "space-around" }}>
         <DButtonPrimary
@@ -112,7 +110,7 @@ const FilterView = ({ route, jumpTo }: TProps) => {
           <DTextInput placeholder="Enter Title" onChangeText={(x) => setQueryTitle(x)}></DTextInput>
           <DTextInput placeholder="Enter description" onChangeText={(x) => setQueryDesc(x)}></DTextInput>
           <DTextInput placeholder="tags" onChangeText={(x) => setQueryTag(x)}></DTextInput>
-          <DText>{query || "<query>"}</DText>
+          <DTextFooter>{query || "<query>"}</DTextFooter>
           <DButtonPrimary
             onPress={() => {
               network.saveNewScreen(

@@ -2,6 +2,7 @@ import pickle
 import time
 from types import FunctionType
 
+from myapp.core import dlog
 from myapp.core.dtypes import TCandleType
 from redis import Redis
 
@@ -9,6 +10,7 @@ _redis = Redis()
 
 
 def set(key, value):
+    dlog.d("Setting Key is redis :{}".format(key))
     _redis.set(key, value)
 
 
