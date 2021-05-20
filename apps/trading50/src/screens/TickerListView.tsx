@@ -39,11 +39,9 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
     if (appState.state.domain == "IN") {
       return `https://uk.tradingview.com/chart/?symbol=NSE:${symbol.replace(".NS", "")}`;
     } else if (appState.state.domain == "USA") {
-      console.log(symbol);
       return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}`;
     } else if (appState.state.domain == "UK") {
-      console.log(symbol);
-      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}`;
+      return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".L", "")}`;
     }
   }
 
@@ -74,7 +72,7 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
     if (curQuery.length > 0) {
       tempData = listData.filter((x) => x.name.toLowerCase().indexOf(curQuery.toLowerCase()) != -1);
     }
-    console.log(">>>" + curFilter);
+
     switch (curFilter) {
       case "ALPHA":
         tempData.sort((a, b) => (a.symbol > b.symbol ? 1 : -1));
@@ -98,7 +96,7 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
       //done
     }
     setFilterListData(tempData);
-    console.log(tempData[0].change);
+
     flatListRef.current?.scrollToIndex({ animated: true, index: 0 });
   }
 
@@ -303,7 +301,6 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
         visible={filterDialogVisible}
         onCancel={() => setFilterDialogVisible(false)}
         onChange={(value) => {
-          console.log(value);
           curFilter = value;
           setFilterDialogVisible(false);
           updateData();

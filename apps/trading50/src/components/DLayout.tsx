@@ -10,8 +10,8 @@ export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
       style={[
         {
           backgroundColor: STYLES.APP_SCREEN_BACKGROUND,
-          flex: 1,
           flexDirection: "column",
+          display: "flex",
         },
         overrideStyle,
         style,

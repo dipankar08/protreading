@@ -121,21 +121,6 @@ const MarketStackScreen = () => (
         },
       }}
     />
-    <ProfileStack.Screen
-      name="WebViewScreen"
-      component={WebViewScreen}
-      options={{
-        title: "Test",
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: "#f4511e",
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "normal",
-        },
-      }}
-    />
   </MarketStack.Navigator>
 );
 
@@ -263,13 +248,30 @@ const RootStackScreen = ({ userToken }: TProps) => {
   return (
     <RootStack.Navigator headerMode="none">
       {coreState.state.isSilentSignInComplete == true ? (
-        <RootStack.Screen
-          name="App"
-          component={DrawerScreen}
-          options={{
-            animationEnabled: false,
-          }}
-        />
+        <>
+          <RootStack.Screen
+            name="App"
+            component={DrawerScreen}
+            options={{
+              animationEnabled: false,
+            }}
+          />
+          <RootStack.Screen
+            name="WebViewScreen"
+            component={WebViewScreen}
+            options={{
+              title: "Test",
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: "#f4511e",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "normal",
+              },
+            }}
+          />
+        </>
       ) : (
         <RootStack.Screen
           name="Core"

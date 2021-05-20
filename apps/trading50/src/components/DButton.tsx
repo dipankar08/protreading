@@ -64,20 +64,21 @@ export const DBaseButton = ({ onPress, icon, size, color, loading, children, pst
             borderRadius: 6,
             marginTop: DIMENS.GAP_2X,
             justifyContent: "center",
+            alignItems: "center",
           },
           style,
         ]}
       >
         {loading && <ActivityIndicator size="small" color={color || "white"} />}
-        {!loading && icon && <MaterialCommunityIcons name={icon || "menu"} color={color || "white"} size={size || 24} style={style} />}
+        {!loading && icon && <MaterialCommunityIcons name={icon || "menu"} color={color || "white"} size={size || 24} style={{ marginRight: 10 }} />}
         {!loading && <Text style={{ color: color || "white" }}>{children}</Text>}
       </DLayoutRow>
     </TouchableOpacity>
   );
 };
 
-export const DButtonPrimary = ({ onPress, icon, size, color, loading, children, pstyle, style }: TProps) => {
-  return <DBaseButton onPress={onPress} icon={icon} size={size} loading={loading} style={style} pstyle={pstyle} children={children} />;
+export const DButtonPrimary = ({ onPress, icon, size, color, loading, children, pstyle, style, title }: TProps) => {
+  return <DBaseButton onPress={onPress} icon={icon} size={size} loading={loading} style={style} pstyle={pstyle} children={children || title} />;
 };
 
 export const DButtonLink = ({ onPress, color, loading, children, style }: TProps) => {

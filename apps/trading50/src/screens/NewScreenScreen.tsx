@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { AppStateContext } from "../appstate/AppStateStore";
@@ -10,7 +10,6 @@ import { DLayoutRow } from "../components/DLayout";
 import { DTextFooter } from "../components/DText";
 import { useNetwork } from "../hooks/useNetwork";
 import { showNotification } from "../libs/uihelper";
-import { TMarketEntry, TObject } from "../models/model";
 import { DIMENS } from "../res/dimens";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
@@ -53,7 +52,7 @@ export let NewScreenScreen = ({ navigation, route }: TProps) => {
   );
 };
 
-const FilterView = ({ route, jumpTo }: TProps) => {
+const FilterView = ({ route, jumpTo, navigation }: TProps) => {
   const [query, setQuery] = useState("");
   const [querytitle, setQueryTitle] = useState("");
   const [queryDesc, setQueryDesc] = useState("");
@@ -64,6 +63,9 @@ const FilterView = ({ route, jumpTo }: TProps) => {
   const appState = useContext(AppStateContext);
 
   const [saveDialogVisible, setSaveDialogVisible] = useState(false);
+  useEffect(() => {
+    setQuery(route.query || "");
+  }, []);
   return (
     <DLayoutCol style={{ marginHorizontal: DIMENS.GAP_BETWEEN_ELEMENT }}>
       <DTextInput onChangeText={(x) => setQuery(x)} multiline={true} style={{ maxHeight: 500 }}>
@@ -72,7 +74,7 @@ const FilterView = ({ route, jumpTo }: TProps) => {
       <DLayoutRow style={{ justifyContent: "space-around" }}>
         <DButtonPrimary
           loading={loadingRun}
-          onPress={() =>
+          onPress={() => {
             network.performScreen(query, {
               onBefore: () => setLoadingRun(true),
               onSuccess: (obj: TObject) => {
@@ -97,8 +99,8 @@ const FilterView = ({ route, jumpTo }: TProps) => {
                 setLoadingRun(false);
                 showNotification(result || "Error happened while screening");
               },
-            })
-          }
+            });
+          }}
         >
           RUN
         </DButtonPrimary>
@@ -135,11 +137,11 @@ const FilterView = ({ route, jumpTo }: TProps) => {
   );
 };
 
-const ResultView = ({ route }: TProps) => {
+const ResultView = ({ route, navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   return (
     <DLayoutCol style={{ marginHorizontal: 0 }}>
-      <TickerListView objArray={appState.state.screenResultList}></TickerListView>
+      <TickerListView objArray={appState.state.screenResultList} navigation={route.navigation}></TickerListView>
     </DLayoutCol>
   );
 };

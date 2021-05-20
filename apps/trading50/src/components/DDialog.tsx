@@ -125,9 +125,8 @@ const styles = StyleSheet.create({
   centeredView: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
     flex: 1,
-    backgroundColor: "#00000066",
+    backgroundColor: "#00000000", // DONOT PUT ANY COLOR as this dilaog is getting part of the layout
   },
   modalView: {
     margin: 20,
@@ -135,6 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 35,
     shadowColor: "#000",
+    maxHeight: "80%", // we need this else the dilog will explore
     shadowOffset: {
       width: 0,
       height: 2,

@@ -1,10 +1,13 @@
 import { Picker } from "@react-native-community/picker";
 import React, { useContext } from "react";
-import { Button, Modal, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { AppStateContext } from "../appstate/AppStateStore";
+import { DButtonPrimary } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
+import { DLayoutCol } from "../components/DLayout";
 import { DKeyValueList } from "../components/DList";
+import { DTextFooter } from "../components/DText";
 import { useNetwork } from "../hooks/useNetwork";
 
 export const OrderCreateDialog = ({ visible, onClose }: any) => {
@@ -21,37 +24,29 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
   }
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
+    <DDialog
       visible={visible}
-      onRequestClose={() => {
-        //Alert.alert("Modal has been closed.");
+      onCancel={() => {
         onClose();
       }}
+      title={"Create Position"}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text>Add new position for tracking</Text>
-          <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
-            {xStockList}
-          </Picker>
-          <TextInput style={styles.TextInputStyle} placeholder="Please enter Stock Price" value={price} onChangeText={setPrice}></TextInput>
-          <TextInput style={styles.TextInputStyle} placeholder="Write Stock quantities" value={quantities} onChangeText={setQuantities}></TextInput>
-          <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-            <Button
-              onPress={() => {
-                network.createOrder(stock, price, quantities, () => {
-                  onClose();
-                });
-              }}
-              title="add New"
-            />
-            <Button onPress={() => onClose()} title="Cancel" />
-          </View>
-        </View>
-      </View>
-    </Modal>
+      <DLayoutCol>
+        <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
+          {xStockList}
+        </Picker>
+        <TextInput style={styles.TextInputStyle} placeholder="Please enter Stock Price" value={price} onChangeText={setPrice}></TextInput>
+        <TextInput style={styles.TextInputStyle} placeholder="Write Stock quantities" value={quantities} onChangeText={setQuantities}></TextInput>
+        <DButtonPrimary
+          onPress={() => {
+            network.createOrder(stock, price, quantities, () => {
+              onClose();
+            });
+          }}
+          title="add New"
+        />
+      </DLayoutCol>
+    </DDialog>
   );
 };
 
@@ -67,32 +62,26 @@ export const OrderCloseDialog = ({ item, visible, onClose }: any) => {
   const network = useNetwork();
   const [price, setPrice] = React.useState("");
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={() => {
+    <DDialog
+      onCancel={() => {
         onClose();
       }}
+      title={"Close Order"}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text>CLose the oder of {item?.stock}</Text>
-          <TextInput style={styles.TextInputStyle} placeholder="Sell Price" value={price} onChangeText={setPrice}></TextInput>
-          <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-            <Button
-              onPress={() => {
-                network.closeOrder(item._id, price, () => {
-                  onClose();
-                });
-              }}
-              title="Close Order"
-            />
-            <Button onPress={() => onClose()} title="Cancel" />
-          </View>
-        </View>
-      </View>
-    </Modal>
+      <DLayoutCol>
+        <DTextFooter> You are going to close the order {item?.stock}</DTextFooter>
+        <TextInput style={styles.TextInputStyle} placeholder="Sell Price" value={price} onChangeText={setPrice}></TextInput>
+        <DButtonPrimary
+          onPress={() => {
+            network.closeOrder(item._id, price, () => {
+              onClose();
+            });
+          }}
+        >
+          Close Order
+        </DButtonPrimary>
+      </DLayoutCol>
+    </DDialog>
   );
 };
 
@@ -122,7 +111,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "#00000020",
+    position: "absolute",
   },
   modalView: {
     margin: 10,

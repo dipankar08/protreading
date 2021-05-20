@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -50,6 +50,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
         navigation={navigation}
       ></ScreenHeader>
       <TabView
+        style={{ flex: 1 }}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
@@ -78,7 +79,7 @@ export const MarketListView = ({ route }: TProps) => {
   }, [appState.state.summary, appState.state.sectorList, appState.state.recommendedList]);
 
   return (
-    <DContainerSafe style={{ paddingHorizontal: 0, margin: 0, marginVertical: 0, flex: 1, height: "100%" }}>
+    <View style={{}}>
       <FlatList
         ItemSeparatorComponent={FlatListItemSeparator}
         showsHorizontalScrollIndicator={false}
@@ -136,7 +137,7 @@ export const MarketListView = ({ route }: TProps) => {
           );
         }}
       />
-    </DContainerSafe>
+    </View>
   );
 };
 

@@ -23,10 +23,14 @@ export const DKeyValueList = ({ object }: TProps) => {
       {object &&
         Object.keys(object).map((key) => (
           <DLayoutRow style={{ justifyContent: "space-between", paddingVertical: 10, borderColor: colors.grey100, borderBottomWidth: 1 }} key={key}>
-            <DTextSubTitle style={{ paddingLeft: 10 }}>{key}:</DTextSubTitle>
-            <DTextSubTitle style={{ paddingRight: 10 }}>{toString(object[key])}</DTextSubTitle>
+            <DTextSubTitle style={{ paddingRight: 10 }}>{key}:</DTextSubTitle>
+            <DTextSubTitle style={{ paddingLeft: 10 }}>{toString(object[key])}</DTextSubTitle>
           </DLayoutRow>
         ))}
+      {!object && <DTextSubTitle style={{ textAlign: "center", flex: 1, width: "100%", color: colors.blue500 }}>No item found</DTextSubTitle>}
+      {object && Object.keys(object).length == 0 && (
+        <DTextSubTitle style={{ textAlign: "center", flex: 1, width: "100%", color: colors.blue500 }}>No item found</DTextSubTitle>
+      )}
     </DLayoutCol>
   );
 };

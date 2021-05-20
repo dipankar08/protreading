@@ -5,7 +5,8 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.1.0",
@@ -34,6 +35,7 @@
     "javascript-time-ago": "^2.3.4",
     "moment": "^2.29.1",
     "react": "16.13.1",
+    "react-devtools": "<4.11.0",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-app-intro-slider": "^4.0.4",
