@@ -200,6 +200,7 @@ export const ScreenHeader = ({
   leftIcon,
   onPressLeftIcon,
   hideBack,
+  color,
 }: any) => {
   return (
     <View
@@ -217,7 +218,7 @@ export const ScreenHeader = ({
         <DButtonIcon
           icon={leftIcon}
           size={24}
-          color="black"
+          color={color || "black"}
           loading={false}
           onPress={onPressLeftIcon}
           style={{ marginRight: DIMENS.GAP_2X }}
@@ -225,13 +226,13 @@ export const ScreenHeader = ({
       )}
       {navigation && !hideBack ? (
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: 20 }}>
-          <MaterialCommunityIcons name={"arrow-left"} color="black" size={24} />
+          <MaterialCommunityIcons name={"arrow-left"} color={color || "black"} size={24} />
         </TouchableOpacity>
       ) : (
         <View></View>
       )}
-      <DScreenTitle>{title}</DScreenTitle>
-      {icon && <DButtonIcon icon={icon} size={24} color="black" loading={loading || false} onPress={onPress}></DButtonIcon>}
+      <DScreenTitle style={{ color: color || "black" }}>{title}</DScreenTitle>
+      {icon && <DButtonIcon icon={icon} size={24} color={color || "black"} loading={loading || false} onPress={onPress}></DButtonIcon>}
     </View>
   );
 };

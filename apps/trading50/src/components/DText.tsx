@@ -30,8 +30,10 @@ export const DLoadingText = ({ color, style, children }: TProps) => {
   );
 };
 
-export const DScreenTitle = ({ children, style }: TProps) => {
-  return <Text style={{ color: "#000000", fontWeight: "bold", fontSize: 23.5, flex: 1, textTransform: "capitalize" }}>{children}</Text>;
+export const DScreenTitle = ({ children, style, color }: TProps) => {
+  return (
+    <Text style={[{ color: color || "#000000", fontWeight: "bold", fontSize: 23.5, flex: 1, textTransform: "capitalize" }, style]}>{children}</Text>
+  );
 };
 
 export const DTextSection = ({ children, style }: TProps) => {

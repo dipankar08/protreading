@@ -10,6 +10,7 @@ import { CoreStackScreen } from "../core/core_navigation";
 import { WebViewScreen } from "../core/WebViewScreen";
 import { DebugScreen } from "./DebugScreen";
 import { HomeScreen } from "./HomeScreen";
+import { LiveTVScreen } from "./LiveTvScreen";
 import { MarketGroupListScreen, MarketScreen } from "./MarketScreen";
 import { NewScreenScreen } from "./NewScreenScreen";
 import { PositionScreen } from "./PositionScreen";
@@ -39,6 +40,29 @@ const HomeStackScreen = ({ navigation }: TProps) => (
       }}
     />
   </HomeStack.Navigator>
+);
+
+// News Stack
+const NewsStack = createStackNavigator();
+const NewsStackScreen = ({ navigation }: TProps) => (
+  <NewsStack.Navigator>
+    <HomeStack.Screen
+      name="LiveTVScreen"
+      component={LiveTVScreen}
+      options={{
+        title: "LiveTVScreen",
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "normal",
+        },
+        headerLeft: () => <MaterialCommunityIcons name="menu" color="white" size={24} style={{ marginLeft: 10 }} />,
+      }}
+    />
+  </NewsStack.Navigator>
 );
 
 /// serach
@@ -238,6 +262,7 @@ const DrawerScreen = () => (
     <Drawer.Screen name="Profile" component={ProfileStackScreen} />
     <Drawer.Screen name="Debug" component={DebugScreen} />
     <Drawer.Screen name="Screen" component={ScreenStackScreen} />
+    <Drawer.Screen name="News" component={NewsStackScreen} />
   </Drawer.Navigator>
 );
 

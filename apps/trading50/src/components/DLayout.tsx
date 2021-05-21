@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
+import { colors } from "../styles/colors";
 import { STYLES } from "./styles";
 
 export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
@@ -51,6 +52,7 @@ export const DLayoutRow = ({ children, center, style }: TProps) => {
         {
           display: "flex",
           flexDirection: "row",
+          alignItems: "center",
         },
         style,
       ]}
@@ -96,4 +98,8 @@ export const DCard = ({ style, children }: TProps) => {
       {children}
     </View>
   );
+};
+
+export const DBorderLine = ({ style }: TProps) => {
+  return <View style={[{ borderTopColor: colors.blueGrey900, borderTopWidth: 1 }, style]}></View>;
 };
