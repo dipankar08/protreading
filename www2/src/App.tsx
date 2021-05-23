@@ -1,6 +1,7 @@
 import "antd/dist/antd.css";
 import React from "react";
-import "./asserts/App.css";
+import "./asserts/css/App.css";
+import "./asserts/css/d.scss";
 import { FilterPageScreen } from "./screen/FilterPageScreen";
 function App() {
   return (
