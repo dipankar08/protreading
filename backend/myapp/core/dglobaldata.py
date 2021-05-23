@@ -85,9 +85,10 @@ def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
         df = df.tail(limit)
         result = df.to_json(orient="records")
         parsed = json.loads(result)
-        for offset in range(15):
+        for offset in range(limit):
             row = parsed[offset]
-            offset_key = offset  # Key => 0, -1,-2....
+            # Key => 0, -1,-2....
+            offset_key = (limit - offset - 1) * -1
             for x in row.keys():
                 pair = literal_eval(x)
                 symbol = pair[0]
