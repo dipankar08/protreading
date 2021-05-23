@@ -1,8 +1,11 @@
+import "antd/dist/antd.css";
 import React from "react";
+import "./asserts/App.css";
+import { FilterPageScreen } from "./screen/FilterPageScreen";
 function App() {
   return (
     <div className="App">
-      <h1>Welcome1</h1>
+      <FilterPageScreen />
     </div>
   );
 }
