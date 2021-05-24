@@ -109,7 +109,7 @@ def resolveCondition(cond: str):
         return " ".join(converted)
     except Exception as e:
         raise Exception(
-            "You passed a invalid filter:{} {}".format(cond, e.args))
+            "Invalid filter:<{}>. What happened? {}".format(cond, e.args[0]))
 
 
 print(resolveCondition("indicator:1d:0:close > num:10"))
