@@ -1,10 +1,8 @@
-from myapp.core.ddecorators import trace_perf
 import numpy as np
+from myapp.core import dlog, dredis, timetracker
+from myapp.core.ddecorators import trace_perf
 from myapp.core.RetHelper import fixDict
-from myapp.core import dlog
-from myapp.core import timetracker
 from myapp.core.sync import getSymbolList
-from myapp.core import dredis, dlog
 
 
 def getIndicatorHistory(domain) -> dict:
@@ -26,6 +24,7 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
     sl = 0
     columns = [resolveIndicatorExpression(c) for c in columns]
     condition = resolveCondition(condition)
+    last_error = ''
     try:
         for symbol in indicatorHistory.keys():
             indicator_map = indicatorHistory[symbol]
@@ -48,9 +47,10 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
                             np.round(eval(col[1]), 2))
                     # add used defined data
                     result.append(fixDict(selected_one))
-
             except Exception as e:
-                dlog.ex(e)
+                last_error = 'Are you passing right Filter {}'.format(
+                    condition)
+                dlog.ex(e, showStack=False)
                 dlog.e(
                     "We faced the issue when we are running filter for symbol:{}".format(symbol))
 
@@ -70,7 +70,7 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
     # Do limit
     if limit:
         result = result[:limit]
-    return result
+    return {'result': result, 'last_error': last_error}
 
 
 def resolveIndicatorExpression(expression: str):
@@ -94,37 +94,22 @@ def resolveIndicatorExpression(expression: str):
 
 def resolveCondition(cond: str):
     # Spacial case when you want to skip the condition
-    if cond.lower() == "true" or cond == "1":
-        return "True"
-
-    # Now process it
-    cond = cond.replace("\t", " ")
-    cond = cond.replace("\n", " ")
-    cond = cond.replace("\r", " ")
-    tokens = cond.split(" ")
-    processed = []
-    for t in tokens:
-        t = t.strip()
-        if len(t) == 0:
-            continue
-        if (t in [')', '(', 'and', 'or', ">", "<", ">=", "<=", "+", "-", "*", "/"]):
-            processed.append(t)
-        elif t.startswith('num:'):
-            processed.append(t.replace("num:", ""))
-        elif t.startswith("indicator:"):
-            # indicator:day:0:ema_50:
-            indicator_tokens = t.split(":")
-            interval = indicator_tokens[1]  # it can be day, m5, m10, m15
-            # Note that we have plus the offset, thus it generates like 0-1, -1-1, -2-1 ...
-            offset = indicator_tokens[2]
-            indicator = indicator_tokens[3]
-            processed.append('indicator_map["{}"][{}]["{}"]'.format(
-                interval, offset, indicator))
-        else:
-            if ':' in t:
-                raise Exception("Invalid Querey send".format(cond))
-            processed.append(t)
-    return " ".join(processed)
+    try:
+        if cond.lower() == "true" or cond == "1":
+            return "True"
+        tokens = [t.strip() for t in cond.split(" ") if len(t.strip()) > 0]
+        converted = []
+        for t in tokens:
+            if t.startswith('indicator:'):
+                indicator_tokens = t.split(":")
+                converted.append('indicator_map["{}"][{}]["{}"]'.format(
+                    indicator_tokens[1], indicator_tokens[2], indicator_tokens[3]))
+            else:
+                converted.append(t)
+        return " ".join(converted)
+    except Exception as e:
+        raise Exception(
+            "You passed a invalid filter:{} {}".format(cond, e.args))
 
 
 print(resolveCondition("indicator:1d:0:close > num:10"))

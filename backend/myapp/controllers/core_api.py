@@ -1,4 +1,4 @@
-
+# noqa: F401,E123
 from flask import Blueprint, json, request
 from myapp import tasks
 # from myapp.core.FastStorage import FastStorage
@@ -139,7 +139,8 @@ def Screen():
         domain,
         get_param_or_throw(request, 'filter'),
         str_to_list(get_param_or_default(request, 'columns', '')))
-    return buildSuccess(msg='Here is the list of Stocks', out={"result": result, "timestamp": dglobaldata.getLastUpdatedTimeStamp(domain)})
+    return buildSuccess(msg='Here is the list of Stocks', out={
+        "result": result['result'], "timestamp": dglobaldata.getLastUpdatedTimeStamp(domain), 'error': result['last_error']})
 
 
 # Chart are depeicated
