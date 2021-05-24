@@ -1,3 +1,5 @@
+import datetime
+
 import numpy as np
 import pandas as pd
 import talib
@@ -30,6 +32,9 @@ def computeIndicator(df: DataFrame, ticker, domain: str):
 
     # df[ticker, 'sector'] = getSymbolList()[ticker]['sector']
     df[ticker, 'open'] = np.round(df[ticker, 'Open'], 2)
+    df[ticker, 'date'] = df[ticker].index
+    df[ticker, 'date_iso'] = df[ticker, "date"].apply(
+        lambda x: x.strftime('%Y-%m-%dT%H:%M:%SZ'))
     df[ticker, 'close'] = np.round(df[ticker, 'Close'], 2)
     df[ticker, 'high'] = np.round(df[ticker, 'High'], 2)
     df[ticker, 'low'] = np.round(df[ticker, 'Low'], 2)

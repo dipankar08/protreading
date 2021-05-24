@@ -85,9 +85,10 @@ def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
         df = df.tail(limit)
         result = df.to_json(orient="records")
         parsed = json.loads(result)
-        for offset in range(15):
+        for offset in range(limit):
             row = parsed[offset]
-            offset_key = offset  # Key => 0, -1,-2....
+            # Key => 0, -1,-2....
+            offset_key = (limit - offset - 1) * -1
             for x in row.keys():
                 pair = literal_eval(x)
                 symbol = pair[0]
@@ -165,9 +166,9 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         processed_df = dindicator.buildTechnicalIndicators(
             download_data, domain)
 
-        dlog.d("downloadAndBuildIndicator: saving to storage start")
-        path_to_store = dstorage.get_default_path_for_candle(candle_type)
-        dstorage.store_data_to_disk(processed_df, path_to_store)
+        # DONOT STOARE AS FILEdlog.d("downloadAndBuildIndicator: saving to storage start")
+        #path_to_store = dstorage.get_default_path_for_candle(candle_type)
+        #dstorage.store_data_to_disk(processed_df, path_to_store)
 
         dlog.d("downloadAndBuildIndicator: building indicator history map")
         # Building Indicator map for O(1) looks up.
