@@ -1,4 +1,6 @@
-npm run  build 
-npx  netlify-cli deploy --prod  -d ./build -m "deployed using deploy script"
-echo "TEST in https://trading50.netlify.app"
+npm run build
+#cp -R public/audio dist/audio
+#cp -R public/img dist/img
+
+firebase deploy
 
