@@ -1,5 +1,6 @@
 import React from "react";
+import { LandingPage, samplePageConfig } from "../components/landingpage/LandingPage";
 
 export const LandingPageScreen = () => {
-  return <p>Hello</p>;
+  return <LandingPage pageConfig={samplePageConfig}></LandingPage>;
 };

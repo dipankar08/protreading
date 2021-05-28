@@ -2,11 +2,11 @@ import "antd/dist/antd.css";
 import React from "react";
 import "./asserts/css/app.scss";
 import "./asserts/css/d.scss";
-import { FilterPageScreen } from "./screen/FilterPageScreen";
+import { LandingPageScreen } from "./screen/LandingPageScreen";
 function App() {
   return (
     <div className="App d_fullscreen">
-      <FilterPageScreen />
+      <LandingPageScreen />
     </div>
   );
 }
