@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useGoogleOneTapLogin } from "react-google-one-tap-login";
+import { getRequest } from "../../libs/network";
+import { TVoidCalBack } from "../../libs/types";
 import featureImage from "./asserts/feature-tile-icon-01.svg";
 import explanationImage from "./asserts/features-split-image-01.png";
-import "./asserts/landingpagestyle.css";
+import "./asserts/LandingPage.scoped.css";
 import logo from "./asserts/logo.svg";
 import heroImage from "./asserts/video-placeholder.jpg";
 export type TSectionItem = {
@@ -163,15 +166,45 @@ export const samplePageConfig: TPageConfig = {
 
 export type TProp = {
   pageConfig: TPageConfig;
+  onNavigateToHome: TVoidCalBack;
 };
 
-export const LandingPage = ({ pageConfig }: TProp) => {
+export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
   pageConfig = pageConfig || samplePageConfig;
   const [showVideoModel, setShowVideoModel] = React.useState(false);
   const [email, setEmail] = React.useState("");
+  const [login, setlogin] = React.useState(false);
+
+  async function doAutoLogin() {
+    let res = await getRequest(
+      "https://oauth2.googleapis.com/tokeninfo?id_token=290736876800-g9jg0bbgrgjkl2m2ta5hamabe2568lms.apps.googleusercontent.com"
+    );
+  }
+
+  useEffect(() => {
+    //const page = location.pathname;
+    //document.body.classList.add("is-loaded");
+    //childRef.current.init();
+    //trackPage(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useGoogleOneTapLogin({
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (response) => {
+      console.log(response);
+    },
+    googleAccountConfigs: {
+      client_id: "290736876800-g9jg0bbgrgjkl2m2ta5hamabe2568lms.apps.googleusercontent.com", // Your google client id here !!!
+    },
+  });
+
   return (
-    <div className="has-animations is-loaded">
-      <div className="body-wrap">
+    <div className="body">
+    <div className="has-animations is-loaded 11">
+      <div className="body_wrap">
         <header className="site-header reveal-from-bottom is-revealed">
           <div className="container">
             <div className="site-header-inner">
@@ -197,9 +230,15 @@ export const LandingPage = ({ pageConfig }: TProp) => {
                   </ul>
                   <ul className="list-reset header-nav-right">
                     <li>
-                      <a className="button button-primary button-wide-mobile button-sm" href="/#0">
-                        Sign up
-                      </a>
+                      {!login ? (
+                        <a className="button button-primary button-wide-mobile button-sm" onClick={(e) => setlogin(true)}>
+                          Sign up
+                        </a>
+                      ) : (
+                        <a className="button button-primary button-wide-mobile button-sm" onClick={(e) => onNavigateToHome?.()}>
+                          Go to Home
+                        </a>
+                      )}
                     </li>
                   </ul>
                 </div>
@@ -224,8 +263,8 @@ export const LandingPage = ({ pageConfig }: TProp) => {
                         <a href="https://cruip.com/" className="button button-primary button-wide-mobile">
                           Get started
                         </a>
-                        <a href="https://github.com/cruip/open-react-template/" className="button button-dark button-wide-mobile">
-                          View on Github
+                        <a href="https://github.com//" className="button button-dark button-wide-mobile">
+                          Join As Prime
                         </a>
                       </div>
                     </div>
@@ -259,9 +298,9 @@ export const LandingPage = ({ pageConfig }: TProp) => {
                   </div>
                 </div>
                 <div className="tiles-wrap center-content">
-                  {pageConfig.featureItems.map((item) => {
+                  {pageConfig.featureItems.map((item, index) => {
                     return (
-                      <div className="tiles-item reveal-from-bottom is-revealed">
+                      <div className="tiles-item reveal-from-bottom is-revealed" key={index.toString()}>
                         <div className="tiles-item-inner">
                           <div className="features-tiles-item-header">
                             <div className="features-tiles-item-image mb-16">
@@ -291,9 +330,9 @@ export const LandingPage = ({ pageConfig }: TProp) => {
                   </div>
                 </div>
                 <div className="split-wrap invert-mobile">
-                  {pageConfig.explanationItems.map((item) => {
+                  {pageConfig.explanationItems.map((item, index) => {
                     return (
-                      <div className="split-item">
+                      <div className="split-item" key={index.toString()}>
                         <div className="split-item-content center-content-mobile reveal-from-left is-revealed" data-reveal-container=".split-item">
                           <div className="text-xxs text-color-primary fw-600 tt-u mb-8">{item.subtitle}</div>
                           <h3 className="mt-0 mb-12">{item.title}</h3>
@@ -323,9 +362,9 @@ export const LandingPage = ({ pageConfig }: TProp) => {
                   </div>
                 </div>
                 <div className="tiles-wrap">
-                  {pageConfig.testimonialItems.map((item) => {
+                  {pageConfig.testimonialItems.map((item, index) => {
                     return (
-                      <div className="tiles-item reveal-from-right is-revealed" data-reveal-delay="200">
+                      <div className="tiles-item reveal-from-right is-revealed" data-reveal-delay="200" key={index.toString()}>
                         <div className="tiles-item-inner">
                           <div className="testimonial-item-content">
                             <p className="text-sm mb-0">{item.review}</p>
@@ -439,6 +478,7 @@ export const LandingPage = ({ pageConfig }: TProp) => {
           </div>
         </footer>
       </div>
+    </div>
     </div>
   );
 };

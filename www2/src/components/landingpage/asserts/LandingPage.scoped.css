@@ -4,7 +4,7 @@
     -webkit-text-size-adjust: 100%
 }
 
-body {
+.body {
     margin: 0
 }
 
@@ -248,7 +248,7 @@ html {
     box-sizing: inherit
 }
 
-body {
+.body {
     background: #151719;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased
@@ -367,12 +367,12 @@ html {
     letter-spacing: -.1px
 }
 
-body {
+.body {
     color: #9ca9b3;
     font-size: 1rem
 }
 
-body,button,input,select,textarea {
+.body,button,input,select,textarea {
     font-family: "Inter",sans-serif;
     font-weight: 400
 }
@@ -1749,13 +1749,13 @@ textarea.form-input {
     background: #1a1c1f
 }
 
-.is-boxed .body-wrap {
+.is-boxed .body_wrap {
     max-width: 1440px;
     margin: 0 auto;
     box-shadow: 0 20px 48px rgba(21,23,25,.8)
 }
 
-.is-boxed .body-wrap:before {
+.is-boxed .body_wrap:before {
     content: "";
     position: absolute;
     top: 0;
@@ -1766,7 +1766,7 @@ textarea.form-input {
     z-index: -10
 }
 
-.body-wrap {
+.body_wrap {
     position: relative;
     overflow: hidden;
     display: flex;
