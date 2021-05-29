@@ -47,6 +47,12 @@ export const FilterPageScreen = () => {
       sorter: (a: any, b: any) => a.close - b.close,
     },
     {
+      title: "volume",
+      dataIndex: "volume",
+      key: "volume",
+      sorter: (a: any, b: any) => a.volume - b.volume,
+    },
+    {
       title: "change",
       dataIndex: "change",
       key: "change",
