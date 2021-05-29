@@ -5,7 +5,7 @@ export type TRecord = { [key: string]: string };
 export type TVoidCalBack = () => void;
 export type TStringCallback = (str: string) => void;
 export type TErrorCallback = (str: string) => void;
-export type TSuccessCallback = (obj: Object) => void;
+export type TSuccessCallback = (obj: any) => void;
 export type TAnyCallback = (obj: any) => void;
 
 export type TAuthInfo = {

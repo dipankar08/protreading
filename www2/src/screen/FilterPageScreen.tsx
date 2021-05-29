@@ -1,14 +1,16 @@
 import { DownloadOutlined, ExclamationCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
-import { Button, Form, Input, List, Modal, notification, Radio, Table } from "antd";
+import { Button, Drawer, Form, Input, List, Modal, notification, Radio, Table } from "antd";
 import Search from "antd/lib/input/Search";
 import React, { useEffect, useState } from "react";
+// @ts-ignore
+import TradingViewWidget from "react-tradingview-widget";
 import { getRequest } from "../libs/network";
 import { fromNow } from "../libs/time";
 import { TObject } from "../libs/types";
-import { deleteFilter, runQuery, saveFilter, searchHistoryFilter, TFilterHistoryItem } from "./network";
+import { deleteFilter, runQuery, saveFilter, searchHistoryFilter, TFilterHistoryItem, TStockListItem } from "./network";
 
 export const FilterPageScreen = () => {
-  const [result, setResult] = useState<Array<TObject>>([]);
+  const [result, setResult] = useState<Array<TStockListItem>>([]);
   const [filterHistory, setFilterHistory] = useState<Array<TFilterHistoryItem>>([]);
   const [loading, setLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
@@ -18,11 +20,12 @@ export const FilterPageScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSaveModalVisible, setIsSaveModalVisible] = useState(false);
+  const [visibleChartDrawer, setVisibleChartDrawer] = useState(false);
 
   const [saveInitialValue, setSaveInitialValue] = useState<TObject>({});
 
   const [domain, setDomain] = useState("IN");
-  const [selectedItem, setSelectedItem] = useState<TObject | null>(null);
+  const [selectedItem, setSelectedItem] = useState<TStockListItem | null>(null);
   const [timestamp, setTimestamp] = useState("We don't know when this data is updated. Please check latest data by clicking above button.");
   const display_columns = [
     {
@@ -56,12 +59,13 @@ export const FilterPageScreen = () => {
       width: 100,
       render: (item: any, data: any) => (
         <a
-          onClick={(item) => {
-            setSelectedItem(item);
-            setIsModalVisible(true);
+          onClick={(e) => {
+            console.log(data)
+            setSelectedItem(data);
+            setVisibleChartDrawer(true);
           }}
         >
-          action
+          chart
         </a>
       ),
     },
@@ -129,43 +133,36 @@ export const FilterPageScreen = () => {
     })
   }
 
-  function perfromScan() {
-    runQuery(`https://dev.api.grodok.com:5000/screen?filter=${query.toLowerCase()}&domain=${domain}&columns=${columns}`, {
-      onBefore: () => {
-        setLoading(true);
-        setError("");
-      },
-      onComplete: () => setLoading(false),
-      onError: (err) => {
-        notification.error({
-          message: "Not able to scan",
-          description: err,
-        });
-        setResult([]);
-      },
-      onSuccess: (result) => {
-        console.log(result);
-        let data = result as TObject;
-        setResult(data.out.result as Array<TObject>);
-        if(data.out.error){
- notification.warning({
-          message: "Run scan with partial error",
-          description:data.out.error,
-        });
-        } else{
-        notification.success({
-          message: `We found ${data.out.result.length} result`,
-        });
-      }
-        setTimestamp(
-          Object.keys(data.out.timestamp)
-            .map((x) => {
-              if (data.out.timestamp[x] != "Data not found") {
-                return `${x} updated on ${fromNow(data.out.timestamp[x])}. `;
-              }
-            })
-            .join("")
-        );
+  function performScan() {
+    runQuery(  query, domain, columns, {
+        onBefore: () => {
+          setLoading(true);
+          setError("");
+        },
+        onComplete: () => setLoading(false),
+        onError: (err) => {
+          notification.error({
+            message: "Not able to scan",
+            description: err,
+          });
+          setResult([]);
+        },
+        onSuccess: (data) => {
+        let result = (data as TObject).result as Array<TStockListItem>
+        let timestamp = (result as TObject).timestamp
+        let error = (result as TObject).error
+        setResult(result)
+        setTimestamp(timestamp);
+        if(error){
+            notification.warning({
+              message: "Run scan with partial error",
+              description:error,
+            });
+          } else{
+            notification.success({
+              message: `We found ${result.length} result`,
+          });
+        }
       },
     });
   }
@@ -177,6 +174,7 @@ export const FilterPageScreen = () => {
         <p className="d_mv0">{timestamp}</p>
       </div>
       <div className="d_layout_row d_layout_fill">
+        <div>
         <div className="d_layout_col browse d_p10">
           <Search placeholder="Browser Filter" onSearch={(data) => searchHistory(data)}  enterButton size="large" style={{backgroundColor:"#00000"}}/>
           <List
@@ -199,6 +197,7 @@ export const FilterPageScreen = () => {
             )}
           />
         </div>
+        </div>
         <div className="d_layout_col d_p10 d_layout_fill">
           <div className="d_layout_col">
             <p className="d_mt10">Write your filter expression (e.g indicator:1d:close == 100) </p>
@@ -217,7 +216,7 @@ export const FilterPageScreen = () => {
                 <Radio value={"USA"}>USA Stocks</Radio>
               </Radio.Group>
               <view className="d_layout_fill" />
-              <Button className="" type="primary" loading={loading} onClick={perfromScan}>
+              <Button className="" type="primary" loading={loading} onClick={performScan}>
                 Run Query
               </Button>
               <Button className="d_ml5" type="primary" onClick={reloadData}>
@@ -303,8 +302,25 @@ export const FilterPageScreen = () => {
         </div>
       </div>
       <div className="d_layout_row footer">
-       
       </div>
+       <Drawer
+          title={`${selectedItem?.name} |  close: ${selectedItem?.close}`}
+          placement={'right'}
+          closable={true}
+          onClose={()=>setVisibleChartDrawer(false)}
+          visible={visibleChartDrawer}
+          width="50%"
+        >
+
+          {selectedItem &&
+            <>
+            <p className="d_text_title d_mb20">Chart( <a href={selectedItem.graphURL} target="black">Open</a> )</p>
+            <TradingViewWidget symbol={selectedItem.tvTicker} width={"100%"} />
+            <p className="d_text_title d_mv20">Indicators </p>
+            <p className="d_text_subtitle d_mv20">Coming soon </p>
+            </>
+          }
+      </Drawer>
     </div>
   );
 };

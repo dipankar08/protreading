@@ -1,7 +1,8 @@
 import { getRequest, postRequest } from "../libs/network";
-import { TCallback } from "../libs/types";
+import { fromNow } from "../libs/time";
+import { TCallback, TObject } from "../libs/types";
 
-export type StockResult = {
+export type TStockListItem = {
   _id: string;
   name: string;
   close: number;
@@ -9,6 +10,9 @@ export type StockResult = {
   volume: number;
   rsi_14: number;
   symbol: string;
+  domain:number,
+  graphURL:string,
+  tvTicker:string, // treading view tocketr
 };
 
 export type TFilterHistoryItem = {
@@ -19,12 +23,40 @@ export type TFilterHistoryItem = {
   columns?:string
 }
 
-export async function runQuery(url: string, callback: TCallback) {
-  let result: Array<StockResult> = [{ _id: "1", name: "test", close: 0, change: 0, volume: 0, rsi_14: 0, symbol: "" }];
-  callback.onBefore?.();
-  try {
-    let result = await getRequest(url);
-    callback.onSuccess?.(result);
+export async function runQuery(filter: string, domain:string, columns:string, callback: TCallback) {
+  
+   let url = `https://dev.api.grodok.com:5000/screen?filter=${encodeURIComponent(filter.toLowerCase())}&domain=${domain}&columns=${columns}`;
+   let listItem: Array<TStockListItem> = [];
+    callback.onBefore?.();
+   try {
+        let result = await getRequest(url);
+        console.log(result);
+        let data = result as TObject;
+        for(var x of data.out.result){
+          listItem.push({
+            _id:x.symbol,
+            name:x.name,
+            symbol:x.symbol,
+            graphURL:getChartURL(x.symbol, domain),
+            domain:x.domain, 
+            close:x.close,
+            change:x.change,
+            volume:x.volume,
+            rsi_14:x.rsi_14,
+            tvTicker:getTVSymbol(x.symbol, domain)
+          })
+        }
+        
+        let timestamp = 
+          Object.keys(data.out.timestamp)
+            .map((x) => {
+              if (data.out.timestamp[x] != "Data not found") {
+                return `${x} updated on ${fromNow(data.out.timestamp[x])}. `;
+              }
+            })
+            .join("")
+      
+    callback.onSuccess?.({result:listItem, timestamp:timestamp, error:data.out.error});
     callback.onComplete?.();
   } catch (err) {
     callback.onError?.(err.message);
@@ -64,5 +96,29 @@ export async function searchHistoryFilter(q: string, callback: TCallback) {
   } catch (err) {
     callback.onError?.(err.message);
     callback.onComplete?.();
+  }
+}
+
+function getChartURL(symbol: string, domain:string ):string {
+  if (domain == "IN") {
+    return `https://uk.tradingview.com/chart/?symbol=NSE:${symbol.replace(".NS", "")}`;
+  } else if (domain == "USA") {
+    return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".NS", "")}`;
+  } else if (domain == "UK") {
+    return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".L", "")}`;
+  } else {
+     return `https://uk.tradingview.com/chart/?symbol=${symbol.replace(".L", "")}`;
+  }
+}
+
+function getTVSymbol(symbol: string, domain:string ):string {
+  if (domain == "IN") {
+    return `NSE:${symbol.replace(".NS", "")}`;
+  } else if (domain == "USA") {
+    return `${symbol.replace(".NS", "")}`;
+  } else if (domain == "UK") {
+    return `${symbol.replace(".L", "")}`;
+  } else {
+     return `${symbol.replace(".L", "")}`;
   }
 }
