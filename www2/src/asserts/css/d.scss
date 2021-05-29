@@ -160,16 +160,18 @@ body {
 .d_text_title {
     padding: 0;
     margin: 0;
-    font-size: 1.5rem;
-    opacity: 0.75;
+    font-size: 16.5px;
+    font-weight: bold;
+    opacity: 0.9;
 }
 .d_text_subtitle {
     padding: 0;
     margin: 0;
-    opacity: 0.5;
+    font-size: 12.5px;
+    opacity: 0.9;
 }
 .d_text_caption {
-    font-size: 13px;
+    font-size: 11.5px;
     letter-spacing: 0.2px;
     font-style: italic;
     opacity: 0.4;
@@ -222,7 +224,7 @@ body {
 }
 //=========================  Spacing ==============================
 // generate Margin and Padding
-@for $i from 1 through 50 {
+@for $i from 0 through 50 {
     .d_p#{$i} {
         padding: 1px * $i !important;
     }
@@ -238,11 +240,11 @@ body {
     .d_pb#{$i} {
         padding-bottom: 1px * $i !important;
     }
-    .d_px#{$i} {
+    .d_ph#{$i} {
         padding-left: 1px * $i !important;
         padding-right: 1px * $i !important ;
     }
-    .d_py#{$i} {
+    .d_pv#{$i} {
         padding-top: 1px * $i !important;
         padding-bottom: 1px * $i !important;
     }

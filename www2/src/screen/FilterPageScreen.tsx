@@ -1,14 +1,15 @@
+import { DownloadOutlined, ExclamationCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Button, Form, Input, List, Modal, notification, Radio, Table } from "antd";
 import Search from "antd/lib/input/Search";
 import React, { useEffect, useState } from "react";
 import { getRequest } from "../libs/network";
 import { fromNow } from "../libs/time";
 import { TObject } from "../libs/types";
-import { runQuery, saveFilter, searchHistoryFilter } from "./network";
+import { deleteFilter, runQuery, saveFilter, searchHistoryFilter, TFilterHistoryItem } from "./network";
 
 export const FilterPageScreen = () => {
   const [result, setResult] = useState<Array<TObject>>([]);
-  const [filterHistory, setFilterHistory] = useState<Array<TObject>>([]);
+  const [filterHistory, setFilterHistory] = useState<Array<TFilterHistoryItem>>([]);
   const [loading, setLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
   const [historyLoading, setHistoryLoading] = useState(false);
@@ -66,13 +67,19 @@ export const FilterPageScreen = () => {
     },
   ];
 
+  useEffect(()=>{
+    (async function(){
+        await searchHistory('')
+    })()
+  },[])
+
   useEffect(() => {
     setSaveInitialValue({ filter: query, columns: columns });
   }, [query, columns]);
 
   async function reloadData() {
-    await getRequest(`https://dev.api.grodok.com:5000/indicator?domain=${domain}&candle_type=1d&reload=1`);
-    await getRequest(`https://dev.api.grodok.com:5000/indicator?domain=${domain}&candle_type=5m&reload=1`);
+    getRequest(`https://dev.api.grodok.com:5000/indicator?domain=${domain}&candle_type=1d&reload=1`);
+    getRequest(`https://dev.api.grodok.com:5000/indicator?domain=${domain}&candle_type=5m&reload=1`);
     notification.info({ message: "scheduled task for update data in backend. Please try after 1 min" });
   }
 
@@ -80,7 +87,7 @@ export const FilterPageScreen = () => {
     searchHistoryFilter(query, {
       onBefore: () => setHistoryLoading(true),
       onComplete: () => setHistoryLoading(false),
-      onSuccess: (res: TObject) => setFilterHistory(res.out as Array<TObject>),
+      onSuccess: (res: TObject) => setFilterHistory(res.out as Array<TFilterHistoryItem>),
       onError: () => {
         notification.error({ message: "Not able to get any history" });
       },
@@ -105,8 +112,25 @@ export const FilterPageScreen = () => {
     }
   }
 
+  async function _deleteFilter(item:TFilterHistoryItem){
+      Modal.confirm({
+      title: 'Do you Want to delete these items?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Some descriptions',
+      onOk() {
+        console.log('OK');
+         deleteFilter(item, {
+                      onComplete:()=>searchHistory("")
+                    })
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    })
+  }
+
   function perfromScan() {
-    runQuery(`https://dev.api.grodok.com:5000/screen?filter=${query}&domain=${domain}&columns=${columns}`, {
+    runQuery(`https://dev.api.grodok.com:5000/screen?filter=${query.toLowerCase()}&domain=${domain}&columns=${columns}`, {
       onBefore: () => {
         setLoading(true);
         setError("");
@@ -123,9 +147,16 @@ export const FilterPageScreen = () => {
         console.log(result);
         let data = result as TObject;
         setResult(data.out.result as Array<TObject>);
+        if(data.out.error){
+ notification.warning({
+          message: "Run scan with partial error",
+          description:data.out.error,
+        });
+        } else{
         notification.success({
           message: `We found ${data.out.result.length} result`,
         });
+      }
         setTimestamp(
           Object.keys(data.out.timestamp)
             .map((x) => {
@@ -141,37 +172,38 @@ export const FilterPageScreen = () => {
   return (
     <div className="d_layout_col filter_screen d_fullscreen">
       <div className="d_layout_row header">
-        <p className="">Trading 50 Advance Screener</p>
+        <p className="d_mv0 d_p0">Trading 50 Advance Screener</p>
+        <p className="d_layout_fill d_mv0"></p>
+        <p className="d_mv0">{timestamp}</p>
       </div>
       <div className="d_layout_row d_layout_fill">
         <div className="d_layout_col browse d_p10">
-          <p className="d_mb10"> Browser Filter</p>
-          <Search placeholder="input search text" onSearch={(data) => searchHistory(data)} />
+          <Search placeholder="Browser Filter" onSearch={(data) => searchHistory(data)}  enterButton size="large" style={{backgroundColor:"#00000"}}/>
           <List
-            bordered
             dataSource={filterHistory}
-            renderItem={(item: TObject) => (
-              <div className="d_layout_col d_p10">
-                <p> {item.title}</p>
-                <p>{item.description}</p>
-                <p>{item.filter}</p>
-                <Button
-                  onClick={() => {
+            renderItem={(item: TFilterHistoryItem) => (
+              <div className="d_layout_col d_border_bottom d_pv20">
+                <p className="d_text_title d_mb8"> {item.title}</p>
+                <p className="d_text_subtitle d_mb8">{item.desc.toLowerCase()}</p>
+                <p className="d_text_caption">{item.filter.toLowerCase()}</p>
+                <div className="d_layout_row">
+                 <Button className="d_mr10" onClick={() => {
                     setQuery(item.filter);
                     setColumn(item.columns || "");
-                  }}
-                >
-                  Run this
-                </Button>
+                  }} 
+                  type="primary" icon={<PlayCircleOutlined />} shape="round"  size="small">Scan This</Button>
+                 <Button onClick={()=>_deleteFilter(item)} 
+                  type="primary" icon={<DownloadOutlined />} shape="round" size="small" >Delete This</Button>
+                </div>
               </div>
             )}
           />
         </div>
         <div className="d_layout_col d_p10 d_layout_fill">
           <div className="d_layout_col">
-            <p className="d_mt20">Write your filter expression (e.g indicator:1d:close == 100) </p>
-            <textarea className="d_textarea" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="white your query here"></textarea>
-            <p className="d_mt20">Write your projection expression (e.g. indicator:1d:0:close,indicator:1d:-1:close, ):</p>
+            <p className="d_mt10">Write your filter expression (e.g indicator:1d:close == 100) </p>
+            <textarea className="d_textarea textarea_filter" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="white your query here"></textarea>
+            <p className="d_mt10">Write your projection expression (e.g. indicator:1d:0:close,indicator:1d:-1:close, ):</p>
             <textarea
               className="d_textarea"
               value={columns}
@@ -228,7 +260,7 @@ export const FilterPageScreen = () => {
               name="basic"
               onFinish={(data) => {
                 saveFilter(
-                  { title: data.title, description: data.description, filter: query, columns: columns },
+                  { title: data.title, desc: data.description, filter: query, columns: columns },
                   {
                     onBefore: () => setSaveLoading(true),
                     onComplete: () => setSaveLoading(false),
@@ -271,7 +303,7 @@ export const FilterPageScreen = () => {
         </div>
       </div>
       <div className="d_layout_row footer">
-        <p className="">(Note: {timestamp})</p>
+       
       </div>
     </div>
   );

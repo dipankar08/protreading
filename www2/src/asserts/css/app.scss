@@ -6,7 +6,17 @@
     padding: 10px;
   }
   .browse {
+    background: antiquewhite;
     width: 400px;
     border-right: 4px solid black;
+  }
+  .textarea_filter {
+    height: 100px;
+  }
+  .no_margin {
+    margin: 0;
+  }
+  .no_padding {
+    padding: 0;
   }
 }

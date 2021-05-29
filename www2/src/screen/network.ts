@@ -1,5 +1,5 @@
 import { getRequest, postRequest } from "../libs/network";
-import { TCallback, TObject } from "../libs/types";
+import { TCallback } from "../libs/types";
 
 export type StockResult = {
   _id: string;
@@ -10,6 +10,14 @@ export type StockResult = {
   rsi_14: number;
   symbol: string;
 };
+
+export type TFilterHistoryItem = {
+  _id?:string,
+  title:string,
+  desc:string,
+  filter:string,
+  columns?:string
+}
 
 export async function runQuery(url: string, callback: TCallback) {
   let result: Array<StockResult> = [{ _id: "1", name: "test", close: 0, change: 0, volume: 0, rsi_14: 0, symbol: "" }];
@@ -24,10 +32,22 @@ export async function runQuery(url: string, callback: TCallback) {
   }
 }
 
-export async function saveFilter(data: TObject, callback: TCallback) {
+export async function deleteFilter(data: TFilterHistoryItem, callback: TCallback) {
   callback.onBefore?.();
   try {
-    let result = await postRequest("https://api.grodok.com/api/trading50_filters/insert", data);
+    let result = await getRequest(`https://api.grodok.com/api/trading50_filter/delete?id=${data._id}`);
+    callback.onSuccess?.(result);
+    callback.onComplete?.();
+  } catch (err) {
+    callback.onError?.(err.message);
+    callback.onComplete?.();
+  }
+}
+
+export async function saveFilter(data: TFilterHistoryItem, callback: TCallback) {
+  callback.onBefore?.();
+  try {
+    let result = await postRequest("https://api.grodok.com/api/trading50_filter/insert", data);
     callback.onSuccess?.(result);
     callback.onComplete?.();
   } catch (err) {
@@ -38,7 +58,7 @@ export async function saveFilter(data: TObject, callback: TCallback) {
 export async function searchHistoryFilter(q: string, callback: TCallback) {
   callback.onBefore?.();
   try {
-    let result = await getRequest(`https://api.grodok.com/api/trading50_filters?${q.trim().length > 0 ? `title=regex:${q}` : ""}`);
+    let result = await getRequest(`https://api.grodok.com/api/trading50_filter?${q.trim().length > 0 ? `title=regex:${q}` : ""}`);
     callback.onSuccess?.(result);
     callback.onComplete?.();
   } catch (err) {
