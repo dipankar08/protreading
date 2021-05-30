@@ -39,6 +39,10 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
                         symbol]['sector']
                     selected_one['close'] = str(
                         np.round(indicator_map['1d'][0]['close'], 2))
+                    selected_one['volume'] = str(
+                        np.round(indicator_map['1d'][0]['volume'], 2))
+                    selected_one['rsi_14'] = str(
+                        np.round(indicator_map['1d'][0]['rsi_14'], 2))
                     selected_one['change'] = str(
                         np.round(indicator_map['1d'][0]['close_change_percentage'], 2))
                     # extra col
