@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { getRequest } from "../../libs/network";
-import { TVoidCalBack } from "../../libs/types";
+import { TObjCalBack, TVoidCalBack } from "../../libs/types";
+import { TLoginInfo } from "../coreState/stateSpec";
 import featureImage from "./asserts/feature-tile-icon-01.svg";
 import explanationImage from "./asserts/features-split-image-01.png";
 import "./asserts/LandingPage.scoped.css";
@@ -49,6 +51,14 @@ export type TPageConfig = {
   // footer
   copyright: string;
   socialLink: { fb: string; tweeter: string; instagram: string };
+
+  // user adta
+  loginInfo?:TLoginInfo
+
+  //callback:
+  onLoginSuccess?:(info:TLoginInfo)=>void,
+  onLoginFailed?:TObjCalBack,
+  onLogout?:TVoidCalBack;
 };
 
 export const samplePageConfig: TPageConfig = {
@@ -173,7 +183,8 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
   pageConfig = pageConfig || samplePageConfig;
   const [showVideoModel, setShowVideoModel] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const [login, setlogin] = React.useState(false);
+  const [login, setlogin] = React.useState<TLoginInfo | undefined | null>(pageConfig?.loginInfo);
+  const GOOGLE_TOKEN ="290736876800-g9jg0bbgrgjkl2m2ta5hamabe2568lms.apps.googleusercontent.com"
 
   async function doAutoLogin() {
     let res = await getRequest(
@@ -181,6 +192,16 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
     );
   }
 
+  function onSuccessGoogleLogin(data:GoogleLoginResponse | GoogleLoginResponseOffline){
+      let response = data as GoogleLoginResponse
+      console.log(response);
+      let loginData = {id:response.getBasicProfile().getEmail(), name:response.getBasicProfile().getName(), email:response.getBasicProfile().getEmail(), profilePicture:response.getBasicProfile().getImageUrl()}
+      setlogin(loginData)
+      pageConfig.onLoginSuccess?.(loginData)
+  }
+  function onFailGoogleLogin(resp:any){
+
+  }
   useEffect(() => {
     //const page = location.pathname;
     //document.body.classList.add("is-loaded");
@@ -193,11 +214,14 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
     onError: (error) => {
       console.log(error);
     },
-    onSuccess: (response) => {
+    onSuccess: (response:any) => {
       console.log(response);
+      let loginData = {id:response.email,name:response.name, email:response.email, profilePicture:response.picture}
+      setlogin(loginData)
+      pageConfig.onLoginSuccess?.(loginData)
     },
     googleAccountConfigs: {
-      client_id: "290736876800-g9jg0bbgrgjkl2m2ta5hamabe2568lms.apps.googleusercontent.com", // Your google client id here !!!
+      client_id:GOOGLE_TOKEN // Your google client id here !!!
     },
   });
 
@@ -230,10 +254,22 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
                   </ul>
                   <ul className="list-reset header-nav-right">
                     <li>
-                      {!login ? (
-                        <a className="button button-primary button-wide-mobile button-sm" onClick={(e) => setlogin(true)}>
-                          Sign up
-                        </a>
+                      {!login? (
+                         <GoogleLogin
+                            clientId={GOOGLE_TOKEN}
+                            buttonText="Login"
+                            onSuccess={onSuccessGoogleLogin}
+                            onFailure={onFailGoogleLogin}
+                            cookiePolicy={'single_host_origin'}
+                            render = {
+                              ({onClick}:any)=>{
+                              return <a className="button button-primary button-wide-mobile button-sm" onClick={onClick}>
+                                Login as Google
+                              </a>
+                            }
+                          }
+                          />
+                   
                       ) : (
                         <a className="button button-primary button-wide-mobile button-sm" onClick={(e) => onNavigateToHome?.()}>
                           Go to Home
@@ -467,9 +503,13 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
                     <li>
                       <a href="/#example">Examples</a>
                     </li>
-                    <li>
-                      <a href="/#0">Support</a>
-                    </li>
+                    {login? <li>
+                      <a onClick={()=>{pageConfig.onLogout?.(); setlogin(null)}}>{login.name} - Logout ?</a>
+                    </li>: <li>
+                      <a onClick={()=>{pageConfig.onLogout?.(); setlogin(null)}}>Login</a>
+                    </li> 
+                    }
+
                   </ul>
                 </nav>
                 <div className="footer-copyright">{pageConfig.copyright}</div>

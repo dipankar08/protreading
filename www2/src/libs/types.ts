@@ -2,6 +2,7 @@ import { CSSProperties } from "react";
 
 export type TObject = { [key: string]: any };
 export type TRecord = { [key: string]: string };
+export type TObjCalBack = (data: TObject) => void;
 export type TVoidCalBack = () => void;
 export type TStringCallback = (str: string) => void;
 export type TErrorCallback = (str: string) => void;

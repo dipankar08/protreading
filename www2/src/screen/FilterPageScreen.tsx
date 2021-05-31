@@ -4,6 +4,7 @@ import Search from "antd/lib/input/Search";
 import React, { useEffect, useState } from "react";
 // @ts-ignore
 import TradingViewWidget from "react-tradingview-widget";
+import { BaseHomePage } from '../components/home/BaseHomePage';
 import { getRequest } from "../libs/network";
 import { fromNow } from "../libs/time";
 import { TObject } from "../libs/types";
@@ -173,12 +174,8 @@ export const FilterPageScreen = () => {
     });
   }
   return (
+    <BaseHomePage homePageConfig={{title:'FilterStocks', subtitle:timestamp}}>
     <div className="d_layout_col filter_screen d_fullscreen">
-      <div className="d_layout_row header">
-        <p className="d_mv0 d_p0">Trading 50 Advance Screener</p>
-        <p className="d_layout_fill d_mv0"></p>
-        <p className="d_mv0">{timestamp}</p>
-      </div>
       <div className="d_layout_row d_layout_fill">
         <div>
         <div className="d_layout_col browse d_p10">
@@ -328,5 +325,6 @@ export const FilterPageScreen = () => {
           }
       </Drawer>
     </div>
+    </BaseHomePage>
   );
 };
