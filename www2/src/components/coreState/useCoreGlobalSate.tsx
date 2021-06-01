@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { storeObj } from "../../libs/storage";
 import { defaultCoreState, TCoreState } from "./stateSpec";
 
 export  type TReducerFunction = (payload:TCoreState) => TCoreState; //({ type, payload }: TCoreReducerType): TCoreState 
@@ -8,6 +9,9 @@ const useGlobalCoreState = () => {
   const update:TReducerFunction = (payload) => {
          let newState:TCoreState = {...state, ...payload}
          setState(newState);
+         if(payload.loginInfo){
+           storeObj("LOGIN_INFO", payload.loginInfo)
+         }
          return newState
   };
   return { state, update };

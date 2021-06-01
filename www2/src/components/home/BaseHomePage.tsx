@@ -2,6 +2,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown, Layout, Menu } from 'antd';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { deleteObj } from '../../libs/storage';
 import { CoreContext } from '../coreState/useCoreGlobalSate';
 const { Header, Content, Footer } = Layout;
 
@@ -33,6 +34,7 @@ export const BaseHomePage =({homePageConfig, children}:TProp)=>{
         switch(key.key){
           case 'logout':
             coreContext.update({loginInfo:undefined})
+            deleteObj("LOGIN_INFO")
             break;
         }
       }}>

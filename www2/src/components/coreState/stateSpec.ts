@@ -1,3 +1,5 @@
+import { getObj } from "../../libs/storage";
+
 // Add More state here as needed
 export type TLoginInfo = {
   name: string;
@@ -7,11 +9,11 @@ export type TLoginInfo = {
 };
 
 export type TCoreState = {
-  loginInfo?: TLoginInfo;
+  loginInfo?: TLoginInfo | undefined;
 };
 
 export const defaultCoreState: TCoreState = {
-  loginInfo: undefined,
+  loginInfo: getObj("LOGIN_INFO") as TLoginInfo,
 };
 
 export type TCoreReducerType = {

@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 import { useGoogleOneTapLogin } from "react-google-one-tap-login";
 import { getRequest } from "../../libs/network";
 import { TObjCalBack, TVoidCalBack } from "../../libs/types";
 import { TLoginInfo } from "../coreState/stateSpec";
+import { CoreContext } from "../coreState/useCoreGlobalSate";
 import featureImage from "./asserts/feature-tile-icon-01.svg";
 import explanationImage from "./asserts/features-split-image-01.png";
 import "./asserts/LandingPage.scoped.css";
@@ -183,7 +184,7 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
   pageConfig = pageConfig || samplePageConfig;
   const [showVideoModel, setShowVideoModel] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  const [login, setlogin] = React.useState<TLoginInfo | undefined | null>(pageConfig?.loginInfo);
+  const coreContext = React.useContext(CoreContext);
   const GOOGLE_TOKEN ="290736876800-g9jg0bbgrgjkl2m2ta5hamabe2568lms.apps.googleusercontent.com"
 
   async function doAutoLogin() {
@@ -192,38 +193,32 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
     );
   }
 
+  function handleGoogleLoginSucess(data:TLoginInfo){
+      coreContext.update({loginInfo:data})
+      pageConfig.onLoginSuccess?.(data)
+  }
+
   function onSuccessGoogleLogin(data:GoogleLoginResponse | GoogleLoginResponseOffline){
       let response = data as GoogleLoginResponse
       console.log(response);
       let loginData = {id:response.getBasicProfile().getEmail(), name:response.getBasicProfile().getName(), email:response.getBasicProfile().getEmail(), profilePicture:response.getBasicProfile().getImageUrl()}
-      setlogin(loginData)
-      pageConfig.onLoginSuccess?.(loginData)
+      handleGoogleLoginSucess(loginData)
   }
-  function onFailGoogleLogin(resp:any){
-
-  }
-  useEffect(() => {
-    //const page = location.pathname;
-    //document.body.classList.add("is-loaded");
-    //childRef.current.init();
-    //trackPage(page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useGoogleOneTapLogin({
-    onError: (error) => {
-      console.log(error);
-    },
-    onSuccess: (response:any) => {
-      console.log(response);
-      let loginData = {id:response.email,name:response.name, email:response.email, profilePicture:response.picture}
-      setlogin(loginData)
-      pageConfig.onLoginSuccess?.(loginData)
-    },
-    googleAccountConfigs: {
-      client_id:GOOGLE_TOKEN // Your google client id here !!!
-    },
-  });
+  function onFailGoogleLogin(resp:any){  }
+    useGoogleOneTapLogin({
+        onError: (error) => {
+          console.log(error);
+        },
+        onSuccess: (response:any) => {
+          console.log(response);
+          let loginData = {id:response.email,name:response.name, email:response.email, profilePicture:response.picture}
+          handleGoogleLoginSucess(loginData)
+        },
+        googleAccountConfigs: {
+          client_id:GOOGLE_TOKEN // Your google client id here !!!
+        },
+      });
+    
 
   return (
     <div className="body">
@@ -254,7 +249,7 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
                   </ul>
                   <ul className="list-reset header-nav-right">
                     <li>
-                      {!login? (
+                      {!coreContext.state.loginInfo? (
                          <GoogleLogin
                             clientId={GOOGLE_TOKEN}
                             buttonText="Login"
@@ -503,10 +498,10 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
                     <li>
                       <a href="/#example">Examples</a>
                     </li>
-                    {login? <li>
-                      <a onClick={()=>{pageConfig.onLogout?.(); setlogin(null)}}>{login.name} - Logout ?</a>
+                    {coreContext.state.loginInfo? <li>
+                      <a onClick={()=>{pageConfig.onLogout?.(); coreContext.update({loginInfo:undefined})}}>{coreContext.state.loginInfo.name} - Logout ?</a>
                     </li>: <li>
-                      <a onClick={()=>{pageConfig.onLogout?.(); setlogin(null)}}>Login</a>
+                      <a onClick={()=>{}}>Login</a>
                     </li> 
                     }
 

@@ -1,5 +1,5 @@
 import { DownloadOutlined, ExclamationCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
-import { Button, Drawer, Form, Input, List, Modal, notification, Radio, Table } from "antd";
+import { Button, Drawer, Form, Input, List, message, Modal, notification, Radio, Table } from "antd";
 import Search from "antd/lib/input/Search";
 import React, { useEffect, useState } from "react";
 // @ts-ignore
@@ -109,15 +109,15 @@ export const FilterPageScreen = () => {
     try {
       setTimestamp("loading...");
       let data = (await getRequest(`https://dev.api.grodok.com:5000/timestamp?domain=${domain}`)) as TObject;
-      setTimestamp(
-        Object.keys(data.out.timestamp)
+      let ts = Object.keys(data.out.timestamp)
           .map((x) => {
             if (data.out.timestamp[x] != "Data not found") {
               return `${x} updated on **${fromNow(data.out.timestamp[x])}**, `;
             }
           })
           .join("")
-      );
+      setTimestamp(ts);
+      message.success(ts)
     } catch (err) {
       setTimestamp("not able to update");
     }
@@ -156,10 +156,11 @@ export const FilterPageScreen = () => {
         },
         onSuccess: (data) => {
         let result = (data as TObject).result as Array<TStockListItem>
-        let timestamp = (result as TObject).timestamp
-        let error = (result as TObject).error
+        let timestamp = (data as TObject).timestamp
+        let error = (data as TObject).error
         setResult(result)
         setTimestamp(timestamp);
+        message.info(`Old Data: ${timestamp}`);
         if(error){
             notification.warning({
               message: "Run scan with partial error",
@@ -174,7 +175,7 @@ export const FilterPageScreen = () => {
     });
   }
   return (
-    <BaseHomePage homePageConfig={{title:'FilterStocks', subtitle:timestamp}}>
+    <BaseHomePage homePageConfig={{title:'FilterStocks', subtitle:''}}>
     <div className="d_layout_col filter_screen d_fullscreen">
       <div className="d_layout_row d_layout_fill">
         <div>
