@@ -60,6 +60,12 @@ export const FilterPageScreen = () => {
       sorter: (a: any, b: any) => a.change - b.change,
     },
     {
+      title: "RSI(14)",
+      dataIndex: "rsi_14",
+      key: "rsi_14",
+      sorter: (a: any, b: any) => a.rsi_14 - b.rsi_14,
+    },
+    {
       title: "Action",
       key: "operation",
       //fixed: "right",

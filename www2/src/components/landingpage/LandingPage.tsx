@@ -60,6 +60,9 @@ export type TPageConfig = {
   onLoginSuccess?:(info:TLoginInfo)=>void,
   onLoginFailed?:TObjCalBack,
   onLogout?:TVoidCalBack;
+
+  // custom notification
+  notificationText?:null | string,
 };
 
 export const samplePageConfig: TPageConfig = {
@@ -173,6 +176,7 @@ export const samplePageConfig: TPageConfig = {
     tweeter: "https://twitter.com/",
     instagram: "https://google.com/",
   },
+  notificationText:null,
 };
 
 export type TProp = {
@@ -224,6 +228,9 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
     <div className="body">
     <div className="has-animations is-loaded 11">
       <div className="body_wrap">
+        { pageConfig.notificationText && <div className="marquee">
+        <p>{pageConfig.notificationText}</p>
+      </div>}
         <header className="site-header reveal-from-bottom is-revealed">
           <div className="container">
             <div className="site-header-inner">

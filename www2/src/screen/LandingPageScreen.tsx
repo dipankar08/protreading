@@ -6,10 +6,11 @@ import explanationImage from "../components/landingpage/asserts/features-split-i
 import logo from "../components/landingpage/asserts/logo.svg";
 import heroImage from "../components/landingpage/asserts/video-placeholder.jpg";
 import { LandingPage, TPageConfig } from "../components/landingpage/LandingPage";
+import { runQuery, TStockListItem } from "./network";
 export const LandingPageScreen = () => {
   const history = useHistory();
   const coreContext = React.useContext(CoreContext);
-   const samplePageConfig: TPageConfig = {
+  const [pageConfig, setPageConfig] = React.useState<TPageConfig>({
   // hero
   logo_url: logo,
   heroTitle: "Find and invest on potential stocks",
@@ -110,6 +111,7 @@ export const LandingPageScreen = () => {
         "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sintoccaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum cillum dolore eu fugiat.",
       designation: "CEO, XYZ",
     },
+    
   ],
 
   //footer
@@ -119,14 +121,34 @@ export const LandingPageScreen = () => {
     fb: "https://facebook.com/",
     tweeter: "https://twitter.com/",
     instagram: "https://google.com/",
-  }
-};
+  },
+  notificationText:'Welcome to trading 50. This application is in Beta Mode ! Please expect bugs ',
+});
+
+ React.useEffect(()=>{
+   runQuery("1","IN","", {
+      onBefore:()=>{
+        setPageConfig({...pageConfig, notificationText:'Welcome to trading 50. This application is in Beta Mode ! Please expect bugs'})
+      },
+      onSuccess:(data)=>{
+        setPageConfig({...pageConfig, notificationText:getNotificationTextFromData(data)})
+      }
+   });
+ },[])
   return (
     <LandingPage
-      pageConfig={samplePageConfig}
+      pageConfig={pageConfig}
       onNavigateToHome={() => {
         history.push("/home");
       }}
     ></LandingPage>
   );
 };
+function getNotificationTextFromData(data: any): string {
+  let sorteddata = data.result as Array<TStockListItem>
+  sorteddata.sort((x,y)=>x.change > y.change ?1:-1)
+  let looser = sorteddata.slice(0,10).map(x=> `${x.name}/${x.symbol} (${x.change} %)`).join(' | ')
+  let gainer = sorteddata.slice(-10).map(x=> `${x.name}-${x.symbol}   (${x.change} %)`).join('   |   ')
+  return `Top gainer: ${gainer} ||  Top Looser: ${looser}`
+}
+
