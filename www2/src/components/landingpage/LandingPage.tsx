@@ -291,10 +291,10 @@ export const LandingPage = ({ pageConfig, onNavigateToHome }: TProp) => {
                     </p>
                     <div className="reveal-from-bottom is-revealed" data-reveal-delay="600">
                       <div className="button-group">
-                        <a href="https://cruip.com/" className="button button-primary button-wide-mobile">
+                        <a href="#" className="button button-primary button-wide-mobile">
                           Get started
                         </a>
-                        <a href="https://github.com//" className="button button-dark button-wide-mobile">
+                        <a href="#" className="button button-dark button-wide-mobile">
                           Join As Prime
                         </a>
                       </div>
