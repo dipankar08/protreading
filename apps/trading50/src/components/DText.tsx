@@ -1,9 +1,9 @@
 import React from "react";
 import { ActivityIndicator, Text } from "react-native";
-import { DIMENS } from "../res/dimens";
 import { TProps } from "../screens/types";
 import { DButtonIcon } from "./DButton";
 import { DLayoutRow } from "./DLayout";
+import { DIMENS } from "./res/dimens";
 // For the the title of any
 export const DTextTitle = ({ children, style }: TProps) => {
   return <Text style={[{ fontWeight: "bold", fontSize: 20 }, style]}>{children}</Text>;

@@ -1,6 +1,10 @@
 import { TextStyle, ViewStyle } from "react-native";
-import { TAnyCallback, TStringCallback, TVoidCalBack } from "../core/core_model";
-import { TObject } from "../models/model";
+import { TObject } from "./model";
+export type TVoidCalBack = () => void;
+export type TStringCallback = (str: string) => void;
+export type TErrorCallback = (str: string) => void;
+export type TSuccessCallback = (obj: Object) => void;
+export type TAnyCallback = (obj: any) => void;
 export type TKeyText = {
   key: string;
   text: string;

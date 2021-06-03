@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Text } from "react-native";
 import { Avatar } from "react-native-elements";
-import { DCard, DLayoutCol, DLayoutRow } from "../components/basic";
-import { DButtonPrimary } from "../components/DButton";
+import { TProps } from "../../screens/types";
+import { DCard, DLayoutCol, DLayoutRow } from "../basic";
+import { DButtonPrimary } from "../DButton";
 import { dlog } from "../libs/dlog";
-import { TProps } from "../screens/types";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 

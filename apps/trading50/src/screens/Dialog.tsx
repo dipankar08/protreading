@@ -2,13 +2,13 @@ import { Picker } from "@react-native-community/picker";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { AppStateContext } from "../appstate/AppStateStore";
 import { DButtonPrimary } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
 import { DLayoutCol } from "../components/DLayout";
 import { DKeyValueList } from "../components/DList";
 import { DTextFooter } from "../components/DText";
-import { useNetwork } from "../hooks/useNetwork";
+import { AppStateContext } from "./AppStateProvider";
+import { useNetwork } from "./useNetwork";
 
 export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const network = useNetwork();
@@ -17,11 +17,18 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
   const [stock, setStock] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [quantities, setQuantities] = React.useState("");
+  const [stockListUI, setStockListUI ] = React.useState<JSX.Element[]>([]);
 
-  let xStockList = [<Picker.Item key="" value="" label="Select an item" />];
-  for (let value of appState.state.stockMap.values()) {
-    xStockList.push(<Picker.Item key={value._id} value={value._id} label={`${value.symbol}-${value.name}`} />);
-  }
+  React.useEffect(()=>{
+    console.log("recomputing....")
+    let xStockList = [<Picker.Item key="" value="" label="Select an item" />];
+      for (let value of appState.state.stockMap.values()) {
+        xStockList.push(<Picker.Item key={value._id} value={value._id} label={`${value.symbol}-${value.name}`} />);
+      }
+      setStockListUI(xStockList)
+  },[])
+
+ 
 
   return (
     <DDialog
@@ -33,7 +40,7 @@ export const OrderCreateDialog = ({ visible, onClose }: any) => {
     >
       <DLayoutCol>
         <Picker selectedValue={stock} style={styles.pickerStyle} onValueChange={(itemValue, itemIndex) => setStock(itemValue)}>
-          {xStockList}
+          {stockListUI}
         </Picker>
         <TextInput style={styles.TextInputStyle} placeholder="Please enter Stock Price" value={price} onChangeText={setPrice}></TextInput>
         <TextInput style={styles.TextInputStyle} placeholder="Write Stock quantities" value={quantities} onChangeText={setQuantities}></TextInput>

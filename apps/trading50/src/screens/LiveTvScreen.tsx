@@ -5,9 +5,9 @@ import { DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../com
 import { DButtonIcon } from "../components/DButton";
 import { DBorderLine, DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
 import { DTextFooter, DTextTitle } from "../components/DText";
-import { showNotification } from "../libs/uihelper";
-import { DIMENS } from "../res/dimens";
-import { colors } from "../styles/colors";
+import { showNotification } from "../components/libs/uihelper";
+import { colors } from "../components/res/colors";
+import { DIMENS } from "../components/res/dimens";
 import { TProps } from "./types";
 type TStreamList = {
   name: string;

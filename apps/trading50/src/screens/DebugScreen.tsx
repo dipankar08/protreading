@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
+import { AppInfoCard } from "../components/core/AppInfoCard";
 import { DButtonPrimary } from "../components/DButton";
 import { DKeyValueList } from "../components/DList";
 import { DTextSection } from "../components/DText";
-import { AppInfoCard } from "../core/AppInfoCard";
-import { useNetwork } from "../hooks/useNetwork";
-import { showNotification } from "../libs/uihelper";
-import { TObject } from "../models/model";
+import { showNotification } from "../components/libs/uihelper";
+import { AppStateContext } from "./AppStateProvider";
+import { TObject } from "./model";
 import { TProps } from "./types";
+import { useNetwork } from "./useNetwork";
 export const DebugScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
   const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);

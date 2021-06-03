@@ -3,9 +3,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import _ from "underscore";
 import { TProps } from "../screens/types";
-import { colors } from "../styles/colors";
-import { DLayoutCol, DLayoutRow, DSpace } from "./basic";
-import { DTextSubTitle } from "./DText";
+import { DLayoutCol, DLayoutRow } from "./basic";
+import { DTextSubTitle, DTextTitle } from "./DText";
+import { colors } from "./res/colors";
 
 function toString(data: any) {
   if (data == undefined || data == null) {
@@ -38,13 +38,15 @@ export const DKeyValueList = ({ object }: TProps) => {
 export const DActionItemRow = ({ style, title, value, icon, onPress }: TProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <DLayoutRow style={{ marginVertical: 10, alignItems: "center" }}>
-        {icon && <MaterialCommunityIcons name={icon} color="black" size={18} style={{ marginRight: 10 }} />}
-        <DTextSubTitle>{title + ":  "}</DTextSubTitle>
-        <DTextSubTitle>{value}</DTextSubTitle>
-        <DSpace />
-        <MaterialCommunityIcons name={"arrow-right"} color="black" size={18} style={{ marginLeft: 10 }} />
+      <DLayoutRow style={{marginLeft:10, marginRight:10, marginBottom:10, borderBottomWidth:1, borderColor:colors.grey200, paddingVertical:10, alignItems:'center'}}>
+        {icon && <MaterialCommunityIcons name={icon} color={colors.grey600} size={36} style={{ marginRight: 20, paddingTop:2 }} />}
+          <DLayoutCol style={{flex:1}}>
+              <DTextTitle style={{flex:1}}>{title}</DTextTitle>
+              <DTextSubTitle style={{color:colors.grey600}}>{value}</DTextSubTitle>
+          </DLayoutCol>
+    <MaterialCommunityIcons name={"arrow-right"} color="black" size={24} style={{ marginLeft: 10 }} />
       </DLayoutRow>
+     
     </TouchableOpacity>
   );
 };

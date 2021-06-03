@@ -1,7 +1,7 @@
-import { dlog } from "../libs/dlog";
-import { getAgoString, isSameDay } from "../libs/time";
-import { RecommendedType, TGroupMarketEntry, TMarket, TMarketEntry, TOrder, TPosition, TPositionSummary } from "./model";
-import { cal_intraday_tax, cal_delivery_tax } from "./taxcalculator";
+import { dlog } from "../../components/libs/dlog";
+import { getAgoString, isSameDay } from "../../components/libs/time";
+import { RecommendedType, TGroupMarketEntry, TMarketEntry, TOrder, TPosition, TPositionSummary } from "../model";
+import { cal_delivery_tax, cal_intraday_tax } from "./taxcalculator";
 
 // compute count and avg.
 export function updateTGroupMarketEntry(map: Map<string, TGroupMarketEntry>) {

@@ -1,18 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import { Text } from "react-native";
 import { Avatar } from "react-native-elements";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { DButton, DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
-import { DButtonPrimary } from "../components/DButton";
-import { useNetwork } from "../hooks/useNetwork";
+import { AppStateContext } from "../../screens/AppStateProvider";
+import { TProps } from "../../screens/types";
+import { DButton, DContainerSafe, DLayoutCol, ScreenHeader } from "../basic";
+import { DButtonPrimary } from "../DButton";
 import { dlog } from "../libs/dlog";
 import { deleteData } from "../libs/stoarge";
-import { TProps } from "../screens/types";
 
 // Profile and Signout logic
 export const SignOutScreen = ({ navigation, route }: TProps) => {
   const appState = useContext(AppStateContext);
-  const network = useNetwork();
   async function signOut() {
     await deleteData("USER_INFO");
     appState.dispatch({ type: "MARK_USER_SIGNED_OUT" });
@@ -40,10 +38,6 @@ export const SignOutScreen = ({ navigation, route }: TProps) => {
         <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Email - {appState.state.userInfo.email}</Text>
         <Text style={{ color: "#000000ee", fontSize: 16, marginTop: 10, fontWeight: "normal" }}>Id -{appState.state.userInfo.email}</Text>
         <Text style={{ fontSize: 20, marginTop: 10, paddingTop: 10, borderTopWidth: 1 }}>Update Data</Text>
-        <DButtonPrimary style={{ marginEnd: 10 }} onPress={network.forceUpdateData}>
-          Refresh Data in backend
-        </DButtonPrimary>
-
         <Text style={{ flex: 1 }}>Hello</Text>
         <DButtonPrimary onPress={signOut} secondary>
           Sign out

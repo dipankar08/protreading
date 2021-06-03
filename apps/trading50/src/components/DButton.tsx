@@ -1,10 +1,10 @@
 import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { DIMENS } from "../res/dimens";
 import { TProps } from "../screens/types";
-import { colors } from "../styles/colors";
 import { DLayoutRow } from "./DLayout";
+import { colors } from "./res/colors";
+import { DIMENS } from "./res/dimens";
 import { STYLES } from "./styles";
 
 export const DButtonWithIcon = ({ children, style, onPress, icon, loading }: TProps) => {

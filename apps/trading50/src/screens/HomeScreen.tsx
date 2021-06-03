@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { AppStateContext } from "../appstate/AppStateStore";
+import { TDomain } from "../appstate/types";
 import { DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
+import { CoreStateContext } from "../components/core/CoreContext";
 import { DOptionDialog } from "../components/DDialog";
 import { DTextSection, DTextSectionWithButton } from "../components/DText";
-import { CoreStateContext } from "../core/CoreContext";
-import { useNetwork } from "../hooks/useNetwork";
-import { dlog } from "../libs/dlog";
-import { showNotification } from "../libs/uihelper";
+import { dlog } from "../components/libs/dlog";
+import { getString } from "../components/libs/stoarge";
+import { showNotification } from "../components/libs/uihelper";
+import { AppStateContext } from "./AppStateProvider";
 import { TProps } from "./types";
+import { domainList, useNetwork } from "./useNetwork";
 
 export const HomeScreen = ({ navigation }: TProps) => {
   const appState = useContext(AppStateContext);
@@ -16,38 +18,32 @@ export const HomeScreen = ({ navigation }: TProps) => {
   const network = useNetwork();
   const [loading, setLoading] = useState(false);
   const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
-  let domainList = [
-    { key: "UK", text: "UK" },
-    { key: "IN", text: "INDIA" },
-    { key: "USA", text: "USA" },
-  ];
 
-  async function refreshData() {
-    await network.doAllNetworkCallOnBoot({
-      onBefore() {
-        setLoading(true);
-      },
-      onComplete() {
-        setLoading(false);
-      },
-      onSuccess() {
-        showNotification("Data updated");
-      },
-      onError(error) {
-        showNotification(error);
-      },
-    });
-  }
 
   let name = "Home";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    if (appState.state.domain == null) {
-      setDomainDialogVisible(true);
-    } else {
-      refreshData();
-    }
-
+    (async function(){
+       let domain = await  getString("DOMAIN")
+       if(domain){
+         network.changeDomain(domain as TDomain, {
+            onBefore() {
+              setLoading(true);
+            },
+            onComplete() {
+              setLoading(false);
+            },
+            onSuccess() {
+              showNotification("Data updated");
+            },
+            onError(error) {
+              showNotification(error);
+            },
+         });
+       } else {
+         setDomainDialogVisible(true);
+       }
+    })();
     return () => {
       dlog.d(`Unmounted ${name}`);
     };
@@ -67,7 +63,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
           title={"Home"}
           style={{ padding: 0 }}
           icon="reload"
-          onPress={refreshData}
+          //onPress={refreshData}
         />
         <DTextSection>Summary</DTextSection>
         <View style={styles.card}>
@@ -144,9 +140,21 @@ export const HomeScreen = ({ navigation }: TProps) => {
         visible={domainDialogVisible}
         onCancel={() => setDomainDialogVisible(false)}
         onChange={(value) => {
-          network.changeDomain(value);
-          setDomainDialogVisible(false);
-          refreshData();
+          network.changeDomain(value as TDomain, {
+                      onBefore() {
+                        setLoading(true);
+                      },
+                      onComplete() {
+                        setLoading(false);
+                      },
+                      onSuccess() {
+                        showNotification("Data updated");
+                      },
+                      onError(error) {
+                        showNotification(error);
+                      },
+                  });
+                  setDomainDialogVisible(false);
         }}
       ></DOptionDialog>
     </DContainerSafe>

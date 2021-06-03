@@ -3,14 +3,14 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, DLayoutRow, DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../components/basic";
-import { useNetwork } from "../hooks/useNetwork";
-import { dlog } from "../libs/dlog";
-import { showNotification } from "../libs/uihelper";
-import { TGroupMarketEntry } from "../models/model";
+import { dlog } from "../components/libs/dlog";
+import { showNotification } from "../components/libs/uihelper";
+import { AppStateContext } from "./AppStateProvider";
+import { TGroupMarketEntry } from "./model";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
+import { useNetwork } from "./useNetwork";
 
 const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 export const MarketScreen = ({ navigation }: TProps) => {

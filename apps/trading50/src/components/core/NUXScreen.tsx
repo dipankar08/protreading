@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { DContainer } from "../components/basic";
+import { TProps } from "../../screens/types";
+import { DContainer } from "../basic";
 import { dlog } from "../libs/dlog";
-import { TProps } from "../screens/types";
-import { colors } from "../styles/colors";
+import { colors } from "../res/colors";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 
@@ -14,21 +14,21 @@ const slides = [
     key: "1", // this must be a string
     title: "Never miss any trading opportunity!",
     text: "There are trading opportunities everyday. Our AI system will provide daily recommendations for any buy and sell opportunity.",
-    image: require("../../assets/images/1.png"),
+    image: require("../../../assets/images/1.png"),
     backgroundColor: colors.cyan400,
   },
   {
     key: "2",
     title: "Get rid of emotional bias with Smart Portfolio.",
     text: "Smart portfolios allow you to track all orders you made in a break-up view or consoluteview. It provides exact take to home profit after tax, brokerage. This helps you to have a right balance between the investigation amount and cash in hand. ",
-    image: require("../../assets/images/2.png"),
+    image: require("../../../assets/images/2.png"),
     backgroundColor: colors.blue400,
   },
   {
     key: "3",
     title: "Advance Screen and Alerts",
     text: "Screen the stock list from India, USA and UK by varieties for technical indicators. Get real time alert when a  technical indicator meets some conditions!",
-    image: require("../../assets/images/3.png"),
+    image: require("../../../assets/images/3.png"),
     backgroundColor: colors.green400,
   },
 ];

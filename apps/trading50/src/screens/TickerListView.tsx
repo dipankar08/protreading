@@ -1,18 +1,18 @@
 import React, { useContext, useRef, useState } from "react";
 import { Button, FlatList, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { AppStateContext } from "../appstate/AppStateStore";
 import { DLayoutCol, DLayoutRow, DListEmptyComponent, DSpace, FlatListItemSeparator, TextWithIcon } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
 import { DDialog, DOptionDialog } from "../components/DDialog";
 import { DTextSearch } from "../components/DInput";
 import { DKeyValueList } from "../components/DList";
-import { useNetwork } from "../hooks/useNetwork";
-import { dlog } from "../libs/dlog";
-import { TMarketEntry } from "../models/model";
-import { DIMENS } from "../res/dimens";
-import { colors } from "../styles/colors";
+import { dlog } from "../components/libs/dlog";
+import { colors } from "../components/res/colors";
+import { DIMENS } from "../components/res/dimens";
+import { AppStateContext } from "./AppStateProvider";
+import { TMarketEntry } from "./model";
 import { TKeyText, TProps } from "./types";
+import { useNetwork } from "./useNetwork";
 
 export const TickerListView = ({ navigation, objArray }: TProps) => {
   const appState = useContext(AppStateContext);

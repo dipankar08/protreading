@@ -1,13 +1,15 @@
 import React from "react";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import AppStateStoreProvider from "./src/appstate/AppStateStore";
-import CoreStateStoreProvider from "./src/core/CoreContext";
+import CoreStateStoreProvider from "./src/components/core/CoreContext";
+import { colors } from "./src/components/res/colors";
+import AppStateStoreProvider from "./src/screens/AppStateProvider";
 import RootNavigation from "./src/screens/navigation";
-import { colors } from "./src/styles/colors";
+import { useGlobalEffect } from './src/screens/useGlobalEffect';
 
 // You must given a name app
 export default function App() {
+  const globalEffect = useGlobalEffect();
   return (
     <SafeAreaProvider style={{ backgroundColor: colors.white }}>
       <CoreStateStoreProvider>

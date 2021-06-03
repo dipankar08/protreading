@@ -1,9 +1,9 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, Image } from "react-native";
-import { STRINGS } from "../res/strings";
+import { Image } from "react-native";
+import { STRINGS } from "../screens/res/strings";
 import { TProps } from "../screens/types";
 import { DLayoutCol } from "./basic";
-import { DTextSubTitle, DTextTitle } from "./DText";
+import { DTextTitle } from "./DText";
 
 export const DAppLogo = ({ logo, text, size }: TProps) => {
   return (

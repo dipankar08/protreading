@@ -3,10 +3,10 @@ import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { DIMENS } from "../res/dimens";
 import { TProps } from "../screens/types";
 import { DButtonIcon } from "./DButton";
 import { DScreenTitle } from "./DText";
+import { DIMENS } from "./res/dimens";
 import { STYLES } from "./styles";
 
 export const DCard = ({ children, overrideStyle }: TProps) => {

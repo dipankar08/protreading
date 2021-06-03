@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FlatList, Text, useWindowDimensions, View } from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, DLayoutRow, DText, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
-import { useNetwork } from "../hooks/useNetwork";
-import { TOrder } from "../models/model";
-import { colors } from "../styles/colors";
+import { colors } from "../components/res/colors";
+import { AppStateContext } from "./AppStateProvider";
 import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
+import { TOrder } from "./model";
 import { TProps } from "./types";
+import { useNetwork } from "./useNetwork";
 
 export const PositionScreen = ({ navigation }: TProps) => {
   // tab config

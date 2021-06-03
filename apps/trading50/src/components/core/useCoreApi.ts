@@ -1,14 +1,10 @@
+import * as Facebook from "expo-facebook";
+import * as Google from "expo-google-app-auth";
 import React, { useContext } from "react";
 import { dlog } from "../libs/dlog";
 import { deleteData, getBool, getData, saveData, setBool } from "../libs/stoarge";
 import { CoreStateContext, globalCoreState } from "./CoreContext";
-import { CompleteSignInScreen } from "./CompleteSignInScreen";
-import { SignInScreen } from "../screens/ThemeTest";
-import { NuxScreen } from "./NUXScreen";
-import * as Facebook from "expo-facebook";
-import { TAuthInfo, TCallback, TCoreScreenName, TCoreScreenType, TErrorCallback, TVoidCalBack } from "./core_model";
-import * as Google from "expo-google-app-auth";
-import { Alert } from "react-native";
+import { TAuthInfo, TCallback, TCoreScreenName, TVoidCalBack } from "./core_model";
 
 export const useCoreApi = () => {
   const coreState = useContext(CoreStateContext);

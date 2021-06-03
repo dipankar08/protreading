@@ -1,6 +1,6 @@
 // convert network json data to right data format.
-import { dlog } from "../libs/dlog";
-import { emptyPositionSummary, TGroupMarketEntry, TMarketEntry, TObject, TPosition } from "./model";
+import { dlog } from "../../components/libs/dlog";
+import { emptyPositionSummary, TGroupMarketEntry, TMarketEntry, TObject, TPosition } from "../model";
 import { getRecommendedMap, getSectorMap, processPositionData } from "./helper";
 
 class DataProcessor {

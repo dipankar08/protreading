@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TProps } from "../screens/types";
-import { colors } from "../styles/colors";
+import { colors } from "./res/colors";
 import { STYLES } from "./styles";
 
 export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {

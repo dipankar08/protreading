@@ -1,15 +1,12 @@
 import React, { useContext, useEffect } from "react";
-import { DContainer, DText, DButton, DLayoutCol } from "../components/basic";
-import { dlog } from "../libs/dlog";
-import { TProps } from "../screens/types";
+import logo from "../../../assets/images/icon_white.png";
+import { TProps } from "../../screens/types";
+import { DContainer, DLayoutCol } from "../basic";
+import { DAppLogo } from "../DImage";
+import { DLoadingText } from "../DText";
+import { STYLES } from "../styles";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { colors } from "../styles/colors";
-import { STYLES } from "../components/styles";
-import { DAppLogo } from "../components/DImage";
-import { DLoadingText } from "../components/DText";
-import logo from "../../assets/images/icon_white.png";
 
 // Sign up logic...
 export const CompleteSignInScreen = ({ navigation }: TProps) => {

@@ -4,10 +4,10 @@ import { DContainerSafe, DLayoutCol, DListEmptyComponent, ScreenHeader } from ".
 import { DButtonPrimary } from "../components/DButton";
 import { DCard } from "../components/DLayout";
 import { DTextFooter, DTextSubTitle, DTextTitle } from "../components/DText";
-import { useNetwork } from "../hooks/useNetwork";
-import { showNotification } from "../libs/uihelper";
-import { TObject } from "../models/model";
+import { showNotification } from "../components/libs/uihelper";
+import { TObject } from "./model";
 import { TProps } from "./types";
+import { useNetwork } from "./useNetwork";
 export let ScreenListScreen = ({ navigation }: TProps) => {
   const network = useNetwork();
   const [loading, setLoading] = React.useState(false);

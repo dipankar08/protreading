@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { TObject } from "../models/model";
+import { TObject } from "../../screens/model";
 import { dlog } from "./dlog";
 
 export async function setBool(key: string, value: boolean) {
@@ -21,6 +21,26 @@ export async function getBool(key: string) {
     return false;
   }
 }
+
+export async function saveString(key: string, value: string) {
+  dlog.d(`[Storage] Saving key ${key}`);
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    dlog.d("[STORAGE] Not able to store latest data in the cache");
+  }
+}
+
+export async function getString(key: string, defl = null) {
+  dlog.d(`[Storage] Getting key ${key}`);
+  try {
+    let data = await AsyncStorage.getItem(key);
+    return data ? data : defl;
+  } catch (e) {
+    return defl;
+  }
+}
+
 export async function saveData(key: string, value: TObject) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
@@ -46,8 +66,9 @@ export async function getData(key: string, defl = null) {
 }
 
 export async function deleteData(key: string) {
+  dlog.d(`[STORAGE] Deleting data ${key}`);
   try {
-    await AsyncStorage.setItem(key, "");
+    await AsyncStorage.removeItem(key);
     dlog.d("[STORAGE] Delete data ");
   } catch (e) {
     dlog.d("[STORAGE] not able to delete data");

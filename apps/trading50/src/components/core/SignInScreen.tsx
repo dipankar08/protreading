@@ -1,22 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { DContainer, DText, DTextInput, DButton } from "../components/basic";
-import { STYLES } from "../components/styles";
+import React, { useEffect, useState } from "react";
+import { Image } from "react-native";
+import logo from "../../../assets/images/icon_white.png";
+import { STRINGS } from "../../screens/res/strings";
+import { TProps } from "../../screens/types";
+import { DContainer } from "../basic";
+import { DButtonLink, DButtonWithIcon } from "../DButton";
+import { DPrompt } from "../DDialog";
+import { DTextFooter, DTextSubTitle, DTextTitle } from "../DText";
 import { dlog } from "../libs/dlog";
-import logo from "../../assets/images/icon_white.png";
-import { TProps } from "../screens/types";
-import { Image, Text, View, StyleSheet, Alert } from "react-native";
-import { CoreStateContext } from "./CoreContext";
-import { useCoreApi } from "./useCoreApi";
-import { DStatusBar } from "../components/DStatusBar";
-import { STRINGS } from "../res/strings";
-import { DTextFooter, DTextSubTitle, DTextTitle } from "../components/DText";
-import { DButtonLink, DButtonWithIcon } from "../components/DButton";
-import { colors } from "../styles/colors";
-import { DIMENS } from "../res/dimens";
 import { showNotification } from "../libs/uihelper";
-import _ from "underscore";
-import { DPrompt } from "../components/DDialog";
+import { colors } from "../res/colors";
+import { DIMENS } from "../res/dimens";
+import { STYLES } from "../styles";
+import { useCoreApi } from "./useCoreApi";
 // Sign in Logics
 export const SignInScreen = ({ navigation }: TProps) => {
   const [loadingGoogle, setLoadingGoogle] = useState(false);

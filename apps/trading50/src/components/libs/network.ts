@@ -1,24 +1,13 @@
 import axios from "axios";
-import { TObject } from "../models/model";
+import { TObject } from "../../screens/model";
 import { dlog } from "./dlog";
-import { getData, saveData } from "./stoarge";
 
-export async function getRequest(url: string, cacheKey?: string | null, cache_first = true) {
+export async function getRequest(url: string) {
   dlog.d("try fetching " + url);
-  if (cache_first && cacheKey) {
-    dlog.d("[Network]Trying cache first..");
-    let data = await getData(cacheKey);
-    if (data) {
-      return data;
-    }
-  }
   let response = await axios.get(url);
   const jsondata: any = response.data;
   if (jsondata.status == "success") {
     dlog.d("fetch success...");
-    if (cacheKey) {
-      await saveData(cacheKey, jsondata.out);
-    }
     return jsondata;
   } else {
     dlog.d(`get failed. URL: ${url}..${JSON.stringify(response.data)}`);

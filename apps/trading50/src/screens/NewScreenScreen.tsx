@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import { AppStateContext } from "../appstate/AppStateStore";
 import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
 import { DButtonPrimary } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
 import { DTextInput } from "../components/DInput";
 import { DLayoutRow } from "../components/DLayout";
 import { DTextFooter } from "../components/DText";
-import { useNetwork } from "../hooks/useNetwork";
-import { showNotification } from "../libs/uihelper";
-import { DIMENS } from "../res/dimens";
+import { showNotification } from "../components/libs/uihelper";
+import { DIMENS } from "../components/res/dimens";
+import { AppStateContext } from "./AppStateProvider";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
+import { useNetwork } from "./useNetwork";
 const renderTabBar = (props) => <TabBar {...props} indicatorStyle={{}} style={{ fontSize: 40 }} />;
 
 export let NewScreenScreen = ({ navigation, route }: TProps) => {

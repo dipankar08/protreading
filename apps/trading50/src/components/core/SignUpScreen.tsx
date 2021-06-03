@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { DButton, DContainer, DText } from "../components/basic";
+import { TProps } from "../../screens/types";
+import { DButton, DContainer, DText } from "../basic";
 import { dlog } from "../libs/dlog";
-import { TProps } from "../screens/types";
 
 // Sign up logic...
 export const SignUpScreen = ({ navigation }: TProps) => {

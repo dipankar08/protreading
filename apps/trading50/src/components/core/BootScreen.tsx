@@ -1,16 +1,17 @@
 // Splash screen or boot screen is important for loading the boot data.
 import * as Updates from "expo-updates";
 import React, { useContext, useEffect, useState } from "react";
-import logo from "../../assets/images/icon_white.png";
-import { DContainer, DLayoutCol } from "../components/basic";
-import { DAppLogo } from "../components/DImage";
-import { DLoadingText, DTextFooter } from "../components/DText";
-import { STYLES } from "../components/styles";
+import logo from "../../../assets/images/icon_white.png";
+import { DContainer, DLayoutCol } from "../basic";
+import { DAppLogo } from "../DImage";
+import { DLoadingText, DTextFooter } from "../DText";
 import { dlog } from "../libs/dlog";
+import { STYLES } from "../styles";
 import { CoreConstant } from "./constant";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { isDev } from "./utils/utils";
+
 // In this screen we are trying to import { CACHE_KEY_MARKET } from '../appstate/CONST';
 export const BootScreen = ({ navigation }: any) => {
   const coreState = useContext(CoreStateContext);

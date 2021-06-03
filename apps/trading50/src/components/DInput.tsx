@@ -1,10 +1,10 @@
 import React from "react";
 import { Picker, TextInput } from "react-native";
 import { TProps } from "../screens/types";
-import { colors } from "../styles/colors";
 import { DButtonIcon } from "./DButton";
 import { DIcon } from "./DIcon";
 import { DLayoutRow } from "./DLayout";
+import { colors } from "./res/colors";
 
 export const DTextInput = ({ children, style, placeholder, onChangeText, multiline }: TProps) => {
   return (

@@ -1,12 +1,12 @@
 import * as Application from "expo-application";
 import * as Updates from "expo-updates";
 import React, { useContext, useEffect, useState } from "react";
-import { DLayoutCol } from "../components/basic";
-import { DButtonPrimary } from "../components/DButton";
-import { DKeyValueList } from "../components/DList";
+import { TProps } from "../../screens/types";
+import { DLayoutCol } from "../basic";
+import { DButtonPrimary } from "../DButton";
+import { DKeyValueList } from "../DList";
 import { dlog } from "../libs/dlog";
 import { showNotification } from "../libs/uihelper";
-import { TProps } from "../screens/types";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 import { isDev } from "./utils/utils";

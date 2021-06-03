@@ -1,19 +1,18 @@
 import moment from "moment";
 import React, { useContext } from "react";
 import { Alert } from "react-native";
-import { globalAppState } from "../appstate/AppStateReducer";
-import { AppStateContext } from "../appstate/AppStateStore";
-import { CACHE_KEY_MARKET, CACHE_KEY_POSITION, PRO_TRADING_SERVER, SIMPLESTORE_ENDPOINT } from "../appstate/CONST";
-import { initialState, TDomain } from "../appstate/types";
-import { CoreStateContext } from "../core/CoreContext";
-import { TCallback } from "../core/core_model";
-import { assertNotEmptyOrNotify, verifyOrCrash } from "../libs/assert";
-import { dlog } from "../libs/dlog";
-import { getRequest, postRequest } from "../libs/network";
-import { getCurrentDate } from "../libs/time";
-import { showNotification } from "../libs/uihelper";
-import { TMarketEntry, TObject } from "../models/model";
-import { processor } from "../models/processor";
+import { CoreStateContext } from "../components/core/CoreContext";
+import { TCallback } from "../components/core/core_model";
+import { assertNotEmptyOrNotify, verifyOrCrash } from "../components/libs/assert";
+import { dlog } from "../components/libs/dlog";
+import { getRequest, postRequest } from "../components/libs/network";
+import { saveString } from "../components/libs/stoarge";
+import { getCurrentDate } from "../components/libs/time";
+import { showNotification } from "../components/libs/uihelper";
+import { AppStateContext, globalAppState, initialState, TDomain } from "./AppStateProvider";
+import { PRO_TRADING_SERVER, SIMPLESTORE_ENDPOINT } from "./CONST";
+import { processor } from "./helper/processor";
+import { TMarketEntry, TObject } from "./model";
 
 const SUMMARY_URL = `${PRO_TRADING_SERVER}/summary?`;
 const MARKET_URL = `${PRO_TRADING_SERVER}/market?`;
@@ -22,22 +21,37 @@ function getDomainUrl(url: string) {
   return `${url}&domain=${globalAppState.domain}`;
 }
 
+let curDomain: TDomain = null;
+
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
   const coreState = useContext(CoreStateContext);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [domain, setDomain] = React.useState<TDomain>(null);
 
-  async function doAllNetworkCallOnBoot(callback: TCallback) {
+  React.useEffect(() => {
+    if (appState.state.domain != curDomain && appState.state.domain != null) {
+      curDomain = appState.state.domain;
+      refreshAllData({
+        onBefore: () => showNotification("refreshing data"),
+        onComplete: () => showNotification("refresh done"),
+      });
+    }
+  }, [appState]);
+
+  async function refreshAllData(callback: TCallback) {
     callback.onBefore?.();
-    await reLoadAllData();
-    await fetchUserInfo(callback);
+    await loadMarketData({
+      onSuccess: async () => {
+        await fetchUserInfo(callback);
+      },
+      onError: callback?.onError,
+    });
   }
 
   async function fetchLatestClose(callback: TCallback) {
     callback.onBefore?.();
     try {
-      let market = await getRequest(MARKET_URL, CACHE_KEY_MARKET, false);
+      let market = await getRequest(MARKET_URL);
       processor.setMarket(market.out);
       callback?.onComplete?.();
     } catch (err) {
@@ -46,30 +60,25 @@ export const useNetwork = () => {
     }
   }
 
-  // realod all market Data
-  async function reLoadAllData(callback?: TCallback) {
-    dlog.d("[NETWORK] fetching from network ");
+  async function loadMarketData(callback?: TCallback) {
+    dlog.d(`loadMarketData called ${appState.state.domain}`);
     callback?.onBefore?.();
     try {
-      // let summary = await getRequest(getDomainUrl(SUMMARY_URL), CACHE_KEY_SUMMARY, false);
-      let market = await getRequest(getDomainUrl(MARKET_URL), CACHE_KEY_MARKET, false);
-      // process alll data
-      // processor.setSummary(summary.out);
+      let market = await getRequest(getDomainUrl(MARKET_URL));
       processor.setMarket(market.out);
       appState.dispatch({
         type: "MERGE",
         payload: {
-          // summary: processor.summary,
           sectorList: processor.sectorList,
           recommendedList: processor.recommendedList,
           stockMap: processor.stockMap,
         },
       });
-      dlog.d(`[NETWORK] fetching from network complete for domain ${globalAppState.domain} `);
+      dlog.d(`[NETWORK] loadMarketData success ${globalAppState.domain} `);
       callback?.onSuccess?.({ msg: "updated data to latest" });
       callback?.onComplete?.();
     } catch (e) {
-      dlog.d(`[NETWORK] fetching from network failed ${SUMMARY_URL} - ${MARKET_URL}`);
+      dlog.e(`[NETWORK] loadMarketData failed ${SUMMARY_URL} - ${MARKET_URL}`);
       dlog.ex(e);
       callback?.onError?.("Error" + e.message);
       callback?.onComplete?.();
@@ -78,29 +87,25 @@ export const useNetwork = () => {
 
   // fetch the User info like position
   async function fetchUserInfo(callback?: TCallback) {
+    dlog.d(`fetchUserInfo called`);
     if (coreState.state.authInfo == null) {
-      dlog.d("early return");
+      dlog.e("fetchUserInfo: early return");
       return;
     }
     callback?.onBefore?.();
     try {
-      let network_resp = await getRequest(
-        `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100`,
-        CACHE_KEY_POSITION,
-        false
-      );
+      let network_resp = await getRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100`);
       verifyOrCrash(globalAppState.ltpMap != null, "Market is null");
       processor.setPositionData(network_resp.out);
       appState.dispatch({ type: "MERGE", payload: { position: processor.position } });
-      setLoading(false);
       callback?.onSuccess?.({});
       callback?.onComplete?.();
+      dlog.d(`fetchUserInfo success`);
     } catch (e) {
       dlog.ex(e);
-      setLoading(false);
-      setError("Not able to get Data");
       callback?.onError?.("Error" + e.message);
       callback?.onComplete?.();
+      dlog.d(`fetchUserInfo error`);
     }
   }
 
@@ -151,11 +156,9 @@ export const useNetwork = () => {
 
   async function forceUpdateData(onSuccess?: Function, onError?: Function) {
     dlog.d("[NETWORK] forceUpdateData");
-    setLoading(true);
     try {
-      let task1 = await getRequest(`${PRO_TRADING_SERVER}/snapshot?candle_type=1d&force=1`, null, false);
-      let task2 = await getRequest(`${PRO_TRADING_SERVER}//snapshot?candle_type=5m&force=1`, null, false);
-      setLoading(false);
+      let task1 = await getRequest(`${PRO_TRADING_SERVER}/snapshot?candle_type=1d&force=1`);
+      let task2 = await getRequest(`${PRO_TRADING_SERVER}//snapshot?candle_type=5m&force=1`);
       dlog.d(`[NETWORK] forceUpdateData complete task1:${JSON.stringify(task1)}  task2:${JSON.stringify(task2)} `);
       showNotification("task submitted");
       if (onSuccess) {
@@ -163,7 +166,6 @@ export const useNetwork = () => {
       }
     } catch (e) {
       //setError("Not able to get Data");
-      setLoading(false);
       showNotification("Not able to submit task");
       dlog.d("[NETWORK] forceUpdateData failed ");
       dlog.ex(e);
@@ -185,10 +187,15 @@ export const useNetwork = () => {
     }
   }
 
-  async function changeDomain(domain: TDomain) {
+  async function changeDomain(domain: TDomain, callback: TCallback) {
+    dlog.d(`trying to chnage the domain:${domain}`);
+    if (!domain) {
+      return;
+    }
+    saveString("DOMAIN", domain);
+    setDomain(domain);
     appState.dispatch({ type: "MERGE", payload: initialState });
     appState.dispatch({ type: "MERGE", payload: { domain: domain } });
-    reLoadAllData();
   }
 
   async function clearAllData() {
@@ -285,16 +292,14 @@ export const useNetwork = () => {
   }
 
   return {
-    loading,
-    error,
     fetchLatestClose,
-    reLoadAllData,
+    loadMarketData,
     fetchUserInfo,
     createOrder,
     closeOrder,
     forceUpdateData,
     reopenOrder,
-    doAllNetworkCallOnBoot,
+    refreshAllData,
     changeDomain,
     performScreen,
     saveNewScreen,
@@ -304,3 +309,9 @@ export const useNetwork = () => {
     clearAllData,
   };
 };
+
+export const domainList = [
+  { key: "UK", text: "UK" },
+  { key: "IN", text: "INDIA" },
+  { key: "USA", text: "USA" },
+];
