@@ -26,8 +26,8 @@ export const ScreenHeader = ({
           flexDirection: "row",
           padding: 0,
           alignItems: "center",
-          paddingHorizontal: DIMENS.GAP_FROM_EDGE,
-          marginBottom: 8,
+          // paddingHorizontal: DIMENS.GAP_FROM_EDGE, // do it in parentes
+          marginBottom: 10,
         },
         style,
       ]}

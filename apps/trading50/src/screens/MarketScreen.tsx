@@ -40,6 +40,7 @@ export const MarketScreen = ({ navigation }: TProps) => {
         title="Market Summary"
         loading={loadingRefresh}
         icon="reload"
+        style={{ paddingLeft: 10 }}
         onPress={() =>
           network.refreshAllData({
             onBefore: () => setLoadingRefresh(true),

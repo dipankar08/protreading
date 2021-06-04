@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import logo from "../../../assets/images/icon_white.png";
 import { STRINGS } from "../../screens/res/strings";
 import { TProps } from "../../screens/types";
@@ -18,6 +19,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingFacebook, setLoadingFacebook] = useState(false);
   const [visibleGuest, setVisibleGuest] = useState(false);
+  const [isShowGuestlogin, setIsShowGuestlogin] = useState(false);
   const coreApi = useCoreApi();
   let name = "SignIn";
   //dlog.obj(Constants, "Expo Constants");
@@ -40,7 +42,9 @@ export const SignInScreen = ({ navigation }: TProps) => {
         }}
         source={logo}
       />
-      <DTextTitle style={{ color: "white", textAlign: "center", fontSize: 40 }}>{STRINGS.APP_NAME}</DTextTitle>
+      <TouchableWithoutFeedback onLongPress={() => setIsShowGuestlogin(!isShowGuestlogin)}>
+        <DTextTitle style={{ color: "white", textAlign: "center", fontSize: 40 }}>{STRINGS.APP_NAME}</DTextTitle>
+      </TouchableWithoutFeedback>
 
       <DTextSubTitle style={{ color: "white", textAlign: "center", marginTop: 40 }}>Please login using your social account</DTextSubTitle>
 
@@ -91,20 +95,22 @@ export const SignInScreen = ({ navigation }: TProps) => {
       >
         Login as Google
       </DButtonWithIcon>
-      <DButtonLink
-        style={{
-          marginTop: 10,
-          textAlign: "center",
-          width: "100%",
-          justifyContent: "center",
-          alignSelf: "center",
-        }}
-        onPress={() => {
-          setVisibleGuest(true);
-        }}
-      >
-        Login as Guest
-      </DButtonLink>
+      {isShowGuestlogin && (
+        <DButtonLink
+          style={{
+            marginTop: 10,
+            textAlign: "center",
+            width: "100%",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+          onPress={() => {
+            setVisibleGuest(true);
+          }}
+        >
+          Login as guest
+        </DButtonLink>
+      )}
       <DTextFooter style={{ color: "white", textAlign: "center" }}>
         (You can use your google and facebook account to get signin. You can login using anyone of this if they have same email address. )
       </DTextFooter>
@@ -112,7 +118,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
         <DPrompt
           visible={visibleGuest}
           placeholder="email"
-          title={"Login as Guest"}
+          title={"Login as guest"}
           body={"Please enter you email address"}
           onOk={(text: string) => {
             setVisibleGuest(false);

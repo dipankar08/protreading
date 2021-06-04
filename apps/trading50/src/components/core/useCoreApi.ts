@@ -168,8 +168,9 @@ export const useCoreApi = () => {
     callback.onBefore?.();
     try {
       const result = await Google.logInAsync({
-        androidClientId: "290736876800-h120tsplv4jdcf2676dogtjd26f2ftgd.apps.googleusercontent.com", //process.env.GOOGLE_AUTH_KEY,
-        androidStandaloneAppClientId: "290736876800-h120tsplv4jdcf2676dogtjd26f2ftgd.apps.googleusercontent.com",
+        iosClientId: "290736876800-0gvt19u7dc49k09spv2s7g1djku8jg0l.apps.googleusercontent.com", // Used from EXPO
+        androidClientId: "290736876800-h120tsplv4jdcf2676dogtjd26f2ftgd.apps.googleusercontent.com", // used from EXPO
+        androidStandaloneAppClientId: "290736876800-h120tsplv4jdcf2676dogtjd26f2ftgd.apps.googleusercontent.com", // used form real ID
         scopes: ["profile", "email"],
       });
 

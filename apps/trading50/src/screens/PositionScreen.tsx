@@ -28,7 +28,13 @@ export const PositionScreen = ({ navigation }: TProps) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader hideBack={true} title={"Smart Portfolio"} icon="sort-reverse-variant" navigation={navigation}></ScreenHeader>
+      <ScreenHeader
+        hideBack={true}
+        title={"Smart Portfolio"}
+        icon="sort-reverse-variant"
+        navigation={navigation}
+        style={{ paddingLeft: 10 }}
+      ></ScreenHeader>
       <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
       <DButtonPrimary onPress={() => setModalVisible(true)} style={{ marginHorizontal: 8, marginTop: 0 }}>
         Add new Buy

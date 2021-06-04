@@ -92,7 +92,9 @@ export const HomeScreen = ({ navigation }: TProps) => {
                 {appState.state.position?.positionSummary?.committed_change.toFixed(2)}%)
               </Text>
               <Text style={styles.textHeader}>Net Profit</Text>
-              <Text style={styles.textValue}>{appState.state.position?.positionSummary?.net_profit.toFixed(2)}</Text>
+              <Text style={[styles.textValue, { color: getColorCode(appState.state.position?.positionSummary?.net_profit) }]}>
+                {appState.state.position?.positionSummary?.net_profit.toFixed(2)}
+              </Text>
             </DLayoutCol>
             <DLayoutCol style={{ flex: 1, justifyContent: "flex-end", textAlign: "right", alignContent: "flex-end" }}>
               <Text style={[styles.textHeader, styles.right]}>Current </Text>
