@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { TDomain } from "../appstate/types";
-import { DContainerSafe, DLayoutCol, DLayoutRow, ScreenHeader } from "../components/basic";
 import { CoreStateContext } from "../components/core/CoreContext";
 import { DOptionDialog } from "../components/DDialog";
+import { ScreenHeader } from "../components/DExtendedLayout";
+import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
 import { DTextSection, DTextSectionWithButton } from "../components/DText";
 import { dlog } from "../components/libs/dlog";
 import { getString } from "../components/libs/stoarge";
 import { showNotification } from "../components/libs/uihelper";
+import { DIMENS } from "../components/res/dimens";
 import { AppStateContext } from "./AppStateProvider";
 import { getColorCode } from "./helper/helper";
 import { TProps } from "./types";
@@ -20,30 +22,29 @@ export const HomeScreen = ({ navigation }: TProps) => {
   const [loading, setLoading] = useState(false);
   const [domainDialogVisible, setDomainDialogVisible] = React.useState(false);
 
-
   let name = "Home";
   useEffect(() => {
     dlog.d(`Mounted ${name}`);
-    (async function(){
-       let domain = await  getString("DOMAIN")
-       if(domain){
-         network.changeDomain(domain as TDomain, {
-            onBefore() {
-              setLoading(true);
-            },
-            onComplete() {
-              setLoading(false);
-            },
-            onSuccess() {
-              showNotification("Data updated");
-            },
-            onError(error) {
-              showNotification(error);
-            },
-         });
-       } else {
-         setDomainDialogVisible(true);
-       }
+    (async function () {
+      let domain = await getString("DOMAIN");
+      if (domain) {
+        network.changeDomain(domain as TDomain, {
+          onBefore() {
+            setLoading(true);
+          },
+          onComplete() {
+            setLoading(false);
+          },
+          onSuccess() {
+            showNotification("Data updated");
+          },
+          onError(error) {
+            showNotification(error);
+          },
+        });
+      } else {
+        setDomainDialogVisible(true);
+      }
     })();
     return () => {
       dlog.d(`Unmounted ${name}`);
@@ -52,24 +53,25 @@ export const HomeScreen = ({ navigation }: TProps) => {
 
   return (
     <DContainerSafe>
-      <DLayoutCol style={{ padding: 16 }}>
-        <ScreenHeader
-          hideBack={true}
-          navigation={navigation}
-          leftIcon={"menu"}
-          onPressLeftIcon={() => {
-            navigation.toggleDrawer();
-          }}
-          loading={loading}
-          title={"Home"}
-          style={{ padding: 0 }}
-          icon="reload"
-          onPress={ async ()=> await network.refreshAllData({
-            onBefore:()=>setLoading(true),
-            onComplete:()=>setLoading(false)
-          })}
-        />
-        <DTextSection>Summary({appState.state.domain})</DTextSection>
+      <ScreenHeader
+        hideBack={true}
+        navigation={navigation}
+        leftIcon={"menu"}
+        onPressLeftIcon={() => {
+          navigation.toggleDrawer();
+        }}
+        loading={loading}
+        title={"Home"}
+        icon="reload"
+        onPress={async () =>
+          await network.refreshAllData({
+            onBefore: () => setLoading(true),
+            onComplete: () => setLoading(false),
+          })
+        }
+      />
+      <DLayoutCol style={{ paddingHorizontal: DIMENS.GAP_FROM_EDGE }}>
+        <DTextSection style={{ marginTop: 0 }}>Summary({appState.state.domain})</DTextSection>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>
             <DLayoutCol style={{ flex: 1 }}>
@@ -82,8 +84,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
                 style={[
                   styles.textValue,
                   {
-                    color:
-                      getColorCode(appState.state.position?.positionSummary?.committed_pl),
+                    color: getColorCode(appState.state.position?.positionSummary?.committed_pl),
                   },
                 ]}
               >
@@ -102,8 +103,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
                   styles.textValue,
                   styles.right,
                   {
-                    color:
-                      getColorCode(appState.state.position?.positionSummary?.total_change)
+                    color: getColorCode(appState.state.position?.positionSummary?.total_change),
                   },
                 ]}
               >
@@ -115,8 +115,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
                   styles.textValue,
                   styles.right,
                   {
-                    color:
-                      getColorCode(appState.state.position?.positionSummary?.uncommitted_change)
+                    color: getColorCode(appState.state.position?.positionSummary?.uncommitted_change),
                   },
                 ]}
               >
@@ -139,20 +138,20 @@ export const HomeScreen = ({ navigation }: TProps) => {
         onCancel={() => setDomainDialogVisible(false)}
         onChange={(value) => {
           network.changeDomain(value as TDomain, {
-                      onBefore() {
-                        setLoading(true);
-                      },
-                      onComplete() {
-                        setLoading(false);
-                      },
-                      onSuccess() {
-                        showNotification("Data updated");
-                      },
-                      onError(error) {
-                        showNotification(error);
-                      },
-                  });
-                  setDomainDialogVisible(false);
+            onBefore() {
+              setLoading(true);
+            },
+            onComplete() {
+              setLoading(false);
+            },
+            onSuccess() {
+              showNotification("Data updated");
+            },
+            onError(error) {
+              showNotification(error);
+            },
+          });
+          setDomainDialogVisible(false);
         }}
       ></DOptionDialog>
     </DContainerSafe>

@@ -1,9 +1,10 @@
 import React from "react";
+import { ActivityIndicator, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import _ from "underscore";
 import { TProps } from "../screens/types";
-import { DLayoutCol, DLayoutRow } from "./basic";
+import { DLayoutCol, DLayoutRow } from "./DLayout";
 import { DTextSubTitle, DTextTitle } from "./DText";
 import { colors } from "./res/colors";
 
@@ -35,18 +36,51 @@ export const DKeyValueList = ({ object }: TProps) => {
   );
 };
 
-export const DActionItemRow = ({ style, title, value, icon, onPress }: TProps) => {
+export const DActionItemRow = ({ style, title, value, icon, onPress, loading }: TProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <DLayoutRow style={{marginLeft:10, marginRight:10, marginBottom:10, borderBottomWidth:1, borderColor:colors.grey200, paddingVertical:10, alignItems:'center'}}>
-        {icon && <MaterialCommunityIcons name={icon} color={colors.grey600} size={36} style={{ marginRight: 20, paddingTop:2 }} />}
-          <DLayoutCol style={{flex:1}}>
-              <DTextTitle style={{flex:1}}>{title}</DTextTitle>
-              <DTextSubTitle style={{color:colors.grey600}}>{value}</DTextSubTitle>
-          </DLayoutCol>
-    <MaterialCommunityIcons name={"arrow-right"} color="black" size={24} style={{ marginLeft: 10 }} />
+      <DLayoutRow
+        style={{
+          marginLeft: 10,
+          marginRight: 10,
+          borderBottomWidth: 1,
+          borderColor: colors.grey200,
+          paddingVertical: 20,
+          alignItems: "center",
+        }}
+      >
+        {icon && <MaterialCommunityIcons name={icon} color={colors.grey600} size={36} style={{ marginRight: 20, paddingTop: 2 }} />}
+        <DLayoutCol style={{ flex: 1 }}>
+          <DTextTitle style={{ flex: 1 }}>{title}</DTextTitle>
+          <DTextSubTitle style={{ color: colors.grey600 }}>{value}</DTextSubTitle>
+        </DLayoutCol>
+        {loading ? (
+          <ActivityIndicator size="small" color="black" style={{ marginLeft: 10 }} />
+        ) : (
+          <MaterialCommunityIcons name={"arrow-right"} color="black" size={24} style={{ marginLeft: 10 }} />
+        )}
       </DLayoutRow>
-     
     </TouchableOpacity>
+  );
+};
+
+export const FlatListItemSeparator = () => {
+  return (
+    <View
+      style={{
+        height: 1,
+        width: "100%",
+        backgroundColor: "#00000020",
+      }}
+    />
+  );
+};
+
+export const DListEmptyComponent = () => {
+  return (
+    <View style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 40 }}>
+      <MaterialCommunityIcons name={"emoticon-sad-outline"} color="black" size={40} />
+      <Text style={{ color: "red", textAlign: "center", marginTop: 16 }}>No item found</Text>
+    </View>
   );
 };

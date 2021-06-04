@@ -1,71 +1,4 @@
-import React from "react";
-import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TProps } from "../screens/types";
-import { DButtonIcon } from "./DButton";
-import { DScreenTitle } from "./DText";
-import { DIMENS } from "./res/dimens";
-import { STYLES } from "./styles";
-
-export const DCard = ({ children, overrideStyle }: TProps) => {
-  return (
-    <View
-      style={[
-        {
-          width: "100%",
-          marginVertical: 5,
-          backgroundColor: "#ffffff",
-          borderRadius: 10,
-          padding: 20,
-        },
-        overrideStyle,
-      ]}
-    >
-      {children}
-    </View>
-  );
-};
-
-export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
-  return (
-    <SafeAreaView
-      style={[
-        {
-          backgroundColor: STYLES.APP_SCREEN_BACKGROUND,
-          flex: 1,
-          flexDirection: "column",
-        },
-        overrideStyle,
-        style,
-      ]}
-    >
-      {children}
-    </SafeAreaView>
-  );
-};
-
-export const DText = ({ children, style, center, bold, primary, secondary, dark, caption }: TProps) => {
-  return (
-    <Text
-      style={[
-        {
-          fontSize: caption ? 10 : primary ? 16.5 : 12.5,
-          color: dark ? "white" : secondary ? "#11111199" : "#111111",
-          marginVertical: 8, // DO NOT OVERRIDE
-          fontWeight: bold ? "bold" : "normal",
-          textAlign: center ? "center" : "left",
-        },
-        {},
-        style,
-      ]}
-    >
-      {children}
-    </Text>
-  );
-};
-
+/*
 export const DTextInput = ({ children, style, dark, placeholder, onChangeText }: TProps) => {
   return (
     <TextInput
@@ -231,22 +164,9 @@ export const ScreenHeader = ({
       ) : (
         <View></View>
       )}
-      <DScreenTitle style={{ color: color || "black", marginTop:0 }}>{title}</DScreenTitle>
+      <DScreenTitle style={{ color: color || "black", marginTop: 0 }}>{title}</DScreenTitle>
       {icon && <DButtonIcon icon={icon} size={24} color={color || "black"} loading={loading || false} onPress={onPress}></DButtonIcon>}
     </View>
   );
 };
-
-// It should be start as a capital letter
-export const B = (props: any) => <Text style={{ fontWeight: "bold", marginEnd: 6 }}>{props.children}</Text>;
-export const Span = ({ style, children }: TProps) => (
-  <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", marginEnd: 6 }}>{children}</View>
-);
-export const I = ({ children }: TProps) => <Text style={{ fontStyle: "italic" }}>{children}</Text>;
-export const P = ({ children }: TProps) => <Text style={{ color: "#111111" }}>{children}</Text>;
-export const Sub = ({ children }: TProps) => <Text style={{ color: "#11111160", marginEnd: 6 }}>{children}</Text>;
-export const A = (props: any) => (
-  <TouchableOpacity onPress={props.onPress}>
-    <Text style={{ fontStyle: "italic", color: "red" }}>{props.children}</Text>;
-  </TouchableOpacity>
-);
+*/

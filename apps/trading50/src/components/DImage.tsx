@@ -2,7 +2,7 @@ import React from "react";
 import { Image } from "react-native";
 import { STRINGS } from "../screens/res/strings";
 import { TProps } from "../screens/types";
-import { DLayoutCol } from "./basic";
+import { DLayoutCol } from "./DLayout";
 import { DTextTitle } from "./DText";
 
 export const DAppLogo = ({ logo, text, size }: TProps) => {

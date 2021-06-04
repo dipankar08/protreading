@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { Text } from "react-native";
 import { Avatar } from "react-native-elements";
 import { TProps } from "../../screens/types";
-import { DCard, DLayoutCol, DLayoutRow } from "../basic";
 import { DButtonPrimary } from "../DButton";
+import { DCard, DLayoutCol, DLayoutRow } from "../DLayout";
 import { dlog } from "../libs/dlog";
+import { colors } from "../res/colors";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
 
@@ -27,7 +28,7 @@ export const LogoutCard = ({ navigation, route, onSignOut }: TProps) => {
   }, []);
 
   return (
-    <DCard>
+    <DCard style={{ backgroundColor: colors.amber400 }}>
       <DLayoutRow style={{ alignItems: "center" }}>
         <Avatar
           rounded
@@ -38,8 +39,7 @@ export const LogoutCard = ({ navigation, route, onSignOut }: TProps) => {
         />
         <DLayoutCol style={{ flex: 1, marginLeft: 50 }}>
           <Text style={{ color: "#000000ee", fontSize: 20, fontWeight: "bold" }}>{coreState.state.authInfo?.name}</Text>
-          <Text style={{ color: "#000000ee", fontSize: 14, marginTop: 10, fontWeight: "normal" }}>Email:{coreState.state.authInfo?.email}</Text>
-          <Text style={{ color: "#000000ee", fontSize: 14, marginTop: 10, fontWeight: "normal" }}>Id:{coreState.state.authInfo?.user_id}</Text>
+          <Text style={{ color: "#00000066", fontSize: 15, marginTop: 10, fontWeight: "normal" }}>{coreState.state.authInfo?.email}</Text>
           <DButtonPrimary onPress={signOut} primary style={{ marginTop: 20 }}>
             Sign out
           </DButtonPrimary>

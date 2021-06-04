@@ -5,7 +5,7 @@ import { TProps } from "../screens/types";
 import { colors } from "./res/colors";
 import { STYLES } from "./styles";
 
-export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
+export const DContainerSafe = ({ children, style }: TProps) => {
   return (
     <SafeAreaView
       style={[
@@ -13,8 +13,8 @@ export const DContainerSafe = ({ children, overrideStyle, style }: TProps) => {
           backgroundColor: STYLES.APP_SCREEN_BACKGROUND,
           flexDirection: "column",
           display: "flex",
+          flex: 1,
         },
-        overrideStyle,
         style,
       ]}
     >

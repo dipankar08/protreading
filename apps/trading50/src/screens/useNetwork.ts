@@ -215,9 +215,11 @@ export const useNetwork = () => {
     if (!domain) {
       return;
     }
+    callback.onBefore?.();
     saveString("DOMAIN", domain);
     appState.dispatch({ type: "MERGE", payload: initialState });
     appState.dispatch({ type: "MERGE", payload: { domain: domain } });
+    callback.onComplete?.();
   }
 
   async function clearAllData() {

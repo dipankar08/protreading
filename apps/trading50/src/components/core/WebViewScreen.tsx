@@ -2,8 +2,8 @@
 import React from "react";
 import { WebView } from "react-native-webview";
 import { TProps } from "../../screens/types";
-import { DContainerSafe, DLayoutCol, DLayoutRow } from "../basic";
 import { DButtonIcon } from "../DButton";
+import { DContainerSafe, DLayoutCol, DLayoutRow } from "../DLayout";
 import { DTextSubTitle } from "../DText";
 import { colors } from "../res/colors";
 

@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TProps } from "../../screens/types";
-import { DContainer } from "../basic";
+import { DContainer } from "../DLayout";
 import { dlog } from "../libs/dlog";
 import { colors } from "../res/colors";
 import { CoreStateContext } from "./CoreContext";

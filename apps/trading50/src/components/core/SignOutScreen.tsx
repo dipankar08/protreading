@@ -3,8 +3,9 @@ import { Text } from "react-native";
 import { Avatar } from "react-native-elements";
 import { AppStateContext } from "../../screens/AppStateProvider";
 import { TProps } from "../../screens/types";
-import { DButton, DContainerSafe, DLayoutCol, ScreenHeader } from "../basic";
 import { DButtonPrimary } from "../DButton";
+import { ScreenHeader } from "../DExtendedLayout";
+import { DContainerSafe, DLayoutCol } from "../DLayout";
 import { dlog } from "../libs/dlog";
 import { deleteData } from "../libs/stoarge";
 
@@ -42,14 +43,14 @@ export const SignOutScreen = ({ navigation, route }: TProps) => {
         <DButtonPrimary onPress={signOut} secondary>
           Sign out
         </DButtonPrimary>
-        <DButton
+        <DButtonPrimary
           onPress={() => {
             navigation.push("TestScreen");
           }}
           secondary
         >
           Test
-        </DButton>
+        </DButtonPrimary>
       </DLayoutCol>
     </DContainerSafe>
   );

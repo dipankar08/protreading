@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
-import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
 import { DButtonPrimary } from "../components/DButton";
 import { DDialog } from "../components/DDialog";
+import { ScreenHeader } from "../components/DExtendedLayout";
 import { DTextInput } from "../components/DInput";
-import { DLayoutRow } from "../components/DLayout";
+import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
 import { DTextFooter } from "../components/DText";
 import { showNotification } from "../components/libs/uihelper";
 import { DIMENS } from "../components/res/dimens";
 import { AppStateContext } from "./AppStateProvider";
+import { TMarketEntry, TObject } from "./model";
 import { TickerListView } from "./TickerListView";
 import { TProps } from "./types";
 import { useNetwork } from "./useNetwork";

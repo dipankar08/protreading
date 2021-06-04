@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Alert, FlatList, Text, useWindowDimensions, View } from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
-import { DContainerSafe, DLayoutCol, DLayoutRow, DText, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
+import { ScreenHeader } from "../components/DExtendedLayout";
+import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
+import { FlatListItemSeparator } from "../components/DList";
 import { colors } from "../components/res/colors";
 import { AppStateContext } from "./AppStateProvider";
 import { OrderCloseDialog, OrderCreateDialog, OrderViewDialog } from "./Dialog";
@@ -26,15 +28,9 @@ export const PositionScreen = ({ navigation }: TProps) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <DContainerSafe style={{ paddingHorizontal: 0 }}>
-      <ScreenHeader
-        hideBack={true}
-        title={"Smart Portfolio"}
-        style={{ padding: 16 }}
-        icon="sort-reverse-variant"
-        navigation={navigation}
-      ></ScreenHeader>
+      <ScreenHeader hideBack={true} title={"Smart Portfolio"} icon="sort-reverse-variant" navigation={navigation}></ScreenHeader>
       <TabView navigationState={{ index, routes }} renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
-      <DButtonPrimary onPress={() => setModalVisible(true)} style={{ marginHorizontal: 8, marginTop: 0, marginBottom: 10 }}>
+      <DButtonPrimary onPress={() => setModalVisible(true)} style={{ marginHorizontal: 8, marginTop: 0 }}>
         Add new Buy
       </DButtonPrimary>
       {modalVisible && <OrderCreateDialog visible={modalVisible} onClose={() => setModalVisible(false)} />}
@@ -109,11 +105,11 @@ export const PositionListView = ({ route, navigation }: TProps) => {
                 <DLayoutCol style={{ flex: 1 }}>
                   <Text style={{ color: "#00000077", fontSize: 16, marginVertical: 2 }}>Order# {item.index}</Text>
                   <Text style={{ color: "#000000", fontSize: 14, marginTop: 2, textTransform: "uppercase" }}>{item.symbol}</Text>
-                  <DText style={{ color: color, fontSize: 14 }}>
+                  <Text style={{ color: color, fontSize: 14 }}>
                     Long: {item.quantities} @ {item.buy_price.toFixed(2)}
-                  </DText>
+                  </Text>
                   <Text style={{ color: "#000000dd", fontSize: 12, marginVertical: 2 }}>Invested for {item.open_for}</Text>
-                  <View style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
+                  <DLayoutRow style={{ marginTop: 10, width: "100%" }}>
                     {item.isBreakOrder && item.is_open && (
                       <DButtonTag
                         style={{ backgroundColor: colors.orange600, marginEnd: 10 }}
@@ -150,19 +146,27 @@ export const PositionListView = ({ route, navigation }: TProps) => {
                       }}
                       text="chart"
                     ></DButtonTag>
-                     {item.isBreakOrder && !item.is_open && (
+                  </DLayoutRow>
+                  <DLayoutRow>
+                    {item.isBreakOrder && !item.is_open && (
                       <DButtonTag
-                        style={{ backgroundColor: colors.red500,}}
+                        style={{ backgroundColor: colors.red900, marginTop: 10 }}
                         onPress={() => {
-                          Alert.alert("DeActivate Order?", "This order will be gone forever and undo all impact on summary",[{text:'Ok', onPress:()=>{
-                              network.deActivateOrder(item._id);
-                          }}, {text:'cancel', onPress:()=>{}}])
-        
+                          console.log("hello");
+                          Alert.alert("DeActivate Order?", "This order will be gone forever and undo all impact on summary", [
+                            {
+                              text: "Ok",
+                              onPress: () => {
+                                network.deActivateOrder(item._id);
+                              },
+                            },
+                            { text: "cancel", onPress: () => {} },
+                          ]);
                         }}
                         text="deactivate"
                       ></DButtonTag>
                     )}
-                  </View>
+                  </DLayoutRow>
                 </DLayoutCol>
                 <DLayoutCol style={{ alignItems: "flex-end" }}>
                   {item.is_open ? ( // opened
@@ -183,10 +187,10 @@ export const PositionListView = ({ route, navigation }: TProps) => {
                   ) : (
                     // closed
                     <>
-                      <DText style={{ color: color_close, fontSize: 14 }}>
+                      <Text style={{ color: color_close, fontSize: 14 }}>
                         Gain: {(item.closed_sum - item.invested_sum).toFixed(2)} (
                         {((item.closed_sum - item.invested_sum) / item.invested_sum).toFixed(2)}%)
-                      </DText>
+                      </Text>
                       <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
                         Buy: {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
                       </Text>

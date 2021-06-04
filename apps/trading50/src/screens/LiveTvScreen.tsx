@@ -1,9 +1,10 @@
 import { Video } from "expo-av";
 import React, { useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
-import { DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { DButtonIcon } from "../components/DButton";
+import { ScreenHeader } from "../components/DExtendedLayout";
 import { DBorderLine, DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
+import { DListEmptyComponent, FlatListItemSeparator } from "../components/DList";
 import { DTextFooter, DTextTitle } from "../components/DText";
 import { showNotification } from "../components/libs/uihelper";
 import { colors } from "../components/res/colors";

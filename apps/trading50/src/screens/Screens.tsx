@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { DCard } from "../components/basic";
+import { DCard } from "../components/DLayout";
 import { globalStyle } from "../components/styles";
 import { TProps } from "./types";
 
@@ -38,7 +38,6 @@ export const SignInScreen = ({ navigation }: TProps) => {
     <ScreenContainer>
       <DCard overrideStyle={{ height: 200 }}>
         <Text style={[globalStyle.PrimaryText]}>Sign In</Text>
-        <Button title="action" />
       </DCard>
     </ScreenContainer>
   );

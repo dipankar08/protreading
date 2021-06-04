@@ -3,7 +3,9 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { DContainerSafe, DLayoutCol, DLayoutRow, DListEmptyComponent, FlatListItemSeparator, ScreenHeader } from "../components/basic";
+import { ScreenHeader } from "../components/DExtendedLayout";
+import { DContainerSafe, DLayoutCol, DLayoutRow } from "../components/DLayout";
+import { DListEmptyComponent, FlatListItemSeparator } from "../components/DList";
 import { dlog } from "../components/libs/dlog";
 import { showNotification } from "../components/libs/uihelper";
 import { AppStateContext } from "./AppStateProvider";
@@ -37,10 +39,9 @@ export const MarketScreen = ({ navigation }: TProps) => {
         hideBack={true}
         title="Market Summary"
         loading={loadingRefresh}
-        style={{ padding: 16 }}
         icon="reload"
         onPress={() =>
-          network.reLoadAllData({
+          network.refreshAllData({
             onBefore: () => setLoadingRefresh(true),
             onComplete: () => setLoadingRefresh(false),
             onSuccess: (data) => showNotification(data.msg),

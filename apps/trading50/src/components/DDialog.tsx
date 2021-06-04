@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { TProps } from "../screens/types";
-import { DLayoutCol, DLayoutRow } from "./basic";
 import { DButtonIcon, DButtonPrimary } from "./DButton";
 import { DTextInput } from "./DInput";
-import { DSpace } from "./DLayout";
+import { DLayoutCol, DLayoutRow, DSpace } from "./DLayout";
 import { DTextSubTitle, DTextTitle } from "./DText";
 import { colors } from "./res/colors";
 
@@ -68,10 +67,10 @@ export const DOptionDialog = ({ visible, title, subtitle, items, onChange, onCan
               {items?.map((x) => {
                 return (
                   <DLayoutRow key={x.key}>
-                      <RadioButton value={x.key} key={x.key}>
-                        <DTextSubTitle>{x.text}</DTextSubTitle>  
-                      </RadioButton>
-                    <DTextSubTitle >{x.text}</DTextSubTitle>  
+                    <RadioButton value={x.key} key={x.key}>
+                      <DTextSubTitle>{x.text}</DTextSubTitle>
+                    </RadioButton>
+                    <DTextSubTitle>{x.text}</DTextSubTitle>
                   </DLayoutRow>
                 );
               })}

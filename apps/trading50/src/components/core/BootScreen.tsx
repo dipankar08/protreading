@@ -2,8 +2,8 @@
 import * as Updates from "expo-updates";
 import React, { useContext, useEffect, useState } from "react";
 import logo from "../../../assets/images/icon_white.png";
-import { DContainer, DLayoutCol } from "../basic";
 import { DAppLogo } from "../DImage";
+import { DContainer, DLayoutCol } from "../DLayout";
 import { DLoadingText, DTextFooter } from "../DText";
 import { dlog } from "../libs/dlog";
 import { STYLES } from "../styles";

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { TProps } from "../../screens/types";
-import { DButton, DContainer, DText } from "../basic";
+import { DContainer } from "../DLayout";
+import { DTextTitle } from "../DText";
 import { dlog } from "../libs/dlog";
 
 // Sign up logic...
@@ -14,8 +15,7 @@ export const SignUpScreen = ({ navigation }: TProps) => {
   }, []);
   return (
     <DContainer>
-      <DText>Create a new Account</DText>
-      <DButton />
+      <DTextTitle>Create a new Account</DTextTitle>
     </DContainer>
   );
 };

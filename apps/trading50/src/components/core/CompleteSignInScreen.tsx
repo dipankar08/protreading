@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import logo from "../../../assets/images/icon_white.png";
 import { TProps } from "../../screens/types";
-import { DContainer, DLayoutCol } from "../basic";
 import { DAppLogo } from "../DImage";
+import { DContainer, DLayoutCol } from "../DLayout";
 import { DLoadingText } from "../DText";
 import { STYLES } from "../styles";
 import { CoreStateContext } from "./CoreContext";

@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { DContainerSafe, DLayoutCol, ScreenHeader } from "../components/basic";
 import { AppInfoCard } from "../components/core/AppInfoCard";
 import { DButtonPrimary } from "../components/DButton";
+import { ScreenHeader } from "../components/DExtendedLayout";
+import { DContainerSafe, DLayoutCol } from "../components/DLayout";
 import { DKeyValueList } from "../components/DList";
 import { DTextSection } from "../components/DText";
 import { showNotification } from "../components/libs/uihelper";

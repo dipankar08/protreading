@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { FlatList } from "react-native";
-import { DContainerSafe, DLayoutCol, DListEmptyComponent, ScreenHeader } from "../components/basic";
 import { DButtonPrimary } from "../components/DButton";
-import { DCard } from "../components/DLayout";
+import { ScreenHeader } from "../components/DExtendedLayout";
+import { DCard, DContainerSafe, DLayoutCol } from "../components/DLayout";
+import { DListEmptyComponent } from "../components/DList";
 import { DTextFooter, DTextSubTitle, DTextTitle } from "../components/DText";
 import { showNotification } from "../components/libs/uihelper";
 import { TObject } from "./model";

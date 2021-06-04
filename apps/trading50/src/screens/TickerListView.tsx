@@ -1,11 +1,11 @@
 import React, { useContext, useRef, useState } from "react";
 import { Button, FlatList, Text, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { DLayoutCol, DLayoutRow, DListEmptyComponent, DSpace, FlatListItemSeparator, TextWithIcon } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
 import { DDialog, DOptionDialog } from "../components/DDialog";
 import { DTextSearch } from "../components/DInput";
-import { DKeyValueList } from "../components/DList";
+import { DLayoutCol, DLayoutRow, DSpace } from "../components/DLayout";
+import { DKeyValueList, DListEmptyComponent, FlatListItemSeparator } from "../components/DList";
 import { dlog } from "../components/libs/dlog";
 import { colors } from "../components/res/colors";
 import { DIMENS } from "../components/res/dimens";
@@ -244,8 +244,6 @@ export const TickerListView = ({ navigation, objArray }: TProps) => {
           <Button onPress={() => {}} title="Sort By Change"></Button>
           <DSpace />
           <Button onPress={() => {}} title="Sort By Name"></Button>
-          <TextWithIcon text={"Sort based on onChangeText"} icon={"sort-ascending"} style={{ paddingVertical: 8 }} onPress={() => {}}></TextWithIcon>
-          <TextWithIcon text={"Sort by stock name"} icon={"sort-ascending"} style={{ paddingVertical: 8 }}></TextWithIcon>
         </DLayoutCol>
       </RBSheet>
 
