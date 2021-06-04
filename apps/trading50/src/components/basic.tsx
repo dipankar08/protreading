@@ -209,7 +209,7 @@ export const ScreenHeader = ({
           display: "flex",
           flexDirection: "row",
           padding: 0,
-          alignItems: "baseline",
+          alignItems: "center",
         },
         style,
       ]}
@@ -231,7 +231,7 @@ export const ScreenHeader = ({
       ) : (
         <View></View>
       )}
-      <DScreenTitle style={{ color: color || "black" }}>{title}</DScreenTitle>
+      <DScreenTitle style={{ color: color || "black", marginTop:0 }}>{title}</DScreenTitle>
       {icon && <DButtonIcon icon={icon} size={24} color={color || "black"} loading={loading || false} onPress={onPress}></DButtonIcon>}
     </View>
   );

@@ -26,8 +26,6 @@ let curDomain: TDomain = null;
 export const useNetwork = () => {
   const appState = useContext(AppStateContext);
   const coreState = useContext(CoreStateContext);
-  const [domain, setDomain] = React.useState<TDomain>(null);
-
   React.useEffect(() => {
     if (appState.state.domain != curDomain && appState.state.domain != null) {
       curDomain = appState.state.domain;
@@ -39,6 +37,8 @@ export const useNetwork = () => {
   }, [appState]);
 
   async function refreshAllData(callback: TCallback) {
+    console.log(">>>>>>>>");
+    processor.clear();
     callback.onBefore?.();
     await loadMarketData({
       onSuccess: async () => {
@@ -193,7 +193,6 @@ export const useNetwork = () => {
       return;
     }
     saveString("DOMAIN", domain);
-    setDomain(domain);
     appState.dispatch({ type: "MERGE", payload: initialState });
     appState.dispatch({ type: "MERGE", payload: { domain: domain } });
   }

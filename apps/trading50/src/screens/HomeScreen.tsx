@@ -9,6 +9,7 @@ import { dlog } from "../components/libs/dlog";
 import { getString } from "../components/libs/stoarge";
 import { showNotification } from "../components/libs/uihelper";
 import { AppStateContext } from "./AppStateProvider";
+import { getColorCode } from "./helper/helper";
 import { TProps } from "./types";
 import { domainList, useNetwork } from "./useNetwork";
 
@@ -63,9 +64,12 @@ export const HomeScreen = ({ navigation }: TProps) => {
           title={"Home"}
           style={{ padding: 0 }}
           icon="reload"
-          //onPress={refreshData}
+          onPress={ async ()=> await network.refreshAllData({
+            onBefore:()=>setLoading(true),
+            onComplete:()=>setLoading(false)
+          })}
         />
-        <DTextSection>Summary</DTextSection>
+        <DTextSection>Summary({appState.state.domain})</DTextSection>
         <View style={styles.card}>
           <DLayoutRow style={{ flex: 1 }}>
             <DLayoutCol style={{ flex: 1 }}>
@@ -79,9 +83,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
                   styles.textValue,
                   {
                     color:
-                      appState.state.position?.positionSummary?.committed_pl && appState.state.position?.positionSummary?.committed_pl > 0
-                        ? "#2cf21c"
-                        : "#ffc300",
+                      getColorCode(appState.state.position?.positionSummary?.committed_pl),
                   },
                 ]}
               >
@@ -101,9 +103,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
                   styles.right,
                   {
                     color:
-                      appState.state.position?.positionSummary?.total_change && appState.state.position?.positionSummary?.total_change > 0
-                        ? "green"
-                        : "#ff9800",
+                      getColorCode(appState.state.position?.positionSummary?.total_change)
                   },
                 ]}
               >
@@ -116,9 +116,7 @@ export const HomeScreen = ({ navigation }: TProps) => {
                   styles.right,
                   {
                     color:
-                      appState.state.position?.positionSummary?.uncommitted_change && appState.state.position?.positionSummary?.uncommitted_change > 0
-                        ? "green"
-                        : "#ffc300",
+                      getColorCode(appState.state.position?.positionSummary?.uncommitted_change)
                   },
                 ]}
               >

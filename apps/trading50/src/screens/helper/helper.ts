@@ -1,5 +1,6 @@
 import { dlog } from "../../components/libs/dlog";
 import { getAgoString, isSameDay } from "../../components/libs/time";
+import { colors } from "../../components/res/colors";
 import { RecommendedType, TGroupMarketEntry, TMarketEntry, TOrder, TPosition, TPositionSummary } from "../model";
 import { cal_delivery_tax, cal_intraday_tax } from "./taxcalculator";
 
@@ -272,4 +273,15 @@ export function processPositionData(obj: any, ltpMap: Map<string, number>): TPos
   };
   //dlog.obj(position)
   return position;
+}
+
+export function getColorCode(data?: number) {
+  if (!data) {
+    return colors.grey500;
+  }
+  if (data >= 0) {
+    return colors.green500;
+  } else {
+    return colors.red500;
+  }
 }

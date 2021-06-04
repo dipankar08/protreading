@@ -13,6 +13,15 @@ class DataProcessor {
 
   constructor() {}
 
+  clear() {
+    this.summary = new Map();
+    this.stockMap = new Map();
+    this.ltpMap = new Map();
+    this.sectorList = new Map();
+    this.recommendedList = new Map();
+    this.position = { orderList: [], positionSummary: emptyPositionSummary, consolidatedList: [] };
+  }
+
   // trying to process summary network resp.
   setSummary(obj: TObject) {
     dlog.d("Process Summary Data ...");
