@@ -171,9 +171,9 @@ export const PositionListView = ({ route, navigation }: TProps) => {
                 <DLayoutCol style={{ alignItems: "flex-end" }}>
                   {item.is_open ? ( // opened
                     <>
-                      <DText style={{ color: color, fontSize: 14 }}>
+                      <Text style={{ color: color, fontSize: 14 }}>
                         {item.change.toFixed(2)} ({item.change_per.toFixed(2)}%)
-                      </DText>
+                      </Text>
                       <Text style={{ color: "#00000077", fontSize: 12, marginVertical: 2 }}>
                         Buy: {item.quantities} X {item.buy_price.toFixed(2)} = {item.invested_sum.toFixed(2)}
                       </Text>

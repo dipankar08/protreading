@@ -36,7 +36,7 @@ export const SplashScreen = () => {
 export const SignInScreen = ({ navigation }: TProps) => {
   return (
     <ScreenContainer>
-      <DCard overrideStyle={{ height: 200 }}>
+      <DCard style={{ height: 200 }}>
         <Text style={[globalStyle.PrimaryText]}>Sign In</Text>
       </DCard>
     </ScreenContainer>
