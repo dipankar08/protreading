@@ -94,7 +94,9 @@ export const useNetwork = () => {
     }
     callback?.onBefore?.();
     try {
-      let network_resp = await getRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100`);
+      let network_resp = await getRequest(
+        `${SIMPLESTORE_ENDPOINT}/api/grodok_position?user_id=${coreState.state.authInfo?.user_id}&_limit=100&active=1`
+      );
       verifyOrCrash(globalAppState.ltpMap != null, "Market is null");
       processor.setPositionData(network_resp.out);
       appState.dispatch({ type: "MERGE", payload: { position: processor.position } });
@@ -121,6 +123,7 @@ export const useNetwork = () => {
         buy_price: parseFloat(price),
         quantities: parseFloat(quantities),
         buy_ts: getCurrentDate(),
+        active: "1",
       });
       await fetchUserInfo();
       showNotification("Created a new order");
@@ -150,6 +153,26 @@ export const useNetwork = () => {
     } catch (err) {
       dlog.d(err);
       showNotification("Not able to close this order");
+      onError?.("Error" + err.message);
+    }
+  }
+
+  async function deActivateOrder(id: string, onSuccess?: Function, onError?: Function) {
+    if (!assertNotEmptyOrNotify(id)) {
+      onError?.();
+      return;
+    }
+    try {
+      let response = await postRequest(`${SIMPLESTORE_ENDPOINT}/api/grodok_position/update`, {
+        _id: id,
+        active: "0",
+      });
+      await fetchUserInfo();
+      showNotification("Order reactivated!");
+      onSuccess?.();
+    } catch (err) {
+      dlog.d(err);
+      showNotification("Not able to deactivate this order");
       onError?.("Error" + err.message);
     }
   }
@@ -306,6 +329,7 @@ export const useNetwork = () => {
     recomputeIndicator,
     getTimeStamp,
     clearAllData,
+    deActivateOrder: deActivateOrder,
   };
 };
 

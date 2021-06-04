@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FlatList, Text, useWindowDimensions, View } from "react-native";
+import { Alert, FlatList, Text, useWindowDimensions, View } from "react-native";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { DContainerSafe, DLayoutCol, DLayoutRow, DText, FlatListItemSeparator, ScreenHeader } from "../components/basic";
 import { DButtonPrimary, DButtonTag } from "../components/DButton";
@@ -150,6 +150,18 @@ export const PositionListView = ({ route, navigation }: TProps) => {
                       }}
                       text="chart"
                     ></DButtonTag>
+                     {item.isBreakOrder && !item.is_open && (
+                      <DButtonTag
+                        style={{ backgroundColor: colors.red500,}}
+                        onPress={() => {
+                          Alert.alert("DeActivate Order?", "This order will be gone forever and undo all impact on summary",[{text:'Ok', onPress:()=>{
+                              network.deActivateOrder(item._id);
+                          }}, {text:'cancel', onPress:()=>{}}])
+        
+                        }}
+                        text="deactivate"
+                      ></DButtonTag>
+                    )}
                   </View>
                 </DLayoutCol>
                 <DLayoutCol style={{ alignItems: "flex-end" }}>

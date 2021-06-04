@@ -120,7 +120,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
               showNotification("Please enter username");
               return;
             }
-            coreApi.loginAsGuest(text, {
+            coreApi.loginAsGuest(text.toLocaleLowerCase().trim(), {
               onSuccess: () => {
                 coreApi.navigateTo(navigation, "CompleteSignInScreen");
               },

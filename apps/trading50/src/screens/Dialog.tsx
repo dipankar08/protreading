@@ -92,6 +92,7 @@ export const OrderCloseDialog = ({ item, visible, onClose }: any) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
