@@ -1,5 +1,5 @@
 {
-  "name": "@dipankar/core",
+  "name": "core",
   "version": "1.0.0",
   "description": "Core TS MODULE",
   "main": "lib/index.js",
@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc",
     "prepare" : "npm run build"
-    
   },
   "keywords": [],
   "author": "",
