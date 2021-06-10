@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import logo from "../../../assets/images/icon_white.png";
+import { helloTS } from "../../core/hello";
 import { STRINGS } from "../../screens/res/strings";
 import { TProps } from "../../screens/types";
 import { DButtonLink, DButtonWithIcon } from "../DButton";
@@ -27,6 +28,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
     dlog.d(`Mounted ${name}`);
     return () => {
       dlog.d(`Unmounted ${name}`);
+      helloTS();
     };
   }, []);
 
@@ -45,9 +47,7 @@ export const SignInScreen = ({ navigation }: TProps) => {
       <TouchableWithoutFeedback onLongPress={() => setIsShowGuestlogin(!isShowGuestlogin)}>
         <DTextTitle style={{ color: "white", textAlign: "center", fontSize: 40 }}>{STRINGS.APP_NAME}</DTextTitle>
       </TouchableWithoutFeedback>
-
       <DTextSubTitle style={{ color: "white", textAlign: "center", marginTop: 40 }}>Please login using your social account</DTextSubTitle>
-
       <DButtonWithIcon
         loading={loadingFacebook}
         icon="facebook"

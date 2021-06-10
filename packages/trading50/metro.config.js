@@ -5,11 +5,13 @@
 
 const path = require("path");
 const extraNodeModules = {
-  core: path.resolve(__dirname + "/../core/"),
+  //core: path.resolve(__dirname + "/../core/"),
+  //core_react_native: path.resolve(__dirname + "/../core_react_native/"),
   // add here a new module.
 };
 const watchFolders = [
-  path.resolve(__dirname + "/../core/"),
+  //path.resolve(__dirname + "/../core/"),
+  // path.resolve(__dirname + "/../core_react_native/"),
   // add here the new module ss
 ];
 

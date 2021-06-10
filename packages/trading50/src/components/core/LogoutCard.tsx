@@ -8,7 +8,6 @@ import { dlog } from "../libs/dlog";
 import { colors } from "../res/colors";
 import { CoreStateContext } from "./CoreContext";
 import { useCoreApi } from "./useCoreApi";
-
 // Simple Logout card which should be embedit in the app
 export const LogoutCard = ({ navigation, route, onSignOut }: TProps) => {
   const coreState = useContext(CoreStateContext);
