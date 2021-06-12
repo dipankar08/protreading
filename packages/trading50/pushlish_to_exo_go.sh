@@ -1,1 +1,0 @@
-expo publish --target managed
