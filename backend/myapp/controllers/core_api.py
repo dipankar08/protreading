@@ -21,7 +21,7 @@ from myapp.core import (danalytics, ddownload, dfilter, dglobaldata,
                         dhighlights, dlog, dplot, dredis)
 from myapp.core.constant import CACHE_TIMEOUT_5MIN
 from myapp.core.ddecorators import make_exception_safe
-from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.rootConfig import ENABLED_CANDLE
 
 
 @core_api.before_request

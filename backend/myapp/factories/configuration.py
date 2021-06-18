@@ -1,4 +1,5 @@
 import os
+
 from celery.schedules import crontab
 
 
@@ -31,6 +32,7 @@ class Config:
         #    'schedule': crontab(hour=10, minute=10),  # tested
         # },
         # At the end of the day update the 1D data
+        """
         'snapshot-1d': {
             'task': 'tasks.code_api.snapshot',
             'args': {"1d": '1d'},  # Not sure the right way to pass the params
@@ -49,4 +51,5 @@ class Config:
             # Testing
             # 'schedule': crontab(minute="*/1", day_of_week="sun-mon", hour="0-23"),
         },
+        """
     }

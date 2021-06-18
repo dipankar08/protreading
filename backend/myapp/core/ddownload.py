@@ -7,7 +7,7 @@ from myapp.core.convertion import covert_to_period_from_duration
 from myapp.core.ddecorators import trace_perf
 from myapp.core.dlog import stack
 from myapp.core.dtypes import TCandleType
-from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.rootConfig import ENABLED_CANDLE
 from myapp.core.sync import getSymbolList
 from pandas.core.frame import DataFrame
 
@@ -18,7 +18,7 @@ yf.download("TCS.NS")
 """
 
 # Rest all locks here
-for candle_type in SUPPORTED_CANDLE:
+for candle_type in ENABLED_CANDLE:
     dredis.set("download_progress_{}".format(candle_type.value), "0")
 dlog.d("Reset download locks")
 

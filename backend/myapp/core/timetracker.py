@@ -1,11 +1,11 @@
-from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.rootConfig import ENABLED_CANDLE
 import time
 from typing import Dict
 from myapp.core import dredis
 from myapp.core import dlog
 from myapp.core.dtypes import TCandleType
 _last_update_ts: Dict[str, int] = {}
-for x in SUPPORTED_CANDLE:
+for x in ENABLED_CANDLE:
     _last_update_ts[x.value] = int(dredis.get(
         "download_start_{}_ts".format(x.value), "0"))
 

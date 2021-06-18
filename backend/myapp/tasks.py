@@ -10,7 +10,7 @@ from myapp.core.ddecorators import (decrTaskCommonAction, decrTLogFunction,
 from myapp.core.ddownload import download
 from myapp.core.dnetwork import pingCelery
 from myapp.core.dtypes import TCandleType
-from myapp.core.rootConfig import SUPPORTED_CANDLE
+from myapp.core.rootConfig import ENABLED_CANDLE
 from myapp.core.sync import SUPPORTED_CHART_DURATION, getSymbolList
 from myapp.core.timex import getCurTimeStr
 from myapp.extensions import celery
@@ -66,7 +66,7 @@ def taskBuildIndicatorAll():
     "This will download - process - and save the file as pkl"
     pingCelery()
     danalytics.reportAction("taskBuildIndicatorAll_started")
-    for x in SUPPORTED_CANDLE:
+    for x in ENABLED_CANDLE:
         dglobaldata.downloadAndBuildIndicator("IN", x)
     danalytics.reportAction("taskBuildIndicatorAll_ended")
     # Compute Summary

@@ -13,7 +13,7 @@ from myapp.core import (danalytics, ddownload, dindicator, dlog, dredis,
 from myapp.core.ddecorators import trace_perf
 from myapp.core.dtypes import TCandleType
 from myapp.core.optimization import shouldBuildIndicator
-from myapp.core.rootConfig import SUPPORTED_CANDLE, SUPPORTED_DOMAIN
+from myapp.core.rootConfig import ENABLED_CANDLE, SUPPORTED_DOMAIN
 from myapp.core.sync import getSymbolList
 from myapp.core.timetracker import (mark_dataload_end, mark_dataload_start,
                                     should_fetch_data,
@@ -32,12 +32,6 @@ def loadDataForCandle(candle_type: TCandleType):
         dlog.d("updating data...")
     except Exception as e:
         dlog.ex(e, "not able to load data from storage.")
-
-
-@trace_perf
-def load_data_on_boot():
-    for candle_type in SUPPORTED_CANDLE:
-        loadDataForCandle(candle_type=candle_type)
 
 
 def get_df(symbol: str, candle_type: TCandleType = TCandleType.DAY_1, duration=50):
@@ -110,7 +104,7 @@ def getLastNIndicatorInJson(domain, df: DataFrame, limit=15):
 
 
 # Rest all locks here - This is needed for restart the server
-for candle_type in SUPPORTED_CANDLE:
+for candle_type in ENABLED_CANDLE:
     for domain in SUPPORTED_DOMAIN:
         dredis.set("downloadAndBuildindicator_{}_{}".format(
             domain, candle_type.value), "0")
@@ -119,7 +113,7 @@ dlog.d("Reset downloadAndBuildIndicator locks")
 
 def getLastUpdatedTimeStamp(domain: str):
     result = {}
-    for candle_type in SUPPORTED_CANDLE:
+    for candle_type in ENABLED_CANDLE:
         result['{}-{}'.format(domain, candle_type.value)] = dredis.get("indicator_timestamp_{}_{}".format(
             domain, candle_type.value), "Data not found")
     return result
@@ -220,7 +214,7 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
 # Call this function in all core api
 def checkLoadLatestData():
     changed = []
-    for candle_type in SUPPORTED_CANDLE:
+    for candle_type in ENABLED_CANDLE:
         if should_load_data_from_disk(candle_type=candle_type):
             loadDataForCandle(candle_type=candle_type)
             changed.append(candle_type)
@@ -281,6 +275,3 @@ def mayGetLatestStockData(domain: str, reload, sync: str):
         # tasks.taskDownloadLatestMarketData.delay(domain)
     else:
         dlog.d("Data is already there")
-
-
-load_data_on_boot()
