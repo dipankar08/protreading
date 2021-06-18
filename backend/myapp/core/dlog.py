@@ -19,11 +19,17 @@ def stack():
 
 
 def d(msg: str):
+    __logger.info("[DEBUG] {}".format(msg))
+
+
+def s(msg: str):
     __logger.debug(msg)
+    __logger.info("[SUCCESS] {}".format(msg))
 
 
 def e(msg: str):
     __logger.error(msg)
+    __logger.info("[ERROR] {}".format(msg))
 
 
 def ex(e: Exception, msg: str = "Exception:", showStack: bool = True):

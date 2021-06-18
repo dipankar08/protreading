@@ -197,11 +197,11 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
         # unlock
         dredis.set(lockkey, "0")
 
-        dlog.d("downloadAndBuildIndicator ends")
+        dlog.s("[SUCCESS] downloadAndBuildIndicator ends")
         return {"status": "success", "msg": "Completed snapshot pipeline", "out": None}
     except Exception as e:
         dredis.set(lockkey, "0")
-        dlog.d("downloadAndBuildIndicator Exception happened")
+        dlog.e("downloadAndBuildIndicator Exception happened")
         danalytics.reportException(
             e, "Exception in downloadAndBuildIndicator")
         dlog.ex(e)
