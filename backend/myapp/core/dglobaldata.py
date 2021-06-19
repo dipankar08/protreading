@@ -15,9 +15,6 @@ from myapp.core.dtypes import TCandleType
 from myapp.core.optimization import shouldBuildIndicator
 from myapp.core.rootConfig import ENABLED_CANDLE, SUPPORTED_DOMAIN
 from myapp.core.sync import getSymbolList
-from myapp.core.timetracker import (mark_dataload_end, mark_dataload_start,
-                                    should_fetch_data,
-                                    should_load_data_from_disk)
 from myapp.core.timex import IfTimeIs5MinOld, getCurTimeStr
 from pandas.core.frame import DataFrame
 
@@ -209,19 +206,6 @@ def downloadAndBuildIndicator(domain, candle_type: TCandleType):
     finally:
         dredis.set(lockkey, "0")
         pass
-
-
-# Call this function in all core api
-def checkLoadLatestData():
-    changed = []
-    for candle_type in ENABLED_CANDLE:
-        if should_load_data_from_disk(candle_type=candle_type):
-            loadDataForCandle(candle_type=candle_type)
-            changed.append(candle_type)
-        if should_fetch_data(candle_type=candle_type):
-            # Default load india
-            tasks.taskBuildIndicator.delay("IN", candle_type.value)
-    return changed
 
 
 # This will build the indicator in background.

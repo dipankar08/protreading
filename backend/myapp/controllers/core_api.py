@@ -101,7 +101,6 @@ def indicator():
 @ core_api.route('/screen', methods=['POST', 'GET'])
 @ make_exception_safe
 def Screen():
-    dglobaldata.checkLoadLatestData()
     domain = get_param_or_default(request, 'domain', "IN")
     result = dfilter.performScreen(
         domain,
