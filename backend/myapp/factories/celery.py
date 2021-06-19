@@ -1,12 +1,11 @@
+from flask import Flask
+from flask_caching import Cache
+from myapp import extensions
+from myapp.core import dlog
+
 from celery import Celery
 from celery.app.task import Task as CeleryTask
-from flask import Flask
-
-from myapp import extensions
-from flask_caching import Cache
-
 from celery.schedules import crontab
-from myapp.core import dlog
 
 
 def configure_celery(app: Flask) -> Celery:
@@ -33,8 +32,9 @@ def configure_celery(app: Flask) -> Celery:
         task_always_eager=app.config.get('CELERY_ALWAYS_EAGER', False)
     )
     extensions.celery.Task = ContextTask
-    dlog.d("Celery setup properly:{}".format(
-        app.config.get('CELERYBEAT_SCHEDULE', {})))
+    # dlog.d("Celery setup properly:{}".format(
+    #    app.config.get('CELERYBEAT_SCHEDULE', {})))
+    dlog.d("[SUCCESS] ========== Celery setup success ====== ")
     return extensions.celery
 
 
