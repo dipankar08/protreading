@@ -1,5 +1,5 @@
-from ast import Str
 import json
+from ast import Str
 from typing import Dict
 
 SUPPORTED_SYMBOL: Dict = {

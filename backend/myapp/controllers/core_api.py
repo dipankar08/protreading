@@ -17,8 +17,7 @@ import random
 
 from flask.globals import g
 from flask_cors import CORS, cross_origin
-from myapp.core import (danalytics, ddownload, dfilter, dglobaldata,
-                        dhighlights, dlog, dplot, dredis)
+from myapp.core import dfilter, dglobaldata, dredis
 from myapp.core.constant import CACHE_TIMEOUT_5MIN
 from myapp.core.ddecorators import make_exception_safe
 from myapp.core.rootConfig import ENABLED_CANDLE
@@ -94,38 +93,7 @@ def indicator():
         task_id = tasks.taskBuildIndicator.delay(domain, candle_type)
         return buildError("Indicator is not yet ready", "Scheduled task id: /result/{}".format(task_id.id))
 
-    # Reload on time
-    # mayUpdateStateData(domain, candle_type)
-
     return buildSuccess("Got indicator", result if show_result == "1" else 'result is hidden')
-
-
-# Build the latest market data
-@ core_api.route('/market')
-@ make_exception_safe
-def market():
-    "status of the app"
-    # Get the data for which doamin ?
-    domain: str = get_param_or_default(request, "domain", "IN")
-    # Do you want to return data and submit job to reload ?
-    reload: str = get_param_or_default(request, "reload", "0")
-    # Do you want to reload data on celeery in in this process for debugging?
-    sync: str = get_param_or_default(request, "sync", "0")
-    return buildSuccess("Status Ok", dglobaldata.getLatestMarketData(domain, reload, sync))
-
-
-# Build the summary
-@ cross_origin()
-@ core_api.route('/summary')
-@ make_exception_safe
-def summary():
-    mayRebuildData()
-    summary = dhighlights.get_summary()
-    if summary:
-        return buildSuccess("calculated", summary)
-    else:
-        tasks.taskComputeSummary.delay()
-        return buildError("Summary is not yet available")
 
 
 # Perform screen
@@ -142,26 +110,9 @@ def Screen():
     return buildSuccess(msg='Here is the list of Stocks', out={
         "result": result['result'], "timestamp": dglobaldata.getLastUpdatedTimeStamp(domain), 'error': result['last_error']})
 
-
-# Chart are depeicated
-"""
-@ cross_origin()
-@ core_api.route('/chart')
-@ make_exception_safe
-def chart():
-    dglobaldata.checkLoadLatestData()
-    symbol = get_param_or_throw(request, 'symbol')
-    candle_type = get_param_or_default(request, "candle_type", "1d")
-    duration = get_param_or_default(request, "duration", "30")
-    reload = get_param_or_default(request, "reload", "0")
-    return buildNotImplemented()
-    # encoded_png = dplot.get_endcoded_png_for_chart(
-    #    symbol, TCandleType(candle_type), duration, reload)
-    # return buildSuccess("Image Return", "data:image/png;base64,{}".format(encoded_png))
-"""
-
-
 # For testing code.
+
+
 @ core_api.route('/test')
 @ make_exception_safe
 def just_test():
@@ -169,12 +120,4 @@ def just_test():
     # ddownload.download(TCandleType.DAY_1)
     # dglobaldata.downloadAndBuildIndicator("IN", TCandleType.MIN_5)
     tasks.taskBuildIndicator("IN", "5m")
-    # dhighlights.taskComputeSummary()
     return buildError("Please verify test in code.")
-
-
-def mayRebuildData() -> bool:
-    changed_candle = dglobaldata.checkLoadLatestData()
-    if TCandleType.DAY_1 in changed_candle:
-        tasks.taskComputeSummary.delay()
-    return len(changed_candle) == 0

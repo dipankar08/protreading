@@ -1,16 +1,14 @@
-from myapp.core.RetHelper import buildError, buildSuccess
-from flask import Blueprint, render_template, Response, request
+from flask import Blueprint, Response, render_template, request
 from myapp import tasks
+from myapp.core.RetHelper import buildError, buildSuccess
 from myapp.extensions import celery
+
 home = Blueprint('home_views', __name__)
 
 
 @home.route('/', methods=['GET', 'POST'])
 def index() -> Response:
-    task_id = None
-    if request.method == 'POST':
-        task_id = tasks.simple_task.delay(request.form.get('message'))
-    return buildSuccess("task submitted", {"status_url": "/result/{}".format(task_id)})
+    return buildSuccess("not supported")
 
 
 @home.route('/result/<task_id>')

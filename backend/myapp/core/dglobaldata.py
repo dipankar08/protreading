@@ -224,20 +224,6 @@ def checkLoadLatestData():
     return changed
 
 
-# This call will get latest market data
-# First it will check if it is downloaded in 5 min returns it, if not schedule an task to download.
-def getLatestMarketData(domain: str, reload: str = "0", sync: str = "0"):
-    # Build indicator if not exist
-    mayGetLatestStockData(domain, reload, sync)
-    mayBuildStockIndicatorInBackground(domain, TCandleType.DAY_1, reload, sync)
-
-    dlog.d("getting data from cache")
-    return {
-        'latest': dredis.getPickle("market_data_{}".format(domain)),
-        'indicator': dredis.getPickle("indicator_data_{}_{}".format(domain, '1d'))
-    }
-
-
 # This will build the indicator in background.
 def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType, reload: str, sync: str):
     # reload
@@ -253,25 +239,5 @@ def mayBuildStockIndicatorInBackground(domain: str, candle_type: TCandleType, re
         # task submitted
         tasks.taskBuildIndicator.delay(domain, candle_type.value)
         dlog.d("task submitted")
-    else:
-        dlog.d("Data is already there")
-
-
-# This will build the indicator in background.
-def mayGetLatestStockData(domain: str, reload, sync: str):
-    if(reload == "1"):
-        dlog.d("taskDownloadLatestMarketData: submitting task")
-        if sync == "1":
-            tasks.taskDownloadLatestMarketData(domain)
-        else:
-            tasks.taskDownloadLatestMarketData.delay(domain)
-        return
-    last_update = dredis.get("market_ts_{}".format(domain), None)
-    if last_update is None or last_update == 'None':
-        dlog.d("No last update - submitting task")
-        tasks.taskDownloadLatestMarketData.delay(domain)
-    elif IfTimeIs5MinOld(last_update):
-        dlog.d("data is 5 min old... submitting task")
-        # tasks.taskDownloadLatestMarketData.delay(domain)
     else:
         dlog.d("Data is already there")
