@@ -103,6 +103,8 @@ def computeIndicator(df: DataFrame, ticker, domain: str):
         df[ticker, 'rsi_18'] = -1
         df[ticker, 'bb_up_5'], df[ticker,
                                   'bb_mid_5'], df[ticker, 'bb_down_5'] = (-1, -1, -1)
+        df[ticker, 'bb_up_20'], df[ticker,
+                                  'bb_mid_20'], df[ticker, 'bb_down_20'] = (-1, -1, -1)
         df[ticker, 'sar'] = -1
         df[ticker, 'atr_14'] = -1
         df[ticker, 'natr_14'] = -1
