@@ -79,6 +79,8 @@ def computeIndicator(df: DataFrame, ticker, domain: str):
         # band
         df[ticker, 'bb_up_5'], df[ticker, 'bb_mid_5'], df[ticker, 'bb_down_5'] = talib.BBANDS(
             df[ticker, 'close'], timeperiod=5)
+        df[ticker, 'bb_up_20'], df[ticker, 'bb_mid_20'], df[ticker, 'bb_down_20'] = talib.BBANDS(
+            df[ticker, 'close'], timeperiod=20)
         # df[ticker, 'bb_up_15'], df[ticker, 'bb_mid_15'], df[ticker, 'bb_down_15'] = talib.BBANDS(
         #    df[ticker, 'close'], timeperiod=15)
         # df[ticker, 'bb_up_60'], df[ticker, 'bb_mid_60'], df[ticker, 'bb_down_60'] = talib.BBANDS(
