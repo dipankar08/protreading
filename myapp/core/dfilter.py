@@ -17,13 +17,16 @@ def getIndicatorHistory(domain) -> dict:
 
 @trace_perf
 def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, limit: int = None):
+    dlog.d("\n\n\n" + "*" * 50 + " NEW FILTER " + "*" * 50)
     dlog.d('[INFO] Running screen for condition: {}, columns: {}'.format(
         condition, columns))
     indicatorHistory = getIndicatorHistory(domain)
     result = []
     sl = 0
-    columns = [resolveIndicatorExpression(c) for c in columns]
+    columns = [resolveColumnExpression(c) for c in columns]
     condition = resolveCondition(condition)
+    dlog.d('[INFO] Running screen for condition: {}, columns: {}'.format(
+        condition, columns))
     last_error = ''
     try:
         for symbol in indicatorHistory.keys():
@@ -47,13 +50,14 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
                         np.round(indicator_map['1d'][0]['close_change_percentage'], 2))
                     # extra col
                     for col in columns:
-                        selected_one[col[0]] = str(
-                            np.round(eval(col[1]), 2))
+                        selected_one[col["name"]] = str(
+                            np.round(eval(col["value"]), 2))
                     # add used defined data
                     result.append(fixDict(selected_one))
             except Exception as e:
-                last_error = 'Are you passing right Filter {}'.format(
-                    condition)
+                dlog.ex(e)
+                last_error = 'Are you passing right Filter {} cased by {}'.format(
+                    condition, e.args)
                 dlog.ex(e, showStack=False)
                 dlog.e(
                     "We faced the issue when we are running filter for symbol:{}".format(symbol))
@@ -77,21 +81,15 @@ def performScreen(domain: str, condition: str, columns=[], sort_by: str = None, 
     return {'result': result, 'last_error': last_error}
 
 
-def resolveIndicatorExpression(expression: str):
+def resolveColumnExpression(expression: str):
     if not expression:
-        return
-    if expression in ['sl', 'close', 'symbol', 'volume', 'name', "change"]:
-        if expression == 'close':
-            return ('close', "indicator_map['1d'][0]['close']")
-        elif expression == 'volume':
-            return ('volume', "indicator_map['1d'][0]['volume']")
-        elif expression == 'change':
-            return ('change', "indicator_map['1d'][0]['close_change_percentage']")
-        else:
-            return
-    indicator_tokens = expression.split(":")
-    return (indicator_tokens[3], 'indicator_map["{}"][{}]["{}"]'.format(
-        indicator_tokens[1], indicator_tokens[2], indicator_tokens[3]))
+        return None
+    tokens = [x.strip()
+              for x in expression.split("=") if len(x.strip()) > 0]
+    if len(tokens) != 2:
+        raise Exception(
+            "invalid Column Expression :<{}> ".format(expression))
+    return {"name": tokens[0], "value": convertToIndicatorMap(tokens[1])}
 
 
 # We resigned the conditions here:
@@ -105,18 +103,39 @@ def resolveCondition(cond: str):
         converted = []
         for t in tokens:
             if t.startswith('indicator:'):
-                indicator_tokens = t.split(":")
-                converted.append('indicator_map["{}"][{}]["{}"]'.format(
-                    indicator_tokens[1], indicator_tokens[2], indicator_tokens[3]))
+                converted.append(convertToIndicatorMap(t))
             else:
                 converted.append(t)
         return " ".join(converted)
     except Exception as e:
         raise Exception(
-            "Invalid filter:<{}>. What happened? {}".format(cond, e.args[0]))
+            "Invalid filter:<{}>. What happened? <{}>".format(cond, e.args[0]))
+
+
+def convertToIndicatorMap(input: str) -> str:
+    try:
+        indicator_tokens = [x.strip()
+                            for x in input.split(":") if len(x.strip()) > 0]
+        if len(indicator_tokens) != 4:
+            raise Exception(
+                "Invalid Indicator Expession found <{}>".format(input))
+
+        if indicator_tokens[1] not in ['1d', '5m']:
+            raise Exception(
+                "Invalid Indicator Expession found <{}> make sure we have only 1d or 5m as cancle".format(input))
+
+        if int(indicator_tokens[2]) > 0 or int(indicator_tokens[2]) < -20:
+            raise Exception(
+                "Invalid Indicator Expession found <{}>. Indicator offset must be between -20 .. 0".format(input))
+
+        return 'indicator_map["{}"][{}]["{}"]'.format(
+            indicator_tokens[1], indicator_tokens[2], indicator_tokens[3])
+    except Exception as e:
+        raise Exception(
+            "Invalid Indicator Expession found <{}>, caused by <{}>".format(input, e.args))
 
 
 print(resolveCondition("indicator:1d:0:close > num:10"))
 print(resolveCondition("indicator:1d:0:close > indicator:1d:0:close"))
 print(resolveCondition("indicator:1d:0:close > num:10"))
-print(resolveIndicatorExpression("indicator:1d:0:close"))
+print(resolveColumnExpression("close =  indicator:1d:0:close"))

@@ -28,7 +28,14 @@ def before_request_func():
     g.timings = {}
 
 
+@core_api.route('/')
+@make_exception_safe
+def index():
+    return buildSuccess("Server is runing OK")
+
 # Lookup redis key
+
+
 @core_api.route('/redis')
 @make_exception_safe
 def redis():
