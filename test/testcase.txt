@@ -17,13 +17,13 @@
 #############################  filter api ##############################
 => GET => {{server}}/screen?filter=1 =>success
 => GET => {{server}}/screen?filter=1&domain=USA =>success
-=> GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100&columns=indicator:5m:0:rsi_14 => success
+=> GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100&columns=rsi=indicator:5m:0:rsi_14 => success
 => GET => {{server}}/screen?filter=indicator:5m:0:close%20>%20100 => success
-=> GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100&columns=indicator:5m:0:rsi_14 => success
+=> GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100&columns=rsi=indicator:5m:0:rsi_14 => success
 => GET => {{server}}/screen?filter=indicator:1d:0:close%20>%20100 => success
 => GET => http://localhost:5000/screen?filter=indicatorX:5m:0:close%20%3C%20100&domain=USA => error
 => GET => http://localhost:5000/screen?filter=indicator:5m:0:close%20%3C%20100&domain=USA => success
-=> GET => http://localhost:5000/screen?filter=indicator:5m:0:close_change_percentage%20%3E%201&domain=IN&columns=indicator:1d:0:close_change_percentage =>success
+=> GET => http://localhost:5000/screen?filter=indicator:5m:0:close_change_percentage%20%3E%201&domain=IN&columns=rsi=indicator:1d:0:close_change_percentage =>success
 # Test columns
 => GET => http://localhost:5000/screen?filter=indicator:5m:0:close%20%3C%20100&domain=USA&columns=close1=indicator:1d:0:close,close2=indicator:1d:0:close => success
 
