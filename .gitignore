@@ -1,3 +1,4 @@
+.env
 ./*/*.pyc
 ./*/*/*.pyc
 ./*.private
@@ -10,12 +11,7 @@ venv
 ./**/node_module
 ./**/venv
 ./**/*.pyc
-
+datasets
+datasets/cache 
 test/node_module
 test/node_modules
-.bit
-./*/.bit
-./*/*/.bit
-
-# Local Netlify folder
-.netlify

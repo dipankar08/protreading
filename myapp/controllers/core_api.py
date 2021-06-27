@@ -50,17 +50,9 @@ def clearcache():
         dredis.clearAll()
     return buildSuccess("Clear cache", {"random": random.randint(10, 100)})
 
-
-# timestamp
-@ core_api.route('/timestamp')
-@ make_exception_safe
-def timestamp():
-    " Just return the timestamp "
-    domain: str = get_param_or_default(request, "domain", "IN")
-    return buildSuccess("Tiemstamp of server data retunrned", {"timestamp": dglobaldata.getLastUpdatedTimeStamp(domain)})
-
-
 # Build and look up indicator history
+
+
 @core_api.route('/indicator')
 @make_exception_safe
 def indicator():
@@ -109,9 +101,8 @@ def Screen():
     return buildSuccess(msg='Here is the list of Stocks', out={
         "result": result['result'], "timestamp": dglobaldata.getLastUpdatedTimeStamp(domain), 'error': result['last_error']})
 
+
 # For testing code.
-
-
 @ core_api.route('/test')
 @ make_exception_safe
 def just_test():
