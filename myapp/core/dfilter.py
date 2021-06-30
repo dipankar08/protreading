@@ -89,7 +89,17 @@ def resolveColumnExpression(expression: str):
     if len(tokens) != 2:
         raise Exception(
             "invalid Column Expression :<{}> ".format(expression))
-    return {"name": tokens[0], "value": convertToIndicatorMap(tokens[1])}
+    return {"name": tokens[0], "value": convertExpression(tokens[1])}
+
+
+def convertExpression(exp: str):
+    result = []
+    for e in exp.split(" "):
+        if e.startswith("indicator:"):
+            result.append(convertToIndicatorMap(e))
+        else:
+            result.append(e)
+    return " ".join(result)
 
 
 # We resigned the conditions here:
