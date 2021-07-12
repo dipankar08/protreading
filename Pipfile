@@ -9,7 +9,7 @@ finplot = "*"
 pandas = "*"
 requests = "*"
 bs4 = "*"
-yfinance = "*"
+yfinance = "0.1.63"
 matplotlib = "*"
 autopep8 = "*"
 asyncio = "*"
@@ -20,8 +20,7 @@ gunicorn = "*"
 Flask = "*"
 Flask-Cors = "*"
 pyOpenSSL = "*"
-Flask-Caching = "*"          
-
+Flask-Caching = "*"
 [dev-packages]
 
 [requires]
