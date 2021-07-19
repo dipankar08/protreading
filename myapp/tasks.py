@@ -3,8 +3,8 @@ import time
 from datetime import timedelta
 from typing import Any, Dict
 
-from myapp.core import (danalytics, dglobaldata, dindicator, dlog, dplot,
-                        dredis, dstorage)
+from myapp.core import (danalytics, dglobaldata, dindicator, dlog, dredis,
+                        dstorage)
 from myapp.core.ddecorators import (decrTaskCommonAction, decrTLogFunction,
                                     make_exception_safe)
 from myapp.core.ddownload import download
