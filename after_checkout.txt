@@ -1,6 +1,8 @@
 INCIDENT"
 =====================================
-yf.download stopped working: pip3 install yfinance==0.1.63    https://github.com/ranaroussi/yfinance/issues/363
+yf.download stopped working: 
+pipenv shell
+pip3 install yfinance==0.1.63    https://github.com/ranaroussi/yfinance/issues/363
 
 MAC SETUP
 ====================================
