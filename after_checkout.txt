@@ -4,18 +4,23 @@ yf.download stopped working: pip3 install yfinance==0.1.63    https://github.com
 
 MAC SETUP
 ====================================
+
 1. install pipenv
 python3 -m pip install --user pipenv
+or
+pip install --user pipenv
 2. setup path
-echo 'export PATH="${HOME}/Library/Python/3.9/bin:$PATH"' >> ~/.bashrc
-export PATH="${HOME}/Library/Python/3.9/bin:$PATH"
+echo 'export PATH="${HOME}/Library/Python/3.8/bin:$PATH"' >> ~/.bashrc
+export PATH="${HOME}/Library/Python/3.8/bin:$PATH"
 echo $PATH
 3. install package
+pipenv --rm
 pipenv install
-4. check shell
+4. check shell --> ensure the path is right else things will not work
 pipenv shell
 python3 --version
 which python3
+which pip3
 
 4. install ta lib
 pipenv shell
